@@ -1,0 +1,56 @@
+package ca.ualberta.cs;
+
+import java.util.ArrayList;
+import java.util.Date;
+import android.graphics.Bitmap;
+import android.location.Location;
+
+public class PostModel {
+	private String bodyText;
+	private Location location;
+	private Bitmap picture;
+	private UserModel postedBy;
+	private Date datePosted;
+	private Integer score;
+	//private ArrayList<Comments> childrenComments;
+	
+	/**
+	 *  Computer built setters and getters
+	 *  */
+	public String getBodyText() {
+		return bodyText;
+	}
+	public void setBodyText(String bodyText) {
+		this.bodyText = bodyText;
+	}
+	public Location getLocation() {
+		return location;
+	}
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+	public Bitmap getPicture() {
+		return picture;
+	}
+	public void setPicture(Bitmap picture) {
+		this.picture = picture;
+	}
+	public UserModel getPostedBy() {
+		return postedBy;
+	}
+	public void setPostedBy(UserModel postedBy) {
+		this.postedBy = postedBy;
+	}
+	public Date getDatePosted() {
+		return datePosted;
+	}
+	public void setDatePosted(Date datePosted) {
+		this.datePosted = datePosted;
+	}
+	public Integer getScore() {
+		return score;
+	}
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+}
