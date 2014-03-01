@@ -12,10 +12,10 @@ public class PostModel {
 	private UserModel postedBy;
 	private Date datePosted;
 	private Integer score;
-	//private ArrayList<Comments> childrenComments;
+	private ArrayList<CommentModel> childrenComments;
 	
 	/**
-	 *  Computer built setters and getters
+	 *  Auto generated setters and getters
 	 *  */
 	public String getBodyText() {
 		return bodyText;
@@ -53,4 +53,15 @@ public class PostModel {
 	public void setScore(Integer score) {
 		this.score = score;
 	}
+	public ArrayList<CommentModel> getChildrenComments() {
+		return childrenComments;
+	}
+	public void setChildrenComments(ArrayList<CommentModel> childrenComments) {
+		this.childrenComments = childrenComments;
+	}
+	
+	/**
+	 * end of auto generated setters and getters
+	 */
+	
 }
