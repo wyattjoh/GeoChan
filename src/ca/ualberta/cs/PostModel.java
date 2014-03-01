@@ -2,6 +2,7 @@ package ca.ualberta.cs;
 
 import java.util.ArrayList;
 import java.util.Date;
+
 import android.graphics.Bitmap;
 import android.location.Location;
 
@@ -13,6 +14,20 @@ public class PostModel {
 	private Date datePosted;
 	private Integer score;
 	private ArrayList<CommentModel> childrenComments;
+	
+	public PostModel(){
+		this.postedBy = new UserModel("default");
+		this.datePosted = new Date();
+		this.score = 0;
+		
+	}
+	
+	public PostModel(UserModel user){
+		this.postedBy = user;
+		this.datePosted = new Date();
+		this.score = 0;
+	}
+	
 	
 	/**
 	 *  Auto generated setters and getters
