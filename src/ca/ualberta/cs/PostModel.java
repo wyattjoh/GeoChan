@@ -15,17 +15,23 @@ public class PostModel {
 	private Integer score;
 	private ArrayList<CommentModel> childrenComments;
 	
+	/**
+	 * Constructors
+	 */
 	public PostModel(){
 		this.postedBy = new UserModel("default");
 		this.datePosted = new Date();
 		this.score = 0;
-		
+		this.picture = null;
+		this.childrenComments = null;
 	}
 	
-	public PostModel(UserModel user){
-		this.postedBy = user;
+	public PostModel(UserModel theUser){
+		this.postedBy = theUser;
 		this.datePosted = new Date();
 		this.score = 0;
+		this.picture = null;
+		this.childrenComments = null;
 	}
 	
 	

@@ -3,6 +3,21 @@ package ca.ualberta.cs;
 public class TopicModel extends PostModel {
 	private String title;
 
+	/**
+	 * Constructors
+	 */
+	public TopicModel(){
+		super();
+		this.title = "Default title";
+	}
+	
+	public TopicModel(UserModel theUser) {
+		super(theUser); 
+	}
+	
+	/**
+	 * auto generated setters and getters
+	 */
 	public String getTitle() {
 		return title;
 	}
