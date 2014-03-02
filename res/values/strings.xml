@@ -9,7 +9,9 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="prompt_username">Username</string>
+    <string name="login">Login</string>
     <string name="title_activity_main_login">MainLogin</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="new_post">NEW</string>
 
 </resources>
