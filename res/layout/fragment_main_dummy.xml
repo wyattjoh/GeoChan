@@ -36,7 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/userNameText"
-        android:layout_centerHorizontal="true" >
+        android:layout_centerHorizontal="true"
+        tools:listitem="@android:layout/simple_expandable_list_item_2" >
 
     </ListView>
 

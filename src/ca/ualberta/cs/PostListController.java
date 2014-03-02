@@ -14,4 +14,21 @@ public class PostListController {
 	public static ArrayList<PostModel> getList(){	
 		return null;
 	}
+
+	public static ArrayList<TopicModel> createTopicList(){
+		// init array list
+		ArrayList<TopicModel> theModelList = new ArrayList<TopicModel>();
+		// init topic model
+		TopicModel theTopic = new TopicModel();
+		
+		// populate topic with test entries
+		theTopic.setBodyText("Test1");
+		theModelList.add(theTopic);
+		theTopic.setBodyText("Test2");
+		theModelList.add(theTopic);
+		theTopic.setBodyText("Test3");
+		theModelList.add(theTopic);
+		
+		return theModelList;
+	}
 }
