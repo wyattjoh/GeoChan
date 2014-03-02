@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import ca.ualberta.cs.CommentModel;
 import ca.ualberta.cs.MainActivity;
 import ca.ualberta.cs.PostModel;
+import ca.ualberta.cs.TopicModel;
 import ca.ualberta.cs.UserModel;
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -31,13 +32,36 @@ public class PostModelTest extends
 
 	public static ArrayList<CommentModel> createCommentList() {
 		// init array list
-		ArrayList<CommentModel> modelList = new ArrayList<CommentModel>();
+		ArrayList<CommentModel> theModelList = new ArrayList<CommentModel>();
 
-		// populate array list with comments
-		CommentModel comment = new CommentModel();
+		// populate an array list with comments
+		CommentModel theComment = new CommentModel();
 
-		modelList.add(comment);
+		// change text for each comment posted by the same user
+		theComment.setBodyText("Test1");
+		theModelList.add(theComment);
+		theComment.setBodyText("Test2");
+		theModelList.add(theComment);
+		theComment.setBodyText("Test3");
+		theModelList.add(theComment);
 
-		return modelList;
+		return theModelList;
+	}
+	
+	public static ArrayList<TopicModel> createTopicList(){
+		// init array list
+		ArrayList<TopicModel> theModelList = new ArrayList<TopicModel>();
+		// init topic model
+		TopicModel theTopic = new TopicModel();
+		
+		// populate topic with test entries
+		theTopic.setBodyText("Test1");
+		theModelList.add(theTopic);
+		theTopic.setBodyText("Test2");
+		theModelList.add(theTopic);
+		theTopic.setBodyText("Test3");
+		theModelList.add(theTopic);
+		
+		return theModelList;
 	}
 }

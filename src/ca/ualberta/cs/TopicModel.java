@@ -8,7 +8,7 @@ public class TopicModel extends PostModel {
 	 */
 	public TopicModel(){
 		super();
-		this.title = "Default title";
+		this.title = "Default Title";
 	}
 	
 	public TopicModel(UserModel theUser) {
