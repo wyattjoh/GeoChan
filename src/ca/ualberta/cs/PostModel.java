@@ -34,7 +34,21 @@ public class PostModel {
 		this.childrenComments = null;
 	}
 	
+	public void incrementScore(){
+		this.score += 1;
+	}
 	
+	public void decrementScore(){
+		this.score -= 1;
+	}
+	
+	public boolean hasPicture(){
+		if (picture != null){
+			return true;
+		}
+		return false;
+		
+	}
 	/**
 	 *  Auto generated setters and getters
 	 *  */
@@ -80,7 +94,6 @@ public class PostModel {
 	public void setChildrenComments(ArrayList<CommentModel> childrenComments) {
 		this.childrenComments = childrenComments;
 	}
-	
 	/**
 	 * end of auto generated setters and getters
 	 */

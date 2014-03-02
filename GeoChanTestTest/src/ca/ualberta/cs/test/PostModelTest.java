@@ -1,7 +1,6 @@
 package ca.ualberta.cs.test;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import ca.ualberta.cs.CommentModel;
 import ca.ualberta.cs.MainActivity;
@@ -22,6 +21,12 @@ public class PostModelTest extends
 
 		assertNotNull("Built post model isn't null", postModel);
 		assertEquals("Post user is assigned", user, postModel.getPostedBy());
+		
+		postModel.incrementScore();
+		assertEquals("Increment score test", postModel.getScore(), Integer.getInteger("1"));
+		
+		postModel.decrementScore();
+		assertEquals("Descrement score test", postModel.getScore(), Integer.getInteger("0"));
 	}
 
 	public static ArrayList<CommentModel> createCommentList() {
