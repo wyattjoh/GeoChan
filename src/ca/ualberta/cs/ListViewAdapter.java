@@ -60,6 +60,12 @@ class ListViewAdapter extends BaseAdapter {
 	public String getFormatedData(int thePosition){
 		String theUserName = data.get(thePosition).getPostedBy().getUserName();
 		String thePostScore = data.get(thePosition).getScore().toString();
-		return "Score:" + thePostScore + " Posted By:" + theUserName;	
+		/*
+		Integer theReplyCount = data.get(thePosition).getChildrenComments().size();
+		if (theReplyCount.equals(null)) {
+			theReplyCount = 0;
+		}
+		*/
+		return "Score:" + thePostScore + " Posted By:" + theUserName + " Replies:" + 0;	
 	}
 }
