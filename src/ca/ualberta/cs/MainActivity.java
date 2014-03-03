@@ -35,6 +35,10 @@ public class MainActivity extends FragmentActivity {
 	 */
 	ViewPager mViewPager;
 
+	
+	/**
+	 * This is where we do onCreate stuff
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,6 +52,11 @@ public class MainActivity extends FragmentActivity {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+		
+		/*
+		ListView listView = (ListView) findViewById(R.id.postListView);
+		listView.setAdapter(new ListViewAdapter(this, new String [] {"data1", "data2"}));
+		*/
 	}
 
 	@Override

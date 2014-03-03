@@ -13,5 +13,7 @@
     <string name="title_activity_main_login">MainLogin</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="new_post">NEW</string>
+    <string name="list_text">Text</string>
+    <string name="list_header">Header</string>
 
 </resources>
