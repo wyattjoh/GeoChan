@@ -22,11 +22,19 @@ public class PostListController {
 		TopicModel theTopic = new TopicModel();
 		
 		// populate topic with test entries
-		theTopic.setBodyText("Test1");
+		theTopic.setTitle("TestTitle1");
+		theTopic.setBodyText("TestText1");
+		theTopic.setScore(1);
 		theModelList.add(theTopic);
-		theTopic.setBodyText("Test2");
+		
+		theTopic.setTitle("TestTitle2");
+		theTopic.setBodyText("TestText2");
+		theTopic.setScore(2);
 		theModelList.add(theTopic);
-		theTopic.setBodyText("Test3");
+		
+		theTopic.setTitle("TestTitle3");
+		theTopic.setBodyText("TestText3");
+		theTopic.setScore(3);
 		theModelList.add(theTopic);
 		
 		return theModelList;

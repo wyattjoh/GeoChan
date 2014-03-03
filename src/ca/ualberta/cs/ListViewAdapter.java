@@ -1,5 +1,7 @@
 package ca.ualberta.cs;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +12,10 @@ import android.widget.TextView;
 class ListViewAdapter extends BaseAdapter {
 
 	Context context;
-	String[] data;
+	ArrayList<TopicModel> data;
 	private static LayoutInflater inflater = null;
 
-	public ListViewAdapter(Context context, String[] data) {
+	public ListViewAdapter(Context context, ArrayList<TopicModel> data) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		this.data = data;
@@ -24,13 +26,13 @@ class ListViewAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return data.length;
+		return data.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return data[position];
+		return data.get(position);
 	}
 
 	@Override
@@ -40,13 +42,24 @@ class ListViewAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(int thePosition, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		View vi = convertView;
 		if (vi == null)
 			vi = inflater.inflate(R.layout.row, null);
+		if (data.get(thePosition).getClass() == TopicModel.class){
+			TextView header = (TextView) vi.findViewById(R.id.header);
+			header.setText( data.get(thePosition).getTitle());
+		}
+		
 		TextView text = (TextView) vi.findViewById(R.id.text);
-		text.setText(data[position]);
+		text.setText(getFormatedData(thePosition));
 		return vi;
+	}
+	
+	public String getFormatedData(int thePosition){
+		String theUserName = data.get(thePosition).getPostedBy().getUserName();
+		String thePostScore = data.get(thePosition).getScore().toString();
+		return "Score:" + thePostScore + " Posted By:" + theUserName;	
 	}
 }

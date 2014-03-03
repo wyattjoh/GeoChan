@@ -137,7 +137,7 @@ public class MainActivity extends FragmentActivity {
 			 *  set to custom listView adapter
 			 */
 			ListView listView = (ListView) getActivity().findViewById(R.id.postListView);
-			ListViewAdapter listAdapter = new ListViewAdapter(getActivity(), new String [] {"data1", "data2"});
+			ListViewAdapter listAdapter = new ListViewAdapter(getActivity(), PostListController.createTopicList());
 			listView.setAdapter(listAdapter);
 		}
 	}

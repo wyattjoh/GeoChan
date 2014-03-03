@@ -19,7 +19,7 @@ public class PostModel {
 	 * Constructors
 	 */
 	public PostModel(){
-		this.postedBy = new UserModel("default");
+		this.postedBy = new UserModel("DefaultUser");
 		this.datePosted = new Date();
 		this.score = 0;
 		this.picture = null;
