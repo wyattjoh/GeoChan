@@ -3,6 +3,7 @@ package ca.ualberta.cs;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,16 +32,12 @@ public class MainActivity extends FragmentActivity {
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
-
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
 
 	
-	/**
-	 * This is where we do onCreate stuff
-	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,11 +51,6 @@ public class MainActivity extends FragmentActivity {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
-		
-		/*
-		ListView listView = (ListView) findViewById(R.id.postListView);
-		listView.setAdapter(new ListViewAdapter(this, new String [] {"data1", "data2"}));
-		*/
 	}
 
 	@Override
@@ -131,8 +125,20 @@ public class MainActivity extends FragmentActivity {
 			TextView dummyTextView = (TextView) rootView
 					.findViewById(R.id.section_label);
 			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
+					ARG_SECTION_NUMBER)));			
 			return rootView;
+		}
+		
+		@Override
+		public void onActivityCreated(Bundle savedInstanceState) {
+			super.onActivityCreated(savedInstanceState);
+			
+			/**
+			 *  set to custom listView adapter
+			 */
+			ListView listView = (ListView) getActivity().findViewById(R.id.postListView);
+			ListViewAdapter listAdapter = new ListViewAdapter(getActivity(), new String [] {"data1", "data2"});
+			listView.setAdapter(listAdapter);
 		}
 	}
 
@@ -146,9 +152,9 @@ public class MainActivity extends FragmentActivity {
 		// TODO Auto-generated method stub
 		super.onStart();
 
-		loginFlow();
+		loginFlow();		
 	}
-
+	
 	private void loginFlow() {
 		UserController userController = UserController.shared();
 
@@ -175,5 +181,4 @@ public class MainActivity extends FragmentActivity {
 			}
 		}
 	}
-
 }
