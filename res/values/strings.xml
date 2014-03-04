@@ -20,5 +20,6 @@
     <string name="topic_prompt">Topic Name</string>
     <string name="post_buton">Post</string>
     <string name="location_prompt">Edit Location</string>
+    <string name="current_location">Location</string>
 
 </resources>

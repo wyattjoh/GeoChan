@@ -16,52 +16,66 @@
         android:layout_alignParentTop="true"
         android:text="@string/new_post" />
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompletePostView"
+    <ImageButton
+        android:id="@+id/imageButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/textView1"
-        android:ems="10"
-        android:hint="@string/body_text_prompt" >
-
-        <requestFocus />
-    </AutoCompleteTextView>
-
-    <ImageView
-        android:id="@+id/imagePostView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/autoCompletePostView"
+        android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/textView1"
+        android:layout_marginRight="22dp"
         android:src="@android:drawable/ic_menu_gallery" />
-
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTopicView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/autoCompletePostView"
-        android:layout_alignLeft="@+id/autoCompletePostView"
-        android:ems="10"
-        android:hint="@string/topic_prompt" />
 
     <Button
         android:id="@+id/postButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/autoCompletePostView"
+        android:layout_alignRight="@+id/imageButton1"
+        android:layout_marginBottom="48dp"
         android:text="@string/post_buton" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompletePostView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageButton1"
+        android:layout_marginTop="96dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:ems="10"
+        android:hint="@string/body_text_prompt" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTopicView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/autoCompletePostView"
+        android:layout_alignRight="@+id/autoCompletePostView"
+        android:layout_marginBottom="46dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:ems="10"
+        android:hint="@string/topic_prompt" >
+
+        <requestFocus />
+    </AutoCompleteTextView>
 
     <EditText
         android:id="@+id/locationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/postButton"
-        android:layout_marginBottom="53dp"
-        android:layout_toLeftOf="@+id/postButton"
+        android:layout_alignRight="@+id/autoCompletePostView"
+        android:layout_below="@+id/autoCompletePostView"
+        android:layout_marginTop="74dp"
         android:layout_toRightOf="@+id/textView1"
-        android:hint="@string/location_prompt"
-        android:ems="10" />
+        android:ems="10"
+        android:hint="@string/location_prompt" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/locationText"
+        android:layout_marginBottom="38dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:text="@string/current_location" />
 
 </RelativeLayout>
