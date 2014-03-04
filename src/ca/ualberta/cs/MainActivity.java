@@ -38,7 +38,6 @@ public class MainActivity extends FragmentActivity {
 	 */
 	ViewPager mViewPager;
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -126,19 +125,21 @@ public class MainActivity extends FragmentActivity {
 			TextView dummyTextView = (TextView) rootView
 					.findViewById(R.id.section_label);
 			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));			
+					ARG_SECTION_NUMBER)));
 			return rootView;
 		}
-		
+
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
-			
+
 			/**
-			 *  set to custom listView adapter
+			 * set custom listView adapter
 			 */
-			ListView listView = (ListView) getActivity().findViewById(R.id.postListView);
-			ListViewAdapter listAdapter = new ListViewAdapter(getActivity(), PostListController.createTopicList());
+			ListView listView = (ListView) getActivity().findViewById(
+					R.id.postListView);
+			ListViewAdapter listAdapter = new ListViewAdapter(getActivity(),
+					PostListController.createTopicList());
 			listView.setAdapter(listAdapter);
 		}
 	}
@@ -148,15 +149,15 @@ public class MainActivity extends FragmentActivity {
 	 * 
 	 * @see android.support.v4.app.FragmentActivity#onStart()
 	 */
-	
+
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
 
-		loginFlow();		
+		loginFlow();
 	}
-	
+
 	private void loginFlow() {
 		UserController userController = UserController.shared();
 
@@ -182,25 +183,23 @@ public class MainActivity extends FragmentActivity {
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.action_new_post:
-	            newPost();
-	            return true;
-	        /*
-	        case R.id.action_settings:
-	            openSettings();
-	            return true;
-	        */
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_new_post:
+			newPost();
+			return true;
+			/*
+			 * case R.id.action_settings: openSettings(); return true;
+			 */
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
-	
-	protected void newPost(){
+
+	protected void newPost() {
 		Intent intent = new Intent(this, PostActivity.class);
 		startActivityForResult(intent, 1);
 	}

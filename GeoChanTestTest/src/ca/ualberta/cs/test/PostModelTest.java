@@ -1,11 +1,7 @@
 package ca.ualberta.cs.test;
 
-import java.util.ArrayList;
-
-import ca.ualberta.cs.CommentModel;
 import ca.ualberta.cs.MainActivity;
 import ca.ualberta.cs.PostModel;
-import ca.ualberta.cs.TopicModel;
 import ca.ualberta.cs.UserModel;
 import android.test.ActivityInstrumentationTestCase2;
 
