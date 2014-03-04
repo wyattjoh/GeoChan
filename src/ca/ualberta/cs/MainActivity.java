@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -147,6 +148,7 @@ public class MainActivity extends FragmentActivity {
 	 * 
 	 * @see android.support.v4.app.FragmentActivity#onStart()
 	 */
+	
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -162,7 +164,6 @@ public class MainActivity extends FragmentActivity {
 			// continue
 		} else {
 			Intent intent = new Intent(this, LoginActivity.class);
-
 			startActivityForResult(intent, 1);
 		}
 	}
@@ -180,5 +181,27 @@ public class MainActivity extends FragmentActivity {
 				loginFlow();
 			}
 		}
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle presses on the action bar items
+	    switch (item.getItemId()) {
+	        case R.id.action_new_post:
+	            newPost();
+	            return true;
+	        /*
+	        case R.id.action_settings:
+	            openSettings();
+	            return true;
+	        */
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	protected void newPost(){
+		Intent intent = new Intent(this, PostActivity.class);
+		startActivityForResult(intent, 1);
 	}
 }

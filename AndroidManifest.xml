@@ -30,6 +30,10 @@
             android:name="ca.ualberta.cs.PostActivity"
             android:label="@string/title_activity_post" >
         </activity>
+        <activity
+            android:name="ca.ualberta.cs.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>
