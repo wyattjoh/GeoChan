@@ -22,7 +22,7 @@ class ListViewAdapter extends BaseAdapter {
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
-
+	
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -44,7 +44,6 @@ class ListViewAdapter extends BaseAdapter {
 	@Override
 	public View getView(int thePosition, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		System.out.println("getView:"+thePosition);
 		View vi = convertView;
 		if (vi == null)
 			vi = inflater.inflate(R.layout.row, null);

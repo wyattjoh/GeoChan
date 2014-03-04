@@ -15,5 +15,10 @@
     <string name="new_post">NEW</string>
     <string name="list_text">Text</string>
     <string name="list_header">Header</string>
+    <string name="title_activity_post">PostActivity</string>
+    <string name="body_text_prompt">Post Text</string>
+    <string name="topic_prompt">Topic Name</string>
+    <string name="post_buton">Post</string>
+    <string name="location_prompt">Edit Location</string>
 
 </resources>
