@@ -126,6 +126,16 @@ public class MainActivity extends FragmentActivity {
 					.findViewById(R.id.section_label);
 			dummyTextView.setText(Integer.toString(getArguments().getInt(
 					ARG_SECTION_NUMBER)));
+			int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+			switch (sectionNumber) {
+			case 1:
+				ListView listView = (ListView) rootView
+						.findViewById(R.id.postListView);
+				ListViewAdapter listAdapter = new ListViewAdapter(
+						getActivity(), PostListController.createTopicList());
+				listView.setAdapter(listAdapter);
+			}
+
 			return rootView;
 		}
 
@@ -136,11 +146,7 @@ public class MainActivity extends FragmentActivity {
 			/**
 			 * set custom listView adapter
 			 */
-			ListView listView = (ListView) getActivity().findViewById(
-					R.id.postListView);
-			ListViewAdapter listAdapter = new ListViewAdapter(getActivity(),
-					PostListController.createTopicList());
-			listView.setAdapter(listAdapter);
+
 		}
 	}
 
@@ -156,8 +162,9 @@ public class MainActivity extends FragmentActivity {
 		super.onStart();
 
 		loginFlow();
-		
-		//DummySectionFragment fragment = (DummySectionFragment) getFragmentManager().findFragmentById(id.);
+
+		// DummySectionFragment fragment = (DummySectionFragment)
+		// getFragmentManager().findFragmentById(id.);
 	}
 
 	private void loginFlow() {
