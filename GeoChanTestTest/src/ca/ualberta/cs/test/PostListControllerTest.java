@@ -16,7 +16,12 @@ public class PostListControllerTest extends ActivityInstrumentationTestCase2<Mai
 	}
 	
 	public void testControllerGetList(){
-		ArrayList<PostModel> commentList = PostListController.getList();
+		ArrayList<Object> commentList = PostListController.getList();
 		assertNotNull(commentList);
+	}
+	
+	public void testControllerCreateTopicList(){
+		ArrayList<TopicModel> model = PostListController.createTopicList();
+		assertNotSame("make sure objects are not all the same", model.get(0), model.get(1));
 	}
 }
