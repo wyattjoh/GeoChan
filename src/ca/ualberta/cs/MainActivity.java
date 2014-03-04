@@ -156,6 +156,8 @@ public class MainActivity extends FragmentActivity {
 		super.onStart();
 
 		loginFlow();
+		
+		//DummySectionFragment fragment = (DummySectionFragment) getFragmentManager().findFragmentById(id.);
 	}
 
 	private void loginFlow() {
