@@ -120,13 +120,19 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			
+			// random generated code...
 			View rootView = inflater.inflate(R.layout.fragment_main_dummy,
 					container, false);
 			TextView dummyTextView = (TextView) rootView
 					.findViewById(R.id.section_label);
 			dummyTextView.setText(Integer.toString(getArguments().getInt(
 					ARG_SECTION_NUMBER)));
+			
+			// get fragment number
 			int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+			
+			// assign list views to fragments
 			switch (sectionNumber) {
 			case 1:
 				ListView listView = (ListView) rootView
