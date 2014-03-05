@@ -1,5 +1,6 @@
 package ca.ualberta.cs;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -120,7 +121,7 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			
+
 			// random generated code...
 			View rootView = inflater.inflate(R.layout.fragment_main_dummy,
 					container, false);
@@ -128,31 +129,26 @@ public class MainActivity extends FragmentActivity {
 					.findViewById(R.id.section_label);
 			dummyTextView.setText(Integer.toString(getArguments().getInt(
 					ARG_SECTION_NUMBER)));
-			
+
 			// get fragment number
 			int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-			
+
 			// assign list views to fragments
 			switch (sectionNumber) {
 			case 1:
-				ListView listView = (ListView) rootView
-						.findViewById(R.id.postListView);
-				ListViewAdapter listAdapter = new ListViewAdapter(
-						getActivity(), PostListController.createTopicList());
-				listView.setAdapter(listAdapter);
+				populateFragment(rootView, PostListController.createTopicList());
 			}
 
 			return rootView;
 		}
 
-		@Override
-		public void onActivityCreated(Bundle savedInstanceState) {
-			super.onActivityCreated(savedInstanceState);
-
-			/**
-			 * set custom listView adapter
-			 */
-
+		public void populateFragment(View theRootView,
+				ArrayList<TopicModel> theTopicList) {
+			ListView listView = (ListView) theRootView
+					.findViewById(R.id.postListView);
+			ListViewAdapter listAdapter = new ListViewAdapter(getActivity(),
+					PostListController.createTopicList());
+			listView.setAdapter(listAdapter);
 		}
 	}
 
