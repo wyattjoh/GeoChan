@@ -6,7 +6,7 @@ import java.util.Date;
 import android.graphics.Bitmap;
 import android.location.Location;
 
-public class PostModel {
+public abstract class PostModel {
 	private String bodyText;
 	private Location location;
 	private Bitmap picture;
