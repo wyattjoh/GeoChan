@@ -13,7 +13,6 @@ import android.os.AsyncTask;
  */
 public class ElasticSearchProviderService extends
 		AsyncTask<Integer, Integer, Long> {
-	public static Integer 
 
 	/* (non-Javadoc)
 	 * @see android.os.AsyncTask#doInBackground(Params[])
