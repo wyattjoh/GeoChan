@@ -1,5 +1,10 @@
-package ca.ualberta.cs;
+package ca.ualberta.cs.views;
 
+import ca.ualberta.cs.R;
+import ca.ualberta.cs.R.id;
+import ca.ualberta.cs.R.layout;
+import ca.ualberta.cs.R.menu;
+import ca.ualberta.cs.controllers.UserController;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

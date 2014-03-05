@@ -1,7 +1,16 @@
-package ca.ualberta.cs;
+package ca.ualberta.cs.views;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import ca.ualberta.cs.R;
+import ca.ualberta.cs.R.id;
+import ca.ualberta.cs.R.layout;
+import ca.ualberta.cs.R.menu;
+import ca.ualberta.cs.R.string;
+import ca.ualberta.cs.controllers.PostListController;
+import ca.ualberta.cs.controllers.UserController;
+import ca.ualberta.cs.models.TopicModel;
 
 import android.app.Activity;
 import android.content.Context;
@@ -146,7 +155,7 @@ public class MainActivity extends FragmentActivity {
 				ArrayList<TopicModel> theTopicList) {
 			ListView listView = (ListView) theRootView
 					.findViewById(R.id.postListView);
-			ListViewAdapter listAdapter = new ListViewAdapter(getActivity(),
+			PostListAdapter listAdapter = new PostListAdapter(getActivity(),
 					PostListController.createTopicList());
 			listView.setAdapter(listAdapter);
 		}

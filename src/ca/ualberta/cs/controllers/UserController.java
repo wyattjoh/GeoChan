@@ -1,7 +1,9 @@
 /**
  * 
  */
-package ca.ualberta.cs;
+package ca.ualberta.cs.controllers;
+
+import ca.ualberta.cs.models.UserModel;
 
 /**
  * @author wyatt

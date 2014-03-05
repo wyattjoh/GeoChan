@@ -1,4 +1,4 @@
-package ca.ualberta.cs;
+package ca.ualberta.cs.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -18,6 +18,10 @@ import android.preference.RingtonePreference;
 import android.text.TextUtils;
 
 import java.util.List;
+
+import ca.ualberta.cs.R;
+import ca.ualberta.cs.R.string;
+import ca.ualberta.cs.R.xml;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On

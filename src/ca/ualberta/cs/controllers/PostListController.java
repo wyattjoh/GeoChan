@@ -1,6 +1,8 @@
-package ca.ualberta.cs;
+package ca.ualberta.cs.controllers;
 
 import java.util.ArrayList;
+
+import ca.ualberta.cs.models.TopicModel;
 
 public class PostListController {
 

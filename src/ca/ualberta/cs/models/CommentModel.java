@@ -1,4 +1,4 @@
-package ca.ualberta.cs;
+package ca.ualberta.cs.models;
 
 public class CommentModel extends PostModel {
 

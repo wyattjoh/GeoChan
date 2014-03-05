@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ca.ualberta.cs;
+package ca.ualberta.cs.models;
 
 import android.location.Location;
 

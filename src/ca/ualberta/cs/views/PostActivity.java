@@ -1,5 +1,8 @@
-package ca.ualberta.cs;
+package ca.ualberta.cs.views;
 
+import ca.ualberta.cs.R;
+import ca.ualberta.cs.R.layout;
+import ca.ualberta.cs.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;

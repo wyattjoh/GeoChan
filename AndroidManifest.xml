@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="ca.ualberta.cs.MainActivity"
+            android:name="ca.ualberta.cs.views.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,15 +23,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ca.ualberta.cs.LoginActivity"
+            android:ca.ualberta.cs.views.LoginActivitytivity"
             android:label="@string/title_activity_login" >
         </activity>
         <activity
-            android:name="ca.ualberta.cs.PostActivity"
+            anca.ualberta.cs.views.PostActivityPostActivity"
             android:label="@string/title_activity_post" >
         </activity>
         <activity
-            android:name="ca.ualberta.cs.SettingsActivity"
+        ca.ualberta.cs.views.SettingsActivitys.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
     </application>

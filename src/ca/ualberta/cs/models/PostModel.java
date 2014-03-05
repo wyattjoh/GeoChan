@@ -1,4 +1,4 @@
-package ca.ualberta.cs;
+package ca.ualberta.cs.models;
 
 import java.util.ArrayList;
 import java.util.Date;

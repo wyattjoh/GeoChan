@@ -1,6 +1,11 @@
-package ca.ualberta.cs;
+package ca.ualberta.cs.views;
 
 import java.util.ArrayList;
+
+import ca.ualberta.cs.R;
+import ca.ualberta.cs.R.id;
+import ca.ualberta.cs.R.layout;
+import ca.ualberta.cs.models.TopicModel;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,13 +14,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-class ListViewAdapter extends BaseAdapter {
+class PostListAdapter extends BaseAdapter {
 
 	Context context;
 	ArrayList<TopicModel> data;
 	private static LayoutInflater inflater = null;
 
-	public ListViewAdapter(Context context, ArrayList<TopicModel> data) {
+	public PostListAdapter(Context context, ArrayList<TopicModel> data) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		this.data = data;
