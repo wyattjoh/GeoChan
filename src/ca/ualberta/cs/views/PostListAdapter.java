@@ -63,17 +63,21 @@ class PostListAdapter extends BaseAdapter {
 		return vi;
 	}
 	
+	// format the data for the list view elements
 	public String getFormatedData(int thePosition){
+		//get user name & score
 		String theUserName = data.get(thePosition).getPostedBy().getUserName();
 		String thePostScore = data.get(thePosition).getScore().toString();
 		
+		// get the number of replies
 		ArrayList<CommentModel> theComments = data.get(thePosition).getChildrenComments();
 		Integer theReplyCount = 0;
-		
+		// check if any, might be null
 		if (theComments != null) {
 			theReplyCount = theComments.size();
 		}
 		
+		// return formated string
 		return "Score:" + thePostScore + " Posted By:" + theUserName + " Replies:" + theReplyCount;	
 	}
 }
