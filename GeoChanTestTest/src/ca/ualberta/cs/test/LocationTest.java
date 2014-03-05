@@ -1,7 +1,7 @@
 package ca.ualberta.cs.test;
 
-import ca.ualberta.cs.MainActivity;
 import android.test.ActivityInstrumentationTestCase2;
+import ca.ualberta.cs.views.MainActivity;
 
 public class LocationTest extends ActivityInstrumentationTestCase2<MainActivity> {
 

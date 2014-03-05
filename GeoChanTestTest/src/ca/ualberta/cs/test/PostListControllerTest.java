@@ -3,11 +3,9 @@ package ca.ualberta.cs.test;
 import java.util.ArrayList;
 
 import android.test.ActivityInstrumentationTestCase2;
-import ca.ualberta.cs.CommentModel;
-import ca.ualberta.cs.MainActivity;
-import ca.ualberta.cs.PostListController;
-import ca.ualberta.cs.PostModel;
-import ca.ualberta.cs.TopicModel;
+import ca.ualberta.cs.controllers.PostListController;
+import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.views.MainActivity;
 
 public class PostListControllerTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
