@@ -16,9 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.R.id;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.controllers.UserController;
 import ca.ualberta.cs.models.TopicModel;
@@ -134,13 +137,14 @@ public class MainActivity extends FragmentActivity {
 			int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
 			switch (sectionNumber) {
-				case 1:
-					populateFragment(rootView, PostListController.createTopicList());
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
+			case 1:
+				populateFragment(rootView, PostListController.createTopicList());
+				setListener(rootView);
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
 			}
 
 			return rootView;
@@ -153,6 +157,21 @@ public class MainActivity extends FragmentActivity {
 			TopicListAdapter listAdapter = new TopicListAdapter(getActivity(),
 					PostListController.createTopicList());
 			listView.setAdapter(listAdapter);
+		}
+
+		/**\
+		 * @param theRootView
+		 * set element on click listener
+		 */
+		public void setListener(View theRootView){
+			final ListView postList = (ListView) theRootView.findViewById(R.id.postListView);
+			postList.setOnItemClickListener(new OnItemClickListener() {
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					Object o = postList.getItemAtPosition(position);
+					System.out.println(o.getClass().toString());
+				}
+			});
 		}
 	}
 
