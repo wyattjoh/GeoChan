@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.R.id;
 import ca.ualberta.cs.R.layout;
+import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.TopicModel;
 
 import android.content.Context;
@@ -65,12 +66,14 @@ class PostListAdapter extends BaseAdapter {
 	public String getFormatedData(int thePosition){
 		String theUserName = data.get(thePosition).getPostedBy().getUserName();
 		String thePostScore = data.get(thePosition).getScore().toString();
-		/*
-		Integer theReplyCount = data.get(thePosition).getChildrenComments().size();
-		if (theReplyCount.equals(null)) {
-			theReplyCount = 0;
+		
+		ArrayList<CommentModel> theComments = data.get(thePosition).getChildrenComments();
+		Integer theReplyCount = 0;
+		
+		if (theComments != null) {
+			theReplyCount = theComments.size();
 		}
-		*/
-		return "Score:" + thePostScore + " Posted By:" + theUserName + " Replies:" + 0;	
+		
+		return "Score:" + thePostScore + " Posted By:" + theUserName + " Replies:" + theReplyCount;	
 	}
 }
