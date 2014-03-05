@@ -150,7 +150,7 @@ public class MainActivity extends FragmentActivity {
 				ArrayList<TopicModel> theTopicList) {
 			ListView listView = (ListView) theRootView
 					.findViewById(R.id.postListView);
-			PostListAdapter listAdapter = new PostListAdapter(getActivity(),
+			TopicListAdapter listAdapter = new TopicListAdapter(getActivity(),
 					PostListController.createTopicList());
 			listView.setAdapter(listAdapter);
 		}

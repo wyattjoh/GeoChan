@@ -2,26 +2,30 @@ package ca.ualberta.cs.views;
 
 import java.util.ArrayList;
 
-import ca.ualberta.cs.R;
-import ca.ualberta.cs.R.id;
-import ca.ualberta.cs.R.layout;
-import ca.ualberta.cs.models.CommentModel;
-import ca.ualberta.cs.models.TopicModel;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import ca.ualberta.cs.R;
+import ca.ualberta.cs.models.CommentModel;
+import ca.ualberta.cs.models.TopicModel;
 
-class PostListAdapter extends BaseAdapter {
+/**
+ * 
+ * @author vincent
+ *
+ * taken from stackoverflow @ http://stackoverflow.com/questions/8166497/custom-adapter-for-list-view
+ */
+
+class TopicListAdapter extends BaseAdapter {
 
 	Context context;
 	ArrayList<TopicModel> data;
 	private static LayoutInflater inflater = null;
 
-	public PostListAdapter(Context context, ArrayList<TopicModel> data) {
+	public TopicListAdapter(Context context, ArrayList<TopicModel> data) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		this.data = data;
