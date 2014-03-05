@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ca.ualberta.cs.views.LoginActivitytivity"
+            android:name="ca.ualberta.cs.views.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
         <activity
-           android:name="ca.ualberta.cs.views.PostActivityPostActivity"
+           android:name="ca.ualberta.cs.views.PostActivity"
             android:label="@string/title_activity_post" >
         </activity>
         <activity

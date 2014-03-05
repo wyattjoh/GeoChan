@@ -3,17 +3,7 @@ package ca.ualberta.cs.views;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import ca.ualberta.cs.R;
-import ca.ualberta.cs.R.id;
-import ca.ualberta.cs.R.layout;
-import ca.ualberta.cs.R.menu;
-import ca.ualberta.cs.R.string;
-import ca.ualberta.cs.controllers.PostListController;
-import ca.ualberta.cs.controllers.UserController;
-import ca.ualberta.cs.models.TopicModel;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,11 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import ca.ualberta.cs.R;
+import ca.ualberta.cs.controllers.PostListController;
+import ca.ualberta.cs.controllers.UserController;
+import ca.ualberta.cs.models.TopicModel;
 
 public class MainActivity extends FragmentActivity {
 
@@ -142,10 +133,14 @@ public class MainActivity extends FragmentActivity {
 			// get fragment number
 			int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
-			// assign list views to fragments
 			switch (sectionNumber) {
-			case 1:
-				populateFragment(rootView, PostListController.createTopicList());
+				case 1:
+					populateFragment(rootView, PostListController.createTopicList());
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
 			}
 
 			return rootView;

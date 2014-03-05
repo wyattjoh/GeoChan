@@ -1,8 +1,8 @@
 package ca.ualberta.cs.test;
 
-import ca.ualberta.cs.MainActivity;
-import ca.ualberta.cs.PostModel;
-import ca.ualberta.cs.UserModel;
+import ca.ualberta.cs.views.MainActivity;
+import ca.ualberta.cs.models.PostModel;
+import ca.ualberta.cs.models.UserModel;
 import android.test.ActivityInstrumentationTestCase2;
 
 public class PostModelTest extends
