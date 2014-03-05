@@ -22,26 +22,26 @@ public class PostModelTest extends
 		assertEquals("Post user is assigned", user, commentModel.getPostedBy());
 		
 		commentModel.incrementScore();
-		assertEquals("Increment score test", commentModel.getScore(), Integer.getInteger("1"));
+		assertEquals("Increment score test", commentModel.getScore().intValue(), 1);
 		
 		commentModel.decrementScore();
-		assertEquals("Descrement score test", commentModel.getScore(), Integer.getInteger("0"));
+		assertEquals("Descrement score test", commentModel.getScore().intValue(), 0);
 	}
 	
 	public void testTopicModel() {
 		UserModel user = new UserModel("Wyatt");
-		TopicModel postModel = new TopicModel(user);
+		TopicModel topicModel = new TopicModel(user);
 
-		assertNotNull("Built post model isn't null", postModel);
-		assertEquals("Post user is assigned", user, postModel.getPostedBy());
+		assertNotNull("Built post model isn't null", topicModel);
+		assertEquals("Post user is assigned", user, topicModel.getPostedBy());
 		
-		postModel.setTitle("Test1");
-		assertEquals("Title is equal to value set", postModel.getTitle(), "Test1");
+		topicModel.setTitle("Test1");
+		assertEquals("Title is equal to value set", topicModel.getTitle(), "Test1");
 		
-		postModel.incrementScore();
-		assertEquals("Increment score test", postModel.getScore(), Integer.getInteger("1"));
+		topicModel.incrementScore();
+		assertEquals("Increment score test", topicModel.getScore().intValue(), 1);
 		
-		postModel.decrementScore();
-		assertEquals("Descrement score test", postModel.getScore(), Integer.getInteger("0"));
+		topicModel.decrementScore();
+		assertEquals("Descrement score test", topicModel.getScore().intValue(), 0);
 	}
 }
