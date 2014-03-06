@@ -171,6 +171,7 @@ public class MainActivity extends FragmentActivity {
 						int position, long id) {
 					TopicModel model = (TopicModel) postList.getAdapter().getItem(position);
 					System.out.println(model.getTitle());
+					
 				}
 			});
 		}
