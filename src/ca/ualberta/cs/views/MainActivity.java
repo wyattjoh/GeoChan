@@ -24,6 +24,7 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.R.id;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.controllers.UserController;
+import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
 
 public class MainActivity extends FragmentActivity {
@@ -168,8 +169,8 @@ public class MainActivity extends FragmentActivity {
 			postList.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					Object o = postList.getItemAtPosition(position);
-					System.out.println(o.getClass().toString());
+					TopicModel model = (TopicModel) postList.getAdapter().getItem(position);
+					System.out.println(model.getTitle());
 				}
 			});
 		}

@@ -21,5 +21,6 @@
     <string name="post_buton">Post</string>
     <string name="location_prompt">Edit Location</string>
     <string name="current_location">Location</string>
+    <string name="title_activity_comment">CommentActivity</string>
 
 </resources>
