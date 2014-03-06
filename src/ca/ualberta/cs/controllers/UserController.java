@@ -42,7 +42,6 @@ public class UserController {
 	}
 
 	public UserModel getLoggedInUser() {
-		// TODO Auto-generated method stub
-		return null;
+		return theUser;
 	}
 }
