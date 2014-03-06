@@ -40,4 +40,9 @@ public class UserController {
 			return true;
 		}
 	}
+
+	public UserModel getLoggedInUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
