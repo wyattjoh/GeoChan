@@ -3,10 +3,12 @@ package ca.ualberta.cs.models;
 import java.util.ArrayList;
 import java.util.Date;
 
+import ca.ualberta.cs.controllers.UserController;
 import android.graphics.Bitmap;
 import android.location.Location;
 
 public abstract class PostModel {
+	private String id;
 	private String bodyText;
 	private Location location;
 	private Bitmap picture;
@@ -19,7 +21,7 @@ public abstract class PostModel {
 	 * Constructors
 	 */
 	public PostModel(){
-		this.postedBy = new UserModel("DefaultUser");
+		this.postedBy = UserController.shared().getLoggedInUser();
 		this.datePosted = new Date();
 		this.score = 0;
 		this.picture = null;
@@ -52,6 +54,12 @@ public abstract class PostModel {
 	/**
 	 *  Auto generated setters and getters
 	 *  */
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getBodyText() {
 		return bodyText;
 	}
@@ -91,8 +99,11 @@ public abstract class PostModel {
 	public ArrayList<CommentModel> getChildrenComments() {
 		return childrenComments;
 	}
-	public void setChildrenComments(ArrayList<CommentModel> childrenComments) {
-		this.childrenComments = childrenComments;
+	public void addChildComment(CommentModel theChildComment) {
+		if (this.childrenComments == null) {
+			this.childrenComments = new ArrayList<CommentModel>();
+		}
+		this.childrenComments.add(theChildComment);
 	}
 	/**
 	 * end of auto generated setters and getters
