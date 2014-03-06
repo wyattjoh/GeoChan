@@ -1,7 +1,10 @@
 package ca.ualberta.cs.views;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import com.google.gson.Gson;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -153,27 +156,58 @@ public class MainActivity extends FragmentActivity {
 
 		public void populateFragment(View theRootView,
 				ArrayList<TopicModel> theTopicList) {
+			// get title & list view adapter
 			ListView listView = (ListView) theRootView
 					.findViewById(R.id.postListView);
 			TopicListAdapter listAdapter = new TopicListAdapter(getActivity(),
 					PostListController.createTopicList());
+			
+			// set adapter
 			listView.setAdapter(listAdapter);
 		}
 
-		/**\
-		 * @param theRootView
+		/**
 		 * set element on click listener
+		 * 
+		 * @param theRootView
 		 */
-		public void setListener(View theRootView){
-			final ListView postList = (ListView) theRootView.findViewById(R.id.postListView);
+		public void setListener(final View theRootView) {
+			// get list view
+			final ListView postList = (ListView) theRootView
+					.findViewById(R.id.postListView);
+
+			// set list view listener
 			postList.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					TopicModel model = (TopicModel) postList.getAdapter().getItem(position);
+					// get the topic model object from the list view
+					TopicModel model = (TopicModel) postList.getAdapter()
+							.getItem(position);
 					System.out.println(model.getTitle());
-					
+					startCommentActivty(theRootView, model);
+
 				}
 			});
+		}
+
+		/**
+		 * start comment activity and pass the topic element as an argument
+		 * 
+		 * @param theRootView
+		 * @param theTopicModel
+		 */
+		public void startCommentActivty(View theRootView,
+				TopicModel theTopicModel) {
+			// new intent
+			Intent intent = new Intent(theRootView.getContext(), CommentActivity.class);
+
+			// make a gson object and serialize the topic
+			Gson gsonTopic = new Gson();
+			String gson = gsonTopic.toJson(theTopicModel);
+
+			// send gson topic to the activity
+			intent.putExtra("theTopicModel", gson);
+			startActivity(intent);
 		}
 	}
 
@@ -190,8 +224,6 @@ public class MainActivity extends FragmentActivity {
 
 		loginFlow();
 
-		// DummySectionFragment fragment = (DummySectionFragment)
-		// getFragmentManager().findFragmentById(id.);
 	}
 
 	private void loginFlow() {
@@ -237,6 +269,6 @@ public class MainActivity extends FragmentActivity {
 
 	protected void newPost() {
 		Intent intent = new Intent(this, PostActivity.class);
-		startActivityForResult(intent, 1);
+		startActivity(intent);
 	}
 }

@@ -1,11 +1,12 @@
 package ca.ualberta.cs.views;
 
-import ca.ualberta.cs.R;
-import ca.ualberta.cs.R.layout;
-import ca.ualberta.cs.R.menu;
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+import ca.ualberta.cs.R;
+import ca.ualberta.cs.models.TopicModel;
+
+import com.google.gson.Gson;
 
 public class CommentActivity extends Activity {
 
@@ -13,6 +14,15 @@ public class CommentActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment);
+		
+		// get gson string from intent
+		String serializedTopic =  getIntent().getStringExtra("theTopicModel");
+		Gson gsonTopic = new Gson();
+		TopicModel theTopic = gsonTopic.fromJson(serializedTopic, TopicModel.class);
+		
+		System.out.println(theTopic.getTitle());
+		
+		
 	}
 
 	@Override
