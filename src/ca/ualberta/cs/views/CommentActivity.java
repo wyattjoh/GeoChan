@@ -20,6 +20,8 @@ public class CommentActivity extends Activity {
 		Gson gsonTopic = new Gson();
 		TopicModel theTopic = gsonTopic.fromJson(serializedTopic, TopicModel.class);
 		
+		
+		// make sure its the right topic
 		System.out.println(theTopic.getTitle());
 		
 		
