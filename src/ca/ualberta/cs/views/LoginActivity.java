@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class LoginActivity extends Activity {
 
@@ -22,9 +23,14 @@ public class LoginActivity extends Activity {
 		final Button button = (Button) findViewById(R.id.signInButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+            	// Get the username
+            	EditText theTextField = (EditText)findViewById(R.id.userNameEditText);
+            	
+            	String theUserName = theTextField.getText().toString();
+            	
                 // Perform action on click
             	UserController userController = UserController.shared();
-            	userController.performLogin("Wyatt");
+            	userController.performLogin(theUserName);
             	Intent resultIntent = new Intent();
             	setResult(Activity.RESULT_OK, resultIntent);
             	finish();

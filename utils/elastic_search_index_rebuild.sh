@@ -23,7 +23,7 @@ curl -XPOST `endpoint` -d'
     "mappings": {
         "wyatt": {
            "properties": {
-             "timestamp": {
+             "datePosted": {
                  "type" : "date"
             }
         }

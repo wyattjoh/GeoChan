@@ -9,7 +9,7 @@
     tools:context=".LoginActivity" >
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/userNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -22,7 +22,7 @@
         android:id="@+id/signInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
+        android:layout_below="@+id/userNameEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="19dp"
         android:text="@string/login" />

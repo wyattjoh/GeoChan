@@ -27,8 +27,11 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.R.id;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.controllers.UserController;
+import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.providers.ElasticSearchProvider;
+import ca.ualberta.cs.providers.ElasticSearchProviderService;
 
 public class MainActivity extends FragmentActivity {
 

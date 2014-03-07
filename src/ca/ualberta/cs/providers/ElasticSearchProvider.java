@@ -5,6 +5,7 @@ package ca.ualberta.cs.providers;
 
 import java.util.ArrayList;
 
+import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
 
 /**
@@ -13,7 +14,7 @@ import ca.ualberta.cs.models.TopicModel;
  * Provides interface to remote and proxies objects
  *
  */
-public class ElasticSearchProvider implements ElasticSearchInterface {
+public class ElasticSearchProvider implements ElasticSearchProviderInterface {
 	private static ElasticSearchProvider singleton = null;
 	
 	public static ElasticSearchProvider getProvider() {
@@ -32,6 +33,11 @@ public class ElasticSearchProvider implements ElasticSearchInterface {
 			Integer topicCount, Integer theOffset) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void addTopic(PostModel theTopic) {
+		// new ElasticSearchProviderService(ElasticSearchConstants.MODE.ADD_TOPIC).execute(theTopic);
 	}
 	
 	
