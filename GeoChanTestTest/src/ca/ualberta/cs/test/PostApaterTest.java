@@ -11,7 +11,6 @@ import ca.ualberta.cs.views.PostListViewAdapter;
 
 public class PostApaterTest extends
 ActivityInstrumentationTestCase2<MainActivity> {
-
 	public PostApaterTest() {
 		super(MainActivity.class);
 		// TODO Auto-generated constructor stub
@@ -29,7 +28,7 @@ ActivityInstrumentationTestCase2<MainActivity> {
 		assertNotNull("The objcet is not null", adapter);
 	}
 
-	public void testAdapterCount(){
+	public void TestAdapterCount(){
 		// build mutli comment item
 		ArrayList<CommentModel> commentList = PostListController.createCommentlist(new UserModel("testUser"));
 		PostListViewAdapter adapter = new PostListViewAdapter(getActivity(), commentList);
@@ -37,7 +36,7 @@ ActivityInstrumentationTestCase2<MainActivity> {
 		assertEquals("Check the number of items in adapter",3, adapter.getCount());
 	}
 	
-	public void testAdapterItem(){
+	public void TestAdapterItem(){
 		// build mutli comment item
 		ArrayList<CommentModel> commentList = PostListController.createCommentlist(new UserModel("testUser"));
 		PostListViewAdapter adapter = new PostListViewAdapter(getActivity(), commentList);
