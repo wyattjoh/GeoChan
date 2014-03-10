@@ -2,7 +2,9 @@ package ca.ualberta.cs.controllers;
 
 import java.util.ArrayList;
 
+import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.models.UserModel;
 
 public class PostListController {
 
@@ -17,31 +19,97 @@ public class PostListController {
 		return null;
 	}
 
-	public static ArrayList<TopicModel> createTopicList(){
+	public static ArrayList<TopicModel> createTopicList(UserModel theUser){
 		// init array list
 		ArrayList<TopicModel> theModelList = new ArrayList<TopicModel>();
 		// init topic model
+		if (theUser == null){
+			// populate topic with test entries
+			TopicModel theTopic1 = new TopicModel();
+			theTopic1.setTitle("TestTitle1");
+			theTopic1.setBodyText("TestText1");
+			theTopic1.setScore(1);
+			theModelList.add(theTopic1);
+			
+			TopicModel theTopic2 = new TopicModel();
+			theTopic2.setTitle("TestTitle2");
+			theTopic2.setBodyText("TestText2");
+			theTopic2.setScore(2);
+			theModelList.add(theTopic2);
+			
+			TopicModel theTopic3 = new TopicModel();
+			theTopic3.setTitle("TestTitle3");
+			theTopic3.setBodyText("TestText3");
+			theTopic3.setScore(3);
+			theModelList.add(theTopic3);
+		}
 		
+		else {
+			// populate topic with test entries
+			TopicModel theTopic1 = new TopicModel(theUser);
+			theTopic1.setTitle("TestTitle1");
+			theTopic1.setBodyText("TestText1");
+			theTopic1.setScore(1);
+			theModelList.add(theTopic1);
+			
+			TopicModel theTopic2 = new TopicModel(theUser);
+			theTopic2.setTitle("TestTitle2");
+			theTopic2.setBodyText("TestText2");
+			theTopic2.setScore(2);
+			theModelList.add(theTopic2);
+			
+			TopicModel theTopic3 = new TopicModel(theUser);
+			theTopic3.setTitle("TestTitle3");
+			theTopic3.setBodyText("TestText3");
+			theTopic3.setScore(3);
+			theModelList.add(theTopic3);
+		}
 		
-		// populate topic with test entries
-		TopicModel theTopic1 = new TopicModel();
-		theTopic1.setTitle("TestTitle1");
-		theTopic1.setBodyText("TestText1");
-		theTopic1.setScore(1);
-		theModelList.add(theTopic1);
-		
-		TopicModel theTopic2 = new TopicModel();
-		theTopic2.setTitle("TestTitle2");
-		theTopic2.setBodyText("TestText2");
-		theTopic2.setScore(2);
-		theModelList.add(theTopic2);
-		
-		TopicModel theTopic3 = new TopicModel();
-		theTopic3.setTitle("TestTitle3");
-		theTopic3.setBodyText("TestText3");
-		theTopic3.setScore(3);
-		theModelList.add(theTopic3);
+
 		
 		return theModelList;
+	}
+	
+	public static ArrayList<CommentModel> createCommentlist(UserModel theUser){
+		//build comment list
+		ArrayList<CommentModel> commentList = new ArrayList<CommentModel>();
+		
+		if (theUser == null){
+			// build giant list items
+			CommentModel theComment1 = new CommentModel();
+			theComment1.setBodyText("Test body text1");
+			theComment1.setScore(1);
+			commentList.add(theComment1);
+			
+			CommentModel theComment2 = new CommentModel();
+			theComment2.setBodyText("Test body text2");
+			theComment2.setScore(2);
+			commentList.add(theComment2);
+			
+			CommentModel theComment3 = new CommentModel();
+			theComment3.setBodyText("Test body text3");
+			theComment3.setScore(3);
+			commentList.add(theComment3);
+		}
+		
+		else {
+			// build giant list items
+			CommentModel theComment1 = new CommentModel(theUser);
+			theComment1.setBodyText("Test body text1");
+			theComment1.setScore(1);
+			commentList.add(theComment1);
+			
+			CommentModel theComment2 = new CommentModel(theUser);
+			theComment2.setBodyText("Test body text2");
+			theComment2.setScore(2);
+			commentList.add(theComment2);
+			
+			CommentModel theComment3 = new CommentModel(theUser);
+			theComment3.setBodyText("Test body text3");
+			theComment3.setScore(3);
+			commentList.add(theComment3);
+		}
+		
+		return commentList;
 	}
 }

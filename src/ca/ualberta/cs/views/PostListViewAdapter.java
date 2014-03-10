@@ -7,10 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.R.id;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
@@ -24,7 +22,7 @@ import ca.ualberta.cs.models.TopicModel;
  *         custom-adapter-for-list-view
  */
 
-class PostListViewAdapter extends BaseAdapter {
+public class PostListViewAdapter extends BaseAdapter {
 
 	Context context;
 	ArrayList<?> data;
@@ -47,7 +45,7 @@ class PostListViewAdapter extends BaseAdapter {
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return data.get(position);
+		return (PostModel)data.get(position);
 	}
 
 	@Override

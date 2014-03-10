@@ -139,7 +139,9 @@ public class MainActivity extends FragmentActivity {
 
 			switch (sectionNumber) {
 			case 1:
-				populateFragment(rootView, PostListController.createTopicList());
+				// create topic list is a stand in for the actual data
+				// TODO get actual data, and add method to the controller
+				populateFragment(rootView, PostListController.createTopicList(null));
 				setListener(rootView);
 				break;
 			case 2:
@@ -157,7 +159,7 @@ public class MainActivity extends FragmentActivity {
 			ListView listView = (ListView) theRootView
 					.findViewById(R.id.postListView);
 			PostListViewAdapter listAdapter = new PostListViewAdapter(getActivity(),
-					PostListController.createTopicList());
+					PostListController.createTopicList(null));
 			
 			// set adapter
 			listView.setAdapter(listAdapter);
