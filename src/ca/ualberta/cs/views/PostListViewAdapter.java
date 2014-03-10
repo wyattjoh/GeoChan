@@ -12,6 +12,7 @@ import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.R.id;
 import ca.ualberta.cs.models.CommentModel;
+import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
 
 /**
@@ -23,16 +24,16 @@ import ca.ualberta.cs.models.TopicModel;
  *         custom-adapter-for-list-view
  */
 
-class TopicListAdapter extends BaseAdapter {
+class PostListViewAdapter extends BaseAdapter {
 
 	Context context;
-	ArrayList<TopicModel> data;
+	ArrayList<?> data;
 	private static LayoutInflater inflater = null;
 
-	public TopicListAdapter(Context context, ArrayList<TopicModel> data) {
+	public PostListViewAdapter(Context context, ArrayList<?> theData) {
 		// TODO Auto-generated constructor stub
-		this.context = context;
-		this.data = data;
+		this.data = theData;		
+		this.context = context;		
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -63,7 +64,7 @@ class TopicListAdapter extends BaseAdapter {
 			vi = inflater.inflate(R.layout.row, null);
 		if (data.get(thePosition).getClass() == TopicModel.class) {
 			TextView header = (TextView) vi.findViewById(R.id.header);
-			header.setText(data.get(thePosition).getTitle());
+			header.setText(((TopicModel) data.get(thePosition)).getTitle());
 		}
 
 		// set row elements to topic data
@@ -76,11 +77,11 @@ class TopicListAdapter extends BaseAdapter {
 	// format the data for the list view elements
 	public String getFormatedData(int thePosition) {
 		// get user name & score
-		String theUserName = data.get(thePosition).getPostedBy().getUserName();
-		String thePostScore = data.get(thePosition).getScore().toString();
+		String theUserName =  ((PostModel) data.get(thePosition)).getPostedBy().getUserName();
+		String thePostScore = ((PostModel) data.get(thePosition)).getScore().toString();
 
 		// get the number of replies
-		ArrayList<CommentModel> theComments = data.get(thePosition)
+		ArrayList<CommentModel> theComments = ((PostModel) data.get(thePosition))
 				.getChildrenComments();
 		Integer theReplyCount = 0;
 		// check if any, might be null

@@ -1,10 +1,7 @@
 package ca.ualberta.cs.views;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Locale;
-
-import com.google.gson.Gson;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,14 +21,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.R.id;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.controllers.UserController;
-import ca.ualberta.cs.models.CommentModel;
-import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
-import ca.ualberta.cs.providers.ElasticSearchProvider;
-import ca.ualberta.cs.providers.ElasticSearchProviderService;
+
+import com.google.gson.Gson;
 
 public class MainActivity extends FragmentActivity {
 
@@ -162,7 +156,7 @@ public class MainActivity extends FragmentActivity {
 			// get title & list view adapter
 			ListView listView = (ListView) theRootView
 					.findViewById(R.id.postListView);
-			TopicListAdapter listAdapter = new TopicListAdapter(getActivity(),
+			PostListViewAdapter listAdapter = new PostListViewAdapter(getActivity(),
 					PostListController.createTopicList());
 			
 			// set adapter
