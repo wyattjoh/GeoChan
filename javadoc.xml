@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" additionalparam="-bootclasspath C:\Users\Ben\Documents\adt-bundle-windows-x86_64-20131030\adt-bundle-windows-x86_64-20131030\sdk\platforms\android-16\android.jar " author="true" classpath="libs/gson-2.2.4.jar;libs/android-support-v4.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" source="1.6" sourcefiles="src/ca/ualberta/cs/models/PostModel.java" sourcepath="gen;src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>

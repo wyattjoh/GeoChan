@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="javadoc">
     <target name="javadoc">
-        <javadoc access="public" author="true" classpath="../libs/android-support-v4.jar" destdir="" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="ca.ualberta.cs" source="1.6" sourcepath="../gen:../src" splitindex="true" use="true" version="true">
-            <link href="file:/cshome/vincent/301/GeoChan/doc/"/>
-        </javadoc>
+        <javadoc access="public" author="true" classpath="libs/gson-2.2.4.jar;libs/android-support-v4.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" source="1.6" sourcefiles="src/ca/ualberta/cs/models/PostModel.java" sourcepath="gen;src" splitindex="true" use="true" version="true"/>
     </target>
 </project>
