@@ -3,7 +3,6 @@ package ca.ualberta.cs.views;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.graphics.Shader.TileMode;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
 
