@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 
 /*
  *  Implement such as:
@@ -17,13 +18,15 @@ import android.os.IBinder;
 
 public class LocationProvider extends Service {
 
-	LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+	private LocationManager locationManager = null;
+	private Location theLocation = null;
 
 	private final LocationListener locationListener = new LocationListener() {
 		public void onLocationChanged(Location location) {
 			// Called when a new location is found by the network location
 			// provider.
 			// TODO
+			theLocation = location;
 
 		}
 
@@ -49,21 +52,19 @@ public class LocationProvider extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// Register the listener with the Location Manager to receive location
 		// updates
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
 		locationManager.requestLocationUpdates(
-				LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+				LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+		Log.w("LocationProvider", "Service Started.");
+		
+		
 
 		return super.onStartCommand(intent, flags, startId);
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Service#onCreate()
-	 */
-	@Override
-	public void onCreate() {
-		// TODO Auto-generated method stub
-		super.onCreate();
+	
+	public Location getLocation() {
+		return theLocation;
 	}
 
 	@Override
