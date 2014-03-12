@@ -61,13 +61,13 @@ public class PostListViewAdapter extends BaseAdapter {
 		if (vi == null)
 			vi = inflater.inflate(R.layout.row, null);
 		if (data.get(thePosition).getClass() == TopicModel.class) {
-			TextView header = (TextView) vi.findViewById(R.id.header);
+			TextView header = (TextView) vi.findViewById(R.id.textViewTitle);
 			header.setText(((TopicModel) data.get(thePosition)).getTitle());
 		}
 
 		// set row elements to topic data
-		TextView text = (TextView) vi.findViewById(R.id.text);
-		text.setText(getFormatedData(thePosition));
+		//TextView text = (TextView) vi.findViewById(R.id.);
+		//text.setText(getFormatedData(thePosition));
 		
 		return vi;
 	}
