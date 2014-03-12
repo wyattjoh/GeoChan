@@ -86,8 +86,7 @@ public class PostListViewAdapter extends BaseAdapter {
 		// check and set text views
 		// DATE
 		if (dateText != null){
-			DateFormat formatDate = new DateFormat();
-			String date = (String) formatDate.format("yyyy/MM/dd", ((PostModel) data.get(thePosition)).getDatePosted());
+			String date = (String) DateFormat.format("yyyy/MM/dd", ((PostModel) data.get(thePosition)).getDatePosted());
 			dateText.setText(date);
 		}
 		
@@ -110,6 +109,7 @@ public class PostListViewAdapter extends BaseAdapter {
 		if (locationText != null){
 			locationText.setText("'162 '163.123");
 			// filler values until we get the location handler working
+			
 			// locationText.setText(((PostModel) data.get(thePosition)).getLocation().toString());
 		}
 		
