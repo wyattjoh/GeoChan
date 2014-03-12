@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Shader.TileMode;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,33 +84,41 @@ public class PostListViewAdapter extends BaseAdapter {
 		TextView titleText = (TextView) theView.findViewById(R.id.textViewTitle);
 		
 		// check and set text views
+		// DATE
 		if (dateText != null){
-			dateText.setText(((PostModel) data.get(thePosition)).getDatePosted().toString());
+			DateFormat formatDate = new DateFormat();
+			String date = (String) formatDate.format("yyyy/MM/dd", ((PostModel) data.get(thePosition)).getDatePosted());
+			dateText.setText(date);
 		}
 		
+		// AUTHOR
 		if (authorText != null){
 			authorText.setText(((PostModel) data.get(thePosition)).getPostedBy().getUserName());
 		}
 		
+		// NUMBER OF COMMENTS
 		if (commentText != null ){
 			if (((PostModel) data.get(thePosition)).getChildrenComments() != null){
-				commentText.setText(((PostModel) data.get(thePosition)).getChildrenComments().size());
+				commentText.setText(((PostModel) data.get(thePosition)).getChildrenComments().size() + " Replies");
 			}
 			else {
-				commentText.setText("0");
+				commentText.setText("0 Replies");
 			}
 		}
 		
+		// LOCATION
 		if (locationText != null){
 			locationText.setText("'162 '163.123");
 			// filler values until we get the location handler working
 			// locationText.setText(((PostModel) data.get(thePosition)).getLocation().toString());
 		}
 		
+		// SCORE
 		if (scoreText != null){
 			scoreText.setText(((PostModel) data.get(thePosition)).getScore().toString());
 		}
 		
+		// TITLE
 		if (titleText != null){
 			if (data.get(thePosition).getClass() == TopicModel.class){
 				titleText.setText(((TopicModel) data.get(thePosition)).getTitle());
@@ -118,25 +127,5 @@ public class PostListViewAdapter extends BaseAdapter {
 				titleText.setText("Reply");
 			}
 		}
-	}
-
-	// format the data for the list view elements
-	public String getFormatedData(int thePosition) {
-		// get user name & score
-		String theUserName =  ((PostModel) data.get(thePosition)).getPostedBy().getUserName();
-		String thePostScore = ((PostModel) data.get(thePosition)).getScore().toString();
-
-		// get the number of replies
-		ArrayList<CommentModel> theComments = ((PostModel) data.get(thePosition))
-				.getChildrenComments();
-		Integer theReplyCount = 0;
-		// check if any, might be null
-		if (theComments != null) {
-			theReplyCount = theComments.size();
-		}
-
-		// return formated string
-		return "Score:" + thePostScore + " Posted By:" + theUserName
-				+ " Replies:" + theReplyCount;
 	}
 }
