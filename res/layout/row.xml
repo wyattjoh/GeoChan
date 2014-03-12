@@ -29,7 +29,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.51"
                 android:gravity="center"
-                android:text="TextView"/>
+                android:text="Title"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="TextView" />
+                        android:text="Comments" />
                 </LinearLayout>
 
                 <TextView
@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="TextView" />
+                    android:text="Score" />
             </LinearLayout>
         </LinearLayout>
 
@@ -83,7 +83,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="TextView" />
+                android:text="Author" />
 
             <ImageView
                 android:id="@+id/imageViewLocation"
@@ -97,7 +97,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="TextView" />
+                android:text="Location" />
 
             <ImageView
                 android:id="@+id/imageViewAge"
@@ -112,7 +112,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="DatePosted" />
 
         </LinearLayout>
     </RelativeLayout>
