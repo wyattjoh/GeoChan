@@ -3,6 +3,7 @@ package ca.ualberta.cs.views;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Shader.TileMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,16 +61,63 @@ public class PostListViewAdapter extends BaseAdapter {
 		View vi = convertView;
 		if (vi == null)
 			vi = inflater.inflate(R.layout.row, null);
-		if (data.get(thePosition).getClass() == TopicModel.class) {
-			TextView header = (TextView) vi.findViewById(R.id.textViewTitle);
-			header.setText(((TopicModel) data.get(thePosition)).getTitle());
-		}
 
-		// set row elements to topic data
-		//TextView text = (TextView) vi.findViewById(R.id.);
-		//text.setText(getFormatedData(thePosition));
+		// set row elements to the required data
+		setRowValues(vi, thePosition);
 		
 		return vi;
+	}
+	
+	/**
+	 * fill in the row at the called position with the appropriate data
+	 * @param theView
+	 * @param thePosition
+	 */
+	public void setRowValues(View theView, int thePosition){
+		// get text views for data
+		TextView dateText = (TextView) theView.findViewById(R.id.textViewAge);
+		TextView authorText = (TextView) theView.findViewById(R.id.textViewAuthor);
+		TextView commentText = (TextView) theView.findViewById(R.id.textViewComments);
+		TextView locationText = (TextView) theView.findViewById(R.id.textViewLocation);
+		TextView scoreText = (TextView) theView.findViewById(R.id.textViewScore);
+		TextView titleText = (TextView) theView.findViewById(R.id.textViewTitle);
+		
+		// check and set text views
+		if (dateText != null){
+			dateText.setText(((PostModel) data.get(thePosition)).getDatePosted().toString());
+		}
+		
+		if (authorText != null){
+			authorText.setText(((PostModel) data.get(thePosition)).getPostedBy().getUserName());
+		}
+		
+		if (commentText != null ){
+			if (((PostModel) data.get(thePosition)).getChildrenComments() != null){
+				commentText.setText(((PostModel) data.get(thePosition)).getChildrenComments().size());
+			}
+			else {
+				commentText.setText("0");
+			}
+		}
+		
+		if (locationText != null){
+			locationText.setText("'162 '163.123");
+			// filler values until we get the location handler working
+			// locationText.setText(((PostModel) data.get(thePosition)).getLocation().toString());
+		}
+		
+		if (scoreText != null){
+			scoreText.setText(((PostModel) data.get(thePosition)).getScore().toString());
+		}
+		
+		if (titleText != null){
+			if (data.get(thePosition).getClass() == TopicModel.class){
+				titleText.setText(((TopicModel) data.get(thePosition)).getTitle());
+			}
+			else{
+				titleText.setText("Reply");
+			}
+		}
 	}
 
 	// format the data for the list view elements
