@@ -112,4 +112,23 @@ public class PostListController {
 		
 		return commentList;
 	}
+	
+	/**
+	 * create test models with comments
+	 * @param theUser
+	 * @return
+	 */
+	public ArrayList<TopicModel> createCommentedTopics(UserModel theUser){
+		// build up static test models
+		ArrayList<TopicModel> topicList = (ArrayList<TopicModel>) createTopicList(theUser);
+		ArrayList<CommentModel> commentList = (ArrayList<CommentModel>) createCommentlist(theUser);
+		
+		// assign topics the comments
+		for (int i = 0; i < topicList.size(); i++) {
+			for (int j = 0; j < commentList.size(); j++){
+				topicList.get(i).addChildComment(commentList.get(j));
+			}
+		}
+		return topicList;
+	}
 }
