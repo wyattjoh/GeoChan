@@ -118,7 +118,7 @@ public class PostListController {
 	 * @param theUser
 	 * @return
 	 */
-	public ArrayList<TopicModel> createCommentedTopics(UserModel theUser){
+	public static ArrayList<TopicModel> createCommentedTopics(UserModel theUser){
 		// build up static test models
 		ArrayList<TopicModel> topicList = (ArrayList<TopicModel>) createTopicList(theUser);
 		ArrayList<CommentModel> commentList = (ArrayList<CommentModel>) createCommentlist(theUser);

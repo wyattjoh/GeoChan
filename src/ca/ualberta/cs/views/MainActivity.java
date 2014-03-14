@@ -141,7 +141,7 @@ public class MainActivity extends FragmentActivity {
 			case 1:
 				// create topic list is a stand in for the actual data
 				// TODO get actual data, and add method to the controller
-				populateFragment(rootView, PostListController.createTopicList(null));
+				populateFragment(rootView, PostListController.createCommentedTopics(null));
 				setListener(rootView);
 				break;
 			case 2:
@@ -159,7 +159,7 @@ public class MainActivity extends FragmentActivity {
 			ListView listView = (ListView) theRootView
 					.findViewById(R.id.postListView);
 			PostListViewAdapter listAdapter = new PostListViewAdapter(getActivity(),
-					PostListController.createTopicList(null));
+					theTopicList);
 			
 			// set adapter
 			listView.setAdapter(listAdapter);
