@@ -158,8 +158,7 @@ public class MainActivity extends FragmentActivity {
 			// get title & list view adapter
 			ListView listView = (ListView) theRootView
 					.findViewById(R.id.postListView);
-			PostListViewAdapter listAdapter = new PostListViewAdapter(getActivity(),
-					theTopicList);
+			PostListViewAdapter listAdapter = new PostListViewAdapter(getActivity(), theTopicList);
 			
 			// set adapter
 			listView.setAdapter(listAdapter);

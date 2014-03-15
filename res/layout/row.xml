@@ -27,14 +27,13 @@
                 android:id="@+id/textViewTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="0.51"
+                android:layout_weight="0.67"
                 android:gravity="center"
-                android:text="Title"/>
+                android:text="Title" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.15"
                 android:orientation="vertical" >
 
                 <LinearLayout
@@ -49,7 +48,7 @@
 
                     <TextView
                         android:id="@+id/textViewComments"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="Comments" />
@@ -57,7 +56,7 @@
 
                 <TextView
                     android:id="@+id/textViewScore"
-                    android:layout_width="match_parent"
+                    android:layout_width="89dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Score" />

@@ -2,6 +2,7 @@ package ca.ualberta.cs.views;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -23,29 +24,30 @@ import ca.ualberta.cs.models.TopicModel;
  */
 
 public class PostListViewAdapter extends BaseAdapter {
+	private Boolean isTopicList = false;
+	private ArrayList<?> postModelList;
+	private LayoutInflater layoutInflater = null;
 
-	Context context;
-	ArrayList<?> data;
-	private static LayoutInflater inflater = null;
-
-	public PostListViewAdapter(Context context, ArrayList<?> theData) {
+	public PostListViewAdapter(Activity theActivity, ArrayList<?> thePostModelList) {
 		// TODO Auto-generated constructor stub
-		this.data = theData;		
-		this.context = context;		
-		inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.postModelList = thePostModelList;	
+		this.layoutInflater = theActivity.getLayoutInflater();
+		
+		if (thePostModelList.get(0).getClass().equals(TopicModel.class)) {
+			this.isTopicList = true;
+		}
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return data.size();
+		return postModelList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return (PostModel)data.get(position);
+		return (PostModel)postModelList.get(position);
 	}
 
 	@Override
@@ -57,14 +59,16 @@ public class PostListViewAdapter extends BaseAdapter {
 	@Override
 	public View getView(int thePosition, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		View vi = convertView;
-		if (vi == null)
-			vi = inflater.inflate(R.layout.row, null);
+		View postRowView = convertView;
+		
+		if (postRowView == null) {
+			postRowView = layoutInflater.inflate(R.layout.row, parent, false);
+		}
 
 		// set row elements to the required data
-		setRowValues(vi, thePosition);
+		populateRowView(postRowView, thePosition);
 		
-		return vi;
+		return postRowView;
 	}
 	
 	/**
@@ -72,58 +76,49 @@ public class PostListViewAdapter extends BaseAdapter {
 	 * @param theView
 	 * @param thePosition
 	 */
-	public void setRowValues(View theView, int thePosition){
-		// get text views for data
-		TextView dateText = (TextView) theView.findViewById(R.id.textViewAge);
-		TextView authorText = (TextView) theView.findViewById(R.id.textViewAuthor);
-		TextView commentText = (TextView) theView.findViewById(R.id.textViewComments);
-		TextView locationText = (TextView) theView.findViewById(R.id.textViewLocation);
+	public void populateRowView(View theView, int thePosition){
+		// Get the post object
+		PostModel thePost = (PostModel) postModelList.get(thePosition);
+		
+		// Fill date
+		TextView dateTextView = (TextView) theView.findViewById(R.id.textViewAge);
+		String date = (String) DateFormat.format("yyyy/MM/dd", thePost.getDatePosted());
+		dateTextView.setText(date);		
+		
+		// Fill author
+		TextView authorTextView = (TextView) theView.findViewById(R.id.textViewAuthor);
+		authorTextView.setText(thePost.getPostedBy().getUserName());		
+		
+		// Fill comment count
+		TextView commentTextView = (TextView) theView.findViewById(R.id.textViewComments);
+		if (thePost.getChildrenComments() == null) {
+			commentTextView.setText("0");
+		}
+		else {
+			String commentCount = Integer.toString(thePost.getChildrenComments().size());
+			commentTextView.setText(commentCount);
+		}
+		
+		// Fill location
+		// TODO: Add location text
+		// TextView locationText = (TextView) theView.findViewById(R.id.textViewLocation);
+		// locationText.setText(thePost.getLocation().toString());
+		
+		// Fill score
 		TextView scoreText = (TextView) theView.findViewById(R.id.textViewScore);
+		scoreText.setText(thePost.getScore().toString());
+		
+		// Fill title/comment text
 		TextView titleText = (TextView) theView.findViewById(R.id.textViewTitle);
-		
-		// check and set text views
-		// DATE
-		if (dateText != null){
-			String date = (String) DateFormat.format("yyyy/MM/dd", ((PostModel) data.get(thePosition)).getDatePosted());
-			dateText.setText(date);
+		if (this.isTopicList){
+			// List of topics, display the title
+			String theTitle = ((TopicModel) thePost).getTitle();
+			titleText.setText(theTitle);
 		}
-		
-		// AUTHOR
-		if (authorText != null){
-			authorText.setText(((PostModel) data.get(thePosition)).getPostedBy().getUserName());
-		}
-		
-		// NUMBER OF COMMENTS
-		if (commentText != null ){
-			if (((PostModel) data.get(thePosition)).getChildrenComments() != null){
-				commentText.setText(((PostModel) data.get(thePosition)).getChildrenComments().size() + " Replies");
-			}
-			else {
-				commentText.setText("0 Replies");
-			}
-		}
-		
-		// LOCATION
-		if (locationText != null){
-			locationText.setText("'162 '163.123");
-			// filler values until we get the location handler working
-			
-			// locationText.setText(((PostModel) data.get(thePosition)).getLocation().toString());
-		}
-		
-		// SCORE
-		if (scoreText != null){
-			scoreText.setText(((PostModel) data.get(thePosition)).getScore().toString());
-		}
-		
-		// TITLE
-		if (titleText != null){
-			if (data.get(thePosition).getClass() == TopicModel.class){
-				titleText.setText(((TopicModel) data.get(thePosition)).getTitle());
-			}
-			else{
-				titleText.setText("Reply");
-			}
+		else{
+			// List of comments, display an excerpt of their comment
+			// TODO: Add excerpt code
+			titleText.setText("Reply");
 		}
 	}
 }
