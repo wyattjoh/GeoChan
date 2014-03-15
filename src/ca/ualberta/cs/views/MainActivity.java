@@ -22,7 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.PostListController;
-import ca.ualberta.cs.controllers.UserController;
+import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.TopicModel;
 
 import com.google.gson.Gson;
@@ -226,7 +226,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void loginFlow() {
-		UserController userController = UserController.shared();
+		ActiveUserModel userController = ActiveUserModel.shared();
 
 		if (userController.isLoggedIn()) {
 			// continue

@@ -1,21 +1,20 @@
 /**
  * 
  */
-package ca.ualberta.cs.controllers;
+package ca.ualberta.cs.models;
 
-import ca.ualberta.cs.models.UserModel;
 
 /**
  * @author wyatt
  *
  */
-public class UserController {
-	private static UserController singleton = null;
+public class ActiveUserModel {
+	private static ActiveUserModel singleton = null;
 	private UserModel theUser = null;
 	
-	public static UserController shared() {
+	public static ActiveUserModel shared() {
 		if (singleton == null) {
-			singleton = new UserController();
+			singleton = new ActiveUserModel();
 		}
 		return singleton;
 	}
@@ -41,7 +40,7 @@ public class UserController {
 		}
 	}
 
-	public UserModel getLoggedInUser() {
+	public UserModel getUser() {
 		return theUser;
 	}
 }

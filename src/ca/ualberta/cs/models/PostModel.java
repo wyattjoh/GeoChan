@@ -3,7 +3,6 @@ package ca.ualberta.cs.models;
 import java.util.ArrayList;
 import java.util.Date;
 
-import ca.ualberta.cs.controllers.UserController;
 import android.graphics.Bitmap;
 import android.location.Location;
 
@@ -21,7 +20,7 @@ public abstract class PostModel {
 	 * Constructors
 	 */
 	public PostModel(){
-		this.postedBy = UserController.shared().getLoggedInUser();
+		this.postedBy = ActiveUserModel.shared().getUser();
 		this.datePosted = new Date();
 		this.score = 0;
 		this.picture = null;
