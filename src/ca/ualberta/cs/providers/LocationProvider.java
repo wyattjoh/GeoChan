@@ -16,8 +16,8 @@ import android.util.Log;
  *  
  */
 
-public class LocationProvider extends Service {
-
+public class LocationProvider {
+	private static LocationProvider singleton = null;
 	private LocationManager locationManager = null;
 	private Location theLocation = null;
 
@@ -27,7 +27,6 @@ public class LocationProvider extends Service {
 			// provider.
 			// TODO
 			theLocation = location;
-
 		}
 
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -42,35 +41,24 @@ public class LocationProvider extends Service {
 			// TODO
 		}
 	};
+	
+	private LocationProvider(Context theContext) {
+		// Register the listener with the Location Manager to receive location updates
+		locationManager = (LocationManager) theContext.getSystemService(Context.LOCATION_SERVICE);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Service#onStartCommand(android.content.Intent, int, int)
-	 */
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		// Register the listener with the Location Manager to receive location
-		// updates
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-		locationManager.requestLocationUpdates(
-				LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-		Log.w("LocationProvider", "Service Started.");
-		
-		
-
-		return super.onStartCommand(intent, flags, startId);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, locationListener);
 	}
 	
-	public Location getLocation() {
-		return theLocation;
+	public static LocationProvider shared(Context theContext) {
+		if (singleton == null) {
+			singleton = new LocationProvider(theContext);
+		}
+		
+		return singleton;
 	}
 
-	@Override
-	public IBinder onBind(Intent arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public Location getLocation() {
+		return theLocation;
 	}
 
 }
