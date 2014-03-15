@@ -33,7 +33,7 @@ public class PostListViewAdapter extends BaseAdapter {
 		this.postModelList = thePostModelList;	
 		this.layoutInflater = theActivity.getLayoutInflater();
 		
-		if (thePostModelList.get(0).getClass().equals(TopicModel.class)) {
+		if (thePostModelList.size() > 0 && thePostModelList.get(0).getClass().equals(TopicModel.class)) {
 			this.isTopicList = true;
 		}
 	}
