@@ -3,19 +3,43 @@
  */
 package ca.ualberta.cs.models;
 
+import android.content.Context;
+
 
 /**
  * @author wyatt
  *
  */
 public class ActiveUserModel {
+	
 	private static ActiveUserModel singleton = null;
 	private UserModel theUser = null;
+	private SavedUserModel theSavedUserModel;
 	
-	public static ActiveUserModel shared() {
+	private ActiveUserModel(Context theContext) {
+		// Setup SavedUserModel
+		this.theSavedUserModel = new SavedUserModel(theContext);
+		
+		// Load UserModel if already existing
+		this.theUser = theSavedUserModel.load();
+	}
+	
+	/*
+	 * Creates a new shared object
+	 */
+	public static ActiveUserModel createShared(Context theContext) {
 		if (singleton == null) {
-			singleton = new ActiveUserModel();
+			singleton = new ActiveUserModel(theContext);
 		}
+		
+		return singleton;
+	}
+	
+	public static ActiveUserModel getShared() {
+		if (singleton == null) {
+			throw new RuntimeException("Shared ActiveUserModel not created yet! Can't getShared().");
+		}
+		
 		return singleton;
 	}
 	
@@ -25,10 +49,16 @@ public class ActiveUserModel {
 		}
 		
 		theUser = new UserModel(theUsername);
+		
+		// Save the user in preferences
+		theSavedUserModel.save(theUser);
 	}
 	
 	public void performLogout() {
 		theUser = null;
+		
+		// Remove the user from preferences
+		theSavedUserModel.remove();
 	}
 	
 	public Boolean isLoggedIn() {

@@ -32,7 +32,7 @@ public class LoginActivity extends Activity {
             	String theUserName = theTextField.getText().toString();
             	
                 // Perform action on click
-            	ActiveUserModel userController = ActiveUserModel.shared();
+            	ActiveUserModel userController = ActiveUserModel.createShared(getApplicationContext());
             	userController.performLogin(theUserName);
             	Intent resultIntent = new Intent();
             	setResult(Activity.RESULT_OK, resultIntent);

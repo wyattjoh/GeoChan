@@ -20,7 +20,7 @@ public abstract class PostModel {
 	 * Constructors
 	 */
 	public PostModel(){
-		this.postedBy = ActiveUserModel.shared().getUser();
+		this.postedBy = ActiveUserModel.getShared().getUser();
 		this.datePosted = new Date();
 		this.score = 0;
 		this.picture = null;

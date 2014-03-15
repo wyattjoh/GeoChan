@@ -226,7 +226,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void loginFlow() {
-		ActiveUserModel userController = ActiveUserModel.shared();
+		ActiveUserModel userController = ActiveUserModel.createShared(getApplicationContext());
 
 		if (userController.isLoggedIn()) {
 			// continue
