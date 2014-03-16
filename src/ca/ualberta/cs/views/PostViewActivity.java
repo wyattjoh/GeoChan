@@ -8,7 +8,7 @@ import ca.ualberta.cs.models.TopicModel;
 
 import com.google.gson.Gson;
 
-public class CommentActivity extends Activity {
+public class PostViewActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

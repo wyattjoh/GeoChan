@@ -38,7 +38,7 @@
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name="ca.ualberta.cs.views.CommentActivity"
+            android:name="ca.ualberta.cs.views.PostViewActivity"
             android:label="@string/title_activity_comment" >
         </activity>
         <activity

@@ -192,7 +192,7 @@ public class MainActivity extends FragmentActivity {
 		public void startCommentActivty(View theRootView,
 				TopicModel theTopicModel) {
 			// new intent
-			Intent intent = new Intent(theRootView.getContext(), CommentActivity.class);
+			Intent intent = new Intent(theRootView.getContext(), PostViewActivity.class);
 
 			// make a gson object and serialize the topic
 			Gson gsonTopic = new Gson();
