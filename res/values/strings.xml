@@ -22,5 +22,6 @@
     <string name="location_prompt">Edit Location</string>
     <string name="current_location">Location</string>
     <string name="title_activity_comment">CommentActivity</string>
+    <string name="title_activity_edit_topic">EditTopicActivity</string>
 
 </resources>

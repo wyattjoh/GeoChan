@@ -127,12 +127,7 @@ public class MainActivity extends FragmentActivity {
 				Bundle savedInstanceState) {
 
 			// random generated code...
-			View rootView = inflater.inflate(R.layout.fragment_main_dummy,
-					container, false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
+			View rootView = inflater.inflate(R.layout.fragment_main_dummy, container, false);
 
 			// get fragment number
 			int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
@@ -266,7 +261,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	protected void newPost() {
-		Intent intent = new Intent(this, PostActivity.class);
+		Intent intent = new Intent(this, EditTopicActivity.class);
 		startActivity(intent);
 	}
 }
