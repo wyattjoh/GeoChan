@@ -19,6 +19,10 @@ public class PostListController {
 	public static ArrayList<Object> getList(){	
 		return null;
 	}
+	
+	public static void setSort(final int theSortOrder){
+		//TODO add sorting
+	}
 
 	public static void createTopicList(UserModel theUser){
 		// init array list

@@ -3,6 +3,9 @@
 
     <string name="app_name">GeoChan</string>
     <string name="action_settings">Settings</string>
+    <string name="action_sortDateText">Sort Newest</string>
+    <string name="action_sortScoreText">Sort Score</string>
+    <string name="action_sortTopText">Sort Top</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_section1">Topics</string>

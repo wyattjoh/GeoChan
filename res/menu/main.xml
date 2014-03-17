@@ -6,6 +6,21 @@
         android:showAsAction="never"
         android:title="@string/action_settings"/>
     <item
+        android:id="@+id/action_sortDate"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_sortDateText"/>
+    <item
+        android:id="@+id/action_sortScore"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_sortScoreText"/>
+    <item
+        android:id="@+id/action_sortDefault"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_sortTopText"/>
+    <item
         android:id="@+id/action_new_post"
         android:icon="@drawable/ic_action_new"
         android:showAsAction="ifRoom"

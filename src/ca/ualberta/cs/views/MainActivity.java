@@ -64,6 +64,7 @@ public class MainActivity extends FragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+
 		return true;
 	}
 
@@ -129,8 +130,8 @@ public class MainActivity extends FragmentActivity {
 				Bundle savedInstanceState) {
 
 			// random generated code...
-			View rootView = inflater.inflate(R.layout.fragment_main_dummy, container, false);
-			
+			View rootView = inflater.inflate(R.layout.fragment_main_dummy,
+					container, false);
 
 			// get fragment number
 			int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
@@ -154,12 +155,13 @@ public class MainActivity extends FragmentActivity {
 		}
 
 		public void populateFragment(View theRootView,
-				TopicModelList topicModelList ) {
+				TopicModelList topicModelList) {
 			// get title & list view adapter
 			ListView listView = (ListView) theRootView
 					.findViewById(R.id.postListView);
-			PostListViewAdapter listAdapter = new PostListViewAdapter(getActivity(), topicModelList.getTopicModelArrayList() );
-			
+			PostListViewAdapter listAdapter = new PostListViewAdapter(
+					getActivity(), topicModelList.getTopicModelArrayList());
+
 			// set adapter
 			listView.setAdapter(listAdapter);
 			listAdapter.notifyDataSetChanged();
@@ -188,19 +190,21 @@ public class MainActivity extends FragmentActivity {
 				}
 			});
 		}
-		
+
 		/**
-		 * set the connection text
+		 * set the connection text taken from
+		 * http://stackoverflow.com/questions/
+		 * 14198605/how-to-hide-a-textview-in-simpleadapter
 		 * 
 		 * @param theRootView
 		 */
 		public void setConnectionStatus(View theRootView) {
-			TextView connectionStatus = (TextView) theRootView.findViewById(R.id.connectionStatusText);
-			//TODO toggle text based on connection status
-			if (null != null){
+			TextView connectionStatus = (TextView) theRootView
+					.findViewById(R.id.connectionStatusText);
+			// TODO toggle text based on connection status
+			if (null != null) {
 				connectionStatus.setVisibility(View.GONE);
-			}
-			else{
+			} else {
 				connectionStatus.setTextColor(Color.RED);
 			}
 		}
@@ -214,7 +218,8 @@ public class MainActivity extends FragmentActivity {
 		public void startCommentActivty(View theRootView,
 				TopicModel theTopicModel) {
 			// new intent
-			Intent intent = new Intent(theRootView.getContext(), PostViewActivity.class);
+			Intent intent = new Intent(theRootView.getContext(),
+					PostViewActivity.class);
 
 			// make a gson object and serialize the topic
 			Gson gsonTopic = new Gson();
@@ -242,7 +247,8 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void loginFlow() {
-		ActiveUserModel userController = ActiveUserModel.createShared(getApplicationContext());
+		ActiveUserModel userController = ActiveUserModel
+				.createShared(getApplicationContext());
 
 		if (userController.isLoggedIn()) {
 			// continue
@@ -274,9 +280,19 @@ public class MainActivity extends FragmentActivity {
 		case R.id.action_new_post:
 			newPost();
 			return true;
-			/*
-			 * case R.id.action_settings: openSettings(); return true;
-			 */
+		case R.id.action_settings:
+			startSettingsActivity();
+			return true;
+		case R.id.action_sortDate:
+			PostListController.setSort(PostListController.SORT_DATE);
+			return true;
+		case R.id.action_sortScore:
+			PostListController.setSort(PostListController.SORT_SCORE);
+			return true;
+		case R.id.action_sortDefault:
+			PostListController.setSort(PostListController.SORT_DEFAULT);
+			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -284,6 +300,11 @@ public class MainActivity extends FragmentActivity {
 
 	protected void newPost() {
 		Intent intent = new Intent(this, EditTopicActivity.class);
+		startActivity(intent);
+	}
+
+	protected void startSettingsActivity() {
+		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
 	}
 }
