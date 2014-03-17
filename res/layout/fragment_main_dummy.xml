@@ -12,9 +12,18 @@
         android:id="@+id/postListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/connectionStatusText"
         tools:listitem="@android:layout/simple_list_item_1" >
 
     </ListView>
+
+    <TextView
+        android:id="@+id/connectionStatusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/connectionStatus"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

@@ -128,6 +128,7 @@ public class MainActivity extends FragmentActivity {
 
 			// random generated code...
 			View rootView = inflater.inflate(R.layout.fragment_main_dummy, container, false);
+			
 
 			// get fragment number
 			int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
@@ -137,6 +138,7 @@ public class MainActivity extends FragmentActivity {
 				// create topic list is a stand in for the actual data
 				// TODO get actual data, and add method to the controller
 				populateFragment(rootView, PostListController.createCommentedTopics(null));
+				setConnectionStatus(rootView);
 				setListener(rootView);
 				break;
 			case 2:
@@ -157,6 +159,7 @@ public class MainActivity extends FragmentActivity {
 			
 			// set adapter
 			listView.setAdapter(listAdapter);
+			listAdapter.notifyDataSetChanged();
 		}
 
 		/**
@@ -181,6 +184,17 @@ public class MainActivity extends FragmentActivity {
 
 				}
 			});
+		}
+		
+		/**
+		 * set the connection text
+		 * 
+		 * @param theRootView
+		 */
+		public void setConnectionStatus(View theRootView) {
+			TextView connectionStatus = (TextView) theRootView.findViewById(R.id.connectionStatusText);
+			//TODO togle text based on connection status
+			connectionStatus.setVisibility(View.GONE);
 		}
 
 		/**

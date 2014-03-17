@@ -121,4 +121,7 @@ public class PostListViewAdapter extends BaseAdapter {
 			titleText.setText("Reply");
 		}
 	}
+	
+	public void updateListView(View theView){
+	}
 }

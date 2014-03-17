@@ -23,5 +23,6 @@
     <string name="current_location">Location</string>
     <string name="title_activity_comment">CommentActivity</string>
     <string name="title_activity_edit_topic">EditTopicActivity</string>
+    <string name="connectionStatus">No Connection</string>
 
 </resources>
