@@ -45,6 +45,8 @@ public class MainActivity extends FragmentActivity {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
+	
+	static PostListViewAdapter listAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -160,12 +162,12 @@ public class MainActivity extends FragmentActivity {
 			// get title & list view adapter
 			ListView listView = (ListView) theRootView
 					.findViewById(R.id.postListView);
-			PostListViewAdapter listAdapter = new PostListViewAdapter(
+			listAdapter = new PostListViewAdapter(
 					getActivity(), topicModelList.getTopicModelArrayList());
 
 			// set adapter
 			listView.setAdapter(listAdapter);
-			listAdapter.notifyDataSetChanged();
+			
 		}
 
 		/**
@@ -202,6 +204,7 @@ public class MainActivity extends FragmentActivity {
 		public void setConnectionStatus(View theRootView) {
 			TextView connectionStatus = (TextView) theRootView
 					.findViewById(R.id.connectionStatusText);
+			
 			// TODO toggle text based on connection status
 			if (null != null) {
 				connectionStatus.setVisibility(View.GONE);
@@ -286,6 +289,8 @@ public class MainActivity extends FragmentActivity {
 			return true;
 		case R.id.action_sortDate:
 			PostListController.setSort(PostListController.SORT_DATE);
+			listAdapter.notifyDataSetChanged();
+			
 			return true;
 		case R.id.action_sortScore:
 			PostListController.setSort(PostListController.SORT_SCORE);

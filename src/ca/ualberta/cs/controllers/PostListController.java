@@ -16,16 +16,16 @@ public class PostListController {
 	public static final int SORT_SCORE = 3;
 	public static final int SORT_DEFAULT = 4;
 	
-	public static ArrayList<Object> getList(){	
-		return null;
-	}
-	
 	public static void setSort(final int theSortOrder){
 		switch (theSortOrder) {
 		case SORT_DATE:
 			TopicModelList.shared().sortByDate();
 			break;
-
+		case SORT_SCORE:
+			TopicModelList.shared().sortByScore();
+			break;
+		case SORT_PROXIMITY:
+			TopicModelList.shared().sortByLocation();
 		default:
 			break;
 		}

@@ -15,10 +15,6 @@ public class PostListControllerTest extends ActivityInstrumentationTestCase2<Mai
 		super(MainActivity.class);
 	}
 	
-	public void testControllerGetList(){
-		ArrayList<Object> commentList = PostListController.getList();
-		assertNotNull(commentList);
-	}
 	
 	public void testControllerCreateTopicList(){
 		PostListController.createTopicList(new UserModel("testUser"));
