@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
 
 public class PostListController {
@@ -19,10 +20,9 @@ public class PostListController {
 		return null;
 	}
 
-	public static ArrayList<TopicModel> createTopicList(UserModel theUser){
+	public static void createTopicList(UserModel theUser){
 		// init array list
 		ArrayList<TopicModel> theModelList = new ArrayList<TopicModel>();
-		// init topic model
 		if (theUser == null){
 			// populate topic with test entries
 			TopicModel theTopic1 = new TopicModel();
@@ -65,9 +65,8 @@ public class PostListController {
 			theModelList.add(theTopic3);
 		}
 		
+		TopicModelList.shared().setTopicModelArrayList(theModelList);
 
-		
-		return theModelList;
 	}
 	
 	public static ArrayList<CommentModel> createCommentlist(UserModel theUser){
@@ -118,17 +117,17 @@ public class PostListController {
 	 * @param theUser
 	 * @return
 	 */
-	public static ArrayList<TopicModel> createCommentedTopics(UserModel theUser){
+	public static void createCommentedTopics(UserModel theUser){
 		// build up static test models
-		ArrayList<TopicModel> topicList = (ArrayList<TopicModel>) createTopicList(theUser);
+		createTopicList(theUser);
+		
 		ArrayList<CommentModel> commentList = (ArrayList<CommentModel>) createCommentlist(theUser);
 		
 		// assign topics the comments
-		for (int i = 0; i < topicList.size(); i++) {
+		for (int i = 0; i < TopicModelList.shared().getTopicModelArrayList().size(); i++) {
 			for (int j = 0; j < commentList.size(); j++){
-				topicList.get(i).addChildComment(commentList.get(j));
+				TopicModelList.shared().getTopicModelArrayList().get(i).addChildComment(commentList.get(j));
 			}
 		}
-		return topicList;
 	}
 }

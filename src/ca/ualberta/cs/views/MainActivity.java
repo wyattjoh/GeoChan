@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -24,6 +25,7 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.models.TopicModelList;
 
 import com.google.gson.Gson;
 
@@ -137,7 +139,8 @@ public class MainActivity extends FragmentActivity {
 			case 1:
 				// create topic list is a stand in for the actual data
 				// TODO get actual data, and add method to the controller
-				populateFragment(rootView, PostListController.createCommentedTopics(null));
+				PostListController.createCommentedTopics(null);
+				populateFragment(rootView, TopicModelList.shared());
 				setConnectionStatus(rootView);
 				setListener(rootView);
 				break;
@@ -151,11 +154,11 @@ public class MainActivity extends FragmentActivity {
 		}
 
 		public void populateFragment(View theRootView,
-				ArrayList<TopicModel> theTopicList) {
+				TopicModelList topicModelList ) {
 			// get title & list view adapter
 			ListView listView = (ListView) theRootView
 					.findViewById(R.id.postListView);
-			PostListViewAdapter listAdapter = new PostListViewAdapter(getActivity(), theTopicList);
+			PostListViewAdapter listAdapter = new PostListViewAdapter(getActivity(), topicModelList.getTopicModelArrayList() );
 			
 			// set adapter
 			listView.setAdapter(listAdapter);
@@ -193,8 +196,13 @@ public class MainActivity extends FragmentActivity {
 		 */
 		public void setConnectionStatus(View theRootView) {
 			TextView connectionStatus = (TextView) theRootView.findViewById(R.id.connectionStatusText);
-			//TODO togle text based on connection status
-			connectionStatus.setVisibility(View.GONE);
+			//TODO toggle text based on connection status
+			if (null != null){
+				connectionStatus.setVisibility(View.GONE);
+			}
+			else{
+				connectionStatus.setTextColor(Color.RED);
+			}
 		}
 
 		/**
