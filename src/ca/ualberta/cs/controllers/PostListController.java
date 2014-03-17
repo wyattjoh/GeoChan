@@ -21,7 +21,14 @@ public class PostListController {
 	}
 	
 	public static void setSort(final int theSortOrder){
-		//TODO add sorting
+		switch (theSortOrder) {
+		case SORT_DATE:
+			TopicModelList.shared().sortByDate();
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	public static void createTopicList(UserModel theUser){

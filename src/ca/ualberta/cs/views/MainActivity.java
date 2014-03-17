@@ -2,6 +2,7 @@ package ca.ualberta.cs.views;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Observer;
 
 import android.app.Activity;
 import android.content.Intent;
