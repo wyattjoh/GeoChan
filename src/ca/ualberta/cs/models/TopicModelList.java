@@ -4,6 +4,7 @@
 package ca.ualberta.cs.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * @author wyatt
@@ -39,5 +40,18 @@ public class TopicModelList {
 	
 	public ArrayList<TopicModel> getTopicModelArrayList() {
 		return theTopicModelArrayList;
+	}
+	
+	/*
+	 * Sorting Methods
+	 */
+	public void sortByScore() {
+		Collections.sort(this.theTopicModelArrayList, PostModel.COMPARE_BY_SCORE);
+	}
+	public void sortByDate() {
+		Collections.sort(this.theTopicModelArrayList, PostModel.COMPARE_BY_DATE);
+	}
+	public void sortByLocation() {
+		//Not yet implemented
 	}
 }

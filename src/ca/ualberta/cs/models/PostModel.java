@@ -1,6 +1,7 @@
 package ca.ualberta.cs.models;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 
 import android.graphics.Bitmap;
@@ -15,6 +16,20 @@ public abstract class PostModel {
 	private Date datePosted;
 	private Integer score;
 	private ArrayList<CommentModel> childrenComments;
+	
+	/**
+	 * Comparators
+	 */
+	public static Comparator<PostModel> COMPARE_BY_DATE = new Comparator<PostModel>() {
+		public int compare(PostModel one, PostModel other) {
+			return one.datePosted.compareTo(other.datePosted);
+		}
+	};
+	public static Comparator<PostModel> COMPARE_BY_SCORE = new Comparator<PostModel>() {
+		public int compare(PostModel one, PostModel other) {
+			return one.score.compareTo(other.score);
+		}
+	};
 	
 	/**
 	 * Constructors
@@ -47,8 +62,7 @@ public abstract class PostModel {
 		if (picture != null){
 			return true;
 		}
-		return false;
-		
+		return false;	
 	}
 	/**
 	 *  Auto generated setters and getters
