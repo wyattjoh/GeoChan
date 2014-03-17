@@ -6,6 +6,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
 import ca.ualberta.cs.views.MainActivity;
 import ca.ualberta.cs.views.PostListViewAdapter;
@@ -51,19 +52,22 @@ public class PostApaterTest extends
 		// make sure we are still getting the correct object
 		assertEquals(CommentModel.class, adapter.getItem(1).getClass());
 	}
-	
-	public void testBuggyJunk(){
-		//TestAdapterCount();
-		//TestAdapterItem();
+
+	public void testBuggyJunk() {
+		// TestAdapterCount();
+		// TestAdapterItem();
 	}
 
 	public void testCommentedTopics() {
 
-		ArrayList<TopicModel> topicList = (ArrayList<TopicModel>) PostListController
-				.createCommentedTopics(new UserModel("Testuser"));
-		assertNotNull("Comments exist", topicList.get(0).getChildrenComments());
-		assertEquals("Comments are comments", CommentModel.class, topicList.get(0).getChildrenComments().get(0).getClass());
-		assertEquals("The number of coments exists", 3, topicList.get(0).getChildrenComments().size());
-		}
+		PostListController.createCommentedTopics(new UserModel("Testuser"));
+		assertNotNull("Comments exist", TopicModelList.shared()
+				.getTopicModelArrayList().get(0).getChildrenComments());
+		assertEquals("Comments are comments", CommentModel.class,
+				TopicModelList.shared().getTopicModelArrayList().get(0)
+						.getChildrenComments().get(0).getClass());
+		assertEquals("The number of coments exists", 3, TopicModelList.shared()
+				.getTopicModelArrayList().get(0).getChildrenComments().size());
+	}
 
 }
