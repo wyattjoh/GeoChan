@@ -290,13 +290,14 @@ public class MainActivity extends FragmentActivity {
 		case R.id.action_sortDate:
 			PostListController.setSort(PostListController.SORT_DATE);
 			listAdapter.notifyDataSetChanged();
-			
 			return true;
 		case R.id.action_sortScore:
 			PostListController.setSort(PostListController.SORT_SCORE);
+			listAdapter.notifyDataSetChanged();
 			return true;
 		case R.id.action_sortDefault:
 			PostListController.setSort(PostListController.SORT_DEFAULT);
+			listAdapter.notifyDataSetChanged();
 			return true;
 
 		default:

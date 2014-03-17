@@ -1,6 +1,9 @@
 package ca.ualberta.cs.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
+
+import android.text.format.DateFormat;
 
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.TopicModel;
@@ -39,7 +42,7 @@ public class PostListController {
 			TopicModel theTopic1 = new TopicModel();
 			theTopic1.setTitle("TestTitle1");
 			theTopic1.setBodyText("TestText1");
-			theTopic1.setScore(1);
+			theTopic1.setScore(3);
 			theModelList.add(theTopic1);
 			
 			TopicModel theTopic2 = new TopicModel();
@@ -51,7 +54,7 @@ public class PostListController {
 			TopicModel theTopic3 = new TopicModel();
 			theTopic3.setTitle("TestTitle3");
 			theTopic3.setBodyText("TestText3");
-			theTopic3.setScore(3);
+			theTopic3.setScore(1);
 			theModelList.add(theTopic3);
 		}
 		
