@@ -22,13 +22,13 @@ public class PostListController {
 	public static void setSort(final int theSortOrder){
 		switch (theSortOrder) {
 		case SORT_DATE:
-			TopicModelList.shared().sortByDate();
+			TopicModelList.getInstance().sortByDate();
 			break;
 		case SORT_SCORE:
-			TopicModelList.shared().sortByScore();
+			TopicModelList.getInstance().sortByScore();
 			break;
 		case SORT_PROXIMITY:
-			TopicModelList.shared().sortByLocation();
+			TopicModelList.getInstance().sortByLocation();
 		default:
 			break;
 		}
@@ -79,7 +79,7 @@ public class PostListController {
 			theModelList.add(theTopic3);
 		}
 		
-		TopicModelList.shared().setTopicModelArrayList(theModelList);
+		TopicModelList.getInstance().setTopicModelArrayList(theModelList);
 
 	}
 	
@@ -138,9 +138,9 @@ public class PostListController {
 		ArrayList<CommentModel> commentList = (ArrayList<CommentModel>) createCommentlist(theUser);
 		
 		// assign topics the comments
-		for (int i = 0; i < TopicModelList.shared().getTopicModelArrayList().size(); i++) {
+		for (int i = 0; i < TopicModelList.getInstance().getTopicModelArrayList().size(); i++) {
 			for (int j = 0; j < commentList.size(); j++){
-				TopicModelList.shared().getTopicModelArrayList().get(i).addChildComment(commentList.get(j));
+				TopicModelList.getInstance().getTopicModelArrayList().get(i).addChildComment(commentList.get(j));
 			}
 		}
 	}

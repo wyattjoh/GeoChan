@@ -23,7 +23,7 @@ public class TopicModelList {
 	/*
 	 * Returns a shared TopicModelList
 	 */
-	public static TopicModelList shared() {
+	public static TopicModelList getInstance() {
 		if (singleton == null) {
 			singleton = new TopicModelList();
 		}

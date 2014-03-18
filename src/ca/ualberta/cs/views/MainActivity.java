@@ -144,7 +144,7 @@ public class MainActivity extends FragmentActivity {
 				// create topic list is a stand in for the actual data
 				// TODO get actual data, and add method to the controller
 				PostListController.createCommentedTopics(null);
-				populateFragment(rootView, TopicModelList.shared());
+				populateFragment(rootView, TopicModelList.getInstance());
 				setConnectionStatus(rootView);
 				setListener(rootView);
 				break;

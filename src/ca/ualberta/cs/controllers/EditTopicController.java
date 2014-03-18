@@ -17,7 +17,7 @@ public class EditTopicController {
 	
 	public EditTopicController(Activity theEditTopicActivity) {
 		this.theEditTopicActivity = theEditTopicActivity;
-		this.theTopicModelList = TopicModelList.shared();
+		this.theTopicModelList = TopicModelList.getInstance();
 	}
 	
 	public void newTopic(String theTitle) {
