@@ -31,6 +31,9 @@ public class TopicModelList {
 		return singleton;
 	}
 	
+	/*
+	 * Adds a topic model to the list singleton
+	 */
 	public void addTopicModel(TopicModel theTopicModel) {
 		theTopicModelArrayList.add(theTopicModel);
 	}
@@ -39,27 +42,39 @@ public class TopicModelList {
 		this.theTopicModelArrayList = theTopicModelArrayList;
 	}
 	
+	/*
+	 * Gets the topic model array list
+	 */
 	public ArrayList<TopicModel> getTopicModelArrayList() {
 		return theTopicModelArrayList;
 	}
 	
 	/*
-	 * Sorting Methods
+	 * Sorts theTopicModelArrayList by score 
 	 */
 	public void sortByScore() {
 		Collections.sort(this.theTopicModelArrayList, PostModel.COMPARE_BY_SCORE);
 	}
-
+	
+	/*
+	 * Sorts theTopicModelArrayList by date
+	 */
 	public void sortByDate() {
 		Collections.sort(this.theTopicModelArrayList, PostModel.COMPARE_BY_DATE);
 	}
 	
+	/*
+	 * Sorts theTopicModelArrayList by location
+	 */
 	public void sortByLocation() {
-		//Not yet implemented
+		// TODO: Implement method
 	}
 	
+	/*
+	 * Selects a TopicModel in a list by a position
+	 */
 	public void selectTopicModel(int position) {
-		
+		// TODO: Implement method
 
 	}
 }
