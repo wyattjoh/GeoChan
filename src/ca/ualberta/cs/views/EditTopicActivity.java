@@ -3,7 +3,10 @@ package ca.ualberta.cs.views;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.EditTopicController;
 
@@ -53,6 +56,18 @@ public class EditTopicActivity extends Activity {
 		
 		if (this.isNewTopic) {
 			saveButton.setText("Add Topic");
+			saveButton.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					EditText titleField = (EditText) v.findViewById(R.id.titleTextField);
+					
+					String theTitle = titleField.getText().toString();
+					
+					theController.newTopic(theTitle);
+				}
+			});
 		}
 		else {
 			saveButton.setText("Update Topic");

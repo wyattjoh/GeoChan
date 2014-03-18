@@ -14,6 +14,7 @@ public class TopicModelList {
 	private static TopicModelList singleton = null;
 	
 	private ArrayList<TopicModel> theTopicModelArrayList;
+	private TopicModel selectedTopicModel = null;
 	
 	private TopicModelList() {
 		theTopicModelArrayList = new ArrayList<TopicModel>();
@@ -48,10 +49,17 @@ public class TopicModelList {
 	public void sortByScore() {
 		Collections.sort(this.theTopicModelArrayList, PostModel.COMPARE_BY_SCORE);
 	}
+
 	public void sortByDate() {
 		Collections.sort(this.theTopicModelArrayList, PostModel.COMPARE_BY_DATE);
 	}
+	
 	public void sortByLocation() {
 		//Not yet implemented
+	}
+	
+	public void selectTopicModel(int position) {
+		
+
 	}
 }
