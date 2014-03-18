@@ -32,7 +32,7 @@ public class TopicModelList {
 	}
 	
 	public void addTopicModel(TopicModel theTopicModel) {
-		
+		theTopicModelArrayList.add(theTopicModel);
 	}
 	
 	public void setTopicModelArrayList(ArrayList<TopicModel> theTopicModelArrayList) {
