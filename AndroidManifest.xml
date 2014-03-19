@@ -34,7 +34,9 @@
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name="ca.ualberta.cs.views.TopicViewActivity" android:label="@string/topic_view_vctivity">
+            android:name="ca.ualberta.cs.views.TopicViewActivity"
+            android:label="@string/topic_view_vctivity"
+            android:parentActivityName="ca.ualberta.cs.views.TopicListActivity" >
         </activity>
         <activity
             android:name="ca.ualberta.cs.views.EditTopicActivity"
@@ -42,10 +44,10 @@
             android:parentActivityName="ca.ualberta.cs.views.TopicListActivity" >
         </activity>
         <activity
-            android:name="ca.ualberta.cs.views.PostViewActivity"
-            android:label="@string/title_activity_post_view" >
+            android:name=".views.CommentViewActivity"
+            android:label="@string/comment_view_activity"
+            android:parentActivityName="ca.ualberta.cs.views.TopicViewActivity">
         </activity>
-        <activity android:label="@string/comment_view_activity" android:name=".views.CommentViewActivity"></activity>
     </application>
 
 </manifest>
