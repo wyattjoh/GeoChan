@@ -18,11 +18,7 @@ public class EditTopicController {
 		this.theTopicModelList = TopicModelList.getInstance();
 	}
 	
-	public void newTopic(String theTitle) {
-		TopicModel theTopicModel = new TopicModel();
-		
-		theTopicModel.setTitle(theTitle);
-		
+	public void newTopic(TopicModel theTopicModel) {
 		this.theTopicModelList.addTopicModel(theTopicModel);
 	}
 	
