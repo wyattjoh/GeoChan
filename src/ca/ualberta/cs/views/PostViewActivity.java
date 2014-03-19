@@ -57,6 +57,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		// Add Author
 		TextView authorView = (TextView) findViewById(R.id.authorTextView);
 		authorView.setText(theModel.getPostedBy().getUserName());
+		
+		// Add or remove title text
+		setTitleText();
 	}
 
 	abstract void setTitleText();
