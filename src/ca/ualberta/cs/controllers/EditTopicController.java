@@ -26,12 +26,6 @@ public class EditTopicController {
 		theTopicModel.setTitle(theTitle);
 		
 		this.theTopicModelList.addTopicModel(theTopicModel);
-		
-		if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
-			Log.w("EditTopicController", "Running on UI Thread.");
-		} else {
-			Log.w("EditTopicController", "Not running on UI Thread.");
-		}
 	}
 	
 }
