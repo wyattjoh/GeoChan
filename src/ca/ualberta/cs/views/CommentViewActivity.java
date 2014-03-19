@@ -25,6 +25,9 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 		// Hide the titleView
 		TextView titleView = (TextView) findViewById(R.id.titleTextView);
 		titleView.setVisibility(View.GONE);
+		
+		// Fix action bar
+		getActionBar().setTitle(theModel.getCommentText()); 
 	}
 
 }

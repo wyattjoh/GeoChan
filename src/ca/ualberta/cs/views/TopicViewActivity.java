@@ -26,6 +26,9 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 	void setTitleText() {
 		TextView titleView = (TextView) findViewById(R.id.titleTextView);
 		titleView.setText(theModel.getTitle());
+		
+		// Fix action bar
+		getActionBar().setTitle(theModel.getTitle()); 
 	}
 
 }
