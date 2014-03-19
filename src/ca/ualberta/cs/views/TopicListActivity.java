@@ -11,11 +11,15 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.TopicModelList;
 
 public class TopicListActivity extends FragmentActivity {
 
@@ -89,6 +93,24 @@ public class TopicListActivity extends FragmentActivity {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
+	
+	/*
+	 * Called when the cell is clicked
+	 */
+	public void cellClicked(View v) {
+		// Get the selected tag position
+		Integer position = (Integer) v.getTag();
+		
+		// Get the model list
+		TopicModelList topicModelList = TopicModelList.getInstance();
+		
+		// Mark the selected model
+		topicModelList.selectTopicModel(position.intValue());
+		
+		// Start intent
+		Intent intent = new Intent(this, TopicViewActivity.class);
+		startActivity(intent);
+	}
 
 	private void loginFlow() {
 		ActiveUserModel userController = ActiveUserModel
@@ -149,7 +171,7 @@ public class TopicListActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
-		case R.id.action_new_post:
+		case R.id.cellActiveArea:
 			newPost();
 			return true;
 		case R.id.action_settings:

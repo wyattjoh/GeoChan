@@ -75,6 +75,13 @@ public class TopicModelList {
 	 */
 	public void selectTopicModel(int position) {
 		// TODO: Implement method
-
+		this.selectedTopicModel = this.theTopicModelArrayList.get(position);
+	}
+	
+	/*
+	 * Gets the last selected TopicModel
+	 */
+	public TopicModel getSelectedTopicModel() {
+		return this.selectedTopicModel;
 	}
 }

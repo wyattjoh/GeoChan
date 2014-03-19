@@ -9,7 +9,7 @@ import android.location.Location;
 
 public abstract class PostModel {
 	private String id;
-	private String bodyText;
+	private String commentText;
 	private Location location;
 	private Bitmap picture;
 	private UserModel postedBy;
@@ -75,11 +75,11 @@ public abstract class PostModel {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getBodyText() {
-		return bodyText;
+	public String getCommentText() {
+		return commentText;
 	}
-	public void setBodyText(String bodyText) {
-		this.bodyText = bodyText;
+	public void setCommentText(String bodyText) {
+		this.commentText = bodyText;
 	}
 	public Location getLocation() {
 		return location;

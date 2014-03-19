@@ -27,5 +27,8 @@
     <string name="title_activity_comment">CommentActivity</string>
     <string name="title_activity_edit_topic">EditTopicActivity</string>
     <string name="connectionStatus">No Connection</string>
+    <string name="title_activity_post_view">PostViewActivity</string>
+    <string name="topic_view_vctivity">Topic View Activity</string>
+    <string name="comment_view_activity">Comment View Activity</string>
 
 </resources>

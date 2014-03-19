@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.PostModel;
@@ -50,6 +51,10 @@ public abstract class PostListViewAdapter<T extends PostModel> extends ArrayAdap
 		// Get the post object
 		T theObject = getItem(thePosition);
 		PostModel thePost = theObject;
+		
+		// Add position tag
+		RelativeLayout cellActiveArea = (RelativeLayout) theView.findViewById(R.id.cellActiveArea);
+		cellActiveArea.setTag(thePosition);
 		
 		// Fill date
 		TextView dateTextView = (TextView) theView.findViewById(R.id.textViewAge);
