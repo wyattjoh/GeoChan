@@ -1,4 +1,4 @@
-package adapters;
+package ca.ualberta.cs.adapters;
 
 import java.util.ArrayList;
 

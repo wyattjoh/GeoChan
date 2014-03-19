@@ -1,7 +1,5 @@
 package ca.ualberta.cs.views;
 
-import adapters.PostListViewAdapter;
-import adapters.TopicListViewAdapter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.adapters.PostListViewAdapter;
+import ca.ualberta.cs.adapters.TopicListViewAdapter;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
