@@ -61,7 +61,7 @@ public class EditTopicActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					EditText titleField = (EditText) v.findViewById(R.id.titleTextField);
+					EditText titleField = (EditText) findViewById(R.id.titleTextField);
 					
 					String theTitle = titleField.getText().toString();
 					
