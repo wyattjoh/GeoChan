@@ -51,12 +51,21 @@
         android:text="Add Picture" />
 
     <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/saveOrAddButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Cancel" />
+
+    <Button
         android:id="@+id/saveOrAddButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
         android:layout_alignLeft="@+id/pictureButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignRight="@+id/pictureButton"
         android:gravity="center_vertical|center_horizontal"
         android:text="Save" />
 

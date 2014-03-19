@@ -6,6 +6,9 @@ package ca.ualberta.cs.models;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import android.os.Looper;
+import android.util.Log;
+
 /**
  * @author wyatt
  *
@@ -32,10 +35,10 @@ public class TopicModelList {
 	}
 	
 	/*
-	 * Adds a topic model to the list singleton
+	 * Adds a topic model to the top of the list singleton
 	 */
 	public void addTopicModel(TopicModel theTopicModel) {
-		theTopicModelArrayList.add(theTopicModel);
+		this.theTopicModelArrayList.add(0, theTopicModel);
 	}
 	
 	public void setTopicModelArrayList(ArrayList<TopicModel> theTopicModelArrayList) {
@@ -46,7 +49,7 @@ public class TopicModelList {
 	 * Gets the topic model array list
 	 */
 	public ArrayList<TopicModel> getTopicModelArrayList() {
-		return theTopicModelArrayList;
+		return this.theTopicModelArrayList;
 	}
 	
 	/*

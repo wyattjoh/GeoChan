@@ -45,7 +45,7 @@ public class EditTopicActivity extends Activity {
 		}
 		
 		// Get the controller
-		this.theController = new EditTopicController(this);
+		this.theController = new EditTopicController();
 		
 		// Populate the view
 		populateView();
@@ -66,6 +66,8 @@ public class EditTopicActivity extends Activity {
 					String theTitle = titleField.getText().toString();
 					
 					theController.newTopic(theTitle);
+					
+					finish();
 				}
 			});
 		}
