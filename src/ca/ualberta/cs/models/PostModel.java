@@ -21,11 +21,13 @@ public abstract class PostModel {
 	 * Comparators
 	 */
 	public static Comparator<PostModel> COMPARE_BY_DATE = new Comparator<PostModel>() {
+		@Override
 		public int compare(PostModel one, PostModel other) {
 			return one.datePosted.compareTo(other.datePosted);
 		}
 	};
 	public static Comparator<PostModel> COMPARE_BY_SCORE = new Comparator<PostModel>() {
+		@Override
 		public int compare(PostModel one, PostModel other) {
 			return one.score.compareTo(other.score);
 		}

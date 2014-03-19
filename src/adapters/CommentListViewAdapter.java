@@ -1,4 +1,4 @@
-package ca.ualberta.cs.views;
+package adapters;
 
 import java.util.ArrayList;
 

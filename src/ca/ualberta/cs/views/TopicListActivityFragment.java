@@ -1,5 +1,7 @@
 package ca.ualberta.cs.views;
 
+import adapters.PostListViewAdapter;
+import adapters.TopicListViewAdapter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -71,6 +73,7 @@ public class TopicListActivityFragment extends Fragment {
 	 * 
 	 * Added a refresh call
 	 */
+	@Override
 	public void onResume() {
 		super.onResume();
 

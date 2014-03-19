@@ -1,4 +1,4 @@
-package ca.ualberta.cs.views;
+package adapters;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.PostModel;
-import ca.ualberta.cs.models.TopicModel;
 
 /**
  * 
@@ -50,7 +49,7 @@ public abstract class PostListViewAdapter<T extends PostModel> extends ArrayAdap
 	protected void populateRowView(View theView, int thePosition){
 		// Get the post object
 		T theObject = getItem(thePosition);
-		PostModel thePost = (PostModel) theObject;
+		PostModel thePost = theObject;
 		
 		// Fill date
 		TextView dateTextView = (TextView) theView.findViewById(R.id.textViewAge);

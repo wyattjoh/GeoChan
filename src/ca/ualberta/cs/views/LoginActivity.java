@@ -25,7 +25,8 @@ public class LoginActivity extends Activity {
 		
 		final Button button = (Button) findViewById(R.id.signInButton);
         button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            @Override
+			public void onClick(View v) {
             	// Get the username
             	EditText theTextField = (EditText)findViewById(R.id.userNameEditText);
             	

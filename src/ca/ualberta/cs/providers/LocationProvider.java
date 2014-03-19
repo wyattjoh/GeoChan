@@ -18,6 +18,7 @@ public class LocationProvider {
 	private Location theLocation = null;
 
 	private final LocationListener locationListener = new LocationListener() {
+		@Override
 		public void onLocationChanged(Location location) {
 			// Called when a new location is found by the network location
 			// provider.
@@ -25,14 +26,17 @@ public class LocationProvider {
 			theLocation = location;
 		}
 
+		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 			// TODO
 		}
 
+		@Override
 		public void onProviderEnabled(String provider) {
 			// TODO
 		}
 
+		@Override
 		public void onProviderDisabled(String provider) {
 			// TODO
 		}

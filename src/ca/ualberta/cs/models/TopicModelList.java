@@ -6,9 +6,6 @@ package ca.ualberta.cs.models;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import android.os.Looper;
-import android.util.Log;
-
 /**
  * @author wyatt
  *

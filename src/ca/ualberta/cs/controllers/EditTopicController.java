@@ -3,8 +3,6 @@
  */
 package ca.ualberta.cs.controllers;
 
-import android.os.Looper;
-import android.util.Log;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 

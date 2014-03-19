@@ -1,10 +1,6 @@
 package ca.ualberta.cs.controllers;
 
 import java.util.ArrayList;
-import java.util.Date;
-
-import android.text.format.DateFormat;
-
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
@@ -135,7 +131,7 @@ public class PostListController {
 		// build up static test models
 		createTopicList(theUser);
 		
-		ArrayList<CommentModel> commentList = (ArrayList<CommentModel>) createCommentlist(theUser);
+		ArrayList<CommentModel> commentList = createCommentlist(theUser);
 		
 		// assign topics the comments
 		for (int i = 0; i < TopicModelList.getInstance().getTopicModelArrayList().size(); i++) {
