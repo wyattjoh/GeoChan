@@ -1,17 +1,17 @@
 package ca.ualberta.cs.test;
 
-import ca.ualberta.cs.views.MainActivity;
+import android.app.Activity;
+import android.test.ActivityInstrumentationTestCase2;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.UserModel;
-import android.test.ActivityInstrumentationTestCase2;
 
 public class PostModelTest extends
-		ActivityInstrumentationTestCase2<MainActivity> {
+		ActivityInstrumentationTestCase2<Activity> {
 
 	public PostModelTest() {
-		super(MainActivity.class);
+		super(Activity.class);
 	}
 
 	public void testCommentModel() {

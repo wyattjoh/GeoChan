@@ -122,7 +122,7 @@ public class PostListController {
 			theComment3.setScore(3);
 			commentList.add(theComment3);
 		}
-		
+			
 		return commentList;
 	}
 	

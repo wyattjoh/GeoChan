@@ -1,23 +1,21 @@
 package ca.ualberta.cs.test;
 
-import java.util.ArrayList;
-
+import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import ca.ualberta.cs.controllers.PostListController;
-import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
-import ca.ualberta.cs.views.MainActivity;
 
-public class PostListControllerTest extends ActivityInstrumentationTestCase2<MainActivity> {
+public class PostListControllerTest extends ActivityInstrumentationTestCase2<Activity> {
 
 	public PostListControllerTest() {
-		super(MainActivity.class);
+		super(Activity.class);
 	}
 	
 	
 	public void testControllerCreateTopicList(){
 		PostListController.createTopicList(new UserModel("testUser"));
-		assertNotSame("make sure objects are not all the same", TopicModelList.shared().getTopicModelArrayList().get(0), TopicModelList.shared().getTopicModelArrayList().get(1));
+		assertNotSame("make sure objects are not all the same", TopicModelList.getInstance().getTopicModelArrayList().get(0), TopicModelList.getInstance().getTopicModelArrayList().get(1));
+		
 	}
 }
