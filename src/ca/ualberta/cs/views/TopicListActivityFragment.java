@@ -2,6 +2,7 @@ package ca.ualberta.cs.views;
 
 import java.util.List;
 
+import android.graphics.AvoidXfermode;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -17,9 +18,11 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.PostListViewAdapter;
 import ca.ualberta.cs.adapters.TopicListViewAdapter;
 import ca.ualberta.cs.controllers.PostListController;
+import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.NetworkModel;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
+import ca.ualberta.cs.providers.LocationProvider;
 
 /**
  * A dummy fragment representing a section of the app, but that simply displays
@@ -110,6 +113,13 @@ public class TopicListActivityFragment extends Fragment {
 				setConnectionStatus(fragment.getView());
 			}
 		}
+
+		// update the location
+		ActiveUserModel
+				.getShared()
+				.getUser()
+				.setLocation(
+						LocationProvider.shared(getActivity()).getLocation());
 	}
 
 	private static enum STATE {

@@ -5,7 +5,11 @@ import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
-
+/**
+ * control the post arrays (?!)
+ * @author vincent
+ *
+ */
 public class PostListController {
 
 	/* sort values */
