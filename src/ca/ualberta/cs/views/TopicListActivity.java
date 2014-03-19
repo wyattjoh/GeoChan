@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -15,10 +18,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.NetworkModel;
 import ca.ualberta.cs.models.TopicModelList;
 
 public class TopicListActivity extends FragmentActivity {
@@ -32,7 +35,7 @@ public class TopicListActivity extends FragmentActivity {
 
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
-			
+
 			this.fragments = new ArrayList<Fragment>();
 		}
 
@@ -49,12 +52,13 @@ public class TopicListActivity extends FragmentActivity {
 			// below) with the page number as its lone argument.
 			Fragment fragment = new TopicListActivityFragment();
 			Bundle args = new Bundle();
-			args.putInt(TopicListActivityFragment.ARG_SECTION_NUMBER, position + 1);
+			args.putInt(TopicListActivityFragment.ARG_SECTION_NUMBER,
+					position + 1);
 			fragment.setArguments(args);
-			
+
 			// Add to list of fragments
 			fragments.add(fragment);
-			
+
 			return fragment;
 		}
 
@@ -71,14 +75,15 @@ public class TopicListActivity extends FragmentActivity {
 			}
 			return null;
 		}
-		
-		public void updateFragments() {
+
+		public void refreshFragments() {
 			for (Fragment fragment : fragments) {
 				// Update Fragments
-				((TopicListActivityFragment) fragment).update();
+				((TopicListActivityFragment) fragment).refresh();
 			}
 		}
 	}
+
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -93,20 +98,20 @@ public class TopicListActivity extends FragmentActivity {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
-	
+
 	/*
 	 * Called when the cell is clicked
 	 */
 	public void cellClicked(View v) {
 		// Get the selected tag position
 		Integer position = (Integer) v.getTag();
-		
+
 		// Get the model list
 		TopicModelList topicModelList = TopicModelList.getInstance();
-		
+
 		// Mark the selected model
 		topicModelList.selectTopicModel(position.intValue());
-		
+
 		// Start intent
 		Intent intent = new Intent(this, TopicViewActivity.class);
 		startActivity(intent);
@@ -157,6 +162,13 @@ public class TopicListActivity extends FragmentActivity {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(sectionsPagerAdapter);
+
+		registerReceiver(new BroadcastReceiver() {
+			public void onReceive(Context context, Intent intent) {
+				// Network changed, refresh the fragments
+				refreshFragments();
+			}
+		}, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
 	}
 
 	@Override
@@ -179,28 +191,28 @@ public class TopicListActivity extends FragmentActivity {
 			return true;
 		case R.id.action_sortDate:
 			PostListController.setSort(PostListController.SORT_DATE);
-			
+
 			// Refresh the lists
-			refreshLists();
+			refreshFragments();
 			return true;
 		case R.id.action_sortScore:
 			PostListController.setSort(PostListController.SORT_SCORE);
-			
+
 			// Refresh the lists
-			refreshLists();
+			refreshFragments();
 			return true;
 		case R.id.action_sortDefault:
 			PostListController.setSort(PostListController.SORT_DEFAULT);
 
 			// Refresh the lists
-			refreshLists();
+			refreshFragments();
 			return true;
 
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -209,9 +221,9 @@ public class TopicListActivity extends FragmentActivity {
 		loginFlow();
 	}
 
-	protected void refreshLists() {
+	protected void refreshFragments() {
 		// Update all fragments
-		sectionsPagerAdapter.updateFragments();
+		sectionsPagerAdapter.refreshFragments();
 	}
 
 	protected void startSettingsActivity() {

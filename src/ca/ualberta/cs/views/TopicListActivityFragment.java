@@ -1,18 +1,23 @@
 package ca.ualberta.cs.views;
 
+import java.util.List;
+
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.PostListViewAdapter;
 import ca.ualberta.cs.adapters.TopicListViewAdapter;
 import ca.ualberta.cs.controllers.PostListController;
+import ca.ualberta.cs.models.NetworkModel;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 
@@ -44,13 +49,15 @@ public class TopicListActivityFragment extends Fragment {
 			// create topic list is a stand in for the actual data
 			PostListController.createCommentedTopics(null);
 			populateFragment(rootView, TopicModelList.getInstance());
-			setConnectionStatus(rootView);
 			break;
 		case 2:
 			break;
 		case 3:
 			break;
 		}
+
+		// Update the status
+		setConnectionStatus(rootView);
 
 		return rootView;
 	}
@@ -79,18 +86,35 @@ public class TopicListActivityFragment extends Fragment {
 		super.onResume();
 
 		// Update
-		update();
+		refresh();
 	}
-	
+
 	/*
 	 * Updates all lists
 	 */
-	public void update() {
+	public void refresh() {
 		// Refresh the list
 		if (this.listAdapter != null) {
 			this.listAdapter.notifyDataSetChanged();
 		}
+
+		// Refresh views
+		List<Fragment> fragments = getFragmentManager().getFragments();
+
+		for (Fragment fragment : fragments) {
+			// Get the view
+			View theView = fragment.getView();
+
+			if (theView != null) {
+				// Update connection status
+				setConnectionStatus(fragment.getView());
+			}
+		}
 	}
+
+	private static enum STATE {
+		CONNECTED, NOT_CONNECTED, LOADING
+	};
 
 	/**
 	 * set the connection text taken from http://stackoverflow.com/questions/
@@ -99,14 +123,54 @@ public class TopicListActivityFragment extends Fragment {
 	 * @param theRootView
 	 */
 	public void setConnectionStatus(View theRootView) {
-		TextView connectionStatus = (TextView) theRootView
-				.findViewById(R.id.connectionStatusText);
+		Drawable theConnectionIcon = null;
+		String statusText = null;
 
-		// TODO toggle text based on connection status
-		if (null != null) {
-			connectionStatus.setVisibility(View.GONE);
+		STATE state = null;
+		if (NetworkModel.isNetworkAvailable(getActivity()
+				.getApplicationContext())) {
+			state = STATE.CONNECTED;
 		} else {
-			connectionStatus.setTextColor(Color.RED);
+			state = STATE.NOT_CONNECTED;
+		}
+
+		switch (state) {
+		case CONNECTED:
+			break;
+
+		case NOT_CONNECTED:
+			theConnectionIcon = getResources().getDrawable(
+					R.drawable.ic_action_warning);
+			statusText = "Not Connected";
+			break;
+
+		case LOADING:
+			theConnectionIcon = getResources().getDrawable(
+					R.drawable.ic_action_refresh);
+			statusText = "Loading...";
+			break;
+		}
+
+		if (statusText != null) {
+			// Make visible
+			LinearLayout listStatusBox = (LinearLayout) theRootView
+					.findViewById(R.id.listStatusBox);
+			listStatusBox.setVisibility(View.VISIBLE);
+
+			// Set the text
+			TextView listStatusText = (TextView) theRootView
+					.findViewById(R.id.listStatusText);
+			listStatusText.setText(statusText);
+
+			// Set the image
+			ImageView listStatusIcon = (ImageView) theRootView
+					.findViewById(R.id.listStatusIcon);
+			listStatusIcon.setImageDrawable(theConnectionIcon);
+		} else {
+			// Hide bar, its connected!
+			LinearLayout listStatusBox = (LinearLayout) theRootView
+					.findViewById(R.id.listStatusBox);
+			listStatusBox.setVisibility(View.GONE);
 		}
 	}
 }
