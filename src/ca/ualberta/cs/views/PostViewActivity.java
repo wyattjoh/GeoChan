@@ -1,8 +1,11 @@
 package ca.ualberta.cs.views;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.PostModel;
@@ -44,7 +47,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		commentView.setText(theModel.getCommentText());
 
 		// Add score
-		TextView scoreView = (TextView) findViewById(R.id.scoreTextView);
+		TextView scoreView = (TextView) findViewById(R.id.scorePostTextView);
 		String scoreString = "";
 		if (theModel.getScore() > 0) {
 			scoreString = "+";
@@ -60,6 +63,18 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		
 		// Add or remove title text
 		setTitleText();
+		
+		// Add image
+		ImageView imageView = (ImageView) findViewById(R.id.imageView);
+		Bitmap thePicture = theModel.getPicture();
+		if (thePicture == null) {
+			// No picture, hide the field
+			imageView.setVisibility(View.GONE);
+		}
+		else {
+			// A picture, add the image
+			// TODO: Implement
+		}
 	}
 
 	abstract void setTitleText();
