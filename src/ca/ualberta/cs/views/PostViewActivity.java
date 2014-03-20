@@ -96,8 +96,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	abstract void setTitleText();
 	
 	public void cellClicked(View theView) {
-		RelativeLayout cellActiveArea = (RelativeLayout) theView.findViewById(R.id.cellActiveArea);
-		Integer thePosition = (Integer) cellActiveArea.getTag();
+		Integer thePosition = (Integer) theView.getTag();
 		
 		CommentModelList commentModelList = CommentModelList.getInstance(theModel);
 		commentModelList.setSelection(thePosition);
