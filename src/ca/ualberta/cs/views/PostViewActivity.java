@@ -13,6 +13,7 @@ import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.CommentListViewAdapter;
 import ca.ualberta.cs.models.CommentModel;
+import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.PostModel;
 
 public abstract class PostViewActivity<T extends PostModel> extends Activity {
@@ -98,9 +99,11 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		RelativeLayout cellActiveArea = (RelativeLayout) theView.findViewById(R.id.cellActiveArea);
 		Integer thePosition = (Integer) cellActiveArea.getTag();
 		
-		
+		CommentModelList commentModelList = CommentModelList.getInstance(theModel);
+		commentModelList.setSelection(thePosition);
 		
 		Intent intent = new Intent(this, CommentViewActivity.class);
+		startActivity(intent);
 	}
 
 }
