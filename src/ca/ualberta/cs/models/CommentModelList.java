@@ -27,5 +27,15 @@ public class CommentModelList extends PostModelList<CommentModel> {
 		// Return the singleton
 		return singleton;
 	}
+	
+	public static CommentModelList getInstance() {
+		// Create the singleton
+		if (singleton == null) {
+			singleton = new CommentModelList();
+		}
+
+		// Return the singleton
+		return singleton;
+	}
 
 }

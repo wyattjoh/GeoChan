@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.CommentModel;
+import ca.ualberta.cs.models.CommentModelList;
 
 /**
  * @author wyatt
@@ -17,7 +18,7 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 	@Override
 	protected void getSelectedModel() {
 		// TODO Auto-generated method stub
-		
+		this.theModel = CommentModelList.getInstance().getSelection();
 	}
 
 	@Override
