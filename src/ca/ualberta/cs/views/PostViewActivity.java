@@ -1,12 +1,14 @@
 package ca.ualberta.cs.views;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.CommentListViewAdapter;
@@ -84,10 +86,21 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			
 		}
 		else {
+			// Has children!
 			CommentListViewAdapter<CommentModel> commentsAdapter = new CommentListViewAdapter<CommentModel>(this, theModel.getChildrenComments());
+			commentsListView.setAdapter(commentsAdapter);
 		}
 	}
 
 	abstract void setTitleText();
+	
+	public void cellClicked(View theView) {
+		RelativeLayout cellActiveArea = (RelativeLayout) theView.findViewById(R.id.cellActiveArea);
+		Integer thePosition = (Integer) cellActiveArea.getTag();
+		
+		
+		
+		Intent intent = new Intent(this, CommentViewActivity.class);
+	}
 
 }

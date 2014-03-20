@@ -79,7 +79,7 @@ public class PostListController {
 			theModelList.add(theTopic3);
 		}
 		
-		TopicModelList.getInstance().setTopicModelArrayList(theModelList);
+		TopicModelList.getInstance().setArrayList(theModelList);
 
 	}
 	
@@ -138,9 +138,9 @@ public class PostListController {
 		ArrayList<CommentModel> commentList = createCommentlist(theUser);
 		
 		// assign topics the comments
-		for (int i = 0; i < TopicModelList.getInstance().getTopicModelArrayList().size(); i++) {
+		for (int i = 0; i < TopicModelList.getInstance().getArrayList().size(); i++) {
 			for (int j = 0; j < commentList.size(); j++){
-				TopicModelList.getInstance().getTopicModelArrayList().get(i).addChildComment(commentList.get(j));
+				TopicModelList.getInstance().getArrayList().get(i).addChildComment(commentList.get(j));
 			}
 		}
 	}

@@ -71,7 +71,7 @@ public class TopicListActivityFragment extends Fragment {
 				.findViewById(R.id.postListView);
 
 		listAdapter = new TopicListViewAdapter<TopicModel>(getActivity(),
-				topicModelList.getTopicModelArrayList());
+				topicModelList.getArrayList());
 
 		// set adapter
 		listView.setAdapter(listAdapter);

@@ -112,7 +112,7 @@ public class TopicListActivity extends FragmentActivity {
 		TopicModelList topicModelList = TopicModelList.getInstance();
 
 		// Mark the selected model
-		topicModelList.selectTopicModel(position.intValue());
+		topicModelList.setSelection(position.intValue());
 
 		// Start intent
 		Intent intent = new Intent(this, TopicViewActivity.class);

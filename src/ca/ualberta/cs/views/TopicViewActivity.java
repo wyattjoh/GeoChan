@@ -19,7 +19,7 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 		// Get the model list
 		TopicModelList topicModelList = TopicModelList.getInstance();
 		
-		this.theModel = topicModelList.getSelectedTopicModel();
+		this.theModel = topicModelList.getSelection();
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class EditTopicController {
 	}
 	
 	public void newTopic(TopicModel theTopicModel) {
-		this.theTopicModelList.addTopicModel(theTopicModel);
+		this.theTopicModelList.add(theTopicModel);
 	}
 	
 }
