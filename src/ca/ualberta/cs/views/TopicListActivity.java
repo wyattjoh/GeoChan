@@ -99,6 +99,8 @@ public class TopicListActivity extends FragmentActivity {
 	 */
 	ViewPager mViewPager;
 
+	BroadcastReceiver connectionBroadcastReceiver = null;
+
 	/*
 	 * Called when the cell is clicked
 	 */
@@ -163,12 +165,34 @@ public class TopicListActivity extends FragmentActivity {
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(sectionsPagerAdapter);
 
-		registerReceiver(new BroadcastReceiver() {
+		Context context = getApplicationContext();
+		this.connectionBroadcastReceiver = new BroadcastReceiver() {
 			public void onReceive(Context context, Intent intent) {
 				// Network changed, refresh the fragments
 				refreshFragments();
 			}
-		}, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+		};
+
+		context.registerReceiver(this.connectionBroadcastReceiver,
+				new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.support.v4.app.FragmentActivity#onDestroy()
+	 */
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+
+		// Unregister from broadcasts
+		if (this.connectionBroadcastReceiver != null) {
+			Context context = getApplicationContext();
+			context.unregisterReceiver(this.connectionBroadcastReceiver);
+			this.connectionBroadcastReceiver = null;
+		}
 	}
 
 	@Override

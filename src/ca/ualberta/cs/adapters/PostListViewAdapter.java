@@ -2,7 +2,7 @@ package ca.ualberta.cs.adapters;
 
 import java.util.ArrayList;
 
-import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +22,10 @@ import ca.ualberta.cs.models.PostModel;
 public abstract class PostListViewAdapter<T extends PostModel> extends ArrayAdapter<T> {
 	private LayoutInflater layoutInflater = null;
 
-	public PostListViewAdapter(FragmentActivity theActivity, ArrayList<T> arrayList) {
-		super(theActivity, R.layout.row, arrayList);
+	public PostListViewAdapter(Activity activity, ArrayList<T> arrayList) {
+		super(activity, R.layout.row, arrayList);
 		// TODO Auto-generated constructor stub
-		this.layoutInflater = theActivity.getLayoutInflater();
+		this.layoutInflater = activity.getLayoutInflater();
 	}
 
 	@Override

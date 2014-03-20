@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.adapters.CommentListViewAdapter;
+import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.PostModel;
 
 public abstract class PostViewActivity<T extends PostModel> extends Activity {
@@ -25,8 +28,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		if (theModel != null) {
 			// Populate the view!
 			populateView();
-		}
-		else {
+		} else {
 			// finish it?
 			finish();
 		}
@@ -56,24 +58,33 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		}
 		scoreString = scoreString + theModel.getScore().toString();
 		scoreView.setText(scoreString);
-		
+
 		// Add Author
 		TextView authorView = (TextView) findViewById(R.id.authorTextView);
 		authorView.setText(theModel.getPostedBy().getUserName());
-		
+
 		// Add or remove title text
 		setTitleText();
-		
+
 		// Add image
 		ImageView imageView = (ImageView) findViewById(R.id.imageView);
 		Bitmap thePicture = theModel.getPicture();
 		if (thePicture == null) {
 			// No picture, hide the field
 			imageView.setVisibility(View.GONE);
-		}
-		else {
+		} else {
 			// A picture, add the image
 			// TODO: Implement
+		}
+
+		// Add comments
+		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
+		
+		if (theModel.getChildrenComments() == null) {
+			
+		}
+		else {
+			CommentListViewAdapter<CommentModel> commentsAdapter = new CommentListViewAdapter<CommentModel>(this, theModel.getChildrenComments());
 		}
 	}
 

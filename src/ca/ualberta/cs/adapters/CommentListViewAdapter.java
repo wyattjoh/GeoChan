@@ -2,7 +2,7 @@ package ca.ualberta.cs.adapters;
 
 import java.util.ArrayList;
 
-import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
@@ -10,9 +10,9 @@ import ca.ualberta.cs.models.CommentModel;
 
 public class CommentListViewAdapter<T extends CommentModel> extends PostListViewAdapter<T> {
 
-	public CommentListViewAdapter(FragmentActivity theActivity,
+	public CommentListViewAdapter(Activity activity,
 			ArrayList<T> arrayList) {
-		super(theActivity, arrayList);
+		super(activity, arrayList);
 		// TODO Auto-generated constructor stub
 	}
 

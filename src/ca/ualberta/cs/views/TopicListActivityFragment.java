@@ -180,7 +180,7 @@ public class TopicListActivityFragment extends Fragment {
 			// Hide bar, its connected!
 			LinearLayout listStatusBox = (LinearLayout) theRootView
 					.findViewById(R.id.listStatusBox);
-			listStatusBox.setVisibility(View.GONE);
+			listStatusBox.setVisibility(View.INVISIBLE);
 		}
 	}
 }
