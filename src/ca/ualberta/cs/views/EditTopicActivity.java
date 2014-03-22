@@ -3,7 +3,6 @@ package ca.ualberta.cs.views;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
@@ -15,7 +14,6 @@ import android.widget.ImageView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.EditTopicController;
 import ca.ualberta.cs.models.TopicModel;
-import ca.ualberta.cs.providers.CameraProvider;
 
 public class EditTopicActivity extends Activity {
 	public static final String IS_NEW_TOPIC_KEY = "IS_NEW_TOPIC";
