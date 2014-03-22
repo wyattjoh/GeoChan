@@ -1,21 +1,29 @@
 package ca.ualberta.cs.views;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.opengl.Visibility;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.EditTopicController;
 import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.providers.CameraProvider;
 
 public class EditTopicActivity extends Activity {
 	public static final String IS_NEW_TOPIC_KEY = "IS_NEW_TOPIC";
 
 	private EditTopicController theController;
 	private Boolean isNewTopic = true;
+	
+	static final int REQUEST_IMAGE_CAPTURE = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,14 +86,53 @@ public class EditTopicActivity extends Activity {
 					finish();
 				}
 			});
+		
+		// hide gallery thumbnail
+		ImageView galeryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
+		galeryThumbnail.setVisibility(View.INVISIBLE);
+		
 		} else {
 			saveButton.setText("Update Topic");
+			
 		}
+		
+		//get photo button
+		Button cameraButton = (Button) findViewById(R.id.pictureButton);
+		
+		// set onclick listener
+		cameraButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// start camera activity
+				dispatchTakePictureIntent();
+			}
+		});
 
 	}
 
 	public Boolean getIsNewTopic() {
 		return isNewTopic;
+	}
+	
+	public void dispatchTakePictureIntent() {
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		startActivityForResult(intent,0);
+	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    if (resultCode == RESULT_OK && data != null) {
+	    	System.out.println("Got image");
+	    	// get bitmap
+	    	Bitmap imageBitmap = (Bitmap) data.getExtras().getParcelable("data");
+	        
+	        // get and set image view
+	        ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
+	        galleryThumbnail.setVisibility(View.VISIBLE);
+	        galleryThumbnail.setImageBitmap(imageBitmap);        
+	    }
+	    else{
+	    	System.out.println("no image");
+	    }
 	}
 
 }
