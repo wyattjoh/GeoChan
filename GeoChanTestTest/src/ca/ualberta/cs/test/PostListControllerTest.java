@@ -15,7 +15,7 @@ public class PostListControllerTest extends ActivityInstrumentationTestCase2<Act
 	
 	public void testControllerCreateTopicList(){
 		PostListController.createTopicList(new UserModel("testUser"));
-		assertNotSame("make sure objects are not all the same", TopicModelList.getInstance().getTopicModelArrayList().get(0), TopicModelList.getInstance().getTopicModelArrayList().get(1));
+		assertNotSame("make sure objects are not all the same", TopicModelList.getInstance().getArrayList().get(0), TopicModelList.getInstance().getArrayList().get(1));
 		
 	}
 }

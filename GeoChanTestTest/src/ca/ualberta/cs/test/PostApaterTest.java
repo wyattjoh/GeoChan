@@ -61,12 +61,12 @@ public class PostApaterTest extends
 
 		PostListController.createCommentedTopics(new UserModel("Testuser"));
 		assertNotNull("Comments exist", TopicModelList.getInstance()
-				.getTopicModelArrayList().get(0).getChildrenComments());
+				.getArrayList().get(0).getChildrenComments());
 		assertEquals("Comments are comments", CommentModel.class,
-				TopicModelList.getInstance().getTopicModelArrayList().get(0)
+				TopicModelList.getInstance().getArrayList().get(0)
 						.getChildrenComments().get(0).getClass());
 		assertEquals("The number of coments exists", 3, TopicModelList.getInstance()
-				.getTopicModelArrayList().get(0).getChildrenComments().size());
+				.getArrayList().get(0).getChildrenComments().size());
 	}
 
 }
