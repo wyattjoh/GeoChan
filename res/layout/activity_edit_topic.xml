@@ -73,8 +73,8 @@
         android:id="@+id/imageThumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/pictureButton"
         android:layout_centerHorizontal="true"
-        android:src="@android:drawable/gallery_thumb" />
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_launcher" />
 
 </RelativeLayout>

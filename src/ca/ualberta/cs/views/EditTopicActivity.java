@@ -1,5 +1,7 @@
 package ca.ualberta.cs.views;
 
+import java.io.ByteArrayOutputStream;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +22,7 @@ public class EditTopicActivity extends Activity {
 
 	private EditTopicController theController;
 	private Boolean isNewTopic = true;
+	private byte[] imageData;
 	
 	static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -87,7 +90,7 @@ public class EditTopicActivity extends Activity {
 		
 		// hide gallery thumbnail
 		ImageView galeryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
-		galeryThumbnail.setVisibility(View.INVISIBLE);
+		//galeryThumbnail.setVisibility(View.INVISIBLE);
 		
 		} else {
 			saveButton.setText("Update Topic");
@@ -119,17 +122,19 @@ public class EditTopicActivity extends Activity {
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    if (resultCode == RESULT_OK && data != null) {
-	    	System.out.println("Got image");
 	    	// get bitmap
-	    	Bitmap imageBitmap = (Bitmap) data.getExtras().getParcelable("data");
+	    	Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
 	        
 	        // get and set image view
 	        ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
-	        galleryThumbnail.setVisibility(View.VISIBLE);
-	        galleryThumbnail.setImageBitmap(imageBitmap);        
-	    }
-	    else{
-	    	System.out.println("no image");
+	        //galleryThumbnail.setVisibility(View.VISIBLE);
+	        galleryThumbnail.setImageBitmap(imageBitmap);
+	        
+	        // compress and output
+	        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+	        imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+	        imageData = outStream.toByteArray();
+	        
 	    }
 	}
 
