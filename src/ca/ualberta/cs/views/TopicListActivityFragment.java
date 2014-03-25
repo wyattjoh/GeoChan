@@ -56,7 +56,8 @@ public class TopicListActivityFragment extends Fragment {
 					.createCommentedTopics(new UserModel("TestFavoritesUser"));
 
 			// get specific fragment view and populate
-			populateFragment(rootView, modelTopicList);
+			TopicModelList.getInstance().setArrayList(modelTopicList);
+			populateFragment(rootView, TopicModelList.getInstance().getArrayList());
 			break;
 
 		// FAVORITES case
