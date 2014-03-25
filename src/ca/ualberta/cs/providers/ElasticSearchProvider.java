@@ -33,4 +33,14 @@ public class ElasticSearchProvider {
 		// Execute the request
 		new ElasticSearchProviderService().execute(request);
 	}
+	
+	public void updateTopic(TopicModel theTopic, PostModelList<TopicModel> thePostModelList) {
+		// Build a request
+		ElasticSearchOperationRequest request = new ElasticSearchOperationRequest(ElasticSearchProviderConstants.TYPE_UPDATE_TOPIC);
+		request.setPostModelList(thePostModelList);
+		request.setTopicModel(theTopic);
+		
+		// Execute the request
+		new ElasticSearchProviderService().execute(request);
+	}
 }

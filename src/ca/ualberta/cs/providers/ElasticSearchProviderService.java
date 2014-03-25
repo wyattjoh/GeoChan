@@ -65,6 +65,10 @@ public class ElasticSearchProviderService extends
 			case TYPE_ADD_TOPIC:
 				theResponse.getPostModelList().add(theResponse.getTopicModel());
 				break;
+				
+			case TYPE_UPDATE_TOPIC:
+				theResponse.getPostModelList().update(theResponse.getTopicModel());
+				break;
 
 			default:
 				break;
@@ -91,6 +95,9 @@ public class ElasticSearchProviderService extends
 			case TYPE_ADD_TOPIC:
 				response[i] = addTopic(theRequest);
 				break;
+			case TYPE_UPDATE_TOPIC:
+				response[i] = addTopic(theRequest);
+				break;
 			default:
 				break;
 			}
@@ -101,8 +108,14 @@ public class ElasticSearchProviderService extends
 
 	public ElasticSearchOperationResponse addTopic(ElasticSearchOperationRequest theRequest) {
 		TopicModel theTopic = theRequest.getTopicModel();
-
-		HttpPost request = new HttpPost(getEndpointUrl("topic"));
+		
+		HttpPost request;
+		if (theTopic.getVersion() > 1) {
+			request = new HttpPost(getVersionedEndpoint("topic", theTopic));
+		}
+		else {
+			request = new HttpPost(getEndpointUrl("topic"));
+		}
 
 		String jsonString = gson.toJson(theTopic);
 
@@ -126,6 +139,9 @@ public class ElasticSearchProviderService extends
 			String theId = esResponse.getId();
 			theTopic.setId(theId);
 			
+			int theVersion = esResponse.getVersion();
+			theTopic.setVersion(theVersion);
+			
 			ElasticSearchOperationResponse theResponse = ElasticSearchOperationTransformer.responseFromRequest(theRequest);
 			theResponse.setTopicModel(theTopic);
 			
@@ -146,6 +162,14 @@ public class ElasticSearchProviderService extends
 
 	private String getEndpointUrl(String endpoint) {
 		return urlIndex + "/" + endpoint;
+	}
+	
+	private String getVersionedEndpoint(String endpoint, TopicModel theTopic) {
+		String theUrl = urlIndex + "/" + endpoint + "/";
+		
+		String theVersion = Integer.toString(theTopic.getVersion());
+		
+		return theUrl + theTopic.getId() + "?version=" + theVersion;
 	}
 
 	private String getStringFromResponse(HttpResponse response) {

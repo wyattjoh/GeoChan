@@ -11,11 +11,11 @@ import ca.ualberta.cs.providers.ElasticSearchProvider;
  * @author wyatt
  *
  */
-public class EditTopicController {
+public class TopicModelController {
 	private TopicModelList theTopicModelList;
 //	private Activity theEditTopicActivity;
 	
-	public EditTopicController() {
+	public TopicModelController() {
 		this.theTopicModelList = TopicModelList.getInstance();
 	}
 	

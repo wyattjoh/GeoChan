@@ -14,14 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.controllers.EditTopicController;
+import ca.ualberta.cs.controllers.TopicModelController;
 import ca.ualberta.cs.models.CurrentUserPostModelFactory;
 import ca.ualberta.cs.models.TopicModel;
 
 public class EditTopicActivity extends Activity {
 	public static final String IS_NEW_TOPIC_KEY = "IS_NEW_TOPIC";
 
-	private EditTopicController theController;
+	private TopicModelController theController;
 	private Boolean isNewTopic = true;
 	private byte[] imageData;
 	
@@ -58,7 +58,7 @@ public class EditTopicActivity extends Activity {
 		}
 
 		// Get the controller
-		this.theController = new EditTopicController();
+		this.theController = new TopicModelController();
 
 		// Populate the view
 		populateView();
