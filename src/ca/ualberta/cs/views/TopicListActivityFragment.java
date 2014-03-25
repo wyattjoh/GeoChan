@@ -53,7 +53,7 @@ public class TopicListActivityFragment extends Fragment {
 		case 1:
 			// Populate list view
 			ArrayList<TopicModel> modelTopicList = DummyPostListFactory
-					.createCommentedTopics(new UserModel("TestFavoritesUser"));
+					.createCommentedTopics(new UserModel("TestTopicsUser"));
 
 			// get specific fragment view and populate
 			TopicModelList.getInstance().setArrayList(modelTopicList);
