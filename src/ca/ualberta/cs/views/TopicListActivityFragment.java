@@ -44,7 +44,7 @@ public class TopicListActivityFragment extends Fragment {
 		int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
 		// get fragment view
-		View rootView = inflater.inflate(R.layout.fragment_topic_list,
+		View rootView = inflater.inflate(R.layout.fragment_post_list,
 				container, false);
 
 		switch (sectionNumber) {
@@ -56,20 +56,17 @@ public class TopicListActivityFragment extends Fragment {
 					.createCommentedTopics(new UserModel("TestFavoritesUser"));
 
 			// get specific fragment view and populate
-			populateFragment(inflater.inflate(R.layout.fragment_topic_list,
-					container, false), modelTopicList);
+			populateFragment(rootView, modelTopicList);
 			break;
 
 		// FAVORITES case
 		case 2:
-			// Populate list view 
+			// Populate list view
 			ArrayList<TopicModel> modelFavoritesList = DummyPostListFactory
 					.createCommentedTopics(new UserModel("TestFavoritesUser"));
-			
+
 			// get specific fragment view and populate
-			populateFragment(inflater.inflate(
-					R.layout.fragment_topic_comment_list, container, false),
-					modelFavoritesList);
+			populateFragment(rootView, modelFavoritesList);
 			break;
 
 		// READ LATER case
@@ -77,11 +74,9 @@ public class TopicListActivityFragment extends Fragment {
 			// Populate list view
 			ArrayList<TopicModel> modelReadlaterList = DummyPostListFactory
 					.createCommentedTopics(new UserModel("TestFavoritesUser"));
-			
+
 			// get specific fragment view and populate
-			populateFragment(inflater.inflate(
-					R.layout.fragment_topic_comment_list, container, false),
-					modelReadlaterList);
+			populateFragment(rootView, modelReadlaterList);
 			break;
 		}
 
