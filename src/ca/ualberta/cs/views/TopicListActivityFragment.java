@@ -40,31 +40,48 @@ public class TopicListActivityFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		// random generated code...
-		View rootView = inflater.inflate(R.layout.fragment_main_dummy,
-				container, false);
-
 		// get fragment number
 		int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
+		// get fragment view
+		View rootView = inflater.inflate(R.layout.fragment_topic_list,
+				container, false);
+
 		switch (sectionNumber) {
+
+		// TOPICS case
 		case 1:
-			// Populate list view for TOPICS
+			// Populate list view
 			ArrayList<TopicModel> modelTopicList = DummyPostListFactory
 					.createCommentedTopics(new UserModel("TestFavoritesUser"));
-			populateFragment(rootView, modelTopicList);
+
+			// get specific fragment view and populate
+			populateFragment(inflater.inflate(R.layout.fragment_topic_list,
+					container, false), modelTopicList);
 			break;
+
+		// FAVORITES case
 		case 2:
-			// Populate list view for FAVORITES
+			// Populate list view 
 			ArrayList<TopicModel> modelFavoritesList = DummyPostListFactory
 					.createCommentedTopics(new UserModel("TestFavoritesUser"));
-			populateFragment(rootView, modelFavoritesList);
+			
+			// get specific fragment view and populate
+			populateFragment(inflater.inflate(
+					R.layout.fragment_topic_comment_list, container, false),
+					modelFavoritesList);
 			break;
+
+		// READ LATER case
 		case 3:
-			// Populate list view for READ LATER
+			// Populate list view
 			ArrayList<TopicModel> modelReadlaterList = DummyPostListFactory
 					.createCommentedTopics(new UserModel("TestFavoritesUser"));
-			populateFragment(rootView, modelReadlaterList);
+			
+			// get specific fragment view and populate
+			populateFragment(inflater.inflate(
+					R.layout.fragment_topic_comment_list, container, false),
+					modelReadlaterList);
 			break;
 		}
 
