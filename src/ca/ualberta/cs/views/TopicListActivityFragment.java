@@ -1,5 +1,6 @@
 package ca.ualberta.cs.views;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.drawable.Drawable;
@@ -48,22 +49,25 @@ public class TopicListActivityFragment extends Fragment {
 
 		// get user
 		UserModel theUser = ActiveUserModel.getShared().getUser();
-		
+
 		switch (sectionNumber) {
 		case 1:
 			// Populate list view for TOPICS
-			DummyPostListFactory.createCommentedTopics(theUser);
-			populateFragment(rootView, TopicModelList.getInstance());
+			ArrayList<TopicModel> modelTopicList = DummyPostListFactory
+					.createCommentedTopics(new UserModel("TestFavoritesUser"));
+			populateFragment(rootView, modelTopicList);
 			break;
 		case 2:
 			// Populate list view for FAVORITES
-			DummyPostListFactory.createCommentedTopics(theUser);
-			populateFragment(rootView, TopicModelList.getInstance());
+			ArrayList<TopicModel> modelFavoritesList = DummyPostListFactory
+					.createCommentedTopics(new UserModel("TestFavoritesUser"));
+			populateFragment(rootView, modelFavoritesList);
 			break;
 		case 3:
 			// Populate list view for READ LATER
-			DummyPostListFactory.createCommentedTopics(theUser);
-			populateFragment(rootView, TopicModelList.getInstance());
+			ArrayList<TopicModel> modelReadlaterList = DummyPostListFactory
+					.createCommentedTopics(new UserModel("TestFavoritesUser"));
+			populateFragment(rootView, modelReadlaterList);
 			break;
 		}
 
@@ -73,35 +77,40 @@ public class TopicListActivityFragment extends Fragment {
 		return rootView;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.support.v4.app.Fragment#onStart()
 	 */
 	@Override
 	public void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		
+
 		TopicModelList.getInstance().registerListeningAdapter(listAdapter);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.support.v4.app.Fragment#onStop()
 	 */
 	@Override
 	public void onStop() {
 		// TODO Auto-generated method stub
 		super.onStop();
-		
+
 		TopicModelList.getInstance().unRegisterListeningAdapter(listAdapter);
 	}
 
-	public void populateFragment(View theRootView, TopicModelList topicModelList) {
+	public void populateFragment(View theRootView,
+			ArrayList<TopicModel> topicModelList) {
 		// get title & list view adapter
 		ListView listView = (ListView) theRootView
 				.findViewById(R.id.postListView);
 
 		listAdapter = new TopicListViewAdapter<TopicModel>(getActivity(),
-				topicModelList.getArrayList());
+				topicModelList);
 
 		// set adapter
 		listView.setAdapter(listAdapter);

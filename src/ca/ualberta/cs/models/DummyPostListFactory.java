@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class DummyPostListFactory {
 
-	public static void createTopicList(UserModel theUser) {
+	public static ArrayList<TopicModel> createTopicList(UserModel theUser) {
 		if (theUser == null) {
 			throw new RuntimeException("Factory got an empty user!");
 		}
@@ -34,7 +34,7 @@ public class DummyPostListFactory {
 		theTopic3.setPostedBy(theUser);
 		theModelList.add(theTopic3);
 
-		TopicModelList.getInstance().setArrayList(theModelList);
+		return theModelList;
 	}
 
 	public static ArrayList<CommentModel> createCommentlist(UserModel theUser) {
@@ -68,19 +68,19 @@ public class DummyPostListFactory {
 	 * @param theUser
 	 * @return
 	 */
-	public static void createCommentedTopics(UserModel theUser) {
+	public static ArrayList<TopicModel> createCommentedTopics(UserModel theUser) {
 		// build up static test models
-		createTopicList(theUser);
+		ArrayList<TopicModel> theModelList = createTopicList(theUser);
 
 		ArrayList<CommentModel> commentList = createCommentlist(theUser);
 
 		// assign topics the comments
-		for (int i = 0; i < TopicModelList.getInstance().getArrayList().size(); i++) {
+		for (int i = 0; i < theModelList.size(); i++) {
 			for (int j = 0; j < commentList.size(); j++) {
-				TopicModelList.getInstance().getArrayList().get(i)
-						.addChildComment(commentList.get(j));
+				theModelList.get(i).addChildComment(commentList.get(j));
 			}
 		}
+		return theModelList;
 	}
 
 }
