@@ -47,9 +47,6 @@ public class TopicListActivityFragment extends Fragment {
 		// get fragment number
 		int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
-		// get user
-		UserModel theUser = ActiveUserModel.getShared().getUser();
-
 		switch (sectionNumber) {
 		case 1:
 			// Populate list view for TOPICS
