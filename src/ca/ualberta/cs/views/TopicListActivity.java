@@ -14,16 +14,21 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
-import ca.ualberta.cs.models.NetworkModel;
+import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
 
+/**
+ * 
+ * Lists recent topics, favorite topics and comments, and read later topics and comments.
+ * 
+ * @author wyatt
+ */
 public class TopicListActivity extends FragmentActivity {
 
 	/**
@@ -101,8 +106,10 @@ public class TopicListActivity extends FragmentActivity {
 
 	BroadcastReceiver connectionBroadcastReceiver = null;
 
-	/*
-	 * Called when the cell is clicked
+	/**
+	 * Called when the cell is clicked. Starts the detail view activity
+	 * 
+	 * @param v The view that was clicked
 	 */
 	public void cellClicked(View v) {
 		// Get the selected tag position
@@ -116,23 +123,6 @@ public class TopicListActivity extends FragmentActivity {
 
 		// Start intent
 		Intent intent = new Intent(this, TopicViewActivity.class);
-		startActivity(intent);
-	}
-
-	private void loginFlow() {
-		ActiveUserModel userController = ActiveUserModel
-				.createShared(getApplicationContext());
-
-		if (userController.isLoggedIn()) {
-			// continue
-		} else {
-			Intent intent = new Intent(this, LoginActivity.class);
-			startActivityForResult(intent, 1);
-		}
-	}
-
-	protected void newPost() {
-		Intent intent = new Intent(this, EditTopicActivity.class);
 		startActivity(intent);
 	}
 
@@ -151,6 +141,9 @@ public class TopicListActivity extends FragmentActivity {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -167,6 +160,7 @@ public class TopicListActivity extends FragmentActivity {
 
 		Context context = getApplicationContext();
 		this.connectionBroadcastReceiver = new BroadcastReceiver() {
+			@Override
 			public void onReceive(Context context, Intent intent) {
 				// Network changed, refresh the fragments
 				refreshFragments();
@@ -195,6 +189,9 @@ public class TopicListActivity extends FragmentActivity {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -203,6 +200,9 @@ public class TopicListActivity extends FragmentActivity {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
@@ -237,21 +237,69 @@ public class TopicListActivity extends FragmentActivity {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onStart()
+	 */
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
 
+		// Must be first thing that is started, sets up contexts
+		createSharedSingletons(getApplicationContext());
+
+		// Perform the login flow process
 		loginFlow();
 	}
 
+	/**
+	 * Creates shared singletons requiring initialization
+	 * 
+	 * @param applicationContext The application context for the main activity
+	 */
+	private void createSharedSingletons(Context applicationContext) {
+		// Create Active User
+		ActiveUserModel.createShared(getApplicationContext());
+
+		// Create Favorites List
+		FavoriteTopicModelList.createInstance(applicationContext);
+	}
+
+	/**
+	 * Refreshes fragments inside the sectionPagerAdapter
+	 */
 	protected void refreshFragments() {
 		// Update all fragments
 		sectionsPagerAdapter.refreshFragments();
 	}
 
+	/**
+	 * Starts a new activity to create a new post 
+	 */
+	protected void newPost() {
+		Intent intent = new Intent(this, EditTopicActivity.class);
+		startActivity(intent);
+	}
+
+	/**
+	 * Starts the settings activity
+	 */
 	protected void startSettingsActivity() {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
+	}
+
+	/**
+	 * Verifies that the user is logged in, if not, starts the login activity
+	 */
+	private void loginFlow() {
+		ActiveUserModel userController = ActiveUserModel.getShared();
+
+		if (userController.isLoggedIn()) {
+			// continue
+		} else {
+			Intent intent = new Intent(this, LoginActivity.class);
+			startActivityForResult(intent, 1);
+		}
 	}
 }
