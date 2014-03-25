@@ -13,4 +13,7 @@ public class ElasticSearchResponse<T> {
     public T getSource() {
         return _source;
     }
+    public String getId() {
+    	return _id;
+    }
 }
