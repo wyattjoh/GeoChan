@@ -65,6 +65,28 @@ public class TopicListActivityFragment extends Fragment {
 		return rootView;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onStart()
+	 */
+	@Override
+	public void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		
+		TopicModelList.getInstance().registerListeningAdapter(listAdapter);
+	}
+
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onStop()
+	 */
+	@Override
+	public void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		
+		TopicModelList.getInstance().unRegisterListeningAdapter(listAdapter);
+	}
+
 	public void populateFragment(View theRootView, TopicModelList topicModelList) {
 		// get title & list view adapter
 		ListView listView = (ListView) theRootView
