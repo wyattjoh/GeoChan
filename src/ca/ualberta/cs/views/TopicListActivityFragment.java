@@ -2,8 +2,6 @@ package ca.ualberta.cs.views;
 
 import java.util.List;
 
-import android.graphics.AvoidXfermode;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,11 +15,12 @@ import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.PostListViewAdapter;
 import ca.ualberta.cs.adapters.TopicListViewAdapter;
-import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.DummyPostListFactory;
 import ca.ualberta.cs.models.NetworkModel;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
+import ca.ualberta.cs.models.UserModel;
 import ca.ualberta.cs.providers.LocationProvider;
 
 /**
@@ -50,7 +49,8 @@ public class TopicListActivityFragment extends Fragment {
 		switch (sectionNumber) {
 		case 1:
 			// create topic list is a stand in for the actual data
-			PostListController.createCommentedTopics(null);
+			UserModel theUser = ActiveUserModel.getShared().getUser();
+			DummyPostListFactory.createCommentedTopics(theUser);
 			populateFragment(rootView, TopicModelList.getInstance());
 			break;
 		case 2:

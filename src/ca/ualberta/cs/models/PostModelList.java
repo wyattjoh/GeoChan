@@ -54,4 +54,20 @@ abstract public class PostModelList<T extends PostModel> {
 	public void sortByDate() {
 		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_DATE);
 	}
+
+	public void remove(int position) {
+		this.postModelArrayList.remove(position);	
+	}
+
+	public void update(int position, T theModel) {
+		this.postModelArrayList.set(position, theModel);		
+	}
+	
+	public void remove(T theModel) {
+		this.postModelArrayList.remove(theModel);
+	}
+	
+	public Boolean contains(T theModelToSearchFor) {
+		return this.getArrayList().contains(theModelToSearchFor);
+	}
 }
