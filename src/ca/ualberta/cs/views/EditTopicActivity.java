@@ -156,6 +156,7 @@ public class EditTopicActivity extends Activity {
 						galleryThumbnail.getHeight(),
 						galleryThumbnail.getFilterTouchesWhenObscured());
 				
+				// set the view image o the selected image
 				galleryThumbnail.setImageBitmap(scaledBitmap);
 
 				// compress and output
