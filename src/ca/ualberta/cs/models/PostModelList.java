@@ -3,7 +3,7 @@ package ca.ualberta.cs.models;
 import java.util.ArrayList;
 import java.util.Collections;
 
-abstract public class PostModelList<T extends PostModel> {
+public class PostModelList<T extends PostModel> {
 	private T selectedPostModel = null;
 	private ArrayList<T> postModelArrayList;
 	
