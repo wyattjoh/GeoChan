@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.EditTopicController;
+import ca.ualberta.cs.models.CurrentUserPostModelFactory;
 import ca.ualberta.cs.models.TopicModel;
 
 public class EditTopicActivity extends Activity {
@@ -72,7 +73,7 @@ public class EditTopicActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					TopicModel theTopicModel = new TopicModel();
+					TopicModel theTopicModel = CurrentUserPostModelFactory.newTopicModel();
 
 					// Get the title
 					EditText titleField = (EditText) findViewById(R.id.titleTextField);
