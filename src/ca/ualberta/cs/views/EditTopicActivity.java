@@ -136,47 +136,57 @@ public class EditTopicActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_PICTURE) {
-                Uri selectedImageUri = data.getData();
-                String selectedImagePath = (String) getPath(selectedImageUri);
-                Bitmap imageBitmap = BitmapFactory.decodeFile(selectedImagePath);
-                
-                
-            	// get and set image view
-                ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
-                //galleryThumbnail.setVisibility(View.VISIBLE);
-                galleryThumbnail.setImageBitmap(imageBitmap);
+		if (resultCode == RESULT_OK) {
+			if (requestCode == SELECT_PICTURE) {
+				// get picture path from intent
+				Uri selectedImageUri = data.getData();
+				String selectedImagePath = (String) getPath(selectedImageUri);
 
-                // compress and output
-                ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-                imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-                imageByteArray = outStream.toByteArray();
-            }
-        }
+				// get picture object from path
+				Bitmap imageBitmap = BitmapFactory
+						.decodeFile(selectedImagePath);
+
+				// get and set image view
+				ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
+				// galleryThumbnail.setVisibility(View.VISIBLE);
+				
+				// create scaled image for display
+				Bitmap scaledBitmap =  Bitmap.createScaledBitmap(imageBitmap,
+						galleryThumbnail.getWidth(),
+						galleryThumbnail.getHeight(),
+						galleryThumbnail.getFilterTouchesWhenObscured());
+				
+				galleryThumbnail.setImageBitmap(scaledBitmap);
+
+				// compress and output
+				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+				imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+				imageByteArray = outStream.toByteArray();
+			}
+		}
 	}
-	
-    /**
-     * helper to retrieve the path of an image URI
-     */
-    public String getPath(Uri uri) {
-            // just some safety built in 
-            if( uri == null ) {
-                // TODO perform some logging or show user feedback
-                return null;
-            }
-            // try to retrieve the image from the media store first
-            // this will only work for images selected from gallery
-            String[] projection = { MediaStore.Images.Media.DATA };
-            Cursor cursor = managedQuery(uri, projection, null, null, null);
-            if( cursor != null ){
-                int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                cursor.moveToFirst();
-                return cursor.getString(column_index);
-            }
-            // this is our fallback here
-            return uri.getPath();
-    }
+
+	/**
+	 * helper to retrieve the path of an image URI
+	 */
+	public String getPath(Uri uri) {
+		// just some safety built in
+		if (uri == null) {
+			// TODO perform some logging or show user feedback
+			return null;
+		}
+		// try to retrieve the image from the media store first
+		// this will only work for images selected from gallery
+		String[] projection = { MediaStore.Images.Media.DATA };
+		Cursor cursor = managedQuery(uri, projection, null, null, null);
+		if (cursor != null) {
+			int column_index = cursor
+					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+			cursor.moveToFirst();
+			return cursor.getString(column_index);
+		}
+		// this is our fallback here
+		return uri.getPath();
+	}
 
 }
