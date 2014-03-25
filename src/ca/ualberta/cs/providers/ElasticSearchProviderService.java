@@ -29,8 +29,7 @@ import com.google.gson.Gson;
  * 
  */
 public class ElasticSearchProviderService extends
-		AsyncTask<ElasticSearchRequest, Integer, String> implements
-		ElasticSearchProviderInterface {
+		AsyncTask<ElasticSearchRequest, Integer, String> {
 	private static String urlIndex = "http://cmput301.softwareprocess.es:8080/cmput301w14t12/";
 
 	private Integer mode;
@@ -71,14 +70,12 @@ public class ElasticSearchProviderService extends
 		return null;
 	}
 
-	@Override
 	public ArrayList<TopicModel> getTopics(Integer withOrder,
 			Integer topicCount, Integer theOffset) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public void addTopic(PostModel theTopic) {
 		// TODO Auto-generated method stub
 		// HttpPost request = new HttpPost("http://requestb.in/xpn5gvxp");

@@ -120,6 +120,7 @@ public class EditTopicActivity extends Activity {
 		startActivityForResult(intent,0);
 	}
 	
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    if (resultCode == RESULT_OK && data != null) {
 	    	// get bitmap

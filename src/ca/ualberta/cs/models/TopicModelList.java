@@ -7,7 +7,7 @@ package ca.ualberta.cs.models;
  * @author wyatt
  *
  */
-public class TopicModelList extends PostModelList<TopicModel> {
+public class TopicModelList extends PostModelList<TopicModel> implements UpdateableListInterface {
 	private static TopicModelList singleton = null;
 	
 	/*
@@ -26,5 +26,11 @@ public class TopicModelList extends PostModelList<TopicModel> {
 	 */
 	public void sortByLocation() {
 		// TODO: Implement method
+	}
+
+	@Override
+	public void updateFromNetwork() {
+		// TODO Auto-generated method stub
+		
 	}
 }
