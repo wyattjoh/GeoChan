@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -61,6 +63,30 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		}
 		scoreString = scoreString + theModel.getScore().toString();
 		scoreView.setText(scoreString);
+		
+		// Add Buttons
+		ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
+		
+		downVoteButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				theModel.decrementScore();
+				populateView();
+				
+			}
+		});
+		
+		ImageButton upVoteButton = (ImageButton) findViewById(R.id.upVoteButton);
+		
+		upVoteButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				theModel.incrementScore();
+				populateView();
+			}
+		});
 
 		// Add Author
 		TextView authorView = (TextView) findViewById(R.id.authorTextView);

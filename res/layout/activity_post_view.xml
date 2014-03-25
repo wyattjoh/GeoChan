@@ -61,21 +61,21 @@
                 android:layout_below="@+id/scorePostTextView" >
 
                 <ImageButton
-                    android:id="@+id/imageButton1"
+                    android:id="@+id/downVoteButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".30"
                     android:src="@drawable/ic_action_bad" />
 
                 <ImageButton
-                    android:id="@+id/imageButton2"
+                    android:id="@+id/favoriteButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".39"
                     android:src="@android:drawable/btn_star_big_off" />
 
                 <ImageButton
-                    android:id="@+id/imageButton3"
+                    android:id="@+id/upVoteButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".30"
