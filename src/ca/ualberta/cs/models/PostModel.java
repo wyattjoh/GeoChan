@@ -17,6 +17,8 @@ public abstract class PostModel {
 	private Integer score;
 	private ArrayList<CommentModel> childrenComments;
 	
+	private transient Boolean isFavorite = false;
+	
 	/**
 	 * Comparators
 	 */
@@ -37,7 +39,8 @@ public abstract class PostModel {
 	 * Constructors
 	 */
 	public PostModel(){
-		this.postedBy = ActiveUserModel.getShared().getUser();
+		this.id = "";
+		this.postedBy = null;
 		this.datePosted = new Date();
 		this.score = 0;
 		this.picture = null;
@@ -45,6 +48,7 @@ public abstract class PostModel {
 	}
 	
 	public PostModel(UserModel theUser){
+		this.id = "";
 		this.postedBy = theUser;
 		this.datePosted = new Date();
 		this.score = 0;
@@ -123,5 +127,39 @@ public abstract class PostModel {
 	/**
 	 * end of auto generated setters and getters
 	 */
+
+	/**
+	 * @return the isFavorite
+	 */
+	public Boolean isFavorite() {
+		return isFavorite;
+	}
+
+	/**
+	 * @param isFavorite the isFavorite to set
+	 */
+	public void setIsFavorite(Boolean isFavorite) {
+		this.isFavorite = isFavorite;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof PostModel) {
+			PostModel thePostModelBeingEvaluated = (PostModel) o;
+
+			if (thePostModelBeingEvaluated.getId().equals(id)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
 	
 }

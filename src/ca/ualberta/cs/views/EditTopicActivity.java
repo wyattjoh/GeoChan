@@ -4,7 +4,10 @@ import java.io.ByteArrayOutputStream;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
@@ -15,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.EditTopicController;
+import ca.ualberta.cs.models.CurrentUserPostModelFactory;
 import ca.ualberta.cs.models.TopicModel;
 
 public class EditTopicActivity extends Activity {
@@ -22,9 +26,9 @@ public class EditTopicActivity extends Activity {
 
 	private EditTopicController theController;
 	private Boolean isNewTopic = true;
-	private byte[] imageData;
-	
-	static final int REQUEST_IMAGE_CAPTURE = 1;
+
+	private static final int SELECT_PICTURE = 1;
+	private byte[] imageByteArray;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +76,8 @@ public class EditTopicActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					TopicModel theTopicModel = new TopicModel();
+					TopicModel theTopicModel = CurrentUserPostModelFactory
+							.newTopicModel();
 
 					// Get the title
 					EditText titleField = (EditText) findViewById(R.id.titleTextField);
@@ -80,32 +85,33 @@ public class EditTopicActivity extends Activity {
 
 					// Get the comment
 					EditText commentField = (EditText) findViewById(R.id.commentTextField);
-					theTopicModel.setCommentText(commentField.getText().toString());
+					theTopicModel.setCommentText(commentField.getText()
+							.toString());
 
 					theController.newTopic(theTopicModel);
 
 					finish();
 				}
 			});
-		
-		// hide gallery thumbnail
-		ImageView galeryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
-		//galeryThumbnail.setVisibility(View.INVISIBLE);
-		
+
+			// hide gallery thumbnail
+			//ImageView galeryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
+			// galeryThumbnail.setVisibility(View.INVISIBLE);
+
 		} else {
 			saveButton.setText("Update Topic");
-			
+
 		}
-		
-		//get photo button
+
+		// get photo button
 		Button cameraButton = (Button) findViewById(R.id.pictureButton);
-		
+
 		// set onclick listener
 		cameraButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// start camera activity
-				dispatchTakePictureIntent();
+				getPictureIntent();
 			}
 		});
 
@@ -114,28 +120,74 @@ public class EditTopicActivity extends Activity {
 	public Boolean getIsNewTopic() {
 		return isNewTopic;
 	}
-	
-	public void dispatchTakePictureIntent() {
-		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		startActivityForResult(intent,0);
+
+	/**
+	 * github http://stackoverflow.com/questions/2169649/get-pick-an-image-from-
+	 * androids-built-in-gallery-app-programmatically
+	 */
+	public void getPictureIntent() {
+		// select a file
+		Intent intent = new Intent();
+		intent.setType("image/*");
+		intent.setAction(Intent.ACTION_GET_CONTENT);
+		startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+				SELECT_PICTURE);
 	}
-	
+
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    if (resultCode == RESULT_OK && data != null) {
-	    	// get bitmap
-	    	Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-	        
-	        // get and set image view
-	        ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
-	        //galleryThumbnail.setVisibility(View.VISIBLE);
-	        galleryThumbnail.setImageBitmap(imageBitmap);
-	        
-	        // compress and output
-	        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-	        imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-	        imageData = outStream.toByteArray();
-	        
-	    }
+		if (resultCode == RESULT_OK) {
+			if (requestCode == SELECT_PICTURE) {
+				// get picture path from intent
+				Uri selectedImageUri = data.getData();
+				String selectedImagePath = (String) getPath(selectedImageUri);
+
+				// get picture object from path
+				Bitmap imageBitmap = BitmapFactory
+						.decodeFile(selectedImagePath);
+
+				// get and set image view
+				ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
+				// galleryThumbnail.setVisibility(View.VISIBLE);
+				
+				// create scaled image for display
+				Bitmap scaledBitmap =  Bitmap.createScaledBitmap(imageBitmap,
+						galleryThumbnail.getWidth(),
+						galleryThumbnail.getHeight(),
+						galleryThumbnail.getFilterTouchesWhenObscured());
+				
+				// set the view image o the selected image
+				galleryThumbnail.setImageBitmap(scaledBitmap);
+
+				// compress and output to class variable
+				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+				imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+				imageByteArray = outStream.toByteArray();
+			}
+		}
+	}
+
+	/**
+	 * helper to retrieve the path of an image URI
+	 */
+	public String getPath(Uri uri) {
+		// just some safety built in
+		if (uri == null) {
+			// TODO perform some logging or show user feedback
+			return null;
+		}
+		// try to retrieve the image from the media store first
+		// this will only work for images selected from gallery
+		String[] projection = { MediaStore.Images.Media.DATA };
+		Cursor cursor = managedQuery(uri, projection, null, null, null);
+		if (cursor != null) {
+			int column_index = cursor
+					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+			cursor.moveToFirst();
+			return cursor.getString(column_index);
+		}
+		// this is our fallback here
+		return uri.getPath();
 	}
 
 }

@@ -48,7 +48,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		return true;
 	}
 
-	private void populateView() {
+	protected void populateView() {
 		// Add comment
 		TextView commentView = (TextView) findViewById(R.id.commentTextView);
 		commentView.setText(theModel.getCommentText());
@@ -117,7 +117,21 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			CommentListViewAdapter<CommentModel> commentsAdapter = new CommentListViewAdapter<CommentModel>(this, theModel.getChildrenComments());
 			commentsListView.setAdapter(commentsAdapter);
 		}
+		
+		// Favorite Button
+		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
+		
+		favoriteButton.setOnClickListener(getFavoriteOnClickListener());
+		
+		if (theModel.isFavorite()) {
+			favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
+		}
+		else {
+			favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
+		}
 	}
+	
+	abstract protected OnClickListener getFavoriteOnClickListener();
 
 	abstract void setTitleText();
 	

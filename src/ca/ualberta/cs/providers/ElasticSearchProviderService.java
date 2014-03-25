@@ -4,11 +4,14 @@
 package ca.ualberta.cs.providers;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -16,11 +19,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import ca.ualberta.cs.models.ElasticSearchRequest;
-import ca.ualberta.cs.models.PostModel;
+import ca.ualberta.cs.models.ElasticSearchResponse;
+import ca.ualberta.cs.models.ElasticSearchOperationTransformer;
+import ca.ualberta.cs.models.ElasticSearchOperationRequest;
+import ca.ualberta.cs.models.ElasticSearchOperationResponse;
 import ca.ualberta.cs.models.TopicModel;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * @author wyatt
@@ -29,21 +35,42 @@ import com.google.gson.Gson;
  * 
  */
 public class ElasticSearchProviderService extends
-		AsyncTask<ElasticSearchRequest, Integer, String> implements
-		ElasticSearchProviderInterface {
+		AsyncTask<ElasticSearchOperationRequest, Integer, ElasticSearchOperationResponse[]> {
 	private static String urlIndex = "http://cmput301.softwareprocess.es:8080/cmput301w14t12/";
 
-	private Integer mode;
 	private Gson gson;
 	private HttpClient client;
 
-	public ElasticSearchProviderService(Integer mode) {
-		// Mode
-		this.mode = mode;
-
-		// Gson objects
+	public ElasticSearchProviderService() {
 		this.gson = GeoChanGson.getGson();
 		this.client = new DefaultHttpClient();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+	 */
+	@Override
+	protected void onPostExecute(ElasticSearchOperationResponse[] result) {
+		// TODO Auto-generated method stub
+		super.onPostExecute(result);
+
+		int size = result.length;
+
+		for (int i = 0; i < size; i++) {
+			ElasticSearchOperationResponse theResponse = result[i];
+			
+			switch (theResponse.getRequestMode()) {
+			case TYPE_ADD_TOPIC:
+				theResponse.getPostModelList().add(theResponse.getTopicModel());
+				break;
+
+			default:
+				break;
+			}
+		}
+
 	}
 
 	/*
@@ -52,44 +79,36 @@ public class ElasticSearchProviderService extends
 	 * @see android.os.AsyncTask#doInBackground(Params[])
 	 */
 	@Override
-	protected String doInBackground(ElasticSearchRequest... requests) {
+	protected ElasticSearchOperationResponse[] doInBackground(
+			ElasticSearchOperationRequest... requests) {
 		int size = requests.length;
+		ElasticSearchOperationResponse[] response = new ElasticSearchOperationResponse[size];
 
 		for (int i = 0; i < size; i++) {
-			ElasticSearchRequest theRequest = requests[i];
-			
+			ElasticSearchOperationRequest theRequest = requests[i];
+
 			switch (theRequest.getRequestMode()) {
 			case TYPE_ADD_TOPIC:
-
+				response[i] = addTopic(theRequest);
 				break;
-
 			default:
 				break;
 			}
 		}
 
-		return null;
+		return response;
 	}
 
-	@Override
-	public ArrayList<TopicModel> getTopics(Integer withOrder,
-			Integer topicCount, Integer theOffset) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public ElasticSearchOperationResponse addTopic(ElasticSearchOperationRequest theRequest) {
+		TopicModel theTopic = theRequest.getTopicModel();
 
-	@Override
-	public void addTopic(PostModel theTopic) {
-		// TODO Auto-generated method stub
-		// HttpPost request = new HttpPost("http://requestb.in/xpn5gvxp");
 		HttpPost request = new HttpPost(getEndpointUrl("topic"));
 
 		String jsonString = gson.toJson(theTopic);
 
+		// Add to entity
 		try {
-			// Add to entity
 			request.setEntity(new StringEntity(jsonString));
-
 			// run it
 			HttpResponse response = client.execute(request);
 
@@ -97,10 +116,32 @@ public class ElasticSearchProviderService extends
 
 			Log.w("ElasticSearchProviderService", jsonResponse);
 
-		} catch (Exception e) {
+			// We have to tell GSON what type we expect
+			Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<TopicModel>>() {
+			}.getType();
+
+			ElasticSearchResponse<TopicModel> esResponse = gson.fromJson(
+					jsonResponse, elasticSearchResponseType);
+			
+			String theId = esResponse.getId();
+			theTopic.setId(theId);
+			
+			ElasticSearchOperationResponse theResponse = ElasticSearchOperationTransformer.responseFromRequest(theRequest);
+			theResponse.setTopicModel(theTopic);
+			
+			return theResponse;
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		return null;
 	}
 
 	private String getEndpointUrl(String endpoint) {

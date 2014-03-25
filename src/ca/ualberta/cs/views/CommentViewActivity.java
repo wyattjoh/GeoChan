@@ -4,6 +4,7 @@
 package ca.ualberta.cs.views;
 
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.CommentModel;
@@ -29,6 +30,12 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 		
 		// Fix action bar
 		getActionBar().setTitle(theModel.getCommentText()); 
+	}
+
+	@Override
+	protected OnClickListener getFavoriteOnClickListener() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

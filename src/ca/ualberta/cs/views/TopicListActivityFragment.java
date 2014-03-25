@@ -1,9 +1,8 @@
 package ca.ualberta.cs.views;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import android.graphics.AvoidXfermode;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,11 +16,12 @@ import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.PostListViewAdapter;
 import ca.ualberta.cs.adapters.TopicListViewAdapter;
-import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.DummyPostListFactory;
 import ca.ualberta.cs.models.NetworkModel;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
+import ca.ualberta.cs.models.UserModel;
 import ca.ualberta.cs.providers.LocationProvider;
 
 /**
@@ -40,22 +40,43 @@ public class TopicListActivityFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		// random generated code...
-		View rootView = inflater.inflate(R.layout.fragment_main_dummy,
-				container, false);
-
 		// get fragment number
 		int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
+		// get fragment view
+		View rootView = inflater.inflate(R.layout.fragment_post_list,
+				container, false);
+
 		switch (sectionNumber) {
+
+		// TOPICS case
 		case 1:
-			// create topic list is a stand in for the actual data
-			PostListController.createCommentedTopics(null);
-			populateFragment(rootView, TopicModelList.getInstance());
+			// Populate list view
+			ArrayList<TopicModel> modelTopicList = DummyPostListFactory
+					.createCommentedTopics(new UserModel("TestFavoritesUser"));
+
+			// get specific fragment view and populate
+			populateFragment(rootView, modelTopicList);
 			break;
+
+		// FAVORITES case
 		case 2:
+			// Populate list view
+			ArrayList<TopicModel> modelFavoritesList = DummyPostListFactory
+					.createCommentedTopics(new UserModel("TestFavoritesUser"));
+
+			// get specific fragment view and populate
+			populateFragment(rootView, modelFavoritesList);
 			break;
+
+		// READ LATER case
 		case 3:
+			// Populate list view
+			ArrayList<TopicModel> modelReadlaterList = DummyPostListFactory
+					.createCommentedTopics(new UserModel("TestFavoritesUser"));
+
+			// get specific fragment view and populate
+			populateFragment(rootView, modelReadlaterList);
 			break;
 		}
 
@@ -65,13 +86,40 @@ public class TopicListActivityFragment extends Fragment {
 		return rootView;
 	}
 
-	public void populateFragment(View theRootView, TopicModelList topicModelList) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.support.v4.app.Fragment#onStart()
+	 */
+	@Override
+	public void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+
+		TopicModelList.getInstance().registerListeningAdapter(listAdapter);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.support.v4.app.Fragment#onStop()
+	 */
+	@Override
+	public void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+
+		TopicModelList.getInstance().unRegisterListeningAdapter(listAdapter);
+	}
+
+	public void populateFragment(View theRootView,
+			ArrayList<TopicModel> topicModelList) {
 		// get title & list view adapter
 		ListView listView = (ListView) theRootView
 				.findViewById(R.id.postListView);
 
 		listAdapter = new TopicListViewAdapter<TopicModel>(getActivity(),
-				topicModelList.getArrayList());
+				topicModelList);
 
 		// set adapter
 		listView.setAdapter(listAdapter);
