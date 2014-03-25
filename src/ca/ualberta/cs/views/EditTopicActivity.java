@@ -95,7 +95,7 @@ public class EditTopicActivity extends Activity {
 			});
 
 			// hide gallery thumbnail
-			ImageView galeryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
+			//ImageView galeryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
 			// galeryThumbnail.setVisibility(View.INVISIBLE);
 
 		} else {
@@ -159,7 +159,7 @@ public class EditTopicActivity extends Activity {
 				// set the view image o the selected image
 				galleryThumbnail.setImageBitmap(scaledBitmap);
 
-				// compress and output
+				// compress and output to class variable
 				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 				imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
 				imageByteArray = outStream.toByteArray();

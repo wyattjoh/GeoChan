@@ -46,16 +46,24 @@ public class TopicListActivityFragment extends Fragment {
 		// get fragment number
 		int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
+		// get user
+		UserModel theUser = ActiveUserModel.getShared().getUser();
+		
 		switch (sectionNumber) {
 		case 1:
-			// create topic list is a stand in for the actual data
-			UserModel theUser = ActiveUserModel.getShared().getUser();
+			// Populate list view for TOPICS
 			DummyPostListFactory.createCommentedTopics(theUser);
 			populateFragment(rootView, TopicModelList.getInstance());
 			break;
 		case 2:
+			// Populate list view for FAVORITES
+			DummyPostListFactory.createCommentedTopics(theUser);
+			populateFragment(rootView, TopicModelList.getInstance());
 			break;
 		case 3:
+			// Populate list view for READ LATER
+			DummyPostListFactory.createCommentedTopics(theUser);
+			populateFragment(rootView, TopicModelList.getInstance());
 			break;
 		}
 
