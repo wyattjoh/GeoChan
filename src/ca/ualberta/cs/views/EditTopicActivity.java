@@ -60,6 +60,9 @@ public class EditTopicActivity extends EditPostActivity {
 					EditText commentField = (EditText) findViewById(R.id.commentTextField);
 					theTopicModel.setCommentText(commentField.getText()
 							.toString());
+					
+					// add the picture
+					theTopicModel.setPicture(imageBitmap);
 
 					theController.newTopic(theTopicModel);
 

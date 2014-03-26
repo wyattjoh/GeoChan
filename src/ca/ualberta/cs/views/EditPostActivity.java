@@ -18,7 +18,8 @@ public abstract class EditPostActivity extends Activity {
 
 	// image vars
 	private static final int SELECT_PICTURE = 1;
-	private byte[] imageByteArray;
+	protected byte[] imageByteArray;
+	protected Bitmap imageBitmap;
 	
 	
 	@Override
@@ -72,7 +73,7 @@ public abstract class EditPostActivity extends Activity {
 				String selectedImagePath = (String) getPath(selectedImageUri);
 
 				// get picture object from path
-				Bitmap imageBitmap = BitmapFactory
+				imageBitmap = BitmapFactory
 						.decodeFile(selectedImagePath);
 
 				// get and set image view
@@ -80,10 +81,19 @@ public abstract class EditPostActivity extends Activity {
 				// galleryThumbnail.setVisibility(View.VISIBLE);
 				
 				// create scaled image for display
-				Bitmap scaledBitmap =  Bitmap.createScaledBitmap(imageBitmap,
-						galleryThumbnail.getWidth(),
-						galleryThumbnail.getHeight(),
-						galleryThumbnail.getFilterTouchesWhenObscured());
+				Bitmap scaledBitmap;
+				if (imageBitmap.getWidth() > imageBitmap.getHeight()) {
+					scaledBitmap = Bitmap.createScaledBitmap(imageBitmap,
+							imageBitmap.getWidth(),
+							galleryThumbnail.getHeight(),
+							galleryThumbnail.getFilterTouchesWhenObscured());
+				}
+				else {
+					scaledBitmap = Bitmap.createScaledBitmap(imageBitmap,
+							galleryThumbnail.getWidth(),
+							imageBitmap.getHeight(),
+							galleryThumbnail.getFilterTouchesWhenObscured());
+				}
 				
 				// set the view image o the selected image
 				galleryThumbnail.setImageBitmap(scaledBitmap);
