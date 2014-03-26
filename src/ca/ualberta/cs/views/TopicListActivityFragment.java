@@ -58,6 +58,11 @@ public class TopicListActivityFragment extends Fragment {
 			populateFragment(
 					(ListView) rootView.findViewById(R.id.postListView),
 					TopicModelList.getInstance().getArrayList());
+			// Populate list view
+			// TODO: Get list!
+
+			// get specific fragment view and populate
+			// TODO: Populate
 			break;
 
 		// FAVORITES case
@@ -71,6 +76,11 @@ public class TopicListActivityFragment extends Fragment {
 					(ListView) rootView.findViewById(R.id.commentListView),
 					DummyPostListFactory.getCommentList(new UserModel(
 							"GeoChanComment")));
+			// Populate list view
+			// TODO: Get list!
+
+			// get specific fragment view and populate
+			// TODO: Populate
 			break;
 
 		// READ LATER case
@@ -80,6 +90,11 @@ public class TopicListActivityFragment extends Fragment {
 			populateFragment(
 					(ListView) rootView.findViewById(R.id.postListView),
 					TopicModelList.getInstance().getArrayList());
+			// Populate list view
+			// TODO: Get list!
+
+			// get specific fragment view and populate
+			// TODO: Populate
 			break;
 		}
 
