@@ -14,10 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.adapters.CommentListViewAdapter;
 import ca.ualberta.cs.adapters.PostListViewAdapter;
 import ca.ualberta.cs.adapters.TopicListViewAdapter;
 import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.DummyPostListFactory;
+import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.NetworkModel;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
@@ -25,8 +28,8 @@ import ca.ualberta.cs.models.UserModel;
 import ca.ualberta.cs.providers.LocationProvider;
 
 /**
- * A dummy fragment representing a section of the app, but that simply displays
- * dummy text.
+ * A dummy fragment representing a section of the application, but that simply
+ * displays dummy text.
  */
 public class TopicListActivityFragment extends Fragment {
 	/**
@@ -34,7 +37,7 @@ public class TopicListActivityFragment extends Fragment {
 	 */
 	public static final String ARG_SECTION_NUMBER = "section_number";
 
-	private PostListViewAdapter<TopicModel> listAdapter = null;
+	private PostListViewAdapter<?> listAdapter = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,35 +54,32 @@ public class TopicListActivityFragment extends Fragment {
 
 		// TOPICS case
 		case 1:
-			// Populate list view
-			DummyPostListFactory.createCommentedTopics(new UserModel(
-					"TestTopicsUser"));
-
 			// get specific fragment view and populate
-			populateFragment(rootView, TopicModelList.getInstance()
-					.getArrayList());
+			populateFragment(
+					(ListView) rootView.findViewById(R.id.postListView),
+					TopicModelList.getInstance().getArrayList());
 			break;
 
 		// FAVORITES case
 		case 2:
-			// Populate list view
-			DummyPostListFactory.createCommentedTopics(new UserModel(
-					"TestFavoritesUser"));
-
 			// get specific fragment view and populate
-			populateFragment(rootView, TopicModelList.getInstance()
-					.getArrayList());
+			populateFragment(
+					(ListView) rootView.findViewById(R.id.postListView),
+					FavoriteTopicModelList.getInstance().getArrayList());
+			
+			populateFragment(
+					(ListView) rootView.findViewById(R.id.commentListView),
+					DummyPostListFactory.getCommentList(new UserModel(
+							"GeoChanComment")));
 			break;
 
 		// READ LATER case
 		case 3:
-			// Populate list view
-			DummyPostListFactory.createCommentedTopics(new UserModel(
-					"TestFavoritesUser"));
 
 			// get specific fragment view and populate
-			populateFragment(rootView, TopicModelList.getInstance()
-					.getArrayList());
+			populateFragment(
+					(ListView) rootView.findViewById(R.id.postListView),
+					TopicModelList.getInstance().getArrayList());
 			break;
 		}
 
@@ -115,17 +115,27 @@ public class TopicListActivityFragment extends Fragment {
 		TopicModelList.getInstance().unRegisterListeningAdapter(listAdapter);
 	}
 
-	public void populateFragment(View theRootView,
-			ArrayList<TopicModel> topicModelList) {
-		// get title & list view adapter
-		ListView listView = (ListView) theRootView
-				.findViewById(R.id.postListView);
+	/**
+	 * Takes the ListView element and a model list and sets the appropriate
+	 * adapter
+	 * 
+	 * @param theListView
+	 * @param theModelList
+	 */
+	public void populateFragment(ListView theListView, ArrayList<?> theModelList) {
 
-		listAdapter = new TopicListViewAdapter<TopicModel>(getActivity(),
-				topicModelList);
-
+		if (!theModelList.isEmpty()) {
+			if (theModelList.get(0).getClass().equals(TopicModel.class)) {
+				listAdapter = new TopicListViewAdapter<TopicModel>(
+						getActivity(), (ArrayList<TopicModel>) theModelList);
+			} else if (theModelList.get(0).getClass()
+					.equals(CommentModel.class)) {
+				listAdapter = new CommentListViewAdapter<CommentModel>(
+						getActivity(), (ArrayList<CommentModel>) theModelList);
+			}
+		}
 		// set adapter
-		listView.setAdapter(listAdapter);
+		theListView.setAdapter(listAdapter);
 	}
 
 	/*
@@ -143,7 +153,7 @@ public class TopicListActivityFragment extends Fragment {
 		refresh();
 	}
 
-	/*
+	/**
 	 * Updates all lists
 	 */
 	public void refresh() {
