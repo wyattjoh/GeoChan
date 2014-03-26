@@ -11,7 +11,7 @@ import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CurrentUserPostModelFactory;
 import ca.ualberta.cs.models.TopicModel;
 
-public class EditCommentActivty extends EditPostActivity {
+public class EditCommentActivity extends EditPostActivity {
 
 	public static final String IS_NEW_COMMENT_KEY = "IS_NEW_COMMENT";
 

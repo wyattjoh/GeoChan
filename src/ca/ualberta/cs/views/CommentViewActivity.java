@@ -44,7 +44,7 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
 		case R.id.cellActiveArea:
-			newPost(EditCommentActivty.class);
+			newPost(EditCommentActivity.class);
 			return true;
 		case R.id.action_settings:
 			startSettingsActivity();
