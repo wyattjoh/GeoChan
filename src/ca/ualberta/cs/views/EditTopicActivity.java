@@ -23,6 +23,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	 * @see android.app.Activity#onStart()
 	 */
 	
+	@Override
 	protected void getSelectedModel() {
 		// TODO Auto-generated method stub
 		this.theModel = TopicModelList.getInstance().getSelection();
@@ -47,6 +48,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 		populateView();
 	}
 
+	@Override
 	protected void populateView() {
 		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
 

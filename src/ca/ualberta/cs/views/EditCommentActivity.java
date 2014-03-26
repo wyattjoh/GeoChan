@@ -9,6 +9,8 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.CommentModelController;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
+import ca.ualberta.cs.models.PostModelList;
+import ca.ualberta.cs.models.TopicModelList;
 
 public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
@@ -42,7 +44,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 		}
 
 		// Get the controller
-		this.theController = new CommentModelController(null);
+		this.theController = new CommentModelController(TopicModelList.getInstance());
 		
 		// customize UI
 		EditText commentEditTitle = (EditText) findViewById(R.id.titleTextField);
@@ -52,6 +54,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 		populateView();
 	}
 
+	@Override
 	protected void populateView() {
 		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
 
@@ -61,17 +64,15 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 				@Override
 				public void onClick(View v) {
-					CommentModel theCommentModel = new CommentModel();
-
 					// Get the comment
 					EditText commentField = (EditText) findViewById(R.id.commentTextField);
-					theCommentModel.setCommentText(commentField.getText()
+					theModel.setCommentText(commentField.getText()
 							.toString());
 					
 					// add the picture
-					theCommentModel.setPicture(imageBitmap);
+					theModel.setPicture(imageBitmap);
 
-					theController.addComment(theCommentModel, null);
+					theController.addComment(theModel, theModel.getMyParent());
 
 					finish();
 				}
