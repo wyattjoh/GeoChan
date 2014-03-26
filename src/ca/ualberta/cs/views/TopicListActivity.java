@@ -20,10 +20,8 @@ import android.view.View;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
-import ca.ualberta.cs.models.DummyPostListFactory;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
-import ca.ualberta.cs.models.UserModel;
 
 /**
  * 

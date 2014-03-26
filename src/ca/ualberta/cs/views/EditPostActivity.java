@@ -3,6 +3,7 @@ package ca.ualberta.cs.views;
 import java.io.ByteArrayOutputStream;
 
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.models.PostModel;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,12 +15,14 @@ import android.provider.MediaStore;
 import android.view.Menu;
 import android.widget.ImageView;
 
-public abstract class EditPostActivity extends Activity {
+public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 	// image vars
 	private static final int SELECT_PICTURE = 1;
 	protected byte[] imageByteArray;
 	protected Bitmap imageBitmap;
+	
+	protected T theModel;
 	
 	
 	@Override
@@ -50,7 +53,9 @@ public abstract class EditPostActivity extends Activity {
 	}
 
 	protected abstract void populateView();
-	
+
+	abstract protected void getSelectedModel();
+
 	/**
 	 * github http://stackoverflow.com/questions/2169649/get-pick-an-image-from-
 	 * androids-built-in-gallery-app-programmatically

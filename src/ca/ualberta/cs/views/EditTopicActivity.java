@@ -9,8 +9,9 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicModelController;
 import ca.ualberta.cs.models.CurrentUserPostModelFactory;
 import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.models.TopicModelList;
 
-public class EditTopicActivity extends EditPostActivity {
+public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	public static final String IS_NEW_TOPIC_KEY = "IS_NEW_TOPIC";
 
 	private TopicModelController theController;
@@ -21,6 +22,12 @@ public class EditTopicActivity extends EditPostActivity {
 	 * 
 	 * @see android.app.Activity#onStart()
 	 */
+	
+	protected void getSelectedModel() {
+		// TODO Auto-generated method stub
+		this.theModel = TopicModelList.getInstance().getSelection();
+	}
+	
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub

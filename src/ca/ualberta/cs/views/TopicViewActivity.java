@@ -3,7 +3,6 @@
  */
 package ca.ualberta.cs.views;
 
-import android.graphics.drawable.Drawable;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicViewController;
-import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 

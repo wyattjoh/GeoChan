@@ -8,10 +8,9 @@ import android.widget.EditText;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.CommentModelController;
 import ca.ualberta.cs.models.CommentModel;
-import ca.ualberta.cs.models.CurrentUserPostModelFactory;
-import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.models.CommentModelList;
 
-public class EditCommentActivity extends EditPostActivity {
+public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 	public static final String IS_NEW_COMMENT_KEY = "IS_NEW_COMMENT";
 
@@ -23,6 +22,13 @@ public class EditCommentActivity extends EditPostActivity {
 	 * 
 	 * @see android.app.Activity#onStart()
 	 */
+	
+	@Override
+	protected void getSelectedModel() {
+		// TODO Auto-generated method stub
+		this.theModel = CommentModelList.getInstance().getSelection();
+	}
+	
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -61,16 +67,15 @@ public class EditCommentActivity extends EditPostActivity {
 					EditText commentField = (EditText) findViewById(R.id.commentTextField);
 					theCommentModel.setCommentText(commentField.getText()
 							.toString());
+					
+					// add the picture
+					theCommentModel.setPicture(imageBitmap);
 
 					theController.addComment(theCommentModel, null);
 
 					finish();
 				}
 			});
-
-			// hide gallery thumbnail
-			//ImageView galeryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
-			// galeryThumbnail.setVisibility(View.INVISIBLE);
 
 		} else {
 			saveButton.setText("Update Comment");
