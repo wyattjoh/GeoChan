@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.CommentModelController;
+import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CurrentUserPostModelFactory;
 import ca.ualberta.cs.models.TopicModel;
 
@@ -35,7 +36,7 @@ public class EditCommentActivty extends EditPostActivity {
 		}
 
 		// Get the controller
-		this.theController = new CommentModelController();
+		this.theController = new CommentModelController(null);
 
 		// Populate the view
 		populateView();
@@ -50,18 +51,14 @@ public class EditCommentActivty extends EditPostActivity {
 
 				@Override
 				public void onClick(View v) {
-					CommentModel theCommentModel;
-
-					// Get the title
-					EditText titleField = (EditText) findViewById(R.id.titleTextField);
-					theCommentModel.setTitle(titleField.getText().toString());
+					CommentModel theCommentModel = new CommentModel();
 
 					// Get the comment
 					EditText commentField = (EditText) findViewById(R.id.commentTextField);
 					theCommentModel.setCommentText(commentField.getText()
 							.toString());
 
-					theController.addComment(theCommentModel);
+					theController.addComment(theCommentModel, null);
 
 					finish();
 				}

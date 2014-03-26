@@ -50,23 +50,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		return true;
 	}
 	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle presses on the action bar items
-		switch (item.getItemId()) {
-		case R.id.cellActiveArea:
-			newPost();
-			return true;
-		case R.id.action_settings:
-			startSettingsActivity();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
-	
-	protected void newPost() {
-		Intent intent = new Intent(this, EditTopicActivity.class);
+	protected void newPost(Class<?> editActivty) {
+		Intent intent = new Intent(this, editActivty);
 		startActivity(intent);
 	}
 
