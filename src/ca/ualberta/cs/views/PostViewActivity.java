@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.CommentListViewAdapter;
+import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.PostModel;
@@ -44,9 +46,38 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.post_view, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.cellActiveArea:
+			newPost();
+			return true;
+		case R.id.action_settings:
+			startSettingsActivity();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	protected void newPost() {
+		Intent intent = new Intent(this, EditTopicActivity.class);
+		startActivity(intent);
+	}
+
+	/**
+	 * Starts the settings activity
+	 */
+	protected void startSettingsActivity() {
+		Intent intent = new Intent(this, SettingsActivity.class);
+		startActivity(intent);
+	}
+
 
 	protected void populateView() {
 		// Add comment
