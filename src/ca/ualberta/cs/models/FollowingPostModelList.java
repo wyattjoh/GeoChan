@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 import ca.ualberta.cs.providers.GeoChanGson;
 
 import com.google.gson.Gson;
@@ -56,6 +57,7 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 			OutputStreamWriter osw = new OutputStreamWriter(fos);
 
 			gson.toJson(dataToSave, osw);
+			Log.w("FollowingPostModel", "Current Saved: " + gson.toJson(dataToSave));
 
 			osw.close();
 			fos.close();
@@ -123,6 +125,17 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	public void remove(int position) {
 		// TODO Auto-generated method stub
 		super.remove(position);
+		
+		save();
+	}
+
+	/* (non-Javadoc)
+	 * @see ca.ualberta.cs.models.PostModelList#remove(ca.ualberta.cs.models.PostModel)
+	 */
+	@Override
+	public void remove(T theModel) {
+		// TODO Auto-generated method stub
+		super.remove(theModel);
 		
 		save();
 	}
