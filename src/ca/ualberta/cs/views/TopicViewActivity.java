@@ -4,6 +4,7 @@
 package ca.ualberta.cs.views;
 
 import android.graphics.drawable.Drawable;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -41,6 +42,21 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 	@Override
 	protected OnClickListener getFavoriteOnClickListener() {
 		return favoriteOnClickListener;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.cellActiveArea:
+			newPost(EditTopicActivity.class);
+			return true;
+		case R.id.action_settings:
+			startSettingsActivity();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	/* (non-Javadoc)

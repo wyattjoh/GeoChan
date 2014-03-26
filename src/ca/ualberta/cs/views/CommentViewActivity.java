@@ -3,6 +3,7 @@
  */
 package ca.ualberta.cs.views;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -36,6 +37,21 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 	protected OnClickListener getFavoriteOnClickListener() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.cellActiveArea:
+			newPost(EditCommentActivity.class);
+			return true;
+		case R.id.action_settings:
+			startSettingsActivity();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 }

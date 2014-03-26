@@ -253,11 +253,7 @@ public class TopicListActivity extends FragmentActivity {
 		// Perform the login flow process
 		loginFlow();
 		
-		
-		// TODO remove
 		// populate with fake data
-		DummyPostListFactory.createCommentedTopics(new UserModel("4ChanTroll"));
-		FavoriteTopicModelList.getInstance().setArrayList(DummyPostListFactory.getTopicList(new UserModel("GeoChanUser")));
 	}
 
 	/**

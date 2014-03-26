@@ -49,9 +49,9 @@ public class TopicListActivityFragment extends Fragment {
 		// get fragment view
 		View rootView = inflater.inflate(R.layout.fragment_post_list,
 				container, false);
+		DummyPostListFactory.createCommentedTopics(new UserModel("GChanTroll"));
 
 		switch (sectionNumber) {
-
 		// TOPICS case
 		case 1:
 			// get specific fragment view and populate
@@ -72,13 +72,10 @@ public class TopicListActivityFragment extends Fragment {
 					(ListView) rootView.findViewById(R.id.postListView),
 					FavoriteTopicModelList.getInstance().getArrayList());
 			
-			TextView commentText = (TextView) rootView.findViewById(R.id.commentListText);
-			commentText.setVisibility(View.VISIBLE);
-			
-			populateFragment(
-					(ListView) rootView.findViewById(R.id.commentListView),
-					DummyPostListFactory.getCommentList(new UserModel(
-							"GeoChanComment")));
+			if (!FavoriteTopicModelList.getInstance().getArrayList().isEmpty()){
+				LinearLayout commentBox = (LinearLayout) rootView.findViewById(R.id.commentViewBox);
+				commentBox.setVisibility(View.VISIBLE);
+			}
 			
 			// Populate list view
 			// TODO: Get list!
