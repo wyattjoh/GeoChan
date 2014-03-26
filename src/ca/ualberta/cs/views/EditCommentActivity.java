@@ -37,6 +37,10 @@ public class EditCommentActivity extends EditPostActivity {
 
 		// Get the controller
 		this.theController = new CommentModelController(null);
+		
+		// customize UI
+		EditText commentEditTitle = (EditText) findViewById(R.id.titleTextField);
+		commentEditTitle.setVisibility(View.GONE);
 
 		// Populate the view
 		populateView();

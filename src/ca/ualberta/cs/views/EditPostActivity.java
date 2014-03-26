@@ -25,7 +25,7 @@ public abstract class EditPostActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_edit_topic);
+		setContentView(R.layout.activity_edit_post);
 	}
 
 	@Override
