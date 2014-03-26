@@ -43,23 +43,35 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         tools:listitem="@android:layout/simple_list_item_1" >
-
     </ListView>
 
-    <TextView
-        android:id="@+id/commentListText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/commentViewBox"
         android:layout_below="@+id/postListView"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"
-        android:text="CommentText" />
-    
-        <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6E6E6E"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:visibility="gone"  >
+
+        <TextView
+            android:id="@+id/commentListText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CommentText"
+            android:gravity="center_vertical|center_horizontal"/>
+    </LinearLayout>
+
+    <ListView
         android:id="@+id/commentListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/commentListText"
+        android:layout_below="@+id/commentViewBox"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         tools:listitem="@android:layout/simple_list_item_1" >

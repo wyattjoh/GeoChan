@@ -72,8 +72,8 @@ public class TopicListActivityFragment extends Fragment {
 					(ListView) rootView.findViewById(R.id.postListView),
 					FavoriteTopicModelList.getInstance().getArrayList());
 			
-			TextView commentText = (TextView) rootView.findViewById(R.id.commentListText);
-			commentText.setVisibility(View.VISIBLE);
+			LinearLayout commentBox = (LinearLayout) rootView.findViewById(R.id.commentViewBox);
+			commentBox.setVisibility(View.VISIBLE);
 			
 			populateFragment(
 					(ListView) rootView.findViewById(R.id.commentListView),
