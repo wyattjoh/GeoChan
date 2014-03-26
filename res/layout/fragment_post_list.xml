@@ -46,11 +46,20 @@
 
     </ListView>
 
-    <ListView
+    <TextView
+        android:id="@+id/commentListText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/postListView"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:text="CommentText" />
+    
+        <ListView
         android:id="@+id/commentListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/postListView"
+        android:layout_below="@+id/commentListText"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         tools:listitem="@android:layout/simple_list_item_1" >
