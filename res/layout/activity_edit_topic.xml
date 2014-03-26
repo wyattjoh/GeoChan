@@ -69,12 +69,22 @@
         android:gravity="center_vertical|center_horizontal"
         android:text="Save" />
 
-    <ImageView
-        android:id="@+id/imageThumbnail"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_launcher" />
+        android:layout_above="@+id/saveOrAddButton"
+        android:layout_alignLeft="@+id/pictureButton"
+        android:layout_alignRight="@+id/pictureButton"
+        android:layout_below="@+id/pictureButton" >
+
+        <ImageView
+            android:id="@+id/imageThumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_action_person" />
+
+    </FrameLayout>
 
 </RelativeLayout>
