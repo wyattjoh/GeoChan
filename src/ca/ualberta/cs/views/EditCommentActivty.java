@@ -6,15 +6,16 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.controllers.TopicModelController;
+import ca.ualberta.cs.controllers.CommentModelController;
 import ca.ualberta.cs.models.CurrentUserPostModelFactory;
 import ca.ualberta.cs.models.TopicModel;
 
-public class EditTopicActivity extends EditPostActivity {
-	public static final String IS_NEW_TOPIC_KEY = "IS_NEW_TOPIC";
+public class EditCommentActivty extends EditPostActivity {
 
-	private TopicModelController theController;
-	private Boolean isNewTopic = true;
+	public static final String IS_NEW_COMMENT_KEY = "IS_NEW_COMMENT";
+
+	private CommentModelController theController;
+	private Boolean isNewComment = true;
 
 	/*
 	 * (non-Javadoc)
@@ -30,11 +31,11 @@ public class EditTopicActivity extends EditPostActivity {
 		Bundle extras = getIntent().getExtras();
 
 		if (extras != null) {
-			this.isNewTopic = extras.getBoolean(IS_NEW_TOPIC_KEY);
+			this.isNewComment = extras.getBoolean(IS_NEW_COMMENT_KEY);
 		}
 
 		// Get the controller
-		this.theController = new TopicModelController();
+		this.theController = new CommentModelController();
 
 		// Populate the view
 		populateView();
@@ -43,25 +44,24 @@ public class EditTopicActivity extends EditPostActivity {
 	protected void populateView() {
 		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
 
-		if (this.isNewTopic) {
-			saveButton.setText("Add Topic");
+		if (this.isNewComment) {
+			saveButton.setText("Add Comment");
 			saveButton.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					TopicModel theTopicModel = CurrentUserPostModelFactory
-							.newTopicModel();
+					CommentModel theCommentModel;
 
 					// Get the title
 					EditText titleField = (EditText) findViewById(R.id.titleTextField);
-					theTopicModel.setTitle(titleField.getText().toString());
+					theCommentModel.setTitle(titleField.getText().toString());
 
 					// Get the comment
 					EditText commentField = (EditText) findViewById(R.id.commentTextField);
-					theTopicModel.setCommentText(commentField.getText()
+					theCommentModel.setCommentText(commentField.getText()
 							.toString());
 
-					theController.newTopic(theTopicModel);
+					theController.addComment(theCommentModel);
 
 					finish();
 				}
@@ -72,7 +72,7 @@ public class EditTopicActivity extends EditPostActivity {
 			// galeryThumbnail.setVisibility(View.INVISIBLE);
 
 		} else {
-			saveButton.setText("Update Topic");
+			saveButton.setText("Update Comment");
 
 		}
 
@@ -91,6 +91,6 @@ public class EditTopicActivity extends EditPostActivity {
 	}
 
 	public Boolean getIsNewTopic() {
-		return isNewTopic;
+		return isNewComment;
 	}
 }
