@@ -20,7 +20,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
 import ca.ualberta.cs.models.ElasticSearchResponse;
-import ca.ualberta.cs.models.ElasticSearchOperationTransformer;
+import ca.ualberta.cs.models.ElasticSearchOperationFactory;
 import ca.ualberta.cs.models.ElasticSearchOperationRequest;
 import ca.ualberta.cs.models.ElasticSearchOperationResponse;
 import ca.ualberta.cs.models.TopicModel;
@@ -142,7 +142,7 @@ public class ElasticSearchProviderService extends
 			int theVersion = esResponse.getVersion();
 			theTopic.setVersion(theVersion);
 			
-			ElasticSearchOperationResponse theResponse = ElasticSearchOperationTransformer.responseFromRequest(theRequest);
+			ElasticSearchOperationResponse theResponse = ElasticSearchOperationFactory.responseFromRequest(theRequest);
 			theResponse.setTopicModel(theTopic);
 			
 			return theResponse;

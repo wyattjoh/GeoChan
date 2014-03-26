@@ -1,6 +1,6 @@
 package ca.ualberta.cs.models;
 
-public class ElasticSearchOperationTransformer {
+public class ElasticSearchOperationFactory {
 	public static ElasticSearchOperationResponse responseFromRequest(ElasticSearchOperationRequest theRequest) {
 		ElasticSearchOperationResponse response = new ElasticSearchOperationResponse(theRequest.getRequestMode());
 		response.setTopicModel(theRequest.getTopicModel());
