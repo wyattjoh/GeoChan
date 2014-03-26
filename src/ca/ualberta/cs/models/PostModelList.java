@@ -79,6 +79,25 @@ public class PostModelList<T extends PostModel> {
 
 		updateListeningAdapters();
 	}
+	
+	public void update(T theModel) {
+		boolean foundObjectToUpdate = false;
+		int size = this.postModelArrayList.size();
+		
+		for (int i = 0; i < size; i++) {
+			T model = this.postModelArrayList.get(i);
+			
+			if (model != null && model.equals(theModel)) {
+				this.postModelArrayList.set(i, theModel);
+				foundObjectToUpdate = true;
+				break;
+			}
+		}
+		
+		if (!foundObjectToUpdate) {
+			throw new RuntimeException("Tried to update an entry that wasn't here!");
+		}
+	}
 
 	public void remove(T theModel) {
 		this.postModelArrayList.remove(theModel);

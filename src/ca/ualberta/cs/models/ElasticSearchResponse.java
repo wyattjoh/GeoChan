@@ -16,4 +16,7 @@ public class ElasticSearchResponse<T> {
     public String getId() {
     	return _id;
     }
+    public int getVersion() {
+    	return _version;
+    }
 }

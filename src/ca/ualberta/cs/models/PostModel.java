@@ -8,13 +8,13 @@ import android.graphics.Bitmap;
 import android.location.Location;
 
 public abstract class PostModel {
-	private String id;
 	private String commentText;
 	private Location location;
 	private Bitmap picture;
 	private UserModel postedBy;
 	private Date datePosted;
 	private Integer score;
+	private transient PostModel myParent = null;
 	private ArrayList<CommentModel> childrenComments;
 	
 	private transient Boolean isFavorite = false;
@@ -39,7 +39,6 @@ public abstract class PostModel {
 	 * Constructors
 	 */
 	public PostModel(){
-		this.id = "";
 		this.postedBy = null;
 		this.datePosted = new Date();
 		this.score = 0;
@@ -48,7 +47,6 @@ public abstract class PostModel {
 	}
 	
 	public PostModel(UserModel theUser){
-		this.id = "";
 		this.postedBy = theUser;
 		this.datePosted = new Date();
 		this.score = 0;
@@ -73,12 +71,6 @@ public abstract class PostModel {
 	/**
 	 *  Auto generated setters and getters
 	 *  */
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 	public String getCommentText() {
 		return commentText;
 	}
@@ -142,24 +134,25 @@ public abstract class PostModel {
 		this.isFavorite = isFavorite;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * @return the myParent
 	 */
-	@Override
-	public boolean equals(Object o) {
-		if (o instanceof PostModel) {
-			PostModel thePostModelBeingEvaluated = (PostModel) o;
+	public PostModel getMyParent() {
+		return myParent;
+	}
 
-			if (thePostModelBeingEvaluated.getId().equals(id)) {
-				return true;
-			}
-			else {
-				return false;
-			}
+	/**
+	 * @param myParent the myParent to set
+	 */
+	public void setMyParent(PostModel myParent) {
+		this.myParent = myParent;
+	}
+	
+	public PostModel getMyFirstAncestor() {
+		if (myParent == null) {
+			return this;
 		}
-		else {
-			return false;
-		}
+		return myParent.getMyFirstAncestor();
 	}
 	
 }
