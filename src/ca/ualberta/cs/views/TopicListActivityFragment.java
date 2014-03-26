@@ -52,32 +52,34 @@ public class TopicListActivityFragment extends Fragment {
 		// TOPICS case
 		case 1:
 			// Populate list view
-			ArrayList<TopicModel> modelTopicList = DummyPostListFactory
-					.createCommentedTopics(new UserModel("TestTopicsUser"));
+			DummyPostListFactory.createCommentedTopics(new UserModel(
+					"TestTopicsUser"));
 
 			// get specific fragment view and populate
-			TopicModelList.getInstance().setArrayList(modelTopicList);
-			populateFragment(rootView, TopicModelList.getInstance().getArrayList());
+			populateFragment(rootView, TopicModelList.getInstance()
+					.getArrayList());
 			break;
 
 		// FAVORITES case
 		case 2:
 			// Populate list view
-			ArrayList<TopicModel> modelFavoritesList = DummyPostListFactory
-					.createCommentedTopics(new UserModel("TestFavoritesUser"));
+			DummyPostListFactory.createCommentedTopics(new UserModel(
+					"TestFavoritesUser"));
 
 			// get specific fragment view and populate
-			populateFragment(rootView, modelFavoritesList);
+			populateFragment(rootView, TopicModelList.getInstance()
+					.getArrayList());
 			break;
 
 		// READ LATER case
 		case 3:
 			// Populate list view
-			ArrayList<TopicModel> modelReadlaterList = DummyPostListFactory
-					.createCommentedTopics(new UserModel("TestFavoritesUser"));
+			DummyPostListFactory.createCommentedTopics(new UserModel(
+					"TestFavoritesUser"));
 
 			// get specific fragment view and populate
-			populateFragment(rootView, modelReadlaterList);
+			populateFragment(rootView, TopicModelList.getInstance()
+					.getArrayList());
 			break;
 		}
 

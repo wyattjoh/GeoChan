@@ -47,11 +47,12 @@
     </ListView>
 
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/commentListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/postListView"
-        android:layout_centerHorizontal="true" >
+        android:layout_centerHorizontal="true"
+        tools:listitem="@android:layout/simple_list_item_1" >
     </ListView>
 
 </RelativeLayout>
