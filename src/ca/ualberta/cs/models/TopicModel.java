@@ -1,7 +1,6 @@
 package ca.ualberta.cs.models;
 
 public class TopicModel extends PostModel {
-	private String id;
 	private String title;
 	private int version;
 
@@ -28,13 +27,6 @@ public class TopicModel extends PostModel {
 		this.title = title;
 	}
 	
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	
 	/**
 	 * @return the version
 	 */
@@ -47,29 +39,6 @@ public class TopicModel extends PostModel {
 	 */
 	public void setVersion(Integer version) {
 		this.version = version;
-	}
-
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.models.PostModel#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object o) {
-		if (o == null) {
-			return false;
-		}
-		
-		if (!(o instanceof TopicModel)) {
-			return false;
-		}
-		
-		TopicModel oModel = (TopicModel) o;
-		
-		if (oModel.getId().equals(getId())) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 	
 }

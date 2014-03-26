@@ -18,6 +18,7 @@ public abstract class PostModel {
 	private ArrayList<CommentModel> childrenComments;
 	
 	private transient Boolean isFavorite = false;
+	private String id;
 	
 	/**
 	 * Comparators
@@ -153,6 +154,33 @@ public abstract class PostModel {
 			return this;
 		}
 		return myParent.getMyFirstAncestor();
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		}
+		
+		if (!(o instanceof PostModel)) {
+			return false;
+		}
+		
+		PostModel oModel = (PostModel) o;
+		
+		if (oModel.getId().equals(getId())) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 }
