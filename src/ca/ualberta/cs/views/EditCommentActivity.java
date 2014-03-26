@@ -40,7 +40,7 @@ public class EditCommentActivity extends EditPostActivity {
 		
 		// customize UI
 		EditText commentEditTitle = (EditText) findViewById(R.id.titleTextField);
-		commentEditTitle.setVisibility(View.GONE);
+		commentEditTitle.setVisibility(View.INVISIBLE);
 
 		// Populate the view
 		populateView();
