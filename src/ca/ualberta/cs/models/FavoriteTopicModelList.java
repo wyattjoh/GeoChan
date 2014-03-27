@@ -25,10 +25,16 @@ public class FavoriteTopicModelList extends FollowingPostModelList<TopicModel> {
 	}
 	
 	public static FavoriteTopicModelList createInstance(Context applicationContext) {
-		return singleton = new FavoriteTopicModelList(applicationContext);
+		if (singleton == null) {
+			singleton = new FavoriteTopicModelList(applicationContext);
+		}
+		return singleton;
 	}
 	
 	public static FavoriteTopicModelList getInstance() {
+		if (singleton == null) {
+			throw new RuntimeException("Cannot get an instance before you create it!");
+		}
 		return singleton;
 	}
 

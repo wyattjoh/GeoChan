@@ -13,7 +13,6 @@ import ca.ualberta.cs.providers.ElasticSearchProvider;
  */
 public class TopicModelController {
 	private TopicModelList theTopicModelList;
-//	private Activity theEditTopicActivity;
 	
 	public TopicModelController() {
 		this.theTopicModelList = TopicModelList.getInstance();

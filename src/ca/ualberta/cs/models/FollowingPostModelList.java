@@ -167,5 +167,4 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 		
 		save();
 	}
-
 }

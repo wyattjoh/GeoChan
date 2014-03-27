@@ -3,17 +3,17 @@ package ca.ualberta.cs.models;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import ca.ualberta.cs.adapters.PostListViewAdapter;
 import android.util.Log;
-import android.widget.BaseAdapter;
 
 public class PostModelList<T extends PostModel> {
 	private T selectedPostModel = null;
 	private ArrayList<T> postModelArrayList;
-	private ArrayList<BaseAdapter> listeningAdapters;
+	private ArrayList<PostListViewAdapter<T>> listeningAdapters;
 
 	protected PostModelList() {
 		this.postModelArrayList = new ArrayList<T>();
-		this.listeningAdapters = new ArrayList<BaseAdapter>();
+		this.listeningAdapters = new ArrayList<PostListViewAdapter<T>>();
 	}
 
 	public void setSelection(int position) {
@@ -110,25 +110,19 @@ public class PostModelList<T extends PostModel> {
 	}
 
 	public void updateListeningAdapters() {
-		Log.w("PostModelList", "The number of listening adapters is: " + Integer.toString(this.listeningAdapters.size()));
-		for (BaseAdapter theAdapter : this.listeningAdapters) {
+		for (PostListViewAdapter<T> theAdapter : this.listeningAdapters) {
 			if (theAdapter != null) {
 				theAdapter.notifyDataSetChanged();
 				Log.w("PostModelList", "The adapter has been notified");
 			}
-			else {
-				Log.w("PostModelList", "The adapter was null! I can't update a null adapter!");
-			}
 		}
 	}
 
-	public void registerListeningAdapter(BaseAdapter theAdapter) {
-		Log.w("PostModelList", "Adapter Registered");
+	public void registerListeningAdapter(PostListViewAdapter<T> theAdapter) {
 		this.listeningAdapters.add(theAdapter);
 	}
 
-	public void unRegisterListeningAdapter(BaseAdapter theAdapter) {
-		Log.w("PostModelList", "Adapter Unregistered");
+	public void unRegisterListeningAdapter(PostListViewAdapter<T> theAdapter) {
 		this.listeningAdapters.remove(theAdapter);
 	}
 }
