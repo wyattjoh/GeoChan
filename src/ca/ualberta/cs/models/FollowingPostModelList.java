@@ -23,16 +23,28 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	
 	private Context applicationContext;
 	
+	/**
+	 * @return string for filename to save as (generally the class name)
+	 */
+	abstract protected String getFilenameString();
+
+	/**
+	 * @return transformed arrayList to a Java array typed correctly
+	 */
+	abstract protected T[] arrayListToArray();
+
+	/**
+	 * Loads the JSON file from the ISR
+	 * @param isr reader for the JSON file
+	 * @return proper typed java array
+	 */
+	abstract protected T[] inputStreaReaderToArray(InputStreamReader isr);
+
 	protected FollowingPostModelList(Context applicationContext) {
 		this.applicationContext = applicationContext;
 		
 		load();
 	}
-	
-	/**
-	 * @return 
-	 */
-	protected abstract String getFilenameString();
 	
 	/*
 	 * (non-Javadoc)
@@ -45,6 +57,9 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 
 	}
 
+	/**
+	 * Saves the current state to the disk
+	 */
 	private void save() {
 		Gson gson = GeoChanGson.getGson();
 		
@@ -71,51 +86,6 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 		}
 	}
 	
-	abstract protected T[] arrayListToArray();
-	abstract protected T[] inputStreaReaderToArray(InputStreamReader isr);
-
-	private void load() {
-		ArrayList<T> dataThatLoaded = new ArrayList<T>();
-						
-		try {
-			String FILENAME = getFilenameString();
-			FileInputStream fis = applicationContext.openFileInput(FILENAME);
-			InputStreamReader isr = new InputStreamReader(fis);
-
-			@SuppressWarnings("unchecked")
-			T[] thePrimative = inputStreaReaderToArray(isr);
-
-			isr.close();
-			fis.close();
-			
-			for(int i = 0; i < thePrimative.length; i++) {
-				dataThatLoaded.add(thePrimative[i]);
-			}
-
-
-		} catch (FileNotFoundException e) {
-			// File was not found! Create it!
-			save();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ca.ualberta.cs.models.PostModelList#add(ca.ualberta.cs.models.PostModel)
-	 */
-	@Override
-	public void add(T theModel) {
-		// TODO Auto-generated method stub
-		super.add(theModel);
-		
-		save();
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -164,6 +134,51 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	public void setArrayList(ArrayList<T> postModelArrayList) {
 		// TODO Auto-generated method stub
 		super.setArrayList(postModelArrayList);
+		
+		save();
+	}
+
+	/**
+	 * Loads the state from the disk to memory
+	 */
+	private void load() {
+		ArrayList<T> dataThatLoaded = new ArrayList<T>();
+						
+		try {
+			String FILENAME = getFilenameString();
+			FileInputStream fis = applicationContext.openFileInput(FILENAME);
+			InputStreamReader isr = new InputStreamReader(fis);
+	
+			@SuppressWarnings("unchecked")
+			T[] thePrimative = inputStreaReaderToArray(isr);
+	
+			isr.close();
+			fis.close();
+			
+			for(int i = 0; i < thePrimative.length; i++) {
+				dataThatLoaded.add(thePrimative[i]);
+			}
+	
+	
+		} catch (FileNotFoundException e) {
+			// File was not found! Create it!
+			save();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.ualberta.cs.models.PostModelList#add(ca.ualberta.cs.models.PostModel)
+	 */
+	@Override
+	public void add(T theModel) {
+		// TODO Auto-generated method stub
+		super.add(theModel);
 		
 		save();
 	}
