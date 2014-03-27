@@ -3,6 +3,7 @@ package ca.ualberta.cs.adapters;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,8 +98,13 @@ public abstract class PostListViewAdapter<T extends PostModel> extends ArrayAdap
 		
 		// Fill picture
 		ImageView imageView = (ImageView) theView.findViewById(R.id.imageViewPicture);
-		// TODO: Add thumbnail if exists
-		imageView.setVisibility(View.GONE);
+		Bitmap thePicture = thePost.getPicture();
+		if (thePicture == null) {
+			imageView.setVisibility(View.GONE);
+		}
+		else {
+			// TODO: Add thumbnail if exists
+		}
 		
 		populateCellTitle(theView, theObject);
 	}
