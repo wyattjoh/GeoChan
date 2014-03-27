@@ -23,46 +23,54 @@
                 android:id="@+id/imageViewPicture"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_weight="0.13"
                 android:src="@android:drawable/ic_menu_gallery" />
 
             <TextView
                 android:id="@+id/textViewTitle"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.67"
+                android:layout_height="57dp"
+                android:layout_weight="1.04"
                 android:gravity="center"
                 android:text="Title" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <RelativeLayout
+                android:id="@+id/RelativeLayout1"
+                android:layout_width="74dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.02"
                 android:orientation="vertical" >
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-
-                    <ImageView
-                        android:id="@+id/imageViewComments"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:src="@android:drawable/sym_action_chat" />
-
-                    <TextView
-                        android:id="@+id/textViewComments"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Comments" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/textViewComments"
+                    android:layout_width="42dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imageViewComments"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center"
+                    android:text="5" />
 
                 <TextView
                     android:id="@+id/textViewScore"
-                    android:layout_width="89dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="59dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/textViewComments"
                     android:gravity="center"
-                    android:text="Score" />
-            </LinearLayout>
+                    android:text="Score"
+                    android:textColor="@color/blueColor" />
+
+                <ImageView
+                    android:id="@+id/imageViewComments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/textViewComments"
+                    android:src="@android:drawable/sym_action_chat" />
+
+            </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -111,10 +119,9 @@
                 android:id="@+id/textViewAge"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="DatePosted" />
-
         </LinearLayout>
     </RelativeLayout>
 
