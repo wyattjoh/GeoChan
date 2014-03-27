@@ -46,13 +46,6 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	 * 
 	 * @see android.app.Activity#onStart()
 	 */
-	
-	@Override
-	protected void onStart()
-	{
-		// TODO Auto-generated method stub
-		super.onStart();
-	}
 
 	protected abstract void populateView();
 

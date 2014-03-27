@@ -3,6 +3,7 @@
  */
 package ca.ualberta.cs.views;
 
+import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,18 +49,9 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 	}
 	
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle presses on the action bar items
-		switch (item.getItemId()) {
-		case R.id.cellActiveArea:
-			newPost(EditTopicActivity.class);
-			return true;
-		case R.id.action_settings:
-			startSettingsActivity();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+	protected void newPost(){
+		Intent intent = new Intent(this, EditCommentActivity.class);
+		startActivity(intent);
 	}
 
 	/* (non-Javadoc)

@@ -11,7 +11,6 @@ import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.TopicModelList;
 
-
 public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 	public static final String IS_NEW_COMMENT_KEY = "IS_NEW_COMMENT";
@@ -24,13 +23,14 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 	 * 
 	 * @see android.app.Activity#onStart()
 	 */
-	
+
 	@Override
 	protected void getSelectedModel() {
 		// TODO Auto-generated method stub
-		this.theModel = CommentModelList.getInstance().getSelection();
+		this.theModel = CommentModelList.getInstance(
+				TopicModelList.getInstance().getSelection()).getSelection();
 	}
-	
+
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -44,11 +44,14 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 		}
 
 		// Get the controller
-		this.theController = new CommentModelController(TopicModelList.getInstance());
-		
+		this.theController = new CommentModelController(
+				TopicModelList.getInstance());
+
 		// customize UI
 		EditText commentEditTitle = (EditText) findViewById(R.id.titleTextField);
 		commentEditTitle.setVisibility(View.INVISIBLE);
+
+		System.out.println(theModel == null);
 
 		// Populate the view
 		populateView();
@@ -66,9 +69,8 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 				public void onClick(View v) {
 					// Get the comment
 					EditText commentField = (EditText) findViewById(R.id.commentTextField);
-					theModel.setCommentText(commentField.getText()
-							.toString());
-					
+					theModel.setCommentText(commentField.getText().toString());
+
 					// add the picture
 					theModel.setPicture(imageBitmap);
 
