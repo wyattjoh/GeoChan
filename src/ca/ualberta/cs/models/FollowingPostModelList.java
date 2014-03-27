@@ -149,7 +149,6 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 			FileInputStream fis = applicationContext.openFileInput(FILENAME);
 			InputStreamReader isr = new InputStreamReader(fis);
 	
-			@SuppressWarnings("unchecked")
 			T[] thePrimative = inputStreaReaderToArray(isr);
 	
 			isr.close();
