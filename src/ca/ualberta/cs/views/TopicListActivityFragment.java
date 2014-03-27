@@ -1,6 +1,5 @@
 package ca.ualberta.cs.views;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.drawable.Drawable;
@@ -14,18 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.adapters.CommentListViewAdapter;
-import ca.ualberta.cs.adapters.PostListViewAdapter;
 import ca.ualberta.cs.adapters.TopicListViewAdapter;
-import ca.ualberta.cs.models.ActiveUserModel;
-import ca.ualberta.cs.models.CommentModel;
-import ca.ualberta.cs.models.DummyPostListFactory;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.NetworkModel;
-import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
-import ca.ualberta.cs.models.UserModel;
-import ca.ualberta.cs.providers.LocationProvider;
 
 /**
  * A dummy fragment representing a section of the application, but that simply
@@ -36,8 +27,17 @@ public class TopicListActivityFragment extends Fragment {
 	 * The fragment argument representing the section number for this fragment.
 	 */
 	public static final String ARG_SECTION_NUMBER = "section_number";
+	
+	private TopicListViewAdapter topicListViewAdapter;
 
-	private PostListViewAdapter<?> listAdapter = null;
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,36 +47,21 @@ public class TopicListActivityFragment extends Fragment {
 		int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
 		// get fragment view
-		View rootView = inflater.inflate(R.layout.fragment_post_list,
-				container, false);
-		DummyPostListFactory.createCommentedTopics(new UserModel("GChanTroll"));
+		View rootView = inflater.inflate(R.layout.fragment_post_list, container, false);
 
 		switch (sectionNumber) {
 		// TOPICS case
 		case 1:
-			// get specific fragment view and populate
-			populateFragment(
-					(ListView) rootView.findViewById(R.id.postListView),
-					TopicModelList.getInstance().getArrayList());
 			// Populate list view
-			// TODO: Get list!
+			ListView topicListView = (ListView) rootView.findViewById(R.id.postListView);
+			TopicModelList theTopicModelList = TopicModelList.getInstance();
 
 			// get specific fragment view and populate
-			// TODO: Populate
+			populateFragment(topicListView, theTopicModelList);
 			break;
 
 		// FAVORITES case
 		case 2:
-			// get specific fragment view and populate
-			populateFragment(
-					(ListView) rootView.findViewById(R.id.postListView),
-					FavoriteTopicModelList.getInstance().getArrayList());
-			
-			if (!FavoriteTopicModelList.getInstance().getArrayList().isEmpty()){
-				LinearLayout commentBox = (LinearLayout) rootView.findViewById(R.id.commentViewBox);
-				commentBox.setVisibility(View.VISIBLE);
-			}
-			
 			// Populate list view
 			// TODO: Get list!
 
@@ -86,11 +71,6 @@ public class TopicListActivityFragment extends Fragment {
 
 		// READ LATER case
 		case 3:
-
-			// get specific fragment view and populate
-			populateFragment(
-					(ListView) rootView.findViewById(R.id.postListView),
-					TopicModelList.getInstance().getArrayList());
 			// Populate list view
 			// TODO: Get list!
 
@@ -105,79 +85,55 @@ public class TopicListActivityFragment extends Fragment {
 		return rootView;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.Fragment#onStart()
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onDestroyView()
 	 */
 	@Override
-	public void onStart() {
+	public void onDestroyView() {
 		// TODO Auto-generated method stub
-		super.onStart();
+		super.onDestroyView();
+		
+		// get fragment number
+		int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
-		TopicModelList.getInstance().registerListeningAdapter(listAdapter);
-	}
+		switch (sectionNumber) {
+		// TOPICS case
+		case 1:
+			// Deconstruct the adapter
+			TopicModelList.getInstance().unRegisterListeningAdapter(topicListViewAdapter);
+			break;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.Fragment#onStop()
-	 */
-	@Override
-	public void onStop() {
-		// TODO Auto-generated method stub
-		super.onStop();
+		// FAVORITES case
+		case 2:
+			// TODO: Deconstruct the adapter
+			break;
 
-		TopicModelList.getInstance().unRegisterListeningAdapter(listAdapter);
-	}
-
-	/**
-	 * Takes the ListView element and a model list and sets the appropriate
-	 * adapter
-	 * 
-	 * @param theListView
-	 * @param theModelList
-	 */
-	public void populateFragment(ListView theListView, ArrayList<?> theModelList) {
-
-		if (!theModelList.isEmpty()) {
-			if (theModelList.get(0).getClass().equals(TopicModel.class)) {
-				listAdapter = new TopicListViewAdapter<TopicModel>(
-						getActivity(), (ArrayList<TopicModel>) theModelList);
-			} else if (theModelList.get(0).getClass()
-					.equals(CommentModel.class)) {
-				listAdapter = new CommentListViewAdapter<CommentModel>(
-						getActivity(), (ArrayList<CommentModel>) theModelList);
-			}
+		// READ LATER case
+		case 3:
+			// TODO: Deconstruct the adapter
+			break;
 		}
-		// set adapter
-		theListView.setAdapter(listAdapter);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onResume()
-	 * 
-	 * Added a refresh call
-	 */
-	@Override
-	public void onResume() {
-		super.onResume();
-
-		// Update
-		refresh();
+	public void populateFragment(ListView theListView, FavoriteTopicModelList theFavoriteTopicModelList) {
+		// TODO: Setup the adapter
+		
+		// TODO: Register the adapter
+	}
+	
+	public void populateFragment(ListView theListView, TopicModelList theTopicModelList) {
+		// Setup the adapter
+		topicListViewAdapter = new TopicListViewAdapter(getActivity(), theTopicModelList.getArrayList());
+		theListView.setAdapter(topicListViewAdapter);
+		
+		// Register the adapter
+		theTopicModelList.registerListeningAdapter(topicListViewAdapter);
 	}
 
 	/**
 	 * Updates all lists
 	 */
-	public void refresh() {
-		// Refresh the list
-		if (this.listAdapter != null) {
-			this.listAdapter.notifyDataSetChanged();
-		}
-
+	public void notifyNetworkStateChanged() {
 		// Refresh views
 		List<Fragment> fragments = getFragmentManager().getFragments();
 
@@ -190,15 +146,9 @@ public class TopicListActivityFragment extends Fragment {
 				setConnectionStatus(fragment.getView());
 			}
 		}
-
-		// update the location
-		ActiveUserModel
-				.getShared()
-				.getUser()
-				.setLocation(
-						LocationProvider.shared(getActivity()).getLocation());
 	}
 
+	// TODO: Refactor this whole thing...
 	private static enum STATE {
 		CONNECTED, NOT_CONNECTED, LOADING
 	};
