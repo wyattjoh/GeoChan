@@ -22,7 +22,7 @@ import ca.ualberta.cs.models.TopicModelList;
  * A dummy fragment representing a section of the application, but that simply
  * displays dummy text.
  */
-public class TopicListActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment {
 	/**
 	 * The fragment argument representing the section number for this fragment.
 	 */

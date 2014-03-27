@@ -29,7 +29,7 @@ import ca.ualberta.cs.models.TopicModelList;
  * 
  * @author wyatt
  */
-public class TopicListActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity {
 
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -56,9 +56,9 @@ public class TopicListActivity extends FragmentActivity {
 		@Override
 		public Fragment getItem(int position) {
 			// getItem is called to instantiate the fragment for the given page
-			Fragment fragment = new TopicListActivityFragment();
+			Fragment fragment = new MainActivityFragment();
 			Bundle args = new Bundle();
-			args.putInt(TopicListActivityFragment.ARG_SECTION_NUMBER,
+			args.putInt(MainActivityFragment.ARG_SECTION_NUMBER,
 					position + 1);
 			fragment.setArguments(args);
 
@@ -87,7 +87,7 @@ public class TopicListActivity extends FragmentActivity {
 		public void notifyNetworkStateChanged() {
 			for (Fragment fragment : fragments) {
 				// Update Fragments
-				TopicListActivityFragment theTopicListActivityFragment = (TopicListActivityFragment) fragment;
+				MainActivityFragment theTopicListActivityFragment = (MainActivityFragment) fragment;
 				theTopicListActivityFragment.notifyNetworkStateChanged();
 			}
 		}
