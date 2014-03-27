@@ -1,5 +1,7 @@
 package ca.ualberta.cs.providers;
 
+import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.UserModel;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -22,8 +24,15 @@ public class LocationProvider {
 		public void onLocationChanged(Location location) {
 			// Called when a new location is found by the network location
 			// provider.
-			// TODO
 			theLocation = location;
+			
+			// update the location
+			ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
+			UserModel theLoggedInUser = theActiveUserModel.getUser();
+			
+			if (theLoggedInUser != null) {
+				theLoggedInUser.setLocation(location);
+			}
 		}
 
 		@Override

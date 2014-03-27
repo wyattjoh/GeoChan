@@ -38,23 +38,24 @@ public class TopicListActivity extends FragmentActivity {
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 		private ArrayList<Fragment> fragments;
 
+		// TODO: Add documentation
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
 
 			this.fragments = new ArrayList<Fragment>();
 		}
 
+		// TODO: Add documentation
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
 			return 3;
 		}
 
+		// TODO: Add documentation
 		@Override
 		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a DummySectionFragment (defined as a static inner class
-			// below) with the page number as its lone argument.
+			// getItem is called to instantiate the fragment for the given page
 			Fragment fragment = new TopicListActivityFragment();
 			Bundle args = new Bundle();
 			args.putInt(TopicListActivityFragment.ARG_SECTION_NUMBER,
@@ -66,7 +67,8 @@ public class TopicListActivity extends FragmentActivity {
 
 			return fragment;
 		}
-
+		
+		// TODO: Add documentation
 		@Override
 		public CharSequence getPageTitle(int position) {
 			Locale l = Locale.getDefault();
@@ -80,11 +82,13 @@ public class TopicListActivity extends FragmentActivity {
 			}
 			return null;
 		}
-
-		public void refreshFragments() {
+		
+		// TODO: Add documentation
+		public void notifyNetworkStateChanged() {
 			for (Fragment fragment : fragments) {
 				// Update Fragments
-				((TopicListActivityFragment) fragment).refresh();
+				TopicListActivityFragment theTopicListActivityFragment = (TopicListActivityFragment) fragment;
+				theTopicListActivityFragment.notifyNetworkStateChanged();
 			}
 		}
 	}
@@ -163,7 +167,7 @@ public class TopicListActivity extends FragmentActivity {
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				// Network changed, refresh the fragments
-				refreshFragments();
+				notifyNetworkStateChanged();
 			}
 		};
 
@@ -215,21 +219,12 @@ public class TopicListActivity extends FragmentActivity {
 			return true;
 		case R.id.action_sortDate:
 			PostListController.setSort(PostListController.SORT_DATE);
-
-			// Refresh the lists
-			refreshFragments();
 			return true;
 		case R.id.action_sortScore:
 			PostListController.setSort(PostListController.SORT_SCORE);
-
-			// Refresh the lists
-			refreshFragments();
 			return true;
 		case R.id.action_sortDefault:
 			PostListController.setSort(PostListController.SORT_DEFAULT);
-
-			// Refresh the lists
-			refreshFragments();
 			return true;
 
 		default:
@@ -242,7 +237,6 @@ public class TopicListActivity extends FragmentActivity {
 	 */
 	@Override
 	protected void onStart() {
-		// TODO Auto-generated method stub
 		super.onStart();
 
 		// Must be first thing that is started, sets up contexts
@@ -250,8 +244,6 @@ public class TopicListActivity extends FragmentActivity {
 
 		// Perform the login flow process
 		loginFlow();
-		
-		// populate with fake data
 	}
 
 	/**
@@ -261,7 +253,7 @@ public class TopicListActivity extends FragmentActivity {
 	 */
 	private void createSharedSingletons(Context applicationContext) {
 		// Create Active User
-		ActiveUserModel.createShared(getApplicationContext());
+		ActiveUserModel.createInstance(applicationContext);
 
 		// Create Favorites List
 		FavoriteTopicModelList.createInstance(applicationContext);
@@ -270,9 +262,9 @@ public class TopicListActivity extends FragmentActivity {
 	/**
 	 * Refreshes fragments inside the sectionPagerAdapter
 	 */
-	protected void refreshFragments() {
+	protected void notifyNetworkStateChanged() {
 		// Update all fragments
-		sectionsPagerAdapter.refreshFragments();
+		sectionsPagerAdapter.notifyNetworkStateChanged();
 	}
 
 	/**
@@ -295,7 +287,7 @@ public class TopicListActivity extends FragmentActivity {
 	 * Verifies that the user is logged in, if not, starts the login activity
 	 */
 	private void loginFlow() {
-		ActiveUserModel userController = ActiveUserModel.getShared();
+		ActiveUserModel userController = ActiveUserModel.getInstance();
 
 		if (userController.isLoggedIn()) {
 			// continue

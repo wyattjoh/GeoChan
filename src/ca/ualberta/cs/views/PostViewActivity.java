@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.CommentListViewAdapter;
-import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.PostModel;
 
@@ -128,7 +127,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		}
 		else {
 			// Has children!
-			CommentListViewAdapter<CommentModel> commentsAdapter = new CommentListViewAdapter<CommentModel>(this, theModel.getChildrenComments());
+			CommentListViewAdapter commentsAdapter = new CommentListViewAdapter(this, theModel.getChildrenComments());
 			commentsListView.setAdapter(commentsAdapter);
 		}
 		

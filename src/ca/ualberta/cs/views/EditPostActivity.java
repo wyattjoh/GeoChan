@@ -11,7 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.provider.MediaStore.MediaColumns;
 import android.view.Menu;
 import android.widget.ImageView;
 
@@ -77,7 +77,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 			if (requestCode == SELECT_PICTURE) {
 				// get picture path from intent
 				Uri selectedImageUri = data.getData();
-				String selectedImagePath = (String) getPath(selectedImageUri);
+				String selectedImagePath = getPath(selectedImageUri);
 
 				// get picture object from path
 				imageBitmap = BitmapFactory
@@ -124,11 +124,11 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		}
 		// try to retrieve the image from the media store first
 		// this will only work for images selected from gallery
-		String[] projection = { MediaStore.Images.Media.DATA };
+		String[] projection = { MediaColumns.DATA };
 		Cursor cursor = managedQuery(uri, projection, null, null, null);
 		if (cursor != null) {
 			int column_index = cursor
-					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+					.getColumnIndexOrThrow(MediaColumns.DATA);
 			cursor.moveToFirst();
 			return cursor.getString(column_index);
 		}

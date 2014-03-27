@@ -164,6 +164,7 @@ public abstract class PostModel {
 		this.id = id;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		if (o == null) {
 			return false;

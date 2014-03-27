@@ -114,15 +114,21 @@ public class PostModelList<T extends PostModel> {
 		for (BaseAdapter theAdapter : this.listeningAdapters) {
 			if (theAdapter != null) {
 				theAdapter.notifyDataSetChanged();
+				Log.w("PostModelList", "The adapter has been notified");
+			}
+			else {
+				Log.w("PostModelList", "The adapter was null! I can't update a null adapter!");
 			}
 		}
 	}
 
 	public void registerListeningAdapter(BaseAdapter theAdapter) {
+		Log.w("PostModelList", "Adapter Registered");
 		this.listeningAdapters.add(theAdapter);
 	}
 
 	public void unRegisterListeningAdapter(BaseAdapter theAdapter) {
+		Log.w("PostModelList", "Adapter Unregistered");
 		this.listeningAdapters.remove(theAdapter);
 	}
 }

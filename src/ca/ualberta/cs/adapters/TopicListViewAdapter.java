@@ -8,15 +8,15 @@ import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.TopicModel;
 
-public class TopicListViewAdapter<T extends TopicModel> extends PostListViewAdapter<T> {
+public class TopicListViewAdapter extends PostListViewAdapter<TopicModel> {
 
 	public TopicListViewAdapter(FragmentActivity theActivity,
-			ArrayList<T> arrayList) {
+			ArrayList<TopicModel> arrayList) {
 		super(theActivity, arrayList);
 	}
 
 	@Override
-	protected void populateCellTitle(View theView, T thePost) {
+	protected void populateCellTitle(View theView, TopicModel thePost) {
 		// Fill title/comment text
 		TextView titleText = (TextView) theView.findViewById(R.id.textViewTitle);
 		// List of topics, display the title
