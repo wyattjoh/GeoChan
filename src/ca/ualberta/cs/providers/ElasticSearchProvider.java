@@ -26,7 +26,7 @@ public class ElasticSearchProvider {
 	
 	public void addTopic(TopicModel theTopic, PostModelList<TopicModel> thePostModelList) {
 		// Build a request
-		ElasticSearchOperationRequest request = new ElasticSearchOperationRequest(ElasticSearchProviderConstants.TYPE_ADD_TOPIC);
+		ElasticSearchOperationRequest request = new ElasticSearchOperationRequest(ElasticSearchProviderServiceType.ADD_TOPIC);
 		request.setPostModelList(thePostModelList);
 		request.setTopicModel(theTopic);
 		
@@ -36,7 +36,7 @@ public class ElasticSearchProvider {
 	
 	public void updateTopic(TopicModel theTopic, PostModelList<TopicModel> thePostModelList) {
 		// Build a request
-		ElasticSearchOperationRequest request = new ElasticSearchOperationRequest(ElasticSearchProviderConstants.TYPE_UPDATE_TOPIC);
+		ElasticSearchOperationRequest request = new ElasticSearchOperationRequest(ElasticSearchProviderServiceType.UPDATE_TOPIC);
 		request.setPostModelList(thePostModelList);
 		request.setTopicModel(theTopic);
 		

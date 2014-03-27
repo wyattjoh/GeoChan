@@ -1,18 +1,18 @@
 package ca.ualberta.cs.models;
 
-import ca.ualberta.cs.providers.ElasticSearchProviderConstants;
+import ca.ualberta.cs.providers.ElasticSearchProviderServiceType;
 
 abstract public class ElasticSearchOperation {
-	private ElasticSearchProviderConstants requestMode;
+	private ElasticSearchProviderServiceType requestType;
 	private TopicModel theModel = null;
 	private PostModelList<TopicModel> thePostModelList = null;
 	
-	public ElasticSearchOperation(ElasticSearchProviderConstants theRequestType) {
-		this.requestMode = theRequestType;
+	public ElasticSearchOperation(ElasticSearchProviderServiceType theRequestType) {
+		this.requestType = theRequestType;
 	}
 	
-	public ElasticSearchProviderConstants getRequestMode() {
-		return requestMode;
+	public ElasticSearchProviderServiceType getRequestType() {
+		return requestType;
 	}
 	
 	public void setTopicModel(TopicModel theModel) {

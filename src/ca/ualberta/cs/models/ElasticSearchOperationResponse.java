@@ -1,11 +1,10 @@
 package ca.ualberta.cs.models;
 
-import ca.ualberta.cs.providers.ElasticSearchProviderConstants;
+import ca.ualberta.cs.providers.ElasticSearchProviderServiceType;
 
 public class ElasticSearchOperationResponse extends ElasticSearchOperation {
 	public ElasticSearchOperationResponse(
-			ElasticSearchProviderConstants theRequestType) {
-		super(theRequestType);
-		// TODO Auto-generated constructor stub
+			ElasticSearchProviderServiceType elasticSearchProviderServiceType) {
+		super(elasticSearchProviderServiceType);
 	}
 }

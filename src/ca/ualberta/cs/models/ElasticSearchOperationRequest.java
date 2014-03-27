@@ -3,7 +3,7 @@
  */
 package ca.ualberta.cs.models;
 
-import ca.ualberta.cs.providers.ElasticSearchProviderConstants;
+import ca.ualberta.cs.providers.ElasticSearchProviderServiceType;
 
 /**
  * Contains information relevant to making a request against the ElasticSearch service
@@ -16,7 +16,7 @@ public class ElasticSearchOperationRequest extends ElasticSearchOperation {
 	 * 
 	 * @param theRequestType
 	 */
-	public ElasticSearchOperationRequest(ElasticSearchProviderConstants theRequestType) {
+	public ElasticSearchOperationRequest(ElasticSearchProviderServiceType theRequestType) {
 		super(theRequestType);
 		// TODO Auto-generated constructor stub
 	}

@@ -2,7 +2,6 @@ package ca.ualberta.cs.models;
 
 import java.util.ArrayList;
 
-import ca.ualberta.cs.controllers.CommentModelController;
 import ca.ualberta.cs.controllers.TopicModelController;
 
 public class DummyPostListFactory {
