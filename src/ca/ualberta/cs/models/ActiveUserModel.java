@@ -27,7 +27,7 @@ public class ActiveUserModel {
 	/*
 	 * Creates a new shared object
 	 */
-	public static ActiveUserModel createShared(Context theContext) {
+	public static ActiveUserModel createInstance(Context theContext) {
 		if (singleton == null) {
 			singleton = new ActiveUserModel(theContext);
 		}
@@ -35,7 +35,7 @@ public class ActiveUserModel {
 		return singleton;
 	}
 	
-	public static ActiveUserModel getShared() {
+	public static ActiveUserModel getInstance() {
 		if (singleton == null) {
 			throw new RuntimeException("Shared ActiveUserModel not created yet! Can't getShared().");
 		}
