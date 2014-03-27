@@ -8,8 +8,6 @@ import android.widget.EditText;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.CommentModelController;
 import ca.ualberta.cs.models.CommentModel;
-import ca.ualberta.cs.models.CurrentUserPostModelFactory;
-import ca.ualberta.cs.models.TopicModel;
 
 public class EditCommentActivity extends EditPostActivity {
 
@@ -42,6 +40,7 @@ public class EditCommentActivity extends EditPostActivity {
 		populateView();
 	}
 
+	@Override
 	protected void populateView() {
 		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
 

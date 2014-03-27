@@ -40,6 +40,7 @@ public class EditTopicActivity extends EditPostActivity {
 		populateView();
 	}
 
+	@Override
 	protected void populateView() {
 		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
 
