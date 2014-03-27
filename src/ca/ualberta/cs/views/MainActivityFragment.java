@@ -10,25 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.adapters.TopicListViewAdapter;
-import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.NetworkModel;
-import ca.ualberta.cs.models.TopicModelList;
 
 /**
  * A dummy fragment representing a section of the application, but that simply
  * displays dummy text.
  */
-public class TopicListActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment {
 	/**
 	 * The fragment argument representing the section number for this fragment.
 	 */
 	public static final String ARG_SECTION_NUMBER = "section_number";
-	
-	private TopicListViewAdapter topicListViewAdapter;
 
 	/* (non-Javadoc)
 	 * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
@@ -48,36 +42,10 @@ public class TopicListActivityFragment extends Fragment {
 
 		// get fragment view
 		View rootView = inflater.inflate(R.layout.fragment_post_list, container, false);
-
-		switch (sectionNumber) {
-		// TOPICS case
-		case 1:
-			// Populate list view
-			ListView topicListView = (ListView) rootView.findViewById(R.id.postListView);
-			TopicModelList theTopicModelList = TopicModelList.getInstance();
-
-			// get specific fragment view and populate
-			populateFragment(topicListView, theTopicModelList);
-			break;
-
-		// FAVORITES case
-		case 2:
-			// Populate list view
-			// TODO: Get list!
-
-			// get specific fragment view and populate
-			// TODO: Populate
-			break;
-
-		// READ LATER case
-		case 3:
-			// Populate list view
-			// TODO: Get list!
-
-			// get specific fragment view and populate
-			// TODO: Populate
-			break;
-		}
+		LinearLayout theLayout = (LinearLayout) rootView.findViewById(R.id.mainListBox);
+		
+		MainActivityFragmentComponent theComponent = MainActivityFragmentComponent.getComponentForPosition(sectionNumber);
+		theComponent.setupView(inflater, theLayout, getActivity());
 
 		// Update the status
 		setConnectionStatus(rootView);
@@ -95,39 +63,9 @@ public class TopicListActivityFragment extends Fragment {
 		
 		// get fragment number
 		int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-
-		switch (sectionNumber) {
-		// TOPICS case
-		case 1:
-			// Deconstruct the adapter
-			TopicModelList.getInstance().unRegisterListeningAdapter(topicListViewAdapter);
-			break;
-
-		// FAVORITES case
-		case 2:
-			// TODO: Deconstruct the adapter
-			break;
-
-		// READ LATER case
-		case 3:
-			// TODO: Deconstruct the adapter
-			break;
-		}
-	}
-
-	public void populateFragment(ListView theListView, FavoriteTopicModelList theFavoriteTopicModelList) {
-		// TODO: Setup the adapter
 		
-		// TODO: Register the adapter
-	}
-	
-	public void populateFragment(ListView theListView, TopicModelList theTopicModelList) {
-		// Setup the adapter
-		topicListViewAdapter = new TopicListViewAdapter(getActivity(), theTopicModelList.getArrayList());
-		theListView.setAdapter(topicListViewAdapter);
-		
-		// Register the adapter
-		theTopicModelList.registerListeningAdapter(topicListViewAdapter);
+		MainActivityFragmentComponent theComponent = MainActivityFragmentComponent.getComponentForPosition(sectionNumber);
+		theComponent.destroy();
 	}
 
 	/**

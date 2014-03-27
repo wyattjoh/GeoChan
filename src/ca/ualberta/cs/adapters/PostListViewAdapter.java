@@ -3,12 +3,13 @@ package ca.ualberta.cs.adapters;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
@@ -94,6 +95,16 @@ public abstract class PostListViewAdapter<T extends PostModel> extends ArrayAdap
 		}
 		scoreString = scoreString + thePost.getScore().toString();
 		scoreText.setText(scoreString);
+		
+		// Fill picture
+		ImageView imageView = (ImageView) theView.findViewById(R.id.imageViewPicture);
+		Bitmap thePicture = thePost.getPicture();
+		if (thePicture == null) {
+			imageView.setVisibility(View.GONE);
+		}
+		else {
+			// TODO: Add thumbnail if exists
+		}
 		
 		populateCellTitle(theView, theObject);
 	}

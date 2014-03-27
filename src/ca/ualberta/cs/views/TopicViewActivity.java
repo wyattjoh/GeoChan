@@ -19,7 +19,12 @@ import ca.ualberta.cs.models.TopicModelList;
  *
  */
 public class TopicViewActivity extends PostViewActivity<TopicModel> {
-
+	private TopicViewController theTopicViewController;
+	
+	public TopicViewActivity() {
+		theTopicViewController = new TopicViewController();
+	}
+	
 	@Override
 	protected void getSelectedModel() {
 		// Get the model list
@@ -81,7 +86,7 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 		@Override
 		public void onClick(View v) {
 			ImageView favoritesButton = (ImageView) v;
-			TopicViewController.toggleFavorite(theModel);
+			theTopicViewController.toggleFavorite(theModel);
 			
 			if (theModel.isFavorite()) {
 				// Is already a favorite! Must unfavorite now...

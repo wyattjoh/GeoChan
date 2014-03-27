@@ -3,7 +3,6 @@
  */
 package ca.ualberta.cs.providers;
 
-import org.apache.http.client.HttpClient;
 import android.os.AsyncTask;
 import ca.ualberta.cs.models.ElasticSearchOperationRequest;
 import ca.ualberta.cs.models.ElasticSearchOperationResponse;

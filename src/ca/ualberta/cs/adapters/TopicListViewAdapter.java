@@ -20,7 +20,7 @@ public class TopicListViewAdapter extends PostListViewAdapter<TopicModel> {
 		// Fill title/comment text
 		TextView titleText = (TextView) theView.findViewById(R.id.textViewTitle);
 		// List of topics, display the title
-		String theTitle = ((TopicModel) thePost).getTitle();
+		String theTitle = thePost.getTitle();
 		titleText.setText(theTitle);
 	}
 }

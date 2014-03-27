@@ -4,16 +4,20 @@ import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.TopicModel;
 
 public class TopicViewController {
-	public static void toggleFavorite(TopicModel theModel) {
-		FavoriteTopicModelList favoriteTopicModelList = FavoriteTopicModelList.getInstance();
-		
+	FavoriteTopicModelList favoriteTopicModelList;
+	
+	public TopicViewController() {
+		favoriteTopicModelList = FavoriteTopicModelList.getInstance();
+	}
+	
+	public void toggleFavorite(TopicModel theModel) {
 		if (theModel.isFavorite()) {
 			theModel.setIsFavorite(false);
 			favoriteTopicModelList.remove(theModel);
 		}
 		else {
-			favoriteTopicModelList.add(theModel);
 			theModel.setIsFavorite(true);
+			favoriteTopicModelList.add(theModel);
 		}
 	}
 }
