@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.CommentListViewAdapter;
+import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.PostModel;
 
@@ -47,10 +49,22 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		return true;
 	}
 	
-	protected void newPost(Class<?> editActivty) {
-		Intent intent = new Intent(this, editActivty);
-		startActivity(intent);
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.cellActiveArea:
+			newPost();
+			return true;
+		case R.id.action_settings:
+			startSettingsActivity();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
+	
+	protected abstract void newPost();
 
 	/**
 	 * Starts the settings activity
@@ -117,6 +131,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		} else {
 			// A picture, add the image
 			// TODO: Implement
+			imageView.setImageBitmap(thePicture);
 		}
 
 		// Add comments
@@ -142,6 +157,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		else {
 			favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
 		}
+		
 	}
 	
 	abstract protected OnClickListener getFavoriteOnClickListener();
