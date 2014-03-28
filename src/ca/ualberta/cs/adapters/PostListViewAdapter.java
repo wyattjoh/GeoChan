@@ -105,18 +105,17 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		scoreString = scoreString + thePost.getScore().toString();
 		scoreText.setText(scoreString);
 
+		
+		System.out.println("PostPic: " + thePost.getCommentText() + " " + thePost.hasPicture());
 		// Fill picture
 		ImageView imageView = (ImageView) theView
 				.findViewById(R.id.imageViewPicture);
 		Bitmap thePicture = thePost.getPicture();
-		if (thePicture != null) {
-			System.out.println(thePost.getId() + thePost.hasPicture());
-			imageView.setImageBitmap(scaleBitMapToImageView(thePicture,
-					imageView));
+		if (thePicture == null) {
+			imageView.setVisibility(View.GONE);
 		}
 		else {
-			// hide thumbnail
-			imageView.setVisibility(View.GONE);
+			imageView.setImageBitmap(thePicture);
 		}
 
 		populateCellTitle(theView, theObject);

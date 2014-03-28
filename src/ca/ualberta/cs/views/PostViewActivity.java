@@ -131,6 +131,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		} else {
 			// A picture, add the image
 			// TODO: Implement
+			imageView.setImageBitmap(thePicture);
 		}
 
 		// Add comments

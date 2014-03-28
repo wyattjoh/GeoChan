@@ -79,6 +79,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 				// set the view image o the selected image
 				galleryThumbnail.setImageBitmap(scaledBitmap);
+				imageBitmap = scaledBitmap;
 
 				// compress and output to class variable
 				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
