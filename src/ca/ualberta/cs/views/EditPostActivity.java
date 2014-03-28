@@ -21,15 +21,14 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	private static final int SELECT_PICTURE = 1;
 	protected byte[] imageByteArray;
 	protected Bitmap imageBitmap;
-	
+
 	protected T theModel;
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_post);
-		
+
 		getSelectedModel();
 	}
 
@@ -39,7 +38,6 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		getMenuInflater().inflate(R.menu.edit_post, menu);
 		return true;
 	}
-	
 
 	/*
 	 * (non-Javadoc)
@@ -73,28 +71,16 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				String selectedImagePath = getPath(selectedImageUri);
 
 				// get picture object from path
-				imageBitmap = BitmapFactory
-						.decodeFile(selectedImagePath);
+				imageBitmap = BitmapFactory.decodeFile(selectedImagePath);
 
 				// get and set image view
 				ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
 				// galleryThumbnail.setVisibility(View.VISIBLE);
-				
+
 				// create scaled image for display
-				Bitmap scaledBitmap;
-				if (imageBitmap.getWidth() > imageBitmap.getHeight()) {
-					scaledBitmap = Bitmap.createScaledBitmap(imageBitmap,
-							imageBitmap.getWidth(),
-							galleryThumbnail.getHeight(),
-							galleryThumbnail.getFilterTouchesWhenObscured());
-				}
-				else {
-					scaledBitmap = Bitmap.createScaledBitmap(imageBitmap,
-							galleryThumbnail.getWidth(),
-							imageBitmap.getHeight(),
-							galleryThumbnail.getFilterTouchesWhenObscured());
-				}
-				
+				Bitmap scaledBitmap = scaleBitMapToFit(imageBitmap,
+						galleryThumbnail);
+
 				// set the view image o the selected image
 				galleryThumbnail.setImageBitmap(scaledBitmap);
 
@@ -104,6 +90,35 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				imageByteArray = outStream.toByteArray();
 			}
 		}
+	}
+
+	/**
+	 * returns a scaled image where the image will be sized so that it will fit
+	 * the image view by scaling to the largest length, either width or height
+	 * and setting that to the size of the image view
+	 * 
+	 * @param bitmapImage
+	 * @param imageViewScale
+	 * @return
+	 */
+	public Bitmap scaleBitMapToFit(Bitmap bitmapImage,
+			ImageView imageViewScale) {
+		Bitmap scaledBitmap = null;
+
+		if (bitmapImage.getWidth() > bitmapImage.getHeight()) {
+			// if the image is bigger horizontally scale vertically
+			scaledBitmap = Bitmap.createScaledBitmap(bitmapImage,
+					bitmapImage.getWidth(), imageViewScale.getHeight(),
+					imageViewScale.getFilterTouchesWhenObscured());
+
+		} else {
+			// otherwise scale horizontally
+			scaledBitmap = Bitmap.createScaledBitmap(bitmapImage,
+					imageViewScale.getWidth(), bitmapImage.getHeight(),
+					imageViewScale.getFilterTouchesWhenObscured());
+		}
+
+		return scaledBitmap;
 	}
 
 	/**
@@ -120,8 +135,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		String[] projection = { MediaColumns.DATA };
 		Cursor cursor = managedQuery(uri, projection, null, null, null);
 		if (cursor != null) {
-			int column_index = cursor
-					.getColumnIndexOrThrow(MediaColumns.DATA);
+			int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
 			cursor.moveToFirst();
 			return cursor.getString(column_index);
 		}
