@@ -11,6 +11,7 @@ import android.widget.ListView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.TopicListViewAdapter;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
+import ca.ualberta.cs.models.ReadLaterTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
 
 /**
@@ -94,20 +95,20 @@ public enum MainActivityFragmentComponent {
 					.findViewById(R.id.listTopics);
 
 			// Setup the adapter
-			TopicModelList theTopicModelList = TopicModelList.getInstance();
+			ReadLaterTopicModelList theReadLaterTopicList = ReadLaterTopicModelList.getInstance();
 
 			adapter = new TopicListViewAdapter(theActivity,
-					theTopicModelList.getArrayList());
+					theReadLaterTopicList.getArrayList());
 			topicListView.setAdapter(adapter);
 			
-			theTopicModelList.registerListeningAdapter(adapter);
+			theReadLaterTopicList.registerListeningAdapter(adapter);
 			
 		}
 
 		@Override
 		public void destroy() {
-			TopicModelList theTopicModelList = TopicModelList.getInstance();
-			theTopicModelList.unRegisterListeningAdapter(adapter);			
+			ReadLaterTopicModelList theReadLaterList = ReadLaterTopicModelList.getInstance();
+			theReadLaterList.unRegisterListeningAdapter(adapter);			
 		}
 		
 	};
