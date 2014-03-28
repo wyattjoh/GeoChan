@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.CommentListViewAdapter;
+import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.PostModel;
 
@@ -155,6 +156,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		else {
 			favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
 		}
+		
 	}
 	
 	abstract protected OnClickListener getFavoriteOnClickListener();

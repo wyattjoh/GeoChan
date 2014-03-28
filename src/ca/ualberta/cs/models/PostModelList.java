@@ -23,6 +23,10 @@ public class PostModelList<T extends PostModel> {
 	public void setSelection(T selectedPostModel) {
 		this.selectedPostModel = selectedPostModel;
 	}
+	
+	public void resetSelection(){
+		this.selectedPostModel = null;
+	}
 
 	public T getSelection() {
 		return this.selectedPostModel;

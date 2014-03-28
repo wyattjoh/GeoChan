@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicViewController;
+import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 
@@ -46,6 +47,13 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 	@Override
 	protected OnClickListener getFavoriteOnClickListener() {
 		return favoriteOnClickListener;
+	}
+	
+	@Override
+	protected void onStart(){
+		super.onStart();
+		TopicModelList.getInstance().setSelection(theModel);
+		CommentModelList.getInstance().resetSelection();
 	}
 	
 	@Override

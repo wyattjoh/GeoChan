@@ -33,6 +33,12 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 		// Fix action bar
 		getActionBar().setTitle(theModel.getCommentText()); 
 	}
+	
+	@Override
+	protected void onStart(){
+		super.onStart();
+		CommentModelList.getInstance().setSelection(theModel);
+	}
 
 	@Override
 	protected OnClickListener getFavoriteOnClickListener() {

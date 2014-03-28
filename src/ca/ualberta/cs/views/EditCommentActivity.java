@@ -52,7 +52,12 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 		EditText commentEditTitle = (EditText) findViewById(R.id.titleTextField);
 		commentEditTitle.setVisibility(View.INVISIBLE);
 
-		System.out.println(theModel == null);
+		if (CommentModelList.getInstance().getSelection() != null){
+			System.out.println(CommentModelList.getInstance().getSelection().getCommentText());
+		}
+		else {
+			System.out.println(TopicModelList.getInstance().getSelection().getCommentText());
+		}
 
 		// Populate the view
 		populateView();
@@ -83,7 +88,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 					} else {
 						theController.addComment(theModel, CommentModelList
 								.getInstance().getSelection());
-						CommentModelList.getInstance().setSelection(null);
+						CommentModelList.getInstance().resetSelection();
 					}
 					finish();
 				}
