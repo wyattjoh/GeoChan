@@ -28,7 +28,6 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 	 * @see android.app.Activity#onStart()
 	 */
 
-
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -40,8 +39,8 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 		if (extras != null) {
 			this.isNewComment = extras.getBoolean(IS_NEW_COMMENT_KEY);
 		}
-		
-		if (this.isNewComment){
+
+		if (this.isNewComment) {
 			theModel = new CommentModel(ActiveUserModel.getInstance().getUser());
 		}
 
@@ -76,11 +75,15 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 					// add the picture
 					theModel.setPicture(imageBitmap);
 
-					if (CommentModelList.getInstance().getSelection() == null){
-						theController.addComment(theModel, TopicModelList.getInstance().getSelection());
-					}
-					else{
-						theController.addComment(theModel, CommentModelList.getInstance().getSelection());
+					// add to the selected model and then reset the selected
+					// model so as to reply to the correct topic
+					if (CommentModelList.getInstance().getSelection() == null) {
+						theController.addComment(theModel, TopicModelList
+								.getInstance().getSelection());
+					} else {
+						theController.addComment(theModel, CommentModelList
+								.getInstance().getSelection());
+						CommentModelList.getInstance().setSelection(null);
 					}
 					finish();
 				}
