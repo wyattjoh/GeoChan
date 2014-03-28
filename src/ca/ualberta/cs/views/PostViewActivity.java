@@ -1,7 +1,10 @@
 package ca.ualberta.cs.views;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,12 +18,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.CommentListViewAdapter;
-import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.PostModel;
 
 public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	protected T theModel = null;
+	protected CommentListViewAdapter thePostAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -142,8 +145,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		}
 		else {
 			// Has children!
-			CommentListViewAdapter commentsAdapter = new CommentListViewAdapter(this, theModel.getChildrenComments());
-			commentsListView.setAdapter(commentsAdapter);
+			thePostAdapter  = new CommentListViewAdapter(this, theModel.getChildrenComments());
+			commentsListView.setAdapter(thePostAdapter);
 		}
 		
 		// Favorite Button
