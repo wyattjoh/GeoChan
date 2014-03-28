@@ -28,8 +28,6 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_post);
-
-		getSelectedModel();
 	}
 
 	@Override
@@ -46,8 +44,6 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	 */
 
 	protected abstract void populateView();
-
-	abstract protected void getSelectedModel();
 
 	/**
 	 * github http://stackoverflow.com/questions/2169649/get-pick-an-image-from-

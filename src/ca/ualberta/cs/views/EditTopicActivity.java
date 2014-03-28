@@ -23,11 +23,6 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	 * @see android.app.Activity#onStart()
 	 */
 	
-	@Override
-	protected void getSelectedModel() {
-		// TODO Auto-generated method stub
-		this.theModel = TopicModelList.getInstance().getSelection();
-	}
 	
 	@Override
 	protected void onStart() {

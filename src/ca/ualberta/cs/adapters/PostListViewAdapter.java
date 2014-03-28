@@ -114,6 +114,10 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 			imageView.setImageBitmap(scaleBitMapToImageView(thePicture,
 					imageView));
 		}
+		else {
+			// hide thumbnail
+			imageView.setVisibility(View.GONE);
+		}
 
 		populateCellTitle(theView, theObject);
 	}

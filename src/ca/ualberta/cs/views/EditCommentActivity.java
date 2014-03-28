@@ -1,5 +1,7 @@
 package ca.ualberta.cs.views;
 
+import java.util.Currency;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -7,8 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.CommentModelController;
+import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
+import ca.ualberta.cs.models.CurrentUserPostModelFactory;
 import ca.ualberta.cs.models.TopicModelList;
 
 public class EditCommentActivity extends EditPostActivity<CommentModel> {
@@ -24,12 +28,6 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 	 * @see android.app.Activity#onStart()
 	 */
 
-	@Override
-	protected void getSelectedModel() {
-		// TODO Auto-generated method stub
-		this.theModel = CommentModelList.getInstance(
-				TopicModelList.getInstance().getSelection()).getSelection();
-	}
 
 	@Override
 	protected void onStart() {
@@ -41,6 +39,10 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 		if (extras != null) {
 			this.isNewComment = extras.getBoolean(IS_NEW_COMMENT_KEY);
+		}
+		
+		if (this.isNewComment){
+			theModel = new CommentModel(ActiveUserModel.getInstance().getUser());
 		}
 
 		// Get the controller
@@ -74,8 +76,12 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 					// add the picture
 					theModel.setPicture(imageBitmap);
 
-					theController.addComment(theModel, theModel.getMyParent());
-
+					if (CommentModelList.getInstance().getSelection() == null){
+						theController.addComment(theModel, TopicModelList.getInstance().getSelection());
+					}
+					else{
+						theController.addComment(theModel, CommentModelList.getInstance().getSelection());
+					}
 					finish();
 				}
 			});
