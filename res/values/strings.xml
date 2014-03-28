@@ -30,5 +30,6 @@
     <string name="title_activity_post_view">PostViewActivity</string>
     <string name="topic_view_vctivity">Topic View Activity</string>
     <string name="comment_view_activity">Comment View Activity</string>
+    <string name="title_activity_location">LocationActivity</string>
 
 </resources>
