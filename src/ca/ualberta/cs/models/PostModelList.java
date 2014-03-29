@@ -80,6 +80,28 @@ public class PostModelList<T extends PostModel> {
 		
 		updateListeningAdapters();
 	}
+	
+	/*
+	 * Sorts theTopicModelArrayList by picture
+	 */
+	public void sortByPicture() {
+		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_DATE);
+		ArrayList<T> tempList = new ArrayList<T>();
+		tempList = (ArrayList<T>) this.postModelArrayList.clone();
+		this.postModelArrayList.clear();
+		for(T theModel : tempList) {
+			if(theModel.hasPicture()) {
+				this.postModelArrayList.add(theModel);
+			}
+		}
+		for(T theModel : tempList) {
+			if(!theModel.hasPicture()) {
+				this.postModelArrayList.add(theModel);
+			}
+		}
+		
+		updateListeningAdapters();
+	}
 
 	/*
 	 * Adds a model to the top of the list singleton

@@ -28,6 +28,8 @@ public class PostListController {
 			TopicModelList.getInstance().sortByProximity();
 		case SORT_LATEST_GREATEST:
 			TopicModelList.getInstance().sortByLatestGreatest();
+		case SORT_PICTURE:
+			TopicModelList.getInstance().sortByPicture();
 		default:
 			break;
 		}
