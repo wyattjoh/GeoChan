@@ -13,8 +13,8 @@ public class PostListController {
 	public static final int SORT_PICTURE = 1;
 	public static final int SORT_DATE	 = 2;
 	public static final int SORT_SCORE = 3;
-	public static final int SORT_DEFAULT = 4;
-	public static final int SORT_LATEST_GREATEST = 5;
+	public static final int SORT_DEFAULT = 2;
+	public static final int SORT_LATEST_GREATEST = 4;
 	
 	public static void setSort(final int theSortOrder){
 		switch (theSortOrder) {
@@ -26,10 +26,13 @@ public class PostListController {
 			break;
 		case SORT_PROXIMITY:
 			TopicModelList.getInstance().sortByProximity();
+			break;
 		case SORT_LATEST_GREATEST:
 			TopicModelList.getInstance().sortByLatestGreatest();
+			break;
 		case SORT_PICTURE:
 			TopicModelList.getInstance().sortByPicture();
+			break;
 		default:
 			break;
 		}

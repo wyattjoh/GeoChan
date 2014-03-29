@@ -7,7 +7,7 @@
     <string name="action_sortScoreText">Sort Score</string>
     <string name="action_sortProximityText">Sort Proximity</string>
     <string name="action_sortLatestGreatestText">Sort Latest/Greatest</string>
-    <string name="action_sortTopText">Sort Top</string>
+    <string name="action_sortPictureText">Sort Picture</string>
     <string name="action_logoutText">Logout</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">MainActivity</string>

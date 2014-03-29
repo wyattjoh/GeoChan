@@ -230,8 +230,8 @@ public class MainActivity extends FragmentActivity {
 		case R.id.action_sortLatestGreatest:
 			PostListController.setSort(PostListController.SORT_LATEST_GREATEST);
 			return true;
-		case R.id.action_sortDefault:
-			PostListController.setSort(PostListController.SORT_DEFAULT);
+		case R.id.action_sortPicture:
+			PostListController.setSort(PostListController.SORT_PICTURE);
 			return true;
 		case R.id.action_logout:
 			logout();
