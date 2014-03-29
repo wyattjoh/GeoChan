@@ -29,17 +29,31 @@ public class LocationActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-
+	protected boolean isEmpty(EditText etText) {
+        return etText.getText().toString().trim().length() == 0;
+    }
 	public void onClick_SubmitLocation(View theView) {
+		/**
+		 * Make sure that a Latitude and Longitude have been given, then create the points
+		 */
 		EditText etLat = (EditText)findViewById(R.id.editTextLatitude);
-		String strLatitude = etLat.getText().toString();
-		Double doubLatitude = Double.parseDouble(strLatitude);
 		EditText etLng = (EditText)findViewById(R.id.editTextLongitude);
-		String strLongitude = etLng.getText().toString();
-		Double doubLongitude = Double.parseDouble(strLongitude);
-		Location theCommentLocation = LocationProvider.getInstance(this).getLocation();
-		theCommentLocation.setLatitude(doubLatitude);
-		theCommentLocation.setLongitude(doubLongitude);
-		Toast.makeText(this, theCommentLocation.toString(), Toast.LENGTH_SHORT).show();
+				
+		if (isEmpty(etLat) || isEmpty(etLng)) {
+			Toast.makeText(this, "Location failed to create", Toast.LENGTH_SHORT).show();
+		} else {
+			String strLatitude = etLat.getText().toString();
+			Double doubLatitude = Double.parseDouble(strLatitude);
+			
+
+			String strLongitude = etLng.getText().toString();
+			Double doubLongitude = Double.parseDouble(strLongitude);
+			
+			Location theCommentLocation = LocationProvider.getInstance(this).getLocation();
+			theCommentLocation.setLatitude(doubLatitude);
+			theCommentLocation.setLongitude(doubLongitude);
+			
+			Toast.makeText(this, theCommentLocation.toString(), Toast.LENGTH_SHORT).show();
+		}
 	}
 }
