@@ -39,6 +39,7 @@
         android:layout_alignLeft="@+id/commentTextField"
         android:layout_below="@+id/commentTextField"
         android:drawableLeft="@android:drawable/ic_menu_mylocation"
+        android:onClick="onClick_StartLocationActivity"
         android:text="Current Location" />
 
     <Button

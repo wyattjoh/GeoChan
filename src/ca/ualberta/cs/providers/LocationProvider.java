@@ -58,7 +58,7 @@ public class LocationProvider {
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, locationListener);
 	}
 	
-	public static LocationProvider shared(Context theContext) {
+	public static LocationProvider getInstance(Context theContext) {
 		if (singleton == null) {
 			singleton = new LocationProvider(theContext);
 		}

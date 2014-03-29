@@ -10,15 +10,15 @@
     tools:context=".LocationActivity" >
 
     <TextView
-        android:id="@+id/editText1"
-        android:background="@android:color/holo_blue_dark"
-        android:textColor="@android:color/white"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
+        android:id="@+id/tvPreviousLocation"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/holo_blue_dark"
         android:ems="10"
-        android:text="Previous Location" />
+        android:gravity="center"
+        android:text="Previous Location"
+        android:textColor="@android:color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,7 +71,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnSubmitLocation"
         android:layout_width="92dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

@@ -2,8 +2,6 @@ package ca.ualberta.cs.views;
 
 import java.io.ByteArrayOutputStream;
 
-import ca.ualberta.cs.R;
-import ca.ualberta.cs.models.PostModel;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,7 +11,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.MediaColumns;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ImageView;
+import ca.ualberta.cs.R;
+import ca.ualberta.cs.models.PostModel;
 
 public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
@@ -58,6 +59,9 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				SELECT_PICTURE);
 	}
 
+	public void onClick_StartLocationActivity(View theView) {
+		Intent locationIntent = new Intent(this, LocationActivity.class);
+	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
