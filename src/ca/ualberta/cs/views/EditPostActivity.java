@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.MediaColumns;
@@ -14,11 +15,13 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.PostModel;
 
 public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 	// image vars
+	public final static String EXTRA_LOCATION = "ca.ualberta.cs.OLD_LOCATION";
 	private static final int SELECT_PICTURE = 1;
 	protected byte[] imageByteArray;
 	protected Bitmap imageBitmap;
@@ -61,6 +64,9 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 	public void onClick_StartLocationActivity(View theView) {
 		Intent locationIntent = new Intent(this, LocationActivity.class);
+		String extraLocation = ActiveUserModel.getInstance().getUser().getLocation().toString();
+		locationIntent.putExtra(EXTRA_LOCATION, extraLocation);
+		startActivity(locationIntent);
 	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
