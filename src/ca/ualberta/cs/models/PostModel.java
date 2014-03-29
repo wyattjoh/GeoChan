@@ -65,6 +65,7 @@ public abstract class PostModel {
 		this.score = 0;
 		this.picture = null;
 		this.childrenComments = null;
+		this.location = null;
 	}
 	
 	public PostModel(UserModel theUser){
@@ -73,6 +74,7 @@ public abstract class PostModel {
 		this.score = 0;
 		this.picture = null;
 		this.childrenComments = null;
+		this.location = null;
 	}
 	
 	public void incrementScore(){
