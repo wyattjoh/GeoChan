@@ -62,6 +62,24 @@ public class PostModelList<T extends PostModel> {
 
 		updateListeningAdapters();
 	}
+	
+	/*
+	 * Sorts theTopicModelArrayList by proximity to user
+	 */
+	public void sortByProximity() {
+		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_PROXIMITY);
+		
+		updateListeningAdapters();
+	}
+	
+	/*
+	 * Sorts theTopicModelArrayList by "latest greatest"
+	 */
+	public void sortByLatestGreatest() {
+		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_LATEST_GREATEST);
+		
+		updateListeningAdapters();
+	}
 
 	/*
 	 * Adds a model to the top of the list singleton

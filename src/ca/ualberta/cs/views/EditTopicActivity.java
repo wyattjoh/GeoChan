@@ -94,6 +94,18 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 				getPictureIntent();
 			}
 		});
+		
+		// get cancel button
+		Button cancelButton = (Button) findViewById(R.id.distanceButton);
+		
+		// set onclick listener
+		cancelButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// return to previous activity
+				finish();
+			}
+		});
 
 	}
 
