@@ -20,13 +20,6 @@ public class TopicModelList extends PostModelList<TopicModel> implements Updatea
 		
 		return singleton;
 	}
-	
-	/*
-	 * Sorts theTopicModelArrayList by location
-	 */
-	public void sortByLocation() {
-		// TODO: Implement method
-	}
 
 	@Override
 	public void updateFromNetwork() {
