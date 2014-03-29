@@ -89,9 +89,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		String scoreString = "";
 		if (theModel.getScore() > 0) {
 			scoreString = "+";
-		} else if (theModel.getScore() < 0) {
-			scoreString = "-";
 		}
+		
 		scoreString = scoreString + theModel.getScore().toString();
 		scoreView.setText(scoreString);
 		
