@@ -16,6 +16,10 @@ public class UserModel {
 	private Location location;
 	private ArrayList<String> upVoteList;
 	private ArrayList<String> downVoteList;
+
+	public UserModel(String theUserName) {
+		userName = theUserName;
+	}
 	
 	public ArrayList<String> getUpVoteList() {
 		return upVoteList;
@@ -25,16 +29,20 @@ public class UserModel {
 		upVoteList.add(id);
 	}
 	
-	public ArrayList<String> getdownVoteList() {
+	public void removePostIdUpVoteList(String id) {
+		upVoteList.remove(id);
+	}
+	
+	public ArrayList<String> getDownVoteList() {
 		return downVoteList;
 	}
 	
 	public void addPostIdDownVoteList(String id) {
 		downVoteList.add(id);
 	}
-
-	public UserModel(String theUserName) {
-		userName = theUserName;
+	
+	public void removePostIdDownVoteList(String id) {
+		downVoteList.remove(id);
 	}
 	
 	public String getUserName() {
