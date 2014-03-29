@@ -3,6 +3,7 @@
  */
 package ca.ualberta.cs.views;
 
+import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,6 +33,12 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 		// Fix action bar
 		getActionBar().setTitle(theModel.getCommentText()); 
 	}
+	
+	@Override
+	protected void onStart(){
+		super.onStart();
+		CommentModelList.getInstance().setSelection(theModel);
+	}
 
 	@Override
 	protected OnClickListener getFavoriteOnClickListener() {
@@ -40,18 +47,8 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 	}
 	
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle presses on the action bar items
-		switch (item.getItemId()) {
-		case R.id.cellActiveArea:
-			newPost(EditCommentActivity.class);
-			return true;
-		case R.id.action_settings:
-			startSettingsActivity();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+	protected void newPost() {
+		Intent intent = new Intent(this, EditCommentActivity.class);
+		startActivity(intent);
 	}
-
 }

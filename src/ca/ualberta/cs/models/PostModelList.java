@@ -23,6 +23,10 @@ public class PostModelList<T extends PostModel> {
 	public void setSelection(T selectedPostModel) {
 		this.selectedPostModel = selectedPostModel;
 	}
+	
+	public void resetSelection(){
+		this.selectedPostModel = null;
+	}
 
 	public T getSelection() {
 		return this.selectedPostModel;
@@ -56,6 +60,24 @@ public class PostModelList<T extends PostModel> {
 	public void sortByDate() {
 		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_DATE);
 
+		updateListeningAdapters();
+	}
+	
+	/*
+	 * Sorts theTopicModelArrayList by proximity to user
+	 */
+	public void sortByProximity() {
+		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_PROXIMITY);
+		
+		updateListeningAdapters();
+	}
+	
+	/*
+	 * Sorts theTopicModelArrayList by "latest greatest"
+	 */
+	public void sortByLatestGreatest() {
+		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_LATEST_GREATEST);
+		
 		updateListeningAdapters();
 	}
 

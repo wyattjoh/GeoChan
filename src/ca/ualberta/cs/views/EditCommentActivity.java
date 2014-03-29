@@ -1,5 +1,7 @@
 package ca.ualberta.cs.views;
 
+import java.util.Currency;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -7,9 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.CommentModelController;
+import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModel;
+import ca.ualberta.cs.models.CommentModelList;
+import ca.ualberta.cs.models.CurrentUserPostModelFactory;
+import ca.ualberta.cs.models.TopicModelList;
 
-public class EditCommentActivity extends EditPostActivity {
+public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 	public static final String IS_NEW_COMMENT_KEY = "IS_NEW_COMMENT";
 
@@ -21,6 +27,7 @@ public class EditCommentActivity extends EditPostActivity {
 	 * 
 	 * @see android.app.Activity#onStart()
 	 */
+
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -33,8 +40,24 @@ public class EditCommentActivity extends EditPostActivity {
 			this.isNewComment = extras.getBoolean(IS_NEW_COMMENT_KEY);
 		}
 
+		if (this.isNewComment) {
+			theModel = new CommentModel(ActiveUserModel.getInstance().getUser());
+		}
+
 		// Get the controller
-		this.theController = new CommentModelController(null);
+		this.theController = new CommentModelController(
+				TopicModelList.getInstance());
+
+		// customize UI
+		EditText commentEditTitle = (EditText) findViewById(R.id.titleTextField);
+		commentEditTitle.setVisibility(View.INVISIBLE);
+
+		if (CommentModelList.getInstance().getSelection() != null){
+			System.out.println(CommentModelList.getInstance().getSelection().getCommentText());
+		}
+		else {
+			System.out.println(TopicModelList.getInstance().getSelection().getCommentText());
+		}
 
 		// Populate the view
 		populateView();
@@ -50,22 +73,26 @@ public class EditCommentActivity extends EditPostActivity {
 
 				@Override
 				public void onClick(View v) {
-					CommentModel theCommentModel = new CommentModel();
-
 					// Get the comment
 					EditText commentField = (EditText) findViewById(R.id.commentTextField);
-					theCommentModel.setCommentText(commentField.getText()
-							.toString());
+					theModel.setCommentText(commentField.getText().toString());
 
-					theController.addComment(theCommentModel, null);
+					// add the picture
+					theModel.setPicture(imageBitmap);
 
+					// add to the selected model and then reset the selected
+					// model so as to reply to the correct topic
+					if (CommentModelList.getInstance().getSelection() == null) {
+						theController.addComment(theModel, TopicModelList
+								.getInstance().getSelection());
+					} else {
+						theController.addComment(theModel, CommentModelList
+								.getInstance().getSelection());
+						CommentModelList.getInstance().resetSelection();
+					}
 					finish();
 				}
 			});
-
-			// hide gallery thumbnail
-			//ImageView galeryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
-			// galeryThumbnail.setVisibility(View.INVISIBLE);
 
 		} else {
 			saveButton.setText("Update Comment");

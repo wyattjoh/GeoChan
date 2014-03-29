@@ -21,6 +21,7 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
+import ca.ualberta.cs.models.ReadLaterTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
 
 /**
@@ -223,8 +224,17 @@ public class MainActivity extends FragmentActivity {
 		case R.id.action_sortScore:
 			PostListController.setSort(PostListController.SORT_SCORE);
 			return true;
+		case R.id.action_sortProximity:
+			PostListController.setSort(PostListController.SORT_PROXIMITY);
+			return true;
+		case R.id.action_sortLatestGreatest:
+			PostListController.setSort(PostListController.SORT_LATEST_GREATEST);
+			return true;
 		case R.id.action_sortDefault:
 			PostListController.setSort(PostListController.SORT_DEFAULT);
+			return true;
+		case R.id.action_logout:
+			logout();
 			return true;
 
 		default:
@@ -257,6 +267,9 @@ public class MainActivity extends FragmentActivity {
 
 		// Create Favorites List
 		FavoriteTopicModelList.createInstance(applicationContext);
+		
+		// Create Read Later list
+		ReadLaterTopicModelList.createInstance(applicationContext);
 	}
 
 	/**
@@ -281,6 +294,17 @@ public class MainActivity extends FragmentActivity {
 	protected void startSettingsActivity() {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
+	}
+	
+	/**
+	 * Allows the user to log out
+	 */
+	protected void logout() {
+		ActiveUserModel userController = ActiveUserModel.getInstance();
+		userController.performLogout();
+		
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivityForResult(intent, 1);
 	}
 
 	/**

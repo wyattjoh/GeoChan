@@ -51,7 +51,7 @@
         <activity
             android:name="ca.ualberta.cs.views.EditCommentActivity"
             android:label="@string/title_activity_edit_topic"
-            android:parentActivityName="ca.ualberta.cs.views.CommentViewActivity" >
+            android:parentActivityName="ca.ualberta.cs.views.TopicViewActivity" >
         </activity>
         <activity
             android:name="ca.ualberta.cs.views.CommentViewActivity"

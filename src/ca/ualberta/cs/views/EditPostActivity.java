@@ -3,6 +3,7 @@ package ca.ualberta.cs.views;
 import java.io.ByteArrayOutputStream;
 
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.models.PostModel;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,17 +15,19 @@ import android.provider.MediaStore.MediaColumns;
 import android.view.Menu;
 import android.widget.ImageView;
 
-public abstract class EditPostActivity extends Activity {
+public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 	// image vars
 	private static final int SELECT_PICTURE = 1;
-	private byte[] imageByteArray;
-	
-	
+	protected byte[] imageByteArray;
+	protected Bitmap imageBitmap;
+
+	protected T theModel;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_edit_topic);
+		setContentView(R.layout.activity_edit_post);
 	}
 
 	@Override
@@ -33,23 +36,15 @@ public abstract class EditPostActivity extends Activity {
 		getMenuInflater().inflate(R.menu.edit_post, menu);
 		return true;
 	}
-	
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see android.app.Activity#onStart()
 	 */
-	
-	@Override
-	protected void onStart()
-	{
-		// TODO Auto-generated method stub
-		super.onStart();
-	}
 
 	protected abstract void populateView();
-	
+
 	/**
 	 * github http://stackoverflow.com/questions/2169649/get-pick-an-image-from-
 	 * androids-built-in-gallery-app-programmatically
@@ -72,21 +67,19 @@ public abstract class EditPostActivity extends Activity {
 				String selectedImagePath = getPath(selectedImageUri);
 
 				// get picture object from path
-				Bitmap imageBitmap = BitmapFactory
-						.decodeFile(selectedImagePath);
+				imageBitmap = BitmapFactory.decodeFile(selectedImagePath);
 
 				// get and set image view
 				ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
 				// galleryThumbnail.setVisibility(View.VISIBLE);
-				
+
 				// create scaled image for display
-				Bitmap scaledBitmap =  Bitmap.createScaledBitmap(imageBitmap,
-						galleryThumbnail.getWidth(),
-						galleryThumbnail.getHeight(),
-						galleryThumbnail.getFilterTouchesWhenObscured());
-				
+				Bitmap scaledBitmap = scaleBitMapToFit(imageBitmap,
+						galleryThumbnail);
+
 				// set the view image o the selected image
 				galleryThumbnail.setImageBitmap(scaledBitmap);
+				imageBitmap = scaledBitmap;
 
 				// compress and output to class variable
 				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
@@ -94,6 +87,35 @@ public abstract class EditPostActivity extends Activity {
 				imageByteArray = outStream.toByteArray();
 			}
 		}
+	}
+
+	/**
+	 * returns a scaled image where the image will be sized so that it will fit
+	 * the image view by scaling to the largest length, either width or height
+	 * and setting that to the size of the image view
+	 * 
+	 * @param bitmapImage
+	 * @param imageViewScale
+	 * @return
+	 */
+	public Bitmap scaleBitMapToFit(Bitmap bitmapImage,
+			ImageView imageViewScale) {
+		Bitmap scaledBitmap = null;
+
+		if (bitmapImage.getWidth() > bitmapImage.getHeight()) {
+			// if the image is bigger horizontally scale vertically
+			scaledBitmap = Bitmap.createScaledBitmap(bitmapImage,
+					bitmapImage.getWidth(), imageViewScale.getHeight(),
+					imageViewScale.getFilterTouchesWhenObscured());
+
+		} else {
+			// otherwise scale horizontally
+			scaledBitmap = Bitmap.createScaledBitmap(bitmapImage,
+					imageViewScale.getWidth(), bitmapImage.getHeight(),
+					imageViewScale.getFilterTouchesWhenObscured());
+		}
+
+		return scaledBitmap;
 	}
 
 	/**
@@ -110,8 +132,7 @@ public abstract class EditPostActivity extends Activity {
 		String[] projection = { MediaColumns.DATA };
 		Cursor cursor = managedQuery(uri, projection, null, null, null);
 		if (cursor != null) {
-			int column_index = cursor
-					.getColumnIndexOrThrow(MediaColumns.DATA);
+			int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
 			cursor.moveToFirst();
 			return cursor.getString(column_index);
 		}

@@ -16,10 +16,25 @@
         android:showAsAction="never"
         android:title="@string/action_sortScoreText"/>
     <item
+        android:id="@+id/action_sortProximity"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_sortProximityText"/>
+    <item
+        android:id="@+id/action_sortLatestGreatest"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_sortLatestGreatestText"/>
+    <item
         android:id="@+id/action_sortDefault"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_sortTopText"/>
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_logoutText"/>
     <item
         android:id="@+id/cellActiveArea"
         android:icon="@drawable/ic_action_new"

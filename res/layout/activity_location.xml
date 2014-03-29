@@ -33,6 +33,11 @@
         <EditText
             android:id="@+id/editTextLatitude"
             android:layout_width="0dip"
+            android:text="Latitude" />
+
+        <EditText
+            android:id="@+id/editTextLatitude"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="1"

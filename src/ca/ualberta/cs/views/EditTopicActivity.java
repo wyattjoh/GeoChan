@@ -9,8 +9,9 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicModelController;
 import ca.ualberta.cs.models.CurrentUserPostModelFactory;
 import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.models.TopicModelList;
 
-public class EditTopicActivity extends EditPostActivity {
+public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	public static final String IS_NEW_TOPIC_KEY = "IS_NEW_TOPIC";
 
 	private TopicModelController theController;
@@ -21,6 +22,8 @@ public class EditTopicActivity extends EditPostActivity {
 	 * 
 	 * @see android.app.Activity#onStart()
 	 */
+	
+	
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -61,6 +64,9 @@ public class EditTopicActivity extends EditPostActivity {
 					EditText commentField = (EditText) findViewById(R.id.commentTextField);
 					theTopicModel.setCommentText(commentField.getText()
 							.toString());
+					
+					// add the picture
+					theTopicModel.setPicture(imageBitmap);
 
 					theController.newTopic(theTopicModel);
 
@@ -86,6 +92,18 @@ public class EditTopicActivity extends EditPostActivity {
 			public void onClick(View v) {
 				// start camera activity
 				getPictureIntent();
+			}
+		});
+		
+		// get cancel button
+		Button cancelButton = (Button) findViewById(R.id.distanceButton);
+		
+		// set onclick listener
+		cancelButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// return to previous activity
+				finish();
 			}
 		});
 

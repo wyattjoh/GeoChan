@@ -14,6 +14,7 @@ public class PostListController {
 	public static final int SORT_DATE	 = 2;
 	public static final int SORT_SCORE = 3;
 	public static final int SORT_DEFAULT = 4;
+	public static final int SORT_LATEST_GREATEST = 5;
 	
 	public static void setSort(final int theSortOrder){
 		switch (theSortOrder) {
@@ -24,7 +25,9 @@ public class PostListController {
 			TopicModelList.getInstance().sortByScore();
 			break;
 		case SORT_PROXIMITY:
-			TopicModelList.getInstance().sortByLocation();
+			TopicModelList.getInstance().sortByProximity();
+		case SORT_LATEST_GREATEST:
+			TopicModelList.getInstance().sortByLatestGreatest();
 		default:
 			break;
 		}
