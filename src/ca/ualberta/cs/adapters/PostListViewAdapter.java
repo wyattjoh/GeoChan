@@ -134,6 +134,21 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 				imageViewScale.getFilterTouchesWhenObscured());
 		return scaledBitmap;
 	}
+	
+	/**
+	 * Trims a string to a max length
+	 * @param theString the string to trim
+	 * @param theLength the max length of the string
+	 * @return a trimmed string
+	 */
+	protected String trimString(String theString, int theLength) {
+		if (theString.length() > theLength) {
+			return theString.substring(0, theLength);
+		}
+		else {
+			return theString;
+		}
+	}
 
 	abstract protected void populateCellTitle(View theView, T thePost);
 }
