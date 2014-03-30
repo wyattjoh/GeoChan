@@ -76,13 +76,8 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		// Fill comment count
 		TextView commentTextView = (TextView) theView
 				.findViewById(R.id.textViewComments);
-		if (thePost.getChildrenComments() == null) {
-			commentTextView.setText("0");
-		} else {
-			String commentCount = Integer.toString(thePost
-					.getChildrenComments().size());
-			commentTextView.setText(commentCount);
-		}
+		commentTextView.setText(Integer.toString(thePost.getChildrenComments()
+				.size()));
 
 		// Fill location
 		// TODO: Add location text
@@ -95,13 +90,9 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		// Fill score
 		TextView scoreText = (TextView) theView
 				.findViewById(R.id.textViewScore);
-		String scoreString = "";
-		if (thePost.getScore() > 0) {
-			scoreString = "+";
-		} else if (thePost.getScore() < 0) {
-			scoreString = "-";
-		}
-		scoreString = scoreString + thePost.getScore().toString();
+
+		String scoreString = (thePost.getScore() > 0) ? "+"
+				+ thePost.getScore().toString() : thePost.getScore().toString();
 		scoreText.setText(scoreString);
 
 		// Fill picture
@@ -109,8 +100,7 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 				.findViewById(R.id.imageViewPicture);
 		if (thePost.hasPicture()) {
 			imageView.setImageBitmap(thePost.getPicture());
-		}
-		else {
+		} else {
 			imageView.setVisibility(View.GONE);
 		}
 
@@ -128,24 +118,27 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 	 */
 	public Bitmap scaleBitMapToImageView(Bitmap bitmapImage,
 			ImageView imageViewScale) {
-		System.out.println("Height"+imageViewScale.getHeight()+" Width"+imageViewScale.getWidth());
+		System.out.println("Height" + imageViewScale.getHeight() + " Width"
+				+ imageViewScale.getWidth());
 		Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmapImage,
 				imageViewScale.getWidth(), imageViewScale.getHeight(),
 				imageViewScale.getFilterTouchesWhenObscured());
 		return scaledBitmap;
 	}
-	
+
 	/**
 	 * Trims a string to a max length
-	 * @param theString the string to trim
-	 * @param theLength the max length of the string
+	 * 
+	 * @param theString
+	 *            the string to trim
+	 * @param theLength
+	 *            the max length of the string
 	 * @return a trimmed string
 	 */
 	protected String trimString(String theString, int theLength) {
 		if (theString.length() > theLength) {
 			return theString.substring(0, theLength);
-		}
-		else {
+		} else {
 			return theString;
 		}
 	}

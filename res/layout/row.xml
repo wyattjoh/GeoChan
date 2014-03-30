@@ -3,22 +3,21 @@
     android:id="@+id/postCell"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="left"
     android:background="@drawable/rowborder"
+    android:gravity="left"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:id="@+id/cellActiveArea"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="0.14"
         android:onClick="cellClicked" >
 
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.14" >
+            android:layout_height="wrap_content" >
 
             <ImageView
                 android:id="@+id/imageViewPicture"
