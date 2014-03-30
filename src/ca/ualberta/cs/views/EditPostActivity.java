@@ -1,37 +1,40 @@
 package ca.ualberta.cs.views;
 
-import java.io.ByteArrayOutputStream;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.MediaColumns;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
 
 public abstract class EditPostActivity<T extends PostModel> extends Activity {
+	public static final String IS_NEW = "IS_NEW_TOPIC";
 
 	// image vars
 	public final static String EXTRA_LOCATION = "ca.ualberta.cs.OLD_LOCATION";
 	private static final int SELECT_PICTURE = 1;
-	protected byte[] imageByteArray;
-	protected Bitmap imageBitmap;
+	protected static final EditPostModel theEditPostModel = EditPostModel.getInstance();
+	protected Bitmap imageBitmap = null;
 
 	protected T theModel;
-
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_post);
+		
+		// Populate the views
+		populateView();
 	}
 
 	@Override
@@ -41,13 +44,45 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onStart()
-	 */
+	protected abstract String getSaveButtonText();
+	protected abstract OnClickListener getNewOnClickListener();
+	protected abstract OnClickListener getUpdateOnClickListener();
 
-	protected abstract void populateView();
+	protected void populateView() {
+		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
+		
+		saveButton.setText(getSaveButtonText());
+
+		if (theEditPostModel.isNewPost()) {
+			saveButton.setOnClickListener(getNewOnClickListener());
+		} else {
+			saveButton.setOnClickListener(getUpdateOnClickListener());
+		}
+
+		// get photo button
+		Button cameraButton = (Button) findViewById(R.id.pictureButton);
+
+		// set onclick listener
+		cameraButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// start camera activity
+				getPictureIntent();
+			}
+		});
+		
+		// get cancel button
+		Button cancelButton = (Button) findViewById(R.id.distanceButton);
+		
+		// set onclick listener
+		cancelButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// return to previous activity
+				finish();
+			}
+		});
+	}
 
 	/**
 	 * github http://stackoverflow.com/questions/2169649/get-pick-an-image-from-
@@ -78,23 +113,17 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 				// get picture object from path
 				imageBitmap = BitmapFactory.decodeFile(selectedImagePath);
-
+				
 				// get and set image view
 				ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
 				// galleryThumbnail.setVisibility(View.VISIBLE);
 
 				// create scaled image for display
-				Bitmap scaledBitmap = scaleBitMapToFit(imageBitmap,
-						galleryThumbnail);
+				Bitmap scaledBitmap = scaleBitMapToFit(imageBitmap, galleryThumbnail);
 
 				// set the view image o the selected image
 				galleryThumbnail.setImageBitmap(scaledBitmap);
 				imageBitmap = scaledBitmap;
-
-				// compress and output to class variable
-				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-				imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-				imageByteArray = outStream.toByteArray();
 			}
 		}
 	}

@@ -8,73 +8,28 @@ import android.graphics.Bitmap;
 import android.location.Location;
 
 public abstract class PostModel {
-	private String commentText;
+	private String commentText = "";
 	private Location location;
-	private Bitmap picture;
-	private UserModel postedBy;
+	private Bitmap theBitmap = null;
+	private UserModel postedBy = null;
 	private Date datePosted;
-	private Integer score;
+	private Integer score = 0;
 	private transient PostModel myParent = null;
-	private ArrayList<CommentModel> childrenComments;
+	private ArrayList<CommentModel> childrenComments = new ArrayList<CommentModel>();
 	
 	private transient Boolean isFavorite = false;
 	private String id;
 	
 	/**
-	 * Comparators
-	 */
-	public static Comparator<PostModel> COMPARE_BY_DATE = new Comparator<PostModel>() {
-		@Override
-		public int compare(PostModel one, PostModel other) {
-			return one.datePosted.compareTo(other.datePosted);
-		}
-	};
-	public static Comparator<PostModel> COMPARE_BY_SCORE = new Comparator<PostModel>() {
-		@Override
-		public int compare(PostModel one, PostModel other) {
-			return one.score.compareTo(other.score);
-		}
-	};
-	public static Comparator<PostModel> COMPARE_BY_PROXIMITY = new Comparator<PostModel>() {
-		@Override
-		public int compare(PostModel one, PostModel other) {
-			ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
-			UserModel theLoggedInUser = theActiveUserModel.getUser();
-			Location myLocation = new Location(theLoggedInUser.getLocation());
-			float distanceToOneLocation = myLocation.distanceTo(one.location);
-			float distanceToOtherLocation = myLocation.distanceTo(other.location);
-			return distanceToOneLocation < distanceToOtherLocation ? -1 : distanceToOneLocation > distanceToOtherLocation ? 1 : 0;
-		}
-	};
-	public static Comparator<PostModel> COMPARE_BY_LATEST_GREATEST = new Comparator<PostModel>() {
-		@Override
-		public int compare(PostModel one, PostModel other) {
-			Date currentTime = new Date();
-			float relativeScoreOne = one.getScore() - ((currentTime.getTime() - one.datePosted.getTime())/10000);
-			float relativeScoreOther = other.getScore() - ((currentTime.getTime() - other.datePosted.getTime())/10000);
-			return relativeScoreOne < relativeScoreOther ? -1 : relativeScoreOne > relativeScoreOther ? 1 : 0;
-		}
-	};
-	
-	/**
 	 * Constructors
 	 */
 	public PostModel(){
-		this.postedBy = null;
 		this.datePosted = new Date();
-		this.score = 0;
-		this.picture = null;
-		this.childrenComments = null;
-		this.location = null;
 	}
 	
 	public PostModel(UserModel theUser){
+		this();
 		this.postedBy = theUser;
-		this.datePosted = new Date();
-		this.score = 0;
-		this.picture = null;
-		this.childrenComments = null;
-		this.location = null;
 	}
 	
 	public void incrementScore(){
@@ -86,10 +41,7 @@ public abstract class PostModel {
 	}
 	
 	public boolean hasPicture(){
-		if (picture != null){
-			return true;
-		}
-		return false;	
+		return this.theBitmap != null;
 	}
 	/**
 	 *  Auto generated setters and getters
@@ -107,10 +59,10 @@ public abstract class PostModel {
 		this.location = location;
 	}
 	public Bitmap getPicture() {
-		return picture;
+		return this.theBitmap;
 	}
 	public void setPicture(Bitmap picture) {
-		this.picture = picture;
+		this.theBitmap = picture;
 	}
 	public UserModel getPostedBy() {
 		return postedBy;
@@ -185,6 +137,42 @@ public abstract class PostModel {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	/**
+	 * Comparators
+	 */
+	public static Comparator<PostModel> COMPARE_BY_DATE = new Comparator<PostModel>() {
+		@Override
+		public int compare(PostModel one, PostModel other) {
+			return one.datePosted.compareTo(other.datePosted);
+		}
+	};
+	public static Comparator<PostModel> COMPARE_BY_SCORE = new Comparator<PostModel>() {
+		@Override
+		public int compare(PostModel one, PostModel other) {
+			return one.score.compareTo(other.score);
+		}
+	};
+	public static Comparator<PostModel> COMPARE_BY_PROXIMITY = new Comparator<PostModel>() {
+		@Override
+		public int compare(PostModel one, PostModel other) {
+			ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
+			UserModel theLoggedInUser = theActiveUserModel.getUser();
+			Location myLocation = new Location(theLoggedInUser.getLocation());
+			float distanceToOneLocation = myLocation.distanceTo(one.location);
+			float distanceToOtherLocation = myLocation.distanceTo(other.location);
+			return distanceToOneLocation < distanceToOtherLocation ? -1 : distanceToOneLocation > distanceToOtherLocation ? 1 : 0;
+		}
+	};
+	public static Comparator<PostModel> COMPARE_BY_LATEST_GREATEST = new Comparator<PostModel>() {
+		@Override
+		public int compare(PostModel one, PostModel other) {
+			Date currentTime = new Date();
+			float relativeScoreOne = one.getScore() - ((currentTime.getTime() - one.datePosted.getTime())/10000);
+			float relativeScoreOther = other.getScore() - ((currentTime.getTime() - other.datePosted.getTime())/10000);
+			return relativeScoreOne < relativeScoreOther ? -1 : relativeScoreOne > relativeScoreOther ? 1 : 0;
+		}
+	};
 
 	@Override
 	public boolean equals(Object o) {

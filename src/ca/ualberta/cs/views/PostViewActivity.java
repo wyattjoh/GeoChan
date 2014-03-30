@@ -1,11 +1,11 @@
 package ca.ualberta.cs.views;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,34 +19,83 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.CommentListViewAdapter;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModelList;
+import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
+import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
 
 public abstract class PostViewActivity<T extends PostModel> extends Activity {
+	/**
+	 * Populates theModel with the proper selected model
+	 * @return TODO
+	 */
+	abstract protected T getSelectedModel();
+
+	abstract void setTitleText();
+
+	abstract protected OnClickListener getFavoriteOnClickListener();
+
 	protected T theModel = null;
+	/**
+	 * Starts an activity to reply to the currently visible post
+	 */
+	protected void replyToPost() {
+		EditPostModel theEditPostModel = EditPostModel.getInstance();
+		theEditPostModel.setTheParent(theModel);
+		
+		Intent intent = new Intent(this, EditCommentActivity.class);
+		startActivity(intent);
+	}
+
 	protected CommentListViewAdapter thePostAdapter;
 	protected ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
 	protected UserModel theLoggedInUser = theActiveUserModel.getUser();
+
+	public void cellClicked(View theView) {
+		Integer thePosition = (Integer) theView.getTag();
+	
+		CommentModelList commentModelList = CommentModelList.getInstanceFromParent(theModel);
+		commentModelList.addToSelectionStackFromPosition(thePosition);
+	
+		Intent intent = new Intent(this, CommentViewActivity.class);
+		startActivity(intent);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_post_view);
-
-		// Get the selected model to display
-		getSelectedModel();
-
-		// If we have a selected model...
-		if (theModel != null) {
-			// Populate the view!
-			populateView();
-		} else {
-			// finish it?
-			finish();
+		
+		ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(true);
+		
+		// Populate the model
+		this.theModel = getSelectedModel();
+		
+		// Populate the view
+		if (this.theModel == null) {
+			throw new RuntimeException("Tried to execute the view without selecting anything? (No idea how you got here...)");
 		}
+		
+		// Populate the view!
+		populateView();
 	}
 
-	abstract protected void getSelectedModel();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onDestroy()
+	 */
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+
+		if (thePostAdapter != null) {
+			TopicModelList.getInstance().unRegisterListeningAdapter(
+					thePostAdapter);
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,23 +103,24 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
 		case R.id.cellActiveArea:
-			newPost();
+			replyToPost();
 			return true;
 		case R.id.action_settings:
 			startSettingsActivity();
+			return true;
+		case android.R.id.home:
+			onBackPressed();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	protected abstract void newPost();
 
 	/**
 	 * Starts the settings activity
@@ -79,7 +129,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
 	}
-
 
 	protected void populateView() {
 		// Add comment
@@ -92,11 +141,12 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		if (theModel.getScore() > 0) {
 			scoreString = "+";
 		}
-		
+
 		scoreString = scoreString + theModel.getScore().toString();
 		scoreView.setText(scoreString);
-		
+
 		// Add Buttons
+<<<<<<< HEAD
 		final ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
 		
 		if (theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
@@ -106,25 +156,34 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			downVoteButton.setPressed(false);
 		}
 		
+=======
+		ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
+
+>>>>>>> 71f4f029be8af39bccbcb1baa2f080af202fbc24
 		downVoteButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+<<<<<<< HEAD
+=======
+				ActiveUserModel theActiveUserModel = ActiveUserModel
+						.getInstance();
+				UserModel theLoggedInUser = theActiveUserModel.getUser();
+>>>>>>> 71f4f029be8af39bccbcb1baa2f080af202fbc24
 				if (!(theLoggedInUser.getUpVoteList().contains(theModel.getId()))) {
-					if (theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
-						theLoggedInUser.removePostIdDownVoteList(theModel.getId());
+					if (theLoggedInUser.getDownVoteList().contains(
+							theModel.getId())) {
+						theLoggedInUser.removePostIdDownVoteList(theModel
+								.getId());
 						theModel.incrementScore();
-					}
-					else {
+					} else {
 						theLoggedInUser.addPostIdDownVoteList(theModel.getId());
 						theModel.decrementScore();
 					}
 				}
-				
-				populateView();
-				
 			}
 		});
+<<<<<<< HEAD
 		
 		final ImageButton upVoteButton = (ImageButton) findViewById(R.id.upVoteButton);
 		
@@ -136,23 +195,34 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		}
 		
 		
+=======
+
+		ImageButton upVoteButton = (ImageButton) findViewById(R.id.upVoteButton);
+
+>>>>>>> 71f4f029be8af39bccbcb1baa2f080af202fbc24
 		upVoteButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+<<<<<<< HEAD
 				if (!theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
 					if (theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
+=======
+				ActiveUserModel theActiveUserModel = ActiveUserModel
+						.getInstance();
+				UserModel theLoggedInUser = theActiveUserModel.getUser();
+				if (!theLoggedInUser.getDownVoteList().contains(
+						theModel.getId())) {
+					if (theLoggedInUser.getUpVoteList().contains(
+							theModel.getId())) {
+>>>>>>> 71f4f029be8af39bccbcb1baa2f080af202fbc24
 						theLoggedInUser.removePostIdUpVoteList(theModel.getId());
 						theModel.decrementScore();
-					}
-					else {
+					} else {
 						theLoggedInUser.addPostIdUpVoteList(theModel.getId());
 						theModel.incrementScore();
 					}
 				}
-				
-				populateView();
-				
 			}
 		});
 
@@ -174,58 +244,39 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			// TODO: Implement
 			imageView.setImageBitmap(thePicture);
 		}
-		
+
 		// Distance button
 		Button distanceButton = (Button) findViewById(R.id.distanceButton);
-		if(theModel.getLocation() != null) {
+		if (theModel.getLocation() != null) {
 			ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
 			UserModel theLoggedInUser = theActiveUserModel.getUser();
 			Location myLocation = new Location(theLoggedInUser.getLocation());
-			float distanceToPost = theModel.getLocation().distanceTo(myLocation);
+			float distanceToPost = theModel.getLocation()
+					.distanceTo(myLocation);
 			String distanceButtonText = String.valueOf(distanceToPost) + " m";
-			distanceButton.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
+			distanceButton.setText(distanceButtonText.toCharArray(), 0,
+					distanceButtonText.length());
 		}
 
 		// Add comments
 		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
-		
-		if (theModel.getChildrenComments() == null) {
-			
-		}
-		else {
-			// Has children!
-			thePostAdapter  = new CommentListViewAdapter(this, theModel.getChildrenComments());
-			commentsListView.setAdapter(thePostAdapter);
-		}
-		
+
+		// Has children!
+		thePostAdapter = new CommentListViewAdapter(this,
+				theModel.getChildrenComments());
+		TopicModelList.getInstance().registerListeningAdapter(thePostAdapter);
+		commentsListView.setAdapter(thePostAdapter);
+
 		// Favorite Button
 		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
-		
+
 		favoriteButton.setOnClickListener(getFavoriteOnClickListener());
-		
+
 		if (theModel.isFavorite()) {
 			favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
+		} else {
+			favoriteButton
+					.setImageResource(android.R.drawable.btn_star_big_off);
 		}
-		else {
-			favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
-		}
-		
 	}
-	
-	abstract protected OnClickListener getFavoriteOnClickListener();
-
-	abstract void setTitleText();
-	
-	public void cellClicked(View theView) {
-		Integer thePosition = (Integer) theView.getTag();
-		
-		CommentModelList commentModelList = CommentModelList.getInstance(theModel);
-		commentModelList.setSelection(thePosition);
-		
-		Intent intent = new Intent(this, CommentViewActivity.class);
-		startActivity(intent);
-		
-		Log.w("PostViewActivity", "the cell was clicked!");
-	}
-
 }

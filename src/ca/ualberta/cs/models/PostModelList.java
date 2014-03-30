@@ -1,35 +1,53 @@
 package ca.ualberta.cs.models;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 
-import ca.ualberta.cs.adapters.PostListViewAdapter;
 import android.util.Log;
+import ca.ualberta.cs.adapters.PostListViewAdapter;
 
 public class PostModelList<T extends PostModel> {
-	private T selectedPostModel = null;
 	private ArrayList<T> postModelArrayList;
-	private ArrayList<PostListViewAdapter<T>> listeningAdapters;
+	private ArrayList<PostListViewAdapter<?>> listeningAdapters;
+	
+	private Deque<T> selectedPostModelStack = new ArrayDeque<T>();
 
 	protected PostModelList() {
 		this.postModelArrayList = new ArrayList<T>();
-		this.listeningAdapters = new ArrayList<PostListViewAdapter<T>>();
+		this.listeningAdapters = new ArrayList<PostListViewAdapter<?>>();
 	}
 
-	public void setSelection(int position) {
-		this.selectedPostModel = postModelArrayList.get(position);
+	/**
+	 * Add the element in the list at position indicated to the selection stack
+	 * @param position is the position of the selected model
+	 */
+	public void addToSelectionStackFromPosition(int position) {
+		this.selectedPostModelStack.add(postModelArrayList.get(position));
 	}
 
-	public void setSelection(T selectedPostModel) {
-		this.selectedPostModel = selectedPostModel;
+	/**
+	 * Add the element to the selection stack
+	 * @param selectedPostModel
+	 */
+	public void addToSelectionStack(T selectedPostModel) {
+		this.selectedPostModelStack.add(selectedPostModel);
 	}
 	
-	public void resetSelection(){
-		this.selectedPostModel = null;
+	/**
+	 * Remove the element at the end of the list from the list
+	 * @return the item removed from the selection stack
+	 */
+	public T popFromSelectionStack(){
+		return this.selectedPostModelStack.pop();
 	}
 
-	public T getSelection() {
-		return this.selectedPostModel;
+	/**
+	 * @return the last element in the stack (last selected)
+	 */
+	public T getLastSelection() {
+		return this.selectedPostModelStack.getLast();
 	}
 
 	public void setArrayList(ArrayList<T> postModelArrayList) {
@@ -146,6 +164,9 @@ public class PostModelList<T extends PostModel> {
 		if (!foundObjectToUpdate) {
 			throw new RuntimeException("Tried to update an entry that wasn't here!");
 		}
+		else {
+			updateListeningAdapters();
+		}
 	}
 
 	public void remove(T theModel) {
@@ -159,7 +180,7 @@ public class PostModelList<T extends PostModel> {
 	}
 
 	public void updateListeningAdapters() {
-		for (PostListViewAdapter<T> theAdapter : this.listeningAdapters) {
+		for (PostListViewAdapter<?> theAdapter : this.listeningAdapters) {
 			if (theAdapter != null) {
 				theAdapter.notifyDataSetChanged();
 				Log.w("PostModelList", "The adapter has been notified");
@@ -167,11 +188,13 @@ public class PostModelList<T extends PostModel> {
 		}
 	}
 
-	public void registerListeningAdapter(PostListViewAdapter<T> theAdapter) {
+	public void registerListeningAdapter(PostListViewAdapter<?> theAdapter) {
 		this.listeningAdapters.add(theAdapter);
+		Log.w("PostModelList", "Listener added");
 	}
 
-	public void unRegisterListeningAdapter(PostListViewAdapter<T> theAdapter) {
+	public void unRegisterListeningAdapter(PostListViewAdapter<?> theAdapter) {
 		this.listeningAdapters.remove(theAdapter);
+		Log.w("PostModelList", "Listener removed");
 	}
 }

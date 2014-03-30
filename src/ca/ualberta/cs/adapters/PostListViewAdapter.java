@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.PostModel;
-import ca.ualberta.cs.views.EditPostActivity;
 
 /**
  * 
@@ -105,17 +104,14 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		scoreString = scoreString + thePost.getScore().toString();
 		scoreText.setText(scoreString);
 
-		
-		System.out.println("PostPic: " + thePost.getCommentText() + " " + thePost.hasPicture());
 		// Fill picture
 		ImageView imageView = (ImageView) theView
 				.findViewById(R.id.imageViewPicture);
-		Bitmap thePicture = thePost.getPicture();
-		if (thePicture == null) {
-			imageView.setVisibility(View.GONE);
+		if (thePost.hasPicture()) {
+			imageView.setImageBitmap(thePost.getPicture());
 		}
 		else {
-			imageView.setImageBitmap(thePicture);
+			imageView.setVisibility(View.GONE);
 		}
 
 		populateCellTitle(theView, theObject);
@@ -137,6 +133,21 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 				imageViewScale.getWidth(), imageViewScale.getHeight(),
 				imageViewScale.getFilterTouchesWhenObscured());
 		return scaledBitmap;
+	}
+	
+	/**
+	 * Trims a string to a max length
+	 * @param theString the string to trim
+	 * @param theLength the max length of the string
+	 * @return a trimmed string
+	 */
+	protected String trimString(String theString, int theLength) {
+		if (theString.length() > theLength) {
+			return theString.substring(0, theLength);
+		}
+		else {
+			return theString;
+		}
 	}
 
 	abstract protected void populateCellTitle(View theView, T thePost);
