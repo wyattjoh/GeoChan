@@ -19,6 +19,8 @@ public class UserModel {
 
 	public UserModel(String theUserName) {
 		userName = theUserName;
+		upVoteList = new ArrayList<String>();
+		downVoteList = new ArrayList<String>();
 	}
 	
 	public ArrayList<String> getUpVoteList() {

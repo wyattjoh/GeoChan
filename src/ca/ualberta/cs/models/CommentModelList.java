@@ -10,7 +10,7 @@ package ca.ualberta.cs.models;
 public class CommentModelList extends PostModelList<CommentModel> {
 	private static CommentModelList singleton = null;
 
-	public static CommentModelList getInstance(PostModel parentModel) {
+	public static CommentModelList getInstanceFromParent(PostModel parentModel) {
 		// Ensure that we can't get an instance without a parent model
 		if (parentModel == null) {
 			throw new RuntimeException("Cannot create a comment list without a parent!");
@@ -31,7 +31,7 @@ public class CommentModelList extends PostModelList<CommentModel> {
 	public static CommentModelList getInstance() {
 		// Create the singleton
 		if (singleton == null) {
-			singleton = new CommentModelList();
+			throw new RuntimeException("Cannot get a comment list without a parent!");
 		}
 
 		// Return the singleton

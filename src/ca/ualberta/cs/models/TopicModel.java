@@ -2,7 +2,7 @@ package ca.ualberta.cs.models;
 
 public class TopicModel extends PostModel {
 	private String title;
-	private int version;
+	private transient int version;
 
 	/**
 	 * Constructors
