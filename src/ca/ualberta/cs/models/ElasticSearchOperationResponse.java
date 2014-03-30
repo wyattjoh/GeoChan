@@ -1,10 +1,10 @@
 package ca.ualberta.cs.models;
 
-import ca.ualberta.cs.providers.ElasticSearchProviderServiceType;
+import ca.ualberta.cs.providers.ElasticSearchProviderServiceHandler;
 
 public class ElasticSearchOperationResponse extends ElasticSearchOperation {
 	public ElasticSearchOperationResponse(
-			ElasticSearchProviderServiceType elasticSearchProviderServiceType) {
+			ElasticSearchProviderServiceHandler elasticSearchProviderServiceType) {
 		super(elasticSearchProviderServiceType);
 	}
 }

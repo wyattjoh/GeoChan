@@ -1,17 +1,23 @@
 package ca.ualberta.cs.models;
 
-import ca.ualberta.cs.providers.ElasticSearchProviderServiceType;
+import java.util.ArrayList;
+
+import ca.ualberta.cs.providers.ElasticSearchProviderServiceHandler;
 
 abstract public class ElasticSearchOperation {
-	private ElasticSearchProviderServiceType requestType;
+	private ElasticSearchProviderServiceHandler requestType;
 	private TopicModel theModel = null;
 	private PostModelList<TopicModel> thePostModelList = null;
+	private ArrayList<TopicModel> theTopicModels = new ArrayList<TopicModel>();
 	
-	public ElasticSearchOperation(ElasticSearchProviderServiceType theRequestType) {
+	protected int size;
+	protected int from;
+	
+	public ElasticSearchOperation(ElasticSearchProviderServiceHandler theRequestType) {
 		this.requestType = theRequestType;
 	}
 	
-	public ElasticSearchProviderServiceType getRequestType() {
+	public ElasticSearchProviderServiceHandler getRequestType() {
 		return requestType;
 	}
 	
@@ -29,5 +35,24 @@ abstract public class ElasticSearchOperation {
 	
 	public PostModelList<TopicModel> getPostModelList() {
 		return this.thePostModelList;
+	}
+	
+	public void setRange(int from, int size) {
+		this.size = size;
+		this.from = from;
+	}
+
+	/**
+	 * @return the theTopicModels
+	 */
+	public ArrayList<TopicModel> getTheTopicModels() {
+		return theTopicModels;
+	}
+
+	/**
+	 * @param theTopicModels the theTopicModels to set
+	 */
+	public void setTheTopicModels(ArrayList<TopicModel> theTopicModels) {
+		this.theTopicModels = theTopicModels;
 	}
 }

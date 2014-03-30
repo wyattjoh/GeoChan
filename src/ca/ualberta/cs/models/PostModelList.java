@@ -51,8 +51,9 @@ public class PostModelList<T extends PostModel> {
 	}
 
 	public void setArrayList(ArrayList<T> postModelArrayList) {
-		this.postModelArrayList = postModelArrayList;
-
+		this.postModelArrayList.clear();
+		this.postModelArrayList.addAll(postModelArrayList);
+		
 		updateListeningAdapters();
 	}
 
