@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.providers.LocationProvider;
 /**
  * 
  * @author troy
@@ -45,19 +44,24 @@ public class LocationActivity extends Activity {
 		} else {
 			String strLatitude = etLat.getText().toString();
 			Double doubLatitude = Double.parseDouble(strLatitude);
+			etLat.setText("");
 			
 			String strLongitude = etLng.getText().toString();
 			Double doubLongitude = Double.parseDouble(strLongitude);
-			try {
-				Location theCommentLocation = new Location("");
-				Toast.makeText(this, theCommentLocation.toString(), Toast.LENGTH_SHORT).show();
-				theCommentLocation.setLatitude(doubLatitude);
-				theCommentLocation.setLongitude(doubLongitude);
-				Toast.makeText(this, theCommentLocation.getLatitude() + " " + theCommentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-			} catch (Exception e){
-				Toast.makeText(this, "FAILED! ", Toast.LENGTH_SHORT).show();
-
-			}
+			etLng.setText("");
+			
+			Location theCommentLocation = new Location("");
+			theCommentLocation.setLatitude(doubLatitude);
+			theCommentLocation.setLongitude(doubLongitude);
+			
+			Toast.makeText(this, theCommentLocation.getLatitude() + " " + theCommentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+			updateModelWithLocation(theCommentLocation);
+			finish();
 		}
+	}
+
+	private void updateModelWithLocation(Location theLocation) {
+		// Finds the post which called it and calls setLocation on it
+		
 	}
 }
