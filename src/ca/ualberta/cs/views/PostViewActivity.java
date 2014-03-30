@@ -1,25 +1,26 @@
 package ca.ualberta.cs.views;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.CommentListViewAdapter;
+import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.PostModel;
+import ca.ualberta.cs.models.UserModel;
 
 public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	protected T theModel = null;
@@ -88,9 +89,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		String scoreString = "";
 		if (theModel.getScore() > 0) {
 			scoreString = "+";
-		} else if (theModel.getScore() < 0) {
-			scoreString = "-";
 		}
+		
 		scoreString = scoreString + theModel.getScore().toString();
 		scoreView.setText(scoreString);
 		
@@ -101,7 +101,19 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				theModel.decrementScore();
+				ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
+				UserModel theLoggedInUser = theActiveUserModel.getUser();
+				if (!(theLoggedInUser.getUpVoteList().contains(theModel.getId()))) {
+					if (theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
+						theLoggedInUser.removePostIdDownVoteList(theModel.getId());
+						theModel.incrementScore();
+					}
+					else {
+						theLoggedInUser.addPostIdDownVoteList(theModel.getId());
+						theModel.decrementScore();
+					}
+				}
+				
 				populateView();
 				
 			}
@@ -113,8 +125,21 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				theModel.incrementScore();
+				ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
+				UserModel theLoggedInUser = theActiveUserModel.getUser();
+				if (!theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
+					if (theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
+						theLoggedInUser.removePostIdUpVoteList(theModel.getId());
+						theModel.decrementScore();
+					}
+					else {
+						theLoggedInUser.addPostIdUpVoteList(theModel.getId());
+						theModel.incrementScore();
+					}
+				}
+				
 				populateView();
+				
 			}
 		});
 
@@ -135,6 +160,17 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			// A picture, add the image
 			// TODO: Implement
 			imageView.setImageBitmap(thePicture);
+		}
+		
+		// Distance button
+		Button distanceButton = (Button) findViewById(R.id.distanceButton);
+		if(theModel.getLocation() != null) {
+			ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
+			UserModel theLoggedInUser = theActiveUserModel.getUser();
+			Location myLocation = new Location(theLoggedInUser.getLocation());
+			float distanceToPost = theModel.getLocation().distanceTo(myLocation);
+			String distanceButtonText = String.valueOf(distanceToPost) + " m";
+			distanceButton.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
 		}
 
 		// Add comments

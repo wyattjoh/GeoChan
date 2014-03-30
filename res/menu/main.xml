@@ -26,10 +26,10 @@
         android:showAsAction="never"
         android:title="@string/action_sortLatestGreatestText"/>
     <item
-        android:id="@+id/action_sortDefault"
+        android:id="@+id/action_sortPicture"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_sortTopText"/>
+        android:title="@string/action_sortPictureText"/>
     <item
         android:id="@+id/action_logout"
         android:orderInCategory="100"

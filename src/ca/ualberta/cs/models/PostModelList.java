@@ -50,6 +50,7 @@ public class PostModelList<T extends PostModel> {
 	 */
 	public void sortByScore() {
 		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_SCORE);
+		Collections.reverse(this.postModelArrayList);
 
 		updateListeningAdapters();
 	}
@@ -59,6 +60,7 @@ public class PostModelList<T extends PostModel> {
 	 */
 	public void sortByDate() {
 		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_DATE);
+		Collections.reverse(this.postModelArrayList);
 
 		updateListeningAdapters();
 	}
@@ -68,6 +70,7 @@ public class PostModelList<T extends PostModel> {
 	 */
 	public void sortByProximity() {
 		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_PROXIMITY);
+		Collections.reverse(this.postModelArrayList);
 		
 		updateListeningAdapters();
 	}
@@ -77,6 +80,30 @@ public class PostModelList<T extends PostModel> {
 	 */
 	public void sortByLatestGreatest() {
 		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_LATEST_GREATEST);
+		Collections.reverse(this.postModelArrayList);
+		
+		updateListeningAdapters();
+	}
+	
+	/*
+	 * Sorts theTopicModelArrayList by picture
+	 */
+	public void sortByPicture() {
+		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_DATE);
+		Collections.reverse(this.postModelArrayList);
+		ArrayList<T> tempList = new ArrayList<T>();
+		tempList = (ArrayList<T>) this.postModelArrayList.clone();
+		this.postModelArrayList.clear();
+		for(T theModel : tempList) {
+			if(theModel.hasPicture()) {
+				this.postModelArrayList.add(theModel);
+			}
+		}
+		for(T theModel : tempList) {
+			if(!theModel.hasPicture()) {
+				this.postModelArrayList.add(theModel);
+			}
+		}
 		
 		updateListeningAdapters();
 	}

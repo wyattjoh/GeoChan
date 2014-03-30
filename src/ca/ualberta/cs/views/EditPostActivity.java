@@ -64,8 +64,8 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 	public void onClick_StartLocationActivity(View theView) {
 		Intent locationIntent = new Intent(this, LocationActivity.class);
-		String extraLocation = ActiveUserModel.getInstance().getUser().getLocation().toString();
-		locationIntent.putExtra(EXTRA_LOCATION, extraLocation);
+//		String extraLocation = ActiveUserModel.getInstance().getUser().getLocation().toString();
+//		locationIntent.putExtra(EXTRA_LOCATION, extraLocation);
 		startActivity(locationIntent);
 	}
 	@Override

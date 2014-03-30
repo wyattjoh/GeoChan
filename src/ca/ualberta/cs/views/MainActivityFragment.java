@@ -145,7 +145,7 @@ public class MainActivityFragment extends Fragment {
 			// Hide bar, its connected!
 			LinearLayout listStatusBox = (LinearLayout) theRootView
 					.findViewById(R.id.listStatusBox);
-			listStatusBox.setVisibility(View.INVISIBLE);
+			listStatusBox.setVisibility(View.GONE);
 		}
 	}
 }
