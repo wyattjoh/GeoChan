@@ -31,13 +31,13 @@
             android:text="Latitude:" />
 
 		<EditText
-            android:id="@+id/editTextLatitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Ex 43.112394" >
+		    android:id="@+id/editTextLatitude"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:ems="10"
+		    android:gravity="center"
+		    android:hint="Ex 53.52661" >
 
         </EditText>
 
@@ -58,10 +58,10 @@
             android:id="@+id/editTextLongitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Ex -19.18478" />
+            android:gravity="center"
+            android:hint="Ex -113.527003" />
 
     </LinearLayout>
 

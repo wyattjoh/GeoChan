@@ -35,25 +35,30 @@ public class LocationActivity extends Activity {
 	public void onClick_SubmitLocation(View theView) {
 		/**
 		 * Make sure that a Latitude and Longitude have been given, then create the points
+		 * Note that comp sci building is 53.526617,-113.52702
 		 */
 		EditText etLat = (EditText)findViewById(R.id.editTextLatitude);
 		EditText etLng = (EditText)findViewById(R.id.editTextLongitude);
 				
 		if (isEmpty(etLat) || isEmpty(etLng)) {
-			Toast.makeText(this, "Location failed to create", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Location Information Missing", Toast.LENGTH_SHORT).show();
 		} else {
 			String strLatitude = etLat.getText().toString();
 			Double doubLatitude = Double.parseDouble(strLatitude);
 			
-
 			String strLongitude = etLng.getText().toString();
 			Double doubLongitude = Double.parseDouble(strLongitude);
-			
-			Location theCommentLocation = LocationProvider.getInstance(this).getLocation();
-			theCommentLocation.setLatitude(doubLatitude);
-			theCommentLocation.setLongitude(doubLongitude);
-			
-			Toast.makeText(this, theCommentLocation.toString(), Toast.LENGTH_SHORT).show();
+			int line = 0;
+			try {
+				Location theCommentLocation = new Location(LocationProvider.getInstance(this).getLocation());
+				Toast.makeText(this, theCommentLocation.toString(), Toast.LENGTH_SHORT).show();
+				theCommentLocation.setLatitude(doubLatitude);
+				theCommentLocation.setLongitude(doubLongitude);
+				Toast.makeText(this, theCommentLocation.getLatitude() + " " + theCommentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+			} catch (Exception e){
+				Toast.makeText(this, "FAILED! ", Toast.LENGTH_SHORT).show();
+
+			}
 		}
 	}
 }
