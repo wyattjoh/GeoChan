@@ -101,7 +101,19 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				theModel.decrementScore();
+				ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
+				UserModel theLoggedInUser = theActiveUserModel.getUser();
+				if (!(theLoggedInUser.getUpVoteList().contains(theModel.getId()))) {
+					if (theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
+						theLoggedInUser.removePostIdDownVoteList(theModel.getId());
+						theModel.incrementScore();
+					}
+					else {
+						theLoggedInUser.addPostIdDownVoteList(theModel.getId());
+						theModel.decrementScore();
+					}
+				}
+				
 				populateView();
 				
 			}
@@ -113,8 +125,21 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				theModel.incrementScore();
+				ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
+				UserModel theLoggedInUser = theActiveUserModel.getUser();
+				if (!theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
+					if (theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
+						theLoggedInUser.removePostIdUpVoteList(theModel.getId());
+						theModel.decrementScore();
+					}
+					else {
+						theLoggedInUser.addPostIdUpVoteList(theModel.getId());
+						theModel.incrementScore();
+					}
+				}
+				
 				populateView();
+				
 			}
 		});
 
