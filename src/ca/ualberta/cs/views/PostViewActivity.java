@@ -25,6 +25,8 @@ import ca.ualberta.cs.models.UserModel;
 public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	protected T theModel = null;
 	protected CommentListViewAdapter thePostAdapter;
+	protected ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
+	protected UserModel theLoggedInUser = theActiveUserModel.getUser();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,14 +97,19 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		scoreView.setText(scoreString);
 		
 		// Add Buttons
-		ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
+		final ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
+		
+		if (theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
+			downVoteButton.setPressed(true);
+		}
+		else {
+			downVoteButton.setPressed(false);
+		}
 		
 		downVoteButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
-				UserModel theLoggedInUser = theActiveUserModel.getUser();
 				if (!(theLoggedInUser.getUpVoteList().contains(theModel.getId()))) {
 					if (theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
 						theLoggedInUser.removePostIdDownVoteList(theModel.getId());
@@ -119,14 +126,20 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			}
 		});
 		
-		ImageButton upVoteButton = (ImageButton) findViewById(R.id.upVoteButton);
+		final ImageButton upVoteButton = (ImageButton) findViewById(R.id.upVoteButton);
+		
+		if (theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
+			upVoteButton.setPressed(true);
+		}
+		else {
+			upVoteButton.setPressed(false);
+		}
+		
 		
 		upVoteButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
-				UserModel theLoggedInUser = theActiveUserModel.getUser();
 				if (!theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
 					if (theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
 						theLoggedInUser.removePostIdUpVoteList(theModel.getId());
