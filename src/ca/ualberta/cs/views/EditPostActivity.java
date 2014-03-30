@@ -14,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
 
 public abstract class EditPostActivity<T extends PostModel> extends Activity {
@@ -23,33 +23,18 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	// image vars
 	public final static String EXTRA_LOCATION = "ca.ualberta.cs.OLD_LOCATION";
 	private static final int SELECT_PICTURE = 1;
-	protected Bitmap imageBitmap;
+	protected static final EditPostModel theEditPostModel = EditPostModel.getInstance();
+	protected Bitmap imageBitmap = null;
 
 	protected T theModel;
-	protected Boolean isNew = false;
 		
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onStart()
-	 */
-	@Override
-	protected void onStart() {
-		super.onStart();
-		
-		// Populate the views
-		populateView();
-	}
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_post);
-		imageBitmap = null;
 		
-		Bundle extras = getIntent().getExtras();
-
-		if (extras != null) {
-			this.isNew = extras.getBoolean(IS_NEW);
-		}
+		// Populate the views
+		populateView();
 	}
 
 	@Override
@@ -68,9 +53,8 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		
 		saveButton.setText(getSaveButtonText());
 
-		if (this.isNew) {
+		if (theEditPostModel.isNewPost()) {
 			saveButton.setOnClickListener(getNewOnClickListener());
-
 		} else {
 			saveButton.setOnClickListener(getUpdateOnClickListener());
 		}

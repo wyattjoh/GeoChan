@@ -16,8 +16,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 
 		@Override
 		public void onClick(View v) {
-			TopicModel theTopicModel = CurrentUserPostModelFactory
-					.newTopicModel();
+			TopicModel theTopicModel = CurrentUserPostModelFactory.newTopicModel();
 
 			// Get the title
 			EditText titleField = (EditText) findViewById(R.id.titleTextField);
@@ -54,7 +53,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	 */
 	@Override
 	protected String getSaveButtonText() {
-		if (this.isNew) {
+		if (theEditPostModel.isNewPost()) {
 			return "New Topic";
 		}
 		else {

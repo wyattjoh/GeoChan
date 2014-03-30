@@ -124,7 +124,7 @@ public class MainActivity extends FragmentActivity {
 		TopicModelList topicModelList = TopicModelList.getInstance();
 
 		// Mark the selected model
-		topicModelList.setSelection(position.intValue());
+		topicModelList.addToSelectionStackFromPosition(position.intValue());
 
 		// Start intent
 		Intent intent = new Intent(this, TopicViewActivity.class);
@@ -296,7 +296,7 @@ public class MainActivity extends FragmentActivity {
 	 */
 	protected void newPost() {
 		Intent intent = new Intent(this, EditTopicActivity.class);
-		intent.putExtra(EditTopicActivity.IS_NEW, true);
+		intent.putExtra(EditPostActivity.IS_NEW, true);
 
 		startActivity(intent);
 	}

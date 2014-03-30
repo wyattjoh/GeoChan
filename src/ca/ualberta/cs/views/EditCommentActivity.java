@@ -12,7 +12,7 @@ import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.TopicModelList;
 
 public class EditCommentActivity extends EditPostActivity<CommentModel> {
-	
+
 	private CommentModelController theController;
 	OnClickListener newOnClickListener = new OnClickListener() {
 
@@ -21,35 +21,33 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 			// Get the comment
 			EditText commentField = (EditText) findViewById(R.id.commentTextField);
 			theModel.setCommentText(commentField.getText().toString());
-			
+
 			if (imageBitmap != null) {
 				// add the picture
 				theModel.setPicture(imageBitmap);
 			}
 
-			// add to the selected model and then reset the selected
-			// model so as to reply to the correct topic
-			if (CommentModelList.getInstance().getSelection() == null) {
-				theController.addComment(theModel, TopicModelList
-						.getInstance().getSelection());
-			} else {
-				theController.addComment(theModel, CommentModelList
-						.getInstance().getSelection());
-			}
+			theController.addComment(theModel, theEditPostModel.getTheParent());
+
 			finish();
 		}
 	};
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ca.ualberta.cs.views.EditPostActivity#onCreate(android.os.Bundle)
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
-		if (this.isNew) {
+
+		if (theEditPostModel.isNewPost()) {
 			theModel = new CommentModel(ActiveUserModel.getInstance().getUser());
+		}
+		else {
+			theModel = (CommentModel) theEditPostModel.getThePost();
 		}
 
 		// Get the controller
@@ -61,20 +59,23 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 		commentEditTitle.setVisibility(View.INVISIBLE);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ca.ualberta.cs.views.EditPostActivity#getSaveButtonText()
 	 */
 	@Override
 	protected String getSaveButtonText() {
-		if (this.isNew) {
+		if (theEditPostModel.isNewPost()) {
 			return "Add Comment";
-		}
-		else {
+		} else {
 			return "Update Comment";
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ca.ualberta.cs.views.EditPostActivity#getNewOnClickListener()
 	 */
 	@Override
@@ -82,7 +83,9 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 		return newOnClickListener;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ca.ualberta.cs.views.EditPostActivity#getUpdateOnClickListener()
 	 */
 	@Override
