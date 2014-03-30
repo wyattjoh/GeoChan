@@ -146,7 +146,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		scoreView.setText(scoreString);
 
 		// Add Buttons
-<<<<<<< HEAD
 		final ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
 		
 		if (theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
@@ -156,21 +155,11 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			downVoteButton.setPressed(false);
 		}
 		
-=======
-		ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
-
->>>>>>> 71f4f029be8af39bccbcb1baa2f080af202fbc24
 		downVoteButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-<<<<<<< HEAD
-=======
-				ActiveUserModel theActiveUserModel = ActiveUserModel
-						.getInstance();
-				UserModel theLoggedInUser = theActiveUserModel.getUser();
->>>>>>> 71f4f029be8af39bccbcb1baa2f080af202fbc24
-				if (!(theLoggedInUser.getUpVoteList().contains(theModel.getId()))) {
+				if (!theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
 					if (theLoggedInUser.getDownVoteList().contains(
 							theModel.getId())) {
 						theLoggedInUser.removePostIdDownVoteList(theModel
@@ -183,7 +172,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 				}
 			}
 		});
-<<<<<<< HEAD
 		
 		final ImageButton upVoteButton = (ImageButton) findViewById(R.id.upVoteButton);
 		
@@ -193,29 +181,15 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		else {
 			upVoteButton.setPressed(false);
 		}
-		
-		
-=======
 
-		ImageButton upVoteButton = (ImageButton) findViewById(R.id.upVoteButton);
-
->>>>>>> 71f4f029be8af39bccbcb1baa2f080af202fbc24
 		upVoteButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-<<<<<<< HEAD
-				if (!theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
-					if (theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
-=======
-				ActiveUserModel theActiveUserModel = ActiveUserModel
-						.getInstance();
-				UserModel theLoggedInUser = theActiveUserModel.getUser();
 				if (!theLoggedInUser.getDownVoteList().contains(
 						theModel.getId())) {
 					if (theLoggedInUser.getUpVoteList().contains(
 							theModel.getId())) {
->>>>>>> 71f4f029be8af39bccbcb1baa2f080af202fbc24
 						theLoggedInUser.removePostIdUpVoteList(theModel.getId());
 						theModel.decrementScore();
 					} else {
