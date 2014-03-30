@@ -21,6 +21,7 @@ import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
+import ca.ualberta.cs.models.PostModelList;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
 
@@ -136,7 +137,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		commentView.setText(theModel.getCommentText());
 
 		// Add score
-		TextView scoreView = (TextView) findViewById(R.id.scorePostTextView);
+		final TextView scoreView = (TextView) findViewById(R.id.scorePostTextView);
 		String scoreString = "";
 		if (theModel.getScore() > 0) {
 			scoreString = "+";
@@ -165,9 +166,24 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 						theLoggedInUser.removePostIdDownVoteList(theModel
 								.getId());
 						theModel.incrementScore();
+						String string = "";
+						if (theModel.getScore() > 0) {
+							string = "+";
+						}
+
+						string = string + theModel.getScore().toString();
+						scoreView.setText(string);
 					} else {
 						theLoggedInUser.addPostIdDownVoteList(theModel.getId());
 						theModel.decrementScore();
+						String string = "";
+						if (theModel.getScore() > 0) {
+							string = "+";
+						}
+
+						string = string + theModel.getScore().toString();
+						scoreView.setText(string);
+						
 					}
 				}
 			}
@@ -192,9 +208,24 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 							theModel.getId())) {
 						theLoggedInUser.removePostIdUpVoteList(theModel.getId());
 						theModel.decrementScore();
+						String string = "";
+						if (theModel.getScore() > 0) {
+							string = "+";
+						}
+
+						string = string + theModel.getScore().toString();
+						scoreView.setText(string);
 					} else {
 						theLoggedInUser.addPostIdUpVoteList(theModel.getId());
 						theModel.incrementScore();
+						String string = "";
+						if (theModel.getScore() > 0) {
+							string = "+";
+						}
+
+						string = string + theModel.getScore().toString();
+						scoreView.setText(string);
+						
 					}
 				}
 			}
