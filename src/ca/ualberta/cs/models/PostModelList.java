@@ -19,18 +19,33 @@ public class PostModelList<T extends PostModel> {
 		this.listeningAdapters = new ArrayList<PostListViewAdapter<?>>();
 	}
 
+	/**
+	 * Add the element in the list at position indicated to the selection stack
+	 * @param position is the position of the selected model
+	 */
 	public void addToSelectionStackFromPosition(int position) {
 		this.selectedPostModelStack.add(postModelArrayList.get(position));
 	}
 
+	/**
+	 * Add the element to the selection stack
+	 * @param selectedPostModel
+	 */
 	public void addToSelectionStack(T selectedPostModel) {
 		this.selectedPostModelStack.add(selectedPostModel);
 	}
 	
+	/**
+	 * Remove the element at the end of the list from the list
+	 * @return the item removed from the selection stack
+	 */
 	public T popFromSelectionStack(){
 		return this.selectedPostModelStack.pop();
 	}
 
+	/**
+	 * @return the last element in the stack (last selected)
+	 */
 	public T getLastSelection() {
 		return this.selectedPostModelStack.getLast();
 	}
