@@ -20,6 +20,7 @@ import ca.ualberta.cs.adapters.CommentListViewAdapter;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.PostModel;
+import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
 
 public abstract class PostViewActivity<T extends PostModel> extends Activity {
@@ -42,6 +43,21 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			// finish it?
 			finish();
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onDestroy()
+	 */
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		
+		if (thePostAdapter != null) {
+			TopicModelList.getInstance().unRegisterListeningAdapter(thePostAdapter);
+		}
+		
+		Log.w("PostViewActivity", "Activity Ended.");
 	}
 
 	abstract protected void getSelectedModel();
@@ -182,6 +198,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		else {
 			// Has children!
 			thePostAdapter  = new CommentListViewAdapter(this, theModel.getChildrenComments());
+			CommentModelList.getInstance().registerListeningAdapter(thePostAdapter);
 			commentsListView.setAdapter(thePostAdapter);
 		}
 		
@@ -195,8 +212,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		}
 		else {
 			favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
-		}
-		
+		}		
 	}
 	
 	abstract protected OnClickListener getFavoriteOnClickListener();

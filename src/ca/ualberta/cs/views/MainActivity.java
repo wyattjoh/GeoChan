@@ -249,6 +249,17 @@ public class MainActivity extends FragmentActivity {
 	protected void onStart() {
 		super.onStart();
 
+
+	}
+
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
 		// Must be first thing that is started, sets up contexts
 		createSharedSingletons(getApplicationContext());
 
@@ -285,6 +296,8 @@ public class MainActivity extends FragmentActivity {
 	 */
 	protected void newPost() {
 		Intent intent = new Intent(this, EditTopicActivity.class);
+		intent.putExtra(EditTopicActivity.IS_NEW, true);
+
 		startActivity(intent);
 	}
 

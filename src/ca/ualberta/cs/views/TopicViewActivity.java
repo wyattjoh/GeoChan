@@ -4,7 +4,6 @@
 package ca.ualberta.cs.views;
 
 import android.content.Intent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -56,29 +55,21 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 		CommentModelList.getInstance().resetSelection();
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onDestroy()
+	 */
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		TopicModelList.getInstance().resetSelection();
+	}
+
 	@Override
 	protected void newPost(){
 		Intent intent = new Intent(this, EditCommentActivity.class);
+		intent.putExtra(EditCommentActivity.IS_NEW, true);
 		startActivity(intent);
-	}
-
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.views.PostViewActivity#populateView()
-	 */
-	@Override
-	protected void populateView() {
-		// TODO Auto-generated method stub
-		super.populateView();
-		
-		// Favorite Button
-		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
-
-		if (theModel.isFavorite()) {
-			favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
-		} else {
-			favoriteButton
-					.setImageResource(android.R.drawable.btn_star_big_off);
-		}
 	}
 
 	private OnClickListener favoriteOnClickListener = new OnClickListener() {

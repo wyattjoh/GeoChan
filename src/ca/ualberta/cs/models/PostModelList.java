@@ -9,11 +9,11 @@ import android.util.Log;
 public class PostModelList<T extends PostModel> {
 	private T selectedPostModel = null;
 	private ArrayList<T> postModelArrayList;
-	private ArrayList<PostListViewAdapter<T>> listeningAdapters;
+	private ArrayList<PostListViewAdapter<?>> listeningAdapters;
 
 	protected PostModelList() {
 		this.postModelArrayList = new ArrayList<T>();
-		this.listeningAdapters = new ArrayList<PostListViewAdapter<T>>();
+		this.listeningAdapters = new ArrayList<PostListViewAdapter<?>>();
 	}
 
 	public void setSelection(int position) {
@@ -159,7 +159,7 @@ public class PostModelList<T extends PostModel> {
 	}
 
 	public void updateListeningAdapters() {
-		for (PostListViewAdapter<T> theAdapter : this.listeningAdapters) {
+		for (PostListViewAdapter<?> theAdapter : this.listeningAdapters) {
 			if (theAdapter != null) {
 				theAdapter.notifyDataSetChanged();
 				Log.w("PostModelList", "The adapter has been notified");
@@ -167,11 +167,11 @@ public class PostModelList<T extends PostModel> {
 		}
 	}
 
-	public void registerListeningAdapter(PostListViewAdapter<T> theAdapter) {
+	public void registerListeningAdapter(PostListViewAdapter<?> theAdapter) {
 		this.listeningAdapters.add(theAdapter);
 	}
 
-	public void unRegisterListeningAdapter(PostListViewAdapter<T> theAdapter) {
+	public void unRegisterListeningAdapter(PostListViewAdapter<?> theAdapter) {
 		this.listeningAdapters.remove(theAdapter);
 	}
 }

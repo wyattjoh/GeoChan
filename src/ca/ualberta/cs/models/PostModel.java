@@ -1,21 +1,24 @@
 package ca.ualberta.cs.models;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 
 public abstract class PostModel {
-	private String commentText;
+	private String commentText = "";
 	private Location location;
-	private Bitmap picture;
-	private UserModel postedBy;
+	private Bitmap theBitmap = null;
+	private UserModel postedBy = null;
 	private Date datePosted;
-	private Integer score;
+	private Integer score = 0;
 	private transient PostModel myParent = null;
-	private ArrayList<CommentModel> childrenComments;
+	private ArrayList<CommentModel> childrenComments = null;
 	
 	private transient Boolean isFavorite = false;
 	private String id;
@@ -60,21 +63,12 @@ public abstract class PostModel {
 	 * Constructors
 	 */
 	public PostModel(){
-		this.postedBy = null;
 		this.datePosted = new Date();
-		this.score = 0;
-		this.picture = null;
-		this.childrenComments = null;
-		this.location = null;
 	}
 	
 	public PostModel(UserModel theUser){
+		this();
 		this.postedBy = theUser;
-		this.datePosted = new Date();
-		this.score = 0;
-		this.picture = null;
-		this.childrenComments = null;
-		this.location = null;
 	}
 	
 	public void incrementScore(){
@@ -86,10 +80,7 @@ public abstract class PostModel {
 	}
 	
 	public boolean hasPicture(){
-		if (picture != null){
-			return true;
-		}
-		return false;	
+		return this.theBitmap != null;
 	}
 	/**
 	 *  Auto generated setters and getters
@@ -107,10 +98,10 @@ public abstract class PostModel {
 		this.location = location;
 	}
 	public Bitmap getPicture() {
-		return picture;
+		return this.theBitmap;
 	}
 	public void setPicture(Bitmap picture) {
-		this.picture = picture;
+		this.theBitmap = picture;
 	}
 	public UserModel getPostedBy() {
 		return postedBy;

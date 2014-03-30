@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,17 +106,14 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		scoreString = scoreString + thePost.getScore().toString();
 		scoreText.setText(scoreString);
 
-		
-		System.out.println("PostPic: " + thePost.getCommentText() + " " + thePost.hasPicture());
 		// Fill picture
 		ImageView imageView = (ImageView) theView
 				.findViewById(R.id.imageViewPicture);
-		Bitmap thePicture = thePost.getPicture();
-		if (thePicture == null) {
-			imageView.setVisibility(View.GONE);
+		if (thePost.hasPicture()) {
+			imageView.setImageBitmap(thePost.getPicture());
 		}
 		else {
-			imageView.setImageBitmap(thePicture);
+			imageView.setVisibility(View.GONE);
 		}
 
 		populateCellTitle(theView, theObject);

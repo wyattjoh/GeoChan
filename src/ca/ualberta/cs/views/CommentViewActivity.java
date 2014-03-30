@@ -4,7 +4,6 @@
 package ca.ualberta.cs.views;
 
 import android.content.Intent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -40,6 +39,16 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 		CommentModelList.getInstance().setSelection(theModel);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onDestroy()
+	 */
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		CommentModelList.getInstance().resetSelection();
+	}
+
 	@Override
 	protected OnClickListener getFavoriteOnClickListener() {
 		// TODO Auto-generated method stub
@@ -49,6 +58,7 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 	@Override
 	protected void newPost() {
 		Intent intent = new Intent(this, EditCommentActivity.class);
+		intent.putExtra(EditCommentActivity.IS_NEW, true);
 		startActivity(intent);
 	}
 }
