@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.providers.LocationProvider;
 /**
  * 
  * @author troy
@@ -35,25 +34,34 @@ public class LocationActivity extends Activity {
 	public void onClick_SubmitLocation(View theView) {
 		/**
 		 * Make sure that a Latitude and Longitude have been given, then create the points
+		 * Note that comp sci building is 53.526617,-113.52702
 		 */
 		EditText etLat = (EditText)findViewById(R.id.editTextLatitude);
 		EditText etLng = (EditText)findViewById(R.id.editTextLongitude);
 				
 		if (isEmpty(etLat) || isEmpty(etLng)) {
-			Toast.makeText(this, "Location failed to create", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Location Information Missing", Toast.LENGTH_SHORT).show();
 		} else {
 			String strLatitude = etLat.getText().toString();
 			Double doubLatitude = Double.parseDouble(strLatitude);
+			etLat.setText("");
 			
-
 			String strLongitude = etLng.getText().toString();
 			Double doubLongitude = Double.parseDouble(strLongitude);
+			etLng.setText("");
 			
-			Location theCommentLocation = LocationProvider.getInstance(this).getLocation();
+			Location theCommentLocation = new Location("");
 			theCommentLocation.setLatitude(doubLatitude);
 			theCommentLocation.setLongitude(doubLongitude);
 			
-			Toast.makeText(this, theCommentLocation.toString(), Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, theCommentLocation.getLatitude() + " " + theCommentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+			updateModelWithLocation(theCommentLocation);
+			finish();
 		}
+	}
+
+	private void updateModelWithLocation(Location theLocation) {
+		// Finds the post which called it and calls setLocation on it
+		
 	}
 }

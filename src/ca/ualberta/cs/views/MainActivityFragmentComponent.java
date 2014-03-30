@@ -13,6 +13,7 @@ import ca.ualberta.cs.adapters.TopicListViewAdapter;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.ReadLaterTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
+import ca.ualberta.cs.providers.ElasticSearchProvider;
 
 /**
  * @author wyatt
@@ -39,6 +40,8 @@ public enum MainActivityFragmentComponent {
 			topicListView.setAdapter(adapter);
 			
 			theTopicModelList.registerListeningAdapter(adapter);
+			
+			ElasticSearchProvider.getProvider().getTopics(0, 30);
 		}
 
 		@Override

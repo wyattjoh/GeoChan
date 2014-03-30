@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
 
@@ -21,7 +22,6 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	public static final String IS_NEW = "IS_NEW_TOPIC";
 
 	// image vars
-	public final static String EXTRA_LOCATION = "ca.ualberta.cs.OLD_LOCATION";
 	private static final int SELECT_PICTURE = 1;
 	protected static final EditPostModel theEditPostModel = EditPostModel.getInstance();
 	protected Bitmap imageBitmap = null;
@@ -99,7 +99,6 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 	public void onClick_StartLocationActivity(View theView) {
 		Intent locationIntent = new Intent(this, LocationActivity.class);
-//		String extraLocation = ActiveUserModel.getInstance().getUser().getLocation().toString();
 //		locationIntent.putExtra(EXTRA_LOCATION, extraLocation);
 		startActivity(locationIntent);
 	}
