@@ -48,9 +48,8 @@ public class LocationActivity extends Activity {
 			
 			String strLongitude = etLng.getText().toString();
 			Double doubLongitude = Double.parseDouble(strLongitude);
-			int line = 0;
 			try {
-				Location theCommentLocation = new Location(LocationProvider.getInstance(this).getLocation());
+				Location theCommentLocation = new Location("");
 				Toast.makeText(this, theCommentLocation.toString(), Toast.LENGTH_SHORT).show();
 				theCommentLocation.setLatitude(doubLatitude);
 				theCommentLocation.setLongitude(doubLongitude);
