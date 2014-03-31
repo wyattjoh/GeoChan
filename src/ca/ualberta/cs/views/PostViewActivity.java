@@ -82,6 +82,17 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		populateView();
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onPrepareOptionsMenu(android.view.Menu)
+	 */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		MenuItem refreshIcon = (MenuItem) menu.findItem(R.id.refreshButton);
+		refreshIcon.setVisible(false);
+		
+		return super.onPrepareOptionsMenu(menu);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

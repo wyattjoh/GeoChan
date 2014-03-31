@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.controllers.NetworkInterfaceController;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
@@ -236,7 +237,9 @@ public class MainActivity extends FragmentActivity {
 		case R.id.action_logout:
 			logout();
 			return true;
-
+		case R.id.refreshButton:
+			NetworkInterfaceController.refreshPosts();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
