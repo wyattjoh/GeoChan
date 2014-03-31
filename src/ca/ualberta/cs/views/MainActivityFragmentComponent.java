@@ -14,7 +14,6 @@ import ca.ualberta.cs.controllers.NetworkInterfaceController;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.ReadLaterTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
-import ca.ualberta.cs.providers.ElasticSearchProvider;
 
 /**
  * @author wyatt

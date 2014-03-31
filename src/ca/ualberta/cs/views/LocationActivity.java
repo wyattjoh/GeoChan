@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.providers.LocationProvider;
 /**
  * 
  * @author troy
