@@ -20,13 +20,26 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 
 			// Get the title
 			EditText titleField = (EditText) findViewById(R.id.titleTextField);
-			theTopicModel.setTitle(titleField.getText().toString());
+			String theTitle = titleField.getText().toString();
+			
+			if (theTitle.length() <= 0) {
+				failedDueToReason("Cannot create a topic with an empty title!");
+				return;
+			}
+			
+			theTopicModel.setTitle(theTitle);
 
 			// Get the comment
 			EditText commentField = (EditText) findViewById(R.id.commentTextField);
-			theTopicModel.setCommentText(commentField.getText()
-					.toString());
+			String theComment = commentField.getText().toString();
 			
+			if (theComment.length() <= 0) {
+				failedDueToReason("Cannot create a topic with an empty comment!");
+				return;
+			}
+			
+			theTopicModel.setCommentText(theComment);
+
 			// add the picture
 			theTopicModel.setPicture(imageBitmap);
 			theTopicModel.setLocation(theLocation);

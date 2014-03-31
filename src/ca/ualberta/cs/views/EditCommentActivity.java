@@ -20,7 +20,14 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 		public void onClick(View v) {
 			// Get the comment
 			EditText commentField = (EditText) findViewById(R.id.commentTextField);
-			theModel.setCommentText(commentField.getText().toString());
+			String theComment = commentField.getText().toString();
+			
+			if (theComment.length() <= 0) {
+				failedDueToReason("Cannot create a comment without any text!");
+				return;
+			}
+			
+			theModel.setCommentText(theComment);
 
 			if (imageBitmap != null) {
 				// add the picture
