@@ -6,6 +6,7 @@ package ca.ualberta.cs.models;
 import java.util.ArrayList;
 
 import android.location.Location;
+import ca.ualberta.cs.providers.LocationProvider;
 
 /**
  * @author wyatt
@@ -13,7 +14,7 @@ import android.location.Location;
  */
 public class UserModel {
 	private String userName;
-	private Location location;
+	private Location location = new LocationProvider().getInstance();
 	private ArrayList<String> upVoteList = new ArrayList<String>();
 	private ArrayList<String> downVoteList = new ArrayList<String>();
 

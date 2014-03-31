@@ -59,7 +59,8 @@ public abstract class PostModel {
 		if (this.location == null) {
 			return "NULL";
 		} else {
-			return String.valueOf(this.location.getLatitude()) + " , " + String.valueOf(this.location.getLongitude());
+			return (String.valueOf(this.location.getLatitude()) + " , " + 
+					String.valueOf(this.location.getLongitude()));
 		}
 	}
 	public void setLocation(Location location) {
