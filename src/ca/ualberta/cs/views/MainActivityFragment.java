@@ -2,6 +2,7 @@ package ca.ualberta.cs.views;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.NetworkModel;
+import ca.ualberta.cs.models.TopicModelList;
 
 /**
  * A dummy fragment representing a section of the application, but that simply
@@ -51,6 +53,27 @@ public class MainActivityFragment extends Fragment {
 		setConnectionStatus(rootView);
 
 		return rootView;
+	}
+	
+
+	/**
+	 * Called when the cell is clicked. Starts the detail view activity
+	 * 
+	 * @param v The view that was clicked
+	 */
+	public void cellClicked(View v) {
+		// Get the selected tag position
+		Integer position = (Integer) v.getTag();
+
+		// Get the model list
+		TopicModelList topicModelList = TopicModelList.getInstance();
+
+		// Mark the selected model
+		topicModelList.addToSelectionStackFromPosition(position.intValue());
+
+		// Start intent
+		Intent intent = new Intent(getActivity(), TopicViewActivity.class);
+		startActivity(intent);
 	}
 
 	/* (non-Javadoc)

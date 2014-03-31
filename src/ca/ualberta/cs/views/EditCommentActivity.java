@@ -52,7 +52,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 		// Get the controller
 		this.theController = new CommentModelController(
-				TopicModelList.getInstance());
+				TopicModelList.getInstance(), getApplicationContext());
 
 		// customize UI
 		EditText commentEditTitle = (EditText) findViewById(R.id.titleTextField);

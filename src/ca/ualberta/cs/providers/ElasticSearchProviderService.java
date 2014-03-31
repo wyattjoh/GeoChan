@@ -30,6 +30,11 @@ public class ElasticSearchProviderService extends
 
 		for (int i = 0; i < size; i++) {
 			ElasticSearchOperationResponse theResponse = result[i];
+			
+			if (theResponse == null) {
+				continue;
+			}
+			
 			ElasticSearchProviderServiceHandler requestType = theResponse.getRequestType();
 			requestType.onPostExecute(theResponse);
 		}

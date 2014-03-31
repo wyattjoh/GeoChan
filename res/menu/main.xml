@@ -40,5 +40,10 @@
         android:icon="@drawable/ic_action_new"
         android:showAsAction="ifRoom"
         android:title="@string/new_post"/>
+    <item
+        android:id="@+id/refreshButton"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_refresh"
+        android:title="Refresh"/>
 
 </menu>

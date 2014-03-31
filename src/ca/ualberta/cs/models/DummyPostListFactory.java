@@ -2,16 +2,17 @@ package ca.ualberta.cs.models;
 
 import java.util.ArrayList;
 
+import android.content.Context;
 import ca.ualberta.cs.controllers.TopicModelController;
 
 public class DummyPostListFactory {
 
-	public static void createTopicList(UserModel theUser) {
+	public static void createTopicList(UserModel theUser, Context theContext) {
 		if (theUser == null) {
 			throw new RuntimeException("Factory got an empty user!");
 		}
 
-		TopicModelController theTopicModelController = new TopicModelController();
+		TopicModelController theTopicModelController = new TopicModelController(theContext);
 		
 		// init array list
 		ArrayList<TopicModel> theModelList = new ArrayList<TopicModel>();
@@ -75,16 +76,4 @@ public class DummyPostListFactory {
 		
 		return theCommentList;
 	}
-
-	/**
-	 * create test models with comments
-	 * 
-	 * @param theUser
-	 * @return
-	 */
-	public static void createCommentedTopics(UserModel theUser) {
-		// build up static test models
-		createTopicList(theUser);
-	}
-
 }

@@ -154,6 +154,11 @@ public enum ElasticSearchProviderServiceHandler {
 
 				ElasticSearchSearchResponse<TopicModel> esResponse = gson.fromJson(
 						jsonResponse, elasticSearchResponseType);
+								
+				if (esResponse.hasError()) {
+					Log.w("ElasticSearchProviderService", "An error was encountered.");
+					return null;
+				}
 				
 				ElasticSearchOperationResponse theResponse = ElasticSearchOperationFactory.responseFromRequest(theRequest, esResponse);
 				
@@ -174,7 +179,28 @@ public enum ElasticSearchProviderServiceHandler {
 
 		@Override
 		public void onPostExecute(ElasticSearchOperationResponse theResponse) {
+			if (theResponse == null) {
+				return;
+			}
+			
 			theResponse.getPostModelList().setArrayList(theResponse.getTheTopicModels());
+		}
+		
+	},
+	
+	GET_MORE_POSTS {
+
+		@Override
+		public ElasticSearchOperationResponse doInBackground(
+				ElasticSearchOperationRequest theRequest) {
+			// TODO Auto-generated method stub
+			return GET_POSTS.doInBackground(theRequest);
+		}
+
+		@Override
+		public void onPostExecute(ElasticSearchOperationResponse theResponse) {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	};

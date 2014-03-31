@@ -10,7 +10,14 @@ public class ElasticSearchSearchResponse<T> {
     boolean timed_out;
     transient Object _shards;
     Hits<T> hits;
-    boolean exists;    
+    boolean exists;
+    String error = "";
+    public String getError() {
+    	return error;
+    }
+    public Boolean hasError() {
+    	return error.length() > 0;
+    }
     public Collection<ElasticSearchResponse<T>> getHits() {
         return hits.getHits();        
     }

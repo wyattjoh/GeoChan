@@ -3,6 +3,7 @@
  */
 package ca.ualberta.cs.providers;
 
+import android.content.Context;
 import ca.ualberta.cs.models.ElasticSearchOperationRequest;
 import ca.ualberta.cs.models.PostModelList;
 import ca.ualberta.cs.models.TopicModel;
@@ -16,11 +17,14 @@ import ca.ualberta.cs.models.TopicModelList;
  */
 public class ElasticSearchProvider {
 	private static ElasticSearchProvider singleton = null;
+	private Context theContext;
 	
-	public static ElasticSearchProvider getProvider() {
+	public static ElasticSearchProvider getProviderWithContext(Context theContext) {
 		if (singleton == null) {
 			singleton = new ElasticSearchProvider();
 		}
+			
+		singleton.theContext = theContext;
 		
 		return singleton;
 	}

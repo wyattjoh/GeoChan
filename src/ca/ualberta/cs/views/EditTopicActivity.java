@@ -45,7 +45,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 		super.onCreate(savedInstanceState);
 		
 		// Get the controller
-		this.theController = new TopicModelController();
+		this.theController = new TopicModelController(getApplicationContext());
 	}
 
 	/* (non-Javadoc)

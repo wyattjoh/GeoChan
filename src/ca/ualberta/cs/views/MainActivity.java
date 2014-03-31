@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.controllers.NetworkInterfaceController;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
@@ -110,26 +111,6 @@ public class MainActivity extends FragmentActivity {
 	ViewPager mViewPager;
 
 	BroadcastReceiver connectionBroadcastReceiver = null;
-
-	/**
-	 * Called when the cell is clicked. Starts the detail view activity
-	 * 
-	 * @param v The view that was clicked
-	 */
-	public void cellClicked(View v) {
-		// Get the selected tag position
-		Integer position = (Integer) v.getTag();
-
-		// Get the model list
-		TopicModelList topicModelList = TopicModelList.getInstance();
-
-		// Mark the selected model
-		topicModelList.addToSelectionStackFromPosition(position.intValue());
-
-		// Start intent
-		Intent intent = new Intent(this, TopicViewActivity.class);
-		startActivity(intent);
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -236,7 +217,9 @@ public class MainActivity extends FragmentActivity {
 		case R.id.action_logout:
 			logout();
 			return true;
-
+		case R.id.refreshButton:
+			NetworkInterfaceController.getControllerFromContext(getApplicationContext()).refreshPosts();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

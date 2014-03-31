@@ -157,7 +157,8 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 			for(int i = 0; i < thePrimative.length; i++) {
 				dataThatLoaded.add(thePrimative[i]);
 			}
-	
+
+			setArrayList(dataThatLoaded);
 	
 		} catch (FileNotFoundException e) {
 			// File was not found! Create it!
@@ -166,6 +167,20 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Retrieves an array list of update Id's to be updated over the network
+	 * @return The array of id's to be updated
+	 */
+	public ArrayList<String> getListIds() {
+		ArrayList<String> theUpdateIds = new ArrayList<String>();
+		
+		for (T theModel: getArrayList()) {
+			theUpdateIds.add(theModel.getId());
+		}
+		
+		return theUpdateIds;
 	}
 
 	/*
