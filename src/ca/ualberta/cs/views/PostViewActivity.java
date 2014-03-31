@@ -23,7 +23,6 @@ import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
-import ca.ualberta.cs.models.PostModelList;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
 
@@ -89,14 +88,16 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		populateView();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onPrepareOptionsMenu(android.view.Menu)
 	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		MenuItem refreshIcon = (MenuItem) menu.findItem(R.id.refreshButton);
+		MenuItem refreshIcon = menu.findItem(R.id.refreshButton);
 		refreshIcon.setVisible(false);
-		
+
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -166,7 +167,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		// Add Buttons
 		final ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
-		
+
 		UserModel theLoggedInUser = ActiveUserModel.getInstance().getUser();
 		ArrayList<String> downVoteList = theLoggedInUser.getDownVoteList();
 
@@ -180,8 +181,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				UserModel theLoggedInUser = ActiveUserModel.getInstance().getUser();
-				
+				UserModel theLoggedInUser = ActiveUserModel.getInstance()
+						.getUser();
+
 				if (!theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
 					if (theLoggedInUser.getDownVoteList().contains(
 							theModel.getId())) {
@@ -205,7 +207,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 						string = string + theModel.getScore().toString();
 						scoreView.setText(string);
-						
+
 					}
 				}
 			}
@@ -223,8 +225,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				UserModel theLoggedInUser = ActiveUserModel.getInstance().getUser();
-				
+				UserModel theLoggedInUser = ActiveUserModel.getInstance()
+						.getUser();
+
 				if (!theLoggedInUser.getDownVoteList().contains(
 						theModel.getId())) {
 					if (theLoggedInUser.getUpVoteList().contains(
@@ -248,7 +251,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 						string = string + theModel.getScore().toString();
 						scoreView.setText(string);
-						
+
 					}
 				}
 			}
@@ -276,8 +279,10 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		// Distance button
 		Button distanceButton = (Button) findViewById(R.id.distanceButton);
 		if (theModel.getLocation() != null) {
-			Location myLocation = new Location(ActiveUserModel.getInstance().getUser().getLocation());
-			float distanceToPost = theModel.getLocation().distanceTo(myLocation);
+			Location myLocation = new Location(ActiveUserModel.getInstance()
+					.getUser().getLocation());
+			float distanceToPost = theModel.getLocation()
+					.distanceTo(myLocation);
 			String distanceButtonText = String.valueOf(distanceToPost) + " m";
 			distanceButton.setText(distanceButtonText.toCharArray(), 0,
 					distanceButtonText.length());

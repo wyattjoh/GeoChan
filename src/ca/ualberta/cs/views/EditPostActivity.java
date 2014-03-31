@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
 
@@ -26,17 +25,18 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	// image vars
 	private static final int SELECT_PICTURE = 1;
 	private static final int GET_LOCATION = 2;
-	protected static final EditPostModel theEditPostModel = EditPostModel.getInstance();
+	protected static final EditPostModel theEditPostModel = EditPostModel
+			.getInstance();
 	protected Bitmap imageBitmap = null;
 	protected Location theLocation = null;
 
 	protected T theModel;
-		
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_post);
-		
+
 		// Populate the views
 		populateView();
 	}
@@ -49,12 +49,14 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	}
 
 	protected abstract String getSaveButtonText();
+
 	protected abstract OnClickListener getNewOnClickListener();
+
 	protected abstract OnClickListener getUpdateOnClickListener();
 
 	protected void populateView() {
 		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
-		
+
 		saveButton.setText(getSaveButtonText());
 
 		if (theEditPostModel.isNewPost()) {
@@ -74,10 +76,10 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				getPictureIntent();
 			}
 		});
-		
+
 		// get cancel button
 		Button cancelButton = (Button) findViewById(R.id.distanceButton);
-		
+
 		// set onclick listener
 		cancelButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -103,9 +105,10 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 	public void onClick_StartLocationActivity(View theView) {
 		Intent locationIntent = new Intent(this, LocationActivity.class);
-//		locationIntent.putExtra(EXTRA_LOCATION, extraLocation);
+		// locationIntent.putExtra(EXTRA_LOCATION, extraLocation);
 		startActivityForResult(locationIntent, GET_LOCATION);
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == SELECT_PICTURE) {
@@ -116,13 +119,14 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 				// get picture object from path
 				imageBitmap = BitmapFactory.decodeFile(selectedImagePath);
-				
+
 				// get and set image view
 				ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
 				// galleryThumbnail.setVisibility(View.VISIBLE);
 
 				// create scaled image for display
-				Bitmap scaledBitmap = scaleBitMapToFit(imageBitmap, galleryThumbnail);
+				Bitmap scaledBitmap = scaleBitMapToFit(imageBitmap,
+						galleryThumbnail);
 
 				// set the view image o the selected image
 				galleryThumbnail.setImageBitmap(scaledBitmap);
@@ -130,23 +134,28 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 			}
 		} else if (requestCode == GET_LOCATION) {
 			if (resultCode == RESULT_OK) {
-				try {	
+				try {
 					Double retLatitude = data.getDoubleExtra("extLatitude", 0);
-					Double retLongitude = data.getDoubleExtra("extLongitude", 0);
-					
+					Double retLongitude = data
+							.getDoubleExtra("extLongitude", 0);
+
 					Location theCurrentLocation = new Location("");
 					theCurrentLocation.setLatitude(retLatitude);
 					theCurrentLocation.setLongitude(retLongitude);
 					this.theLocation = theCurrentLocation;
-					
+
 				} catch (Exception e) {
-					Toast.makeText(this, "FAILED " +
-							Double.toString(data.getDoubleExtra("extLatitude", 0)) +
-							Double.toString(data.getDoubleExtra("extLongitude", 0)),
+					Toast.makeText(
+							this,
+							"FAILED "
+									+ Double.toString(data.getDoubleExtra(
+											"extLatitude", 0))
+									+ Double.toString(data.getDoubleExtra(
+											"extLongitude", 0)),
 							Toast.LENGTH_LONG).show();
 				}
 			}
-			//on result code cancel, don't do anything
+			// on result code cancel, don't do anything
 		}
 	}
 
@@ -159,8 +168,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	 * @param imageViewScale
 	 * @return
 	 */
-	public Bitmap scaleBitMapToFit(Bitmap bitmapImage,
-			ImageView imageViewScale) {
+	public Bitmap scaleBitMapToFit(Bitmap bitmapImage, ImageView imageViewScale) {
 		Bitmap scaledBitmap = null;
 
 		if (bitmapImage.getWidth() > bitmapImage.getHeight()) {

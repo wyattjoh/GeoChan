@@ -58,7 +58,7 @@ public class PostModelList<T extends PostModel> {
 		this.postModelArrayList.clear();
 		this.addToArrayList(postModelArrayList);
 	}
-	
+
 	public void addToArrayList(ArrayList<T> postModelArrayList) {
 		this.postModelArrayList.addAll(postModelArrayList);
 
