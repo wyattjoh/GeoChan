@@ -1,7 +1,7 @@
 package ca.ualberta.cs.views;
 
 import android.app.Activity;
-import android.location.Location;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -50,18 +50,17 @@ public class LocationActivity extends Activity {
 			Double doubLongitude = Double.parseDouble(strLongitude);
 			etLng.setText("");
 			
-			Location theCommentLocation = new Location("");
-			theCommentLocation.setLatitude(doubLatitude);
-			theCommentLocation.setLongitude(doubLongitude);
+			Intent returnIntent = new Intent();
+			returnIntent.putExtra("extLatitude", doubLatitude);
+			returnIntent.putExtra("extLongitude", doubLongitude);
 			
-			Toast.makeText(this, theCommentLocation.getLatitude() + " " + theCommentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-			updateModelWithLocation(theCommentLocation);
+			setResult(RESULT_OK, returnIntent);
 			finish();
 		}
 	}
-
-	private void updateModelWithLocation(Location theLocation) {
-		// Finds the post which called it and calls setLocation on it
-		
+	public void onClick_CancelLocation(View theView) {
+		Intent returnIntent = new Intent();
+		setResult(RESULT_CANCELED, returnIntent);
+		finish();
 	}
 }

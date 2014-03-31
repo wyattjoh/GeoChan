@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.MediaColumns;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.EditPostModel;
@@ -23,6 +25,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 	// image vars
 	private static final int SELECT_PICTURE = 1;
+	private static final int GET_LOCATION = 2;
 	protected static final EditPostModel theEditPostModel = EditPostModel.getInstance();
 	protected Bitmap imageBitmap = null;
 
@@ -100,12 +103,12 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	public void onClick_StartLocationActivity(View theView) {
 		Intent locationIntent = new Intent(this, LocationActivity.class);
 //		locationIntent.putExtra(EXTRA_LOCATION, extraLocation);
-		startActivity(locationIntent);
+		startActivityForResult(locationIntent, GET_LOCATION);
 	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == RESULT_OK) {
-			if (requestCode == SELECT_PICTURE) {
+		if (requestCode == SELECT_PICTURE) {
+			if (resultCode == RESULT_OK) {
 				// get picture path from intent
 				Uri selectedImageUri = data.getData();
 				String selectedImagePath = getPath(selectedImageUri);
@@ -124,6 +127,24 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				galleryThumbnail.setImageBitmap(scaledBitmap);
 				imageBitmap = scaledBitmap;
 			}
+		} else if (requestCode == GET_LOCATION) {
+			if (resultCode == RESULT_OK) {
+				try {	
+					Double retLatitude = data.getDoubleExtra("extLatitude", 0);
+					Double retLongitude = data.getDoubleExtra("extLongitude", 0);
+				
+					Location theCommentLocation = new Location("");
+					theCommentLocation.setLatitude(retLatitude);
+					theCommentLocation.setLongitude(retLongitude);
+					//theEditPostModel.getThePost().setLocation(theCommentLocation);
+				} catch (Exception e) {
+					Toast.makeText(this, "FAILED " +
+							Double.toString(data.getDoubleExtra("extLatitude", 0)) +
+							Double.toString(data.getDoubleExtra("extLongitude", 0)),
+							Toast.LENGTH_LONG).show();
+				}
+			}
+			//on result code cancel, don't do anything
 		}
 	}
 
