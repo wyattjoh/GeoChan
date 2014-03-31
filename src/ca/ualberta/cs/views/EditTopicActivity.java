@@ -29,7 +29,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 
 			// add the picture
 			theTopicModel.setPicture(imageBitmap);
-
+			theTopicModel.setLocation(theLocation);
 			theController.newTopic(theTopicModel);
 
 			finish();

@@ -14,13 +14,11 @@ import android.location.Location;
 public class UserModel {
 	private String userName;
 	private Location location;
-	private ArrayList<String> upVoteList;
-	private ArrayList<String> downVoteList;
+	private ArrayList<String> upVoteList = new ArrayList<String>();
+	private ArrayList<String> downVoteList = new ArrayList<String>();
 
 	public UserModel(String theUserName) {
 		userName = theUserName;
-		upVoteList = new ArrayList<String>();
-		downVoteList = new ArrayList<String>();
 	}
 
 	public ArrayList<String> getUpVoteList() {

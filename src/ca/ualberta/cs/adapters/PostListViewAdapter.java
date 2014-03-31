@@ -76,32 +76,23 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		// Fill comment count
 		TextView commentTextView = (TextView) theView
 				.findViewById(R.id.textViewComments);
-		if (thePost.getChildrenComments() == null) {
-			commentTextView.setText("0");
-		} else {
-			String commentCount = Integer.toString(thePost
-					.getChildrenComments().size());
-			commentTextView.setText(commentCount);
-		}
+		commentTextView.setText(Integer.toString(thePost.getChildrenComments()
+				.size()));
 
 		// Fill location
 		// TODO: Add location text
 		TextView locationText = (TextView) theView
 				.findViewById(R.id.textViewLocation);
 		if (thePost.getLocation() != null) {
-			locationText.setText(thePost.getLocation().toString());
+			locationText.setText(thePost.getLocationAsString());
 		}
 
 		// Fill score
 		TextView scoreText = (TextView) theView
 				.findViewById(R.id.textViewScore);
-		String scoreString = "";
-		if (thePost.getScore() > 0) {
-			scoreString = "+";
-		} else if (thePost.getScore() < 0) {
-			scoreString = "-";
-		}
-		scoreString = scoreString + thePost.getScore().toString();
+
+		String scoreString = (thePost.getScore() > 0) ? "+"
+				+ thePost.getScore().toString() : thePost.getScore().toString();
 		scoreText.setText(scoreString);
 
 		// Fill picture

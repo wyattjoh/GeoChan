@@ -67,10 +67,18 @@
 
     <Button
         android:id="@+id/btnSubmitLocation"
-        android:layout_width="92dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:onClick="onClick_SubmitLocation"
         android:text="Enter" />
+
+    <Button
+        android:id="@+id/btnCancelLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClick_CancelLocation"
+        android:text="Cancel" />
 
 </LinearLayout>

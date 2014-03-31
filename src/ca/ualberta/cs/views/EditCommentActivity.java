@@ -24,6 +24,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 			if (imageBitmap != null) {
 				// add the picture
 				theModel.setPicture(imageBitmap);
+				theModel.setLocation(theLocation);
 			}
 
 			theController.addComment(theModel, theEditPostModel.getTheParent());
