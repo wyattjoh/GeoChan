@@ -84,7 +84,7 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		TextView locationText = (TextView) theView
 				.findViewById(R.id.textViewLocation);
 		if (thePost.getLocation() != null) {
-			locationText.setText(thePost.getLocation().toString());
+			locationText.setText(thePost.getLocationAsString());
 		}
 
 		// Fill score
