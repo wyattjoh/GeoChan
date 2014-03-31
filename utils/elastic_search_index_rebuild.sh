@@ -21,7 +21,7 @@ log "Deleted index."
 curl -XPOST `endpoint` -d'
 {
     "mappings": {
-        "wyatt": {
+        "topic": {
            "properties": {
              "datePosted": {
                  "type" : "date"
