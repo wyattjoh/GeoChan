@@ -18,28 +18,29 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		
+
 		Intent intent = new Intent(this, LocationProvider.class);
 		startService(intent);
 		Log.w("LoginActivity", "Activity onCreate.");
-		
+
 		final Button button = (Button) findViewById(R.id.signInButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
 			public void onClick(View v) {
-            	// Get the username
-            	EditText theTextField = (EditText)findViewById(R.id.userNameEditText);
-            	
-            	String theUserName = theTextField.getText().toString();
-            	
-                // Perform action on click
-            	ActiveUserModel userController = ActiveUserModel.createInstance(getApplicationContext());
-            	userController.performLogin(theUserName);
-            	Intent resultIntent = new Intent();
-            	setResult(Activity.RESULT_OK, resultIntent);
-            	finish();
-            }
-        });
+				// Get the username
+				EditText theTextField = (EditText) findViewById(R.id.userNameEditText);
+
+				String theUserName = theTextField.getText().toString();
+
+				// Perform action on click
+				ActiveUserModel userController = ActiveUserModel
+						.createInstance(getApplicationContext());
+				userController.performLogin(theUserName);
+				Intent resultIntent = new Intent();
+				setResult(Activity.RESULT_OK, resultIntent);
+				finish();
+			}
+		});
 	}
 
 	@Override

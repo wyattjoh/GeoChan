@@ -23,16 +23,17 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	// image vars
 	public final static String EXTRA_LOCATION = "ca.ualberta.cs.OLD_LOCATION";
 	private static final int SELECT_PICTURE = 1;
-	protected static final EditPostModel theEditPostModel = EditPostModel.getInstance();
+	protected static final EditPostModel theEditPostModel = EditPostModel
+			.getInstance();
 	protected Bitmap imageBitmap = null;
 
 	protected T theModel;
-		
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_post);
-		
+
 		// Populate the views
 		populateView();
 	}
@@ -45,12 +46,14 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	}
 
 	protected abstract String getSaveButtonText();
+
 	protected abstract OnClickListener getNewOnClickListener();
+
 	protected abstract OnClickListener getUpdateOnClickListener();
 
 	protected void populateView() {
 		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
-		
+
 		saveButton.setText(getSaveButtonText());
 
 		if (theEditPostModel.isNewPost()) {
@@ -70,10 +73,10 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				getPictureIntent();
 			}
 		});
-		
+
 		// get cancel button
 		Button cancelButton = (Button) findViewById(R.id.distanceButton);
-		
+
 		// set onclick listener
 		cancelButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -99,10 +102,12 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 	public void onClick_StartLocationActivity(View theView) {
 		Intent locationIntent = new Intent(this, LocationActivity.class);
-//		String extraLocation = ActiveUserModel.getInstance().getUser().getLocation().toString();
-//		locationIntent.putExtra(EXTRA_LOCATION, extraLocation);
+		// String extraLocation =
+		// ActiveUserModel.getInstance().getUser().getLocation().toString();
+		// locationIntent.putExtra(EXTRA_LOCATION, extraLocation);
 		startActivity(locationIntent);
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
@@ -113,13 +118,14 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 				// get picture object from path
 				imageBitmap = BitmapFactory.decodeFile(selectedImagePath);
-				
+
 				// get and set image view
 				ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
 				// galleryThumbnail.setVisibility(View.VISIBLE);
 
 				// create scaled image for display
-				Bitmap scaledBitmap = scaleBitMapToFit(imageBitmap, galleryThumbnail);
+				Bitmap scaledBitmap = scaleBitMapToFit(imageBitmap,
+						galleryThumbnail);
 
 				// set the view image o the selected image
 				galleryThumbnail.setImageBitmap(scaledBitmap);
@@ -137,8 +143,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	 * @param imageViewScale
 	 * @return
 	 */
-	public Bitmap scaleBitMapToFit(Bitmap bitmapImage,
-			ImageView imageViewScale) {
+	public Bitmap scaleBitMapToFit(Bitmap bitmapImage, ImageView imageViewScale) {
 		Bitmap scaledBitmap = null;
 
 		if (bitmapImage.getWidth() > bitmapImage.getHeight()) {

@@ -13,27 +13,29 @@ import android.content.Context;
 
 /**
  * @author wyatt
- *
+ * 
  */
 public class ReadLaterTopicModelList extends FollowingPostModelList<TopicModel> {
 	private static ReadLaterTopicModelList singleton = null;
-	
+
 	private static final String FILENAME = "FavoriteTopicModelList.json";
 
 	private ReadLaterTopicModelList(Context applicationContext) {
 		super(applicationContext);
 	}
-	
-	public static ReadLaterTopicModelList createInstance(Context applicationContext) {
+
+	public static ReadLaterTopicModelList createInstance(
+			Context applicationContext) {
 		if (singleton == null) {
 			singleton = new ReadLaterTopicModelList(applicationContext);
 		}
 		return singleton;
 	}
-	
+
 	public static ReadLaterTopicModelList getInstance() {
 		if (singleton == null) {
-			throw new RuntimeException("Cannot get an instance before you create it!");
+			throw new RuntimeException(
+					"Cannot get an instance before you create it!");
 		}
 		return singleton;
 	}
@@ -46,7 +48,7 @@ public class ReadLaterTopicModelList extends FollowingPostModelList<TopicModel> 
 	@Override
 	protected TopicModel[] inputStreaReaderToArray(InputStreamReader isr) {
 		Gson gson = GeoChanGson.getGson();
-		
+
 		return gson.fromJson(isr, TopicModel[].class);
 	}
 

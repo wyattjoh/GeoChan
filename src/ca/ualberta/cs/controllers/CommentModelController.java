@@ -10,19 +10,22 @@ import ca.ualberta.cs.providers.ElasticSearchProvider;
 public class CommentModelController {
 	private PostModelList<TopicModel> thePostModelList;
 	private Context theContext;
-	
-	public CommentModelController(PostModelList<TopicModel> thePostModelList, Context theContext) {
+
+	public CommentModelController(PostModelList<TopicModel> thePostModelList,
+			Context theContext) {
 		this.thePostModelList = thePostModelList;
 		this.theContext = theContext;
 	}
-	
+
 	public void addComment(CommentModel theComment, PostModel theParent) {
 		theParent.addChildComment(theComment);
 		theComment.setMyParent(theParent);
-		
+
 		// Get the provider
-		ElasticSearchProvider theProvider = ElasticSearchProvider.getProviderWithContext(theContext);
-		
-		theProvider.updateTopic((TopicModel) theParent.getMyFirstAncestor(), thePostModelList);
+		ElasticSearchProvider theProvider = ElasticSearchProvider
+				.getProviderWithContext(theContext);
+
+		theProvider.updateTopic((TopicModel) theParent.getMyFirstAncestor(),
+				thePostModelList);
 	}
 }

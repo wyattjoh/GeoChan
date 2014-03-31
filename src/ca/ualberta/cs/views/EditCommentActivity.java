@@ -44,8 +44,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 		if (theEditPostModel.isNewPost()) {
 			theModel = new CommentModel(ActiveUserModel.getInstance().getUser());
-		}
-		else {
+		} else {
 			theModel = (CommentModel) theEditPostModel.getThePost();
 		}
 

@@ -26,7 +26,9 @@ public class MainActivityFragment extends Fragment {
 	 */
 	public static final String ARG_SECTION_NUMBER = "section_number";
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
 	 */
 	@Override
@@ -43,10 +45,13 @@ public class MainActivityFragment extends Fragment {
 		int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
 		// get fragment view
-		View rootView = inflater.inflate(R.layout.fragment_post_list, container, false);
-		LinearLayout theLayout = (LinearLayout) rootView.findViewById(R.id.mainListBox);
-		
-		MainActivityFragmentComponent theComponent = MainActivityFragmentComponent.getComponentForPosition(sectionNumber);
+		View rootView = inflater.inflate(R.layout.fragment_post_list,
+				container, false);
+		LinearLayout theLayout = (LinearLayout) rootView
+				.findViewById(R.id.mainListBox);
+
+		MainActivityFragmentComponent theComponent = MainActivityFragmentComponent
+				.getComponentForPosition(sectionNumber);
 		theComponent.setupView(inflater, theLayout, getActivity());
 
 		// Update the status
@@ -54,12 +59,12 @@ public class MainActivityFragment extends Fragment {
 
 		return rootView;
 	}
-	
 
 	/**
 	 * Called when the cell is clicked. Starts the detail view activity
 	 * 
-	 * @param v The view that was clicked
+	 * @param v
+	 *            The view that was clicked
 	 */
 	public void cellClicked(View v) {
 		// Get the selected tag position
@@ -76,18 +81,21 @@ public class MainActivityFragment extends Fragment {
 		startActivity(intent);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.support.v4.app.Fragment#onDestroyView()
 	 */
 	@Override
 	public void onDestroyView() {
 		// TODO Auto-generated method stub
 		super.onDestroyView();
-		
+
 		// get fragment number
 		int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-		
-		MainActivityFragmentComponent theComponent = MainActivityFragmentComponent.getComponentForPosition(sectionNumber);
+
+		MainActivityFragmentComponent theComponent = MainActivityFragmentComponent
+				.getComponentForPosition(sectionNumber);
 		theComponent.destroy();
 	}
 

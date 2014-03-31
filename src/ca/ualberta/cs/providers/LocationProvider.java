@@ -25,11 +25,11 @@ public class LocationProvider {
 			// Called when a new location is found by the network location
 			// provider.
 			theLocation = location;
-			
+
 			// update the location
 			ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
 			UserModel theLoggedInUser = theActiveUserModel.getUser();
-			
+
 			if (theLoggedInUser != null) {
 				theLoggedInUser.setLocation(location);
 			}
@@ -50,19 +50,22 @@ public class LocationProvider {
 			// TODO
 		}
 	};
-	
-	private LocationProvider(Context theContext) {
-		// Register the listener with the Location Manager to receive location updates
-		locationManager = (LocationManager) theContext.getSystemService(Context.LOCATION_SERVICE);
 
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, locationListener);
+	private LocationProvider(Context theContext) {
+		// Register the listener with the Location Manager to receive location
+		// updates
+		locationManager = (LocationManager) theContext
+				.getSystemService(Context.LOCATION_SERVICE);
+
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+				10000, 0, locationListener);
 	}
-	
+
 	public static LocationProvider getInstance(Context theContext) {
 		if (singleton == null) {
 			singleton = new LocationProvider(theContext);
 		}
-		
+
 		return singleton;
 	}
 

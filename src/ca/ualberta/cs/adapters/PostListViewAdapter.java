@@ -109,8 +109,7 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 				.findViewById(R.id.imageViewPicture);
 		if (thePost.hasPicture()) {
 			imageView.setImageBitmap(thePost.getPicture());
-		}
-		else {
+		} else {
 			imageView.setVisibility(View.GONE);
 		}
 
@@ -128,24 +127,27 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 	 */
 	public Bitmap scaleBitMapToImageView(Bitmap bitmapImage,
 			ImageView imageViewScale) {
-		System.out.println("Height"+imageViewScale.getHeight()+" Width"+imageViewScale.getWidth());
+		System.out.println("Height" + imageViewScale.getHeight() + " Width"
+				+ imageViewScale.getWidth());
 		Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmapImage,
 				imageViewScale.getWidth(), imageViewScale.getHeight(),
 				imageViewScale.getFilterTouchesWhenObscured());
 		return scaledBitmap;
 	}
-	
+
 	/**
 	 * Trims a string to a max length
-	 * @param theString the string to trim
-	 * @param theLength the max length of the string
+	 * 
+	 * @param theString
+	 *            the string to trim
+	 * @param theLength
+	 *            the max length of the string
 	 * @return a trimmed string
 	 */
 	protected String trimString(String theString, int theLength) {
 		if (theString.length() > theLength) {
 			return theString.substring(0, theLength);
-		}
-		else {
+		} else {
 			return theString;
 		}
 	}

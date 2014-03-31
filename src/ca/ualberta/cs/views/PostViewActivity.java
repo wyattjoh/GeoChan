@@ -27,6 +27,7 @@ import ca.ualberta.cs.models.UserModel;
 public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	/**
 	 * Populates theModel with the proper selected model
+	 * 
 	 * @return TODO
 	 */
 	abstract protected T getSelectedModel();
@@ -36,27 +37,30 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	abstract protected OnClickListener getFavoriteOnClickListener();
 
 	protected T theModel = null;
+
 	/**
 	 * Starts an activity to reply to the currently visible post
 	 */
 	protected void replyToPost() {
 		EditPostModel theEditPostModel = EditPostModel.getInstance();
 		theEditPostModel.setTheParent(theModel);
-		
+
 		Intent intent = new Intent(this, EditCommentActivity.class);
 		startActivity(intent);
 	}
 
 	protected CommentListViewAdapter thePostAdapter;
-	protected ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
+	protected ActiveUserModel theActiveUserModel = ActiveUserModel
+			.getInstance();
 	protected UserModel theLoggedInUser = theActiveUserModel.getUser();
 
 	public void cellClicked(View theView) {
 		Integer thePosition = (Integer) theView.getTag();
-	
-		CommentModelList commentModelList = CommentModelList.getInstanceFromParent(theModel);
+
+		CommentModelList commentModelList = CommentModelList
+				.getInstanceFromParent(theModel);
 		commentModelList.addToSelectionStackFromPosition(thePosition);
-	
+
 		Intent intent = new Intent(this, CommentViewActivity.class);
 		startActivity(intent);
 	}
@@ -65,18 +69,19 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_post_view);
-		
+
 		ActionBar actionBar = getActionBar();
-	    actionBar.setDisplayHomeAsUpEnabled(true);
-		
+		actionBar.setDisplayHomeAsUpEnabled(true);
+
 		// Populate the model
 		this.theModel = getSelectedModel();
-		
+
 		// Populate the view
 		if (this.theModel == null) {
-			throw new RuntimeException("Tried to execute the view without selecting anything? (No idea how you got here...)");
+			throw new RuntimeException(
+					"Tried to execute the view without selecting anything? (No idea how you got here...)");
 		}
-		
+
 		// Populate the view!
 		populateView();
 	}
@@ -147,14 +152,13 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		// Add Buttons
 		final ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
-		
+
 		if (theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
 			downVoteButton.setPressed(true);
-		}
-		else {
+		} else {
 			downVoteButton.setPressed(false);
 		}
-		
+
 		downVoteButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -172,13 +176,12 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 				}
 			}
 		});
-		
+
 		final ImageButton upVoteButton = (ImageButton) findViewById(R.id.upVoteButton);
-		
+
 		if (theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
 			upVoteButton.setPressed(true);
-		}
-		else {
+		} else {
 			upVoteButton.setPressed(false);
 		}
 

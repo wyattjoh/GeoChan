@@ -18,7 +18,8 @@ public class TopicListViewAdapter extends PostListViewAdapter<TopicModel> {
 	@Override
 	protected void populateCellTitle(View theView, TopicModel thePost) {
 		// Fill title/comment text
-		TextView titleText = (TextView) theView.findViewById(R.id.textViewTitle);
+		TextView titleText = (TextView) theView
+				.findViewById(R.id.textViewTitle);
 		// List of topics, display the title
 		String theTitle = thePost.getTitle();
 		titleText.setText(theTitle);

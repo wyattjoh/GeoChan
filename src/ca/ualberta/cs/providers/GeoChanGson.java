@@ -64,12 +64,15 @@ public class GeoChanGson {
 			ByteArrayOutputStream blob = new ByteArrayOutputStream();
 
 			arg0.compress(CompressFormat.WEBP, 100, blob);
-			
+
 			byte[] byteArray = blob.toByteArray();
 
-			Log.w("GeoChanGson", "Bitmap Serialization in progress. Length is: " + byteArray.length);
+			Log.w("GeoChanGson",
+					"Bitmap Serialization in progress. Length is: "
+							+ byteArray.length);
 
-			return new JsonPrimitive(Base64.encodeToString(byteArray, Base64.NO_WRAP));
+			return new JsonPrimitive(Base64.encodeToString(byteArray,
+					Base64.NO_WRAP));
 		}
 
 	}

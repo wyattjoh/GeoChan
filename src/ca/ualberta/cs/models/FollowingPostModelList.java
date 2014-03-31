@@ -20,9 +20,9 @@ import com.google.gson.Gson;
  */
 abstract public class FollowingPostModelList<T extends PostModel> extends
 		PostModelList<T> implements UpdateableListInterface {
-	
+
 	private Context applicationContext;
-	
+
 	/**
 	 * @return string for filename to save as (generally the class name)
 	 */
@@ -35,17 +35,19 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 
 	/**
 	 * Loads the JSON file from the ISR
-	 * @param isr reader for the JSON file
+	 * 
+	 * @param isr
+	 *            reader for the JSON file
 	 * @return proper typed java array
 	 */
 	abstract protected T[] inputStreaReaderToArray(InputStreamReader isr);
 
 	protected FollowingPostModelList(Context applicationContext) {
 		this.applicationContext = applicationContext;
-		
+
 		load();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -62,7 +64,7 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	 */
 	private void save() {
 		Gson gson = GeoChanGson.getGson();
-		
+
 		T[] dataToSave = arrayListToArray();
 
 		try {
@@ -72,7 +74,8 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 			OutputStreamWriter osw = new OutputStreamWriter(fos);
 
 			gson.toJson(dataToSave, osw);
-			Log.w("FollowingPostModel", "Current Saved: " + gson.toJson(dataToSave));
+			Log.w("FollowingPostModel",
+					"Current Saved: " + gson.toJson(dataToSave));
 
 			osw.close();
 			fos.close();
@@ -85,7 +88,7 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 			e.printStackTrace();
 		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -95,18 +98,22 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	public void remove(int position) {
 		// TODO Auto-generated method stub
 		super.remove(position);
-		
+
 		save();
 	}
 
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.models.PostModelList#remove(ca.ualberta.cs.models.PostModel)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.ualberta.cs.models.PostModelList#remove(ca.ualberta.cs.models.PostModel
+	 * )
 	 */
 	@Override
 	public void remove(T theModel) {
 		// TODO Auto-generated method stub
 		super.remove(theModel);
-		
+
 		save();
 	}
 
@@ -120,7 +127,7 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	public void update(int position, T theModel) {
 		// TODO Auto-generated method stub
 		super.update(position, theModel);
-		
+
 		save();
 	}
 
@@ -134,7 +141,7 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	public void setArrayList(ArrayList<T> postModelArrayList) {
 		// TODO Auto-generated method stub
 		super.setArrayList(postModelArrayList);
-		
+
 		save();
 	}
 
@@ -143,23 +150,23 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	 */
 	private void load() {
 		ArrayList<T> dataThatLoaded = new ArrayList<T>();
-						
+
 		try {
 			String FILENAME = getFilenameString();
 			FileInputStream fis = applicationContext.openFileInput(FILENAME);
 			InputStreamReader isr = new InputStreamReader(fis);
-	
+
 			T[] thePrimative = inputStreaReaderToArray(isr);
-	
+
 			isr.close();
 			fis.close();
-			
-			for(int i = 0; i < thePrimative.length; i++) {
+
+			for (int i = 0; i < thePrimative.length; i++) {
 				dataThatLoaded.add(thePrimative[i]);
 			}
 
 			setArrayList(dataThatLoaded);
-	
+
 		} catch (FileNotFoundException e) {
 			// File was not found! Create it!
 			save();
@@ -168,18 +175,19 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Retrieves an array list of update Id's to be updated over the network
+	 * 
 	 * @return The array of id's to be updated
 	 */
 	public ArrayList<String> getListIds() {
 		ArrayList<String> theUpdateIds = new ArrayList<String>();
-		
-		for (T theModel: getArrayList()) {
+
+		for (T theModel : getArrayList()) {
 			theUpdateIds.add(theModel.getId());
 		}
-		
+
 		return theUpdateIds;
 	}
 
@@ -193,7 +201,7 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	public void add(T theModel) {
 		// TODO Auto-generated method stub
 		super.add(theModel);
-		
+
 		save();
 	}
 }

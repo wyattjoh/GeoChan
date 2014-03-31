@@ -11,7 +11,7 @@ import ca.ualberta.cs.adapters.PostListViewAdapter;
 public class PostModelList<T extends PostModel> {
 	private ArrayList<T> postModelArrayList;
 	private ArrayList<PostListViewAdapter<?>> listeningAdapters;
-	
+
 	private Deque<T> selectedPostModelStack = new ArrayDeque<T>();
 
 	protected PostModelList() {
@@ -21,7 +21,9 @@ public class PostModelList<T extends PostModel> {
 
 	/**
 	 * Add the element in the list at position indicated to the selection stack
-	 * @param position is the position of the selected model
+	 * 
+	 * @param position
+	 *            is the position of the selected model
 	 */
 	public void addToSelectionStackFromPosition(int position) {
 		this.selectedPostModelStack.add(postModelArrayList.get(position));
@@ -29,17 +31,19 @@ public class PostModelList<T extends PostModel> {
 
 	/**
 	 * Add the element to the selection stack
+	 * 
 	 * @param selectedPostModel
 	 */
 	public void addToSelectionStack(T selectedPostModel) {
 		this.selectedPostModelStack.add(selectedPostModel);
 	}
-	
+
 	/**
 	 * Remove the element at the end of the list from the list
+	 * 
 	 * @return the item removed from the selection stack
 	 */
-	public T popFromSelectionStack(){
+	public T popFromSelectionStack() {
 		return this.selectedPostModelStack.pop();
 	}
 
@@ -53,7 +57,7 @@ public class PostModelList<T extends PostModel> {
 	public void setArrayList(ArrayList<T> postModelArrayList) {
 		this.postModelArrayList.clear();
 		this.postModelArrayList.addAll(postModelArrayList);
-		
+
 		updateListeningAdapters();
 	}
 
@@ -83,27 +87,29 @@ public class PostModelList<T extends PostModel> {
 
 		updateListeningAdapters();
 	}
-	
+
 	/*
 	 * Sorts theTopicModelArrayList by proximity to user
 	 */
 	public void sortByProximity() {
-		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_PROXIMITY);
+		Collections.sort(this.postModelArrayList,
+				PostModel.COMPARE_BY_PROXIMITY);
 		Collections.reverse(this.postModelArrayList);
-		
+
 		updateListeningAdapters();
 	}
-	
+
 	/*
 	 * Sorts theTopicModelArrayList by "latest greatest"
 	 */
 	public void sortByLatestGreatest() {
-		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_LATEST_GREATEST);
+		Collections.sort(this.postModelArrayList,
+				PostModel.COMPARE_BY_LATEST_GREATEST);
 		Collections.reverse(this.postModelArrayList);
-		
+
 		updateListeningAdapters();
 	}
-	
+
 	/*
 	 * Sorts theTopicModelArrayList by picture
 	 */
@@ -113,17 +119,17 @@ public class PostModelList<T extends PostModel> {
 		ArrayList<T> tempList = new ArrayList<T>();
 		tempList = (ArrayList<T>) this.postModelArrayList.clone();
 		this.postModelArrayList.clear();
-		for(T theModel : tempList) {
-			if(theModel.hasPicture()) {
+		for (T theModel : tempList) {
+			if (theModel.hasPicture()) {
 				this.postModelArrayList.add(theModel);
 			}
 		}
-		for(T theModel : tempList) {
-			if(!theModel.hasPicture()) {
+		for (T theModel : tempList) {
+			if (!theModel.hasPicture()) {
 				this.postModelArrayList.add(theModel);
 			}
 		}
-		
+
 		updateListeningAdapters();
 	}
 
@@ -147,25 +153,25 @@ public class PostModelList<T extends PostModel> {
 
 		updateListeningAdapters();
 	}
-	
+
 	public void update(T theModel) {
 		boolean foundObjectToUpdate = false;
 		int size = this.postModelArrayList.size();
-		
+
 		for (int i = 0; i < size; i++) {
 			T model = this.postModelArrayList.get(i);
-			
+
 			if (model != null && model.equals(theModel)) {
 				this.postModelArrayList.set(i, theModel);
 				foundObjectToUpdate = true;
 				break;
 			}
 		}
-		
+
 		if (!foundObjectToUpdate) {
-			throw new RuntimeException("Tried to update an entry that wasn't here!");
-		}
-		else {
+			throw new RuntimeException(
+					"Tried to update an entry that wasn't here!");
+		} else {
 			updateListeningAdapters();
 		}
 	}

@@ -25,7 +25,8 @@ import ca.ualberta.cs.models.ReadLaterTopicModelList;
 
 /**
  * 
- * Lists recent topics, favorite topics and comments, and read later topics and comments.
+ * Lists recent topics, favorite topics and comments, and read later topics and
+ * comments.
  * 
  * @author wyatt
  */
@@ -58,8 +59,7 @@ public class MainActivity extends FragmentActivity {
 			// getItem is called to instantiate the fragment for the given page
 			Fragment fragment = new MainActivityFragment();
 			Bundle args = new Bundle();
-			args.putInt(MainActivityFragment.ARG_SECTION_NUMBER,
-					position + 1);
+			args.putInt(MainActivityFragment.ARG_SECTION_NUMBER, position + 1);
 			fragment.setArguments(args);
 
 			// Add to list of fragments
@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity {
 
 			return fragment;
 		}
-		
+
 		// TODO: Add documentation
 		@Override
 		public CharSequence getPageTitle(int position) {
@@ -82,7 +82,7 @@ public class MainActivity extends FragmentActivity {
 			}
 			return null;
 		}
-		
+
 		// TODO: Add documentation
 		public void notifyNetworkStateChanged() {
 			for (Fragment fragment : fragments) {
@@ -125,7 +125,9 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
 	 */
 	@Override
@@ -173,7 +175,9 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
 	 */
 	@Override
@@ -184,7 +188,9 @@ public class MainActivity extends FragmentActivity {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
 	 */
 	@Override
@@ -216,31 +222,35 @@ public class MainActivity extends FragmentActivity {
 			logout();
 			return true;
 		case R.id.refreshButton:
-			NetworkInterfaceController.getControllerFromContext(getApplicationContext()).refreshPosts();
+			NetworkInterfaceController.getControllerFromContext(
+					getApplicationContext()).refreshPosts();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.support.v4.app.FragmentActivity#onStart()
 	 */
 	@Override
 	protected void onStart() {
 		super.onStart();
 
-
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.support.v4.app.FragmentActivity#onResume()
 	 */
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
+
 		// Must be first thing that is started, sets up contexts
 		createSharedSingletons(getApplicationContext());
 
@@ -251,7 +261,8 @@ public class MainActivity extends FragmentActivity {
 	/**
 	 * Creates shared singletons requiring initialization
 	 * 
-	 * @param applicationContext The application context for the main activity
+	 * @param applicationContext
+	 *            The application context for the main activity
 	 */
 	private void createSharedSingletons(Context applicationContext) {
 		// Create Active User
@@ -259,7 +270,7 @@ public class MainActivity extends FragmentActivity {
 
 		// Create Favorites List
 		FavoriteTopicModelList.createInstance(applicationContext);
-		
+
 		// Create Read Later list
 		ReadLaterTopicModelList.createInstance(applicationContext);
 	}
@@ -273,7 +284,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	/**
-	 * Starts a new activity to create a new post 
+	 * Starts a new activity to create a new post
 	 */
 	protected void newPost() {
 		Intent intent = new Intent(this, EditTopicActivity.class);
@@ -289,14 +300,14 @@ public class MainActivity extends FragmentActivity {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
 	}
-	
+
 	/**
 	 * Allows the user to log out
 	 */
 	protected void logout() {
 		ActiveUserModel userController = ActiveUserModel.getInstance();
 		userController.performLogout();
-		
+
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivityForResult(intent, 1);
 	}

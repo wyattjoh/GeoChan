@@ -47,7 +47,7 @@ public enum MainActivityFragmentComponent {
 			NetworkInterfaceController nic = NetworkInterfaceController
 					.getControllerFromContext(theActivity
 							.getApplicationContext());
-			
+
 			// Refresh the posts
 			nic.refreshPosts();
 		}
