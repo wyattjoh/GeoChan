@@ -1,11 +1,10 @@
 package ca.ualberta.cs.models;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import ca.ualberta.cs.providers.GeoChanGson;
 
 import com.google.gson.Gson;
-
-import android.content.Context;
-import android.content.SharedPreferences;
 
 public class SavedUserModel {
 	private static final String PREFS_NAME = "ActiveUserModel";

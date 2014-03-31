@@ -1,5 +1,7 @@
 package ca.ualberta.cs.views;
 
+import java.util.List;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -16,9 +18,6 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
-
-import java.util.List;
-
 import ca.ualberta.cs.R;
 
 /**

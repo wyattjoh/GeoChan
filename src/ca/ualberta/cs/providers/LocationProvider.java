@@ -1,12 +1,12 @@
 package ca.ualberta.cs.providers;
 
-import ca.ualberta.cs.models.ActiveUserModel;
-import ca.ualberta.cs.models.UserModel;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.UserModel;
 
 /*
  *  Implement such as:

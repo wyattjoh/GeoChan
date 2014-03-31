@@ -5,11 +5,10 @@ package ca.ualberta.cs.models;
 
 import java.io.InputStreamReader;
 
+import android.content.Context;
 import ca.ualberta.cs.providers.GeoChanGson;
 
 import com.google.gson.Gson;
-
-import android.content.Context;
 
 /**
  * @author wyatt
