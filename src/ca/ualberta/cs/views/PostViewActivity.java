@@ -53,12 +53,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	}
 
 	protected CommentListViewAdapter thePostAdapter;
-<<<<<<< HEAD
 	protected ActiveUserModel theActiveUserModel = ActiveUserModel
 			.getInstance();
 	protected UserModel theLoggedInUser = theActiveUserModel.getUser();
-=======
->>>>>>> 8dfef73d304f5e08b589facfac1ba7532e7fa156
 
 	public void cellClicked(View theView) {
 		Integer thePosition = (Integer) theView.getTag();
@@ -169,16 +166,11 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		// Add Buttons
 		final ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
-<<<<<<< HEAD
-
-		if (theLoggedInUser.getDownVoteList().contains(theModel.getId())) {
-=======
 		
 		UserModel theLoggedInUser = ActiveUserModel.getInstance().getUser();
 		ArrayList<String> downVoteList = theLoggedInUser.getDownVoteList();
 
 		if (downVoteList.contains(theModel.getId())) {
->>>>>>> 8dfef73d304f5e08b589facfac1ba7532e7fa156
 			downVoteButton.setPressed(true);
 		} else {
 			downVoteButton.setPressed(false);
