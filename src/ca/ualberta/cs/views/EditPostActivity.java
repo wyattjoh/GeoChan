@@ -109,6 +109,16 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		startActivityForResult(locationIntent, GET_LOCATION);
 	}
 
+	/**
+	 * Creates a notification due to a failed response
+	 * 
+	 * @param theReason
+	 */
+	protected void failedDueToReason(String theReason) {
+		Toast.makeText(getApplicationContext(), theReason, Toast.LENGTH_LONG)
+				.show();
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == SELECT_PICTURE) {
