@@ -28,6 +28,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	private static final int GET_LOCATION = 2;
 	protected static final EditPostModel theEditPostModel = EditPostModel.getInstance();
 	protected Bitmap imageBitmap = null;
+	protected Location theLocation = null;
 
 	protected T theModel;
 		
@@ -132,11 +133,12 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				try {	
 					Double retLatitude = data.getDoubleExtra("extLatitude", 0);
 					Double retLongitude = data.getDoubleExtra("extLongitude", 0);
-				
-					Location theCommentLocation = new Location("");
-					theCommentLocation.setLatitude(retLatitude);
-					theCommentLocation.setLongitude(retLongitude);
-					//theEditPostModel.getThePost().setLocation(theCommentLocation);
+					
+					Location theCurrentLocation = new Location("");
+					theCurrentLocation.setLatitude(retLatitude);
+					theCurrentLocation.setLongitude(retLongitude);
+					this.theLocation = theCurrentLocation;
+					
 				} catch (Exception e) {
 					Toast.makeText(this, "FAILED " +
 							Double.toString(data.getDoubleExtra("extLatitude", 0)) +
