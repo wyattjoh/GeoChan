@@ -60,27 +60,6 @@ public class MainActivityFragment extends Fragment {
 		return rootView;
 	}
 
-	/**
-	 * Called when the cell is clicked. Starts the detail view activity
-	 * 
-	 * @param v
-	 *            The view that was clicked
-	 */
-	public void cellClicked(View v) {
-		// Get the selected tag position
-		Integer position = (Integer) v.getTag();
-
-		// Get the model list
-		TopicModelList topicModelList = TopicModelList.getInstance();
-
-		// Mark the selected model
-		topicModelList.addToSelectionStackFromPosition(position.intValue());
-
-		// Start intent
-		Intent intent = new Intent(getActivity(), TopicViewActivity.class);
-		startActivity(intent);
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

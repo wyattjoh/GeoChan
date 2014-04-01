@@ -9,17 +9,15 @@ import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
+import ca.ualberta.cs.models.PostModelList;
+import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.models.TopicModelList;
 
 /**
  * @author wyatt
  * 
  */
 public class CommentViewActivity extends PostViewActivity<CommentModel> {
-
-	@Override
-	protected CommentModel getSelectedModel() {
-		return CommentModelList.getInstance().getLastSelection();
-	}
 
 	@Override
 	void setTitleText() {
@@ -47,5 +45,26 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 	protected OnClickListener getFavoriteOnClickListener() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	protected CommentModel getSelectedModel() {
+		// TODO Auto-generated method stub
+		return getPostModelList(null).getLastSelection();
+	}
+
+	@Override
+	protected PostModelList<CommentModel> getPostModelList(
+			MainActivityFragmentComponent component) {
+		if (this.thePostModelList != null) {
+			return this.thePostModelList;
+		} else {
+			if (component != null) {
+				return this.thePostModelList = component
+						.provideCommentPostModelList();
+			} else {
+				return this.thePostModelList = CommentModelList.getInstance();
+			}
+		}
 	}
 }

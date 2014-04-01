@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicViewController;
+import ca.ualberta.cs.models.PostModelList;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 
@@ -21,11 +22,6 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 
 	public TopicViewActivity() {
 		theTopicViewController = new TopicViewController();
-	}
-
-	@Override
-	protected TopicModel getSelectedModel() {
-		return TopicModelList.getInstance().getLastSelection();
 	}
 
 	@Override
@@ -51,7 +47,7 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		TopicModelList.getInstance().popFromSelectionStack();
+		getPostModelList(null).popFromSelectionStack();
 	}
 
 	private OnClickListener favoriteOnClickListener = new OnClickListener() {
@@ -72,4 +68,25 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 			}
 		}
 	};
+
+	@Override
+	protected TopicModel getSelectedModel() {
+		// TODO Auto-generated method stub
+		return getPostModelList(null).getLastSelection();
+	}
+
+	@Override
+	protected PostModelList<TopicModel> getPostModelList(
+			MainActivityFragmentComponent component) {
+		if (this.thePostModelList != null) {
+			return this.thePostModelList;
+		} else {
+			if (component != null) {
+				return this.thePostModelList = component
+						.provideTopicPostModelList();
+			} else {
+				return this.thePostModelList = TopicModelList.getInstance();
+			}
+		}
+	}
 }

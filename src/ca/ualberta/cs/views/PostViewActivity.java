@@ -23,22 +23,27 @@ import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
+import ca.ualberta.cs.models.PostModelList;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
 
 public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	/**
 	 * Populates theModel with the proper selected model
+	 * @param component TODO
 	 * 
 	 * @return TODO
 	 */
 	abstract protected T getSelectedModel();
+	
+	abstract protected PostModelList<T> getPostModelList(MainActivityFragmentComponent component);
 
 	abstract void setTitleText();
 
 	abstract protected OnClickListener getFavoriteOnClickListener();
 
 	protected T theModel = null;
+	protected PostModelList<T> thePostModelList = null;
 
 	/**
 	 * Starts an activity to reply to the currently visible post
@@ -74,8 +79,14 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		
+		Bundle extras = getIntent().getExtras();
 
-		// Populate the model
+		if (extras != null) {
+			MainActivityFragmentComponent component = (MainActivityFragmentComponent) extras.getSerializable(MainActivityFragmentComponent.COMPONENT_STRING);
+			getPostModelList(component);
+		}
+		
 		this.theModel = getSelectedModel();
 
 		// Populate the view
