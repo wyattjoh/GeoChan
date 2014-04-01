@@ -247,6 +247,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 					}
 				}
 			}
+			
 		});
 
 		// Add Author
