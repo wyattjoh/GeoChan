@@ -52,6 +52,9 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	protected abstract OnClickListener getNewOnClickListener();
 	protected abstract OnClickListener getUpdateOnClickListener();
 
+	/**
+	 * update and populate the view so as to display the newestt information
+	 */
 	protected void populateView() {
 		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
 		
@@ -89,8 +92,11 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	}
 
 	/**
+	 * start up the gallery activity, and set to receive the on activity result
+	 * 
 	 * github http://stackoverflow.com/questions/2169649/get-pick-an-image-from-
 	 * androids-built-in-gallery-app-programmatically
+	 * 
 	 */
 	public void getPictureIntent() {
 		// select a file
@@ -101,6 +107,11 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				SELECT_PICTURE);
 	}
 
+	/**
+	 * start the location activity
+	 * 
+	 * @param theView
+	 */
 	public void onClick_StartLocationActivity(View theView) {
 		Intent locationIntent = new Intent(this, LocationActivity.class);
 //		locationIntent.putExtra(EXTRA_LOCATION, extraLocation);
@@ -192,6 +203,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 	/**
 	 * helper to retrieve the path of an image URI
+	 * 
 	 */
 	public String getPath(Uri uri) {
 		// just some safety built in
