@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.Toast;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicModelController;
 import ca.ualberta.cs.models.CurrentUserPostModelFactory;
 import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.providers.LocationProvider;
 
 public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	private TopicModelController theController;
@@ -59,6 +61,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 		
 		// Get the controller
 		this.theController = new TopicModelController();
+		//display the phone's location
 	}
 
 	/* (non-Javadoc)

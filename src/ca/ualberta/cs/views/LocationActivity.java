@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.providers.LocationProvider;
 /**
  * 
  * @author troy
@@ -19,6 +20,13 @@ public class LocationActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_location);
+		try {
+			Toast.makeText(this, String.valueOf(LocationProvider.getInstance(null).getLastKnownLocation().getLatitude()) +
+					String.valueOf(LocationProvider.getInstance(null).getLastKnownLocation().getLatitude()),
+					Toast.LENGTH_SHORT).show();
+		}catch (Exception e) {
+			Toast.makeText(this, "No last known location", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	@Override

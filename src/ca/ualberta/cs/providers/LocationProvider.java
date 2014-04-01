@@ -69,5 +69,7 @@ public class LocationProvider {
 	public Location getLocation() {
 		return theLocation;
 	}
-
+	public Location getLastKnownLocation() {
+		return this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+	}
 }
