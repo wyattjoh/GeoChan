@@ -19,6 +19,9 @@ public class UserModel {
 
 	public UserModel(String theUserName) {
 		userName = theUserName;
+		this.location = new Location("");
+		this.location.setLatitude(0);
+		this.location.setLongitude(0);
 	}
 	
 	public ArrayList<String> getUpVoteList() {
