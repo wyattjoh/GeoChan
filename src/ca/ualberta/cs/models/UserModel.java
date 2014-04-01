@@ -14,7 +14,7 @@ import ca.ualberta.cs.providers.LocationProvider;
  */
 public class UserModel {
 	private String userName;
-	private Location location = new LocationProvider().getInstance();
+	private Location location;
 	private ArrayList<String> upVoteList = new ArrayList<String>();
 	private ArrayList<String> downVoteList = new ArrayList<String>();
 
