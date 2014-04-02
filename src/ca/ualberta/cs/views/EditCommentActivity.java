@@ -59,9 +59,8 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 			}
 			
 			// get model index
-			Integer modelIndex = getCommentIndex(EditPostModel.getTheParent().getChildrenComments(), theModel);
-			Log.w("EditCommentActivity",theModel.getCommentText());
-			System.out.println("test "+EditPostModel.getInstance().getTheParent().getChildrenComments().get(0).getCommentText());
+			System.out.println("parent model "+ ((PostModel) CommentModelList.getInstance().getLastSelection()).getMyParent() == null);
+			Integer modelIndex = TopicModelList.getInstance().getLastSelection().getChildrenComments().indexOf(theModel);
 
 			// set the model text
 			theModel.setCommentText(theComment);
@@ -71,7 +70,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 				theModel.setPicture(imageBitmap);
 			}
 
-			theController.updateComment(theModel, theEditPostModel.getTheParent(), modelIndex);
+			theController.updateComment(theModel, TopicModelList.getInstance().getLastSelection(), modelIndex);
 
 			finish();
 		}

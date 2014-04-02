@@ -71,7 +71,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 			
 			// set the distance button
 			Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
-			Location temploc = theModel.getLocation();
+			Location temploc = ActiveUserModel.getInstance().getUser().getLocation();
 			distanceButton.setText(String.valueOf(temploc.getLatitude() + " , " +
 					String.valueOf(temploc.getLongitude())));
 			
@@ -107,7 +107,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 			}
 		});
 		
-		if (theEditPostModel.isNewPost() && theModel.hasPicture()) {
+		if (!theEditPostModel.isNewPost() && theModel.hasPicture()) {
 			// get and set image view
 			ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
 			// galleryThumbnail.setVisibility(View.VISIBLE);
