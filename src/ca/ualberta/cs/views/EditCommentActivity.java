@@ -1,6 +1,9 @@
 package ca.ualberta.cs.views;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -9,6 +12,8 @@ import ca.ualberta.cs.controllers.CommentModelController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
+import ca.ualberta.cs.models.EditPostModel;
+import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModelList;
 
 public class EditCommentActivity extends EditPostActivity<CommentModel> {
@@ -54,7 +59,9 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 			}
 			
 			// get model index
-			Integer modelIndex = theEditPostModel.getTheParent().getChildrenComments().indexOf(theModel);
+			Integer modelIndex = getCommentIndex(EditPostModel.getTheParent().getChildrenComments(), theModel);
+			Log.w("EditCommentActivity",theModel.getCommentText());
+			System.out.println("test "+EditPostModel.getInstance().getTheParent().getChildrenComments().get(0).getCommentText());
 
 			// set the model text
 			theModel.setCommentText(theComment);
@@ -69,6 +76,17 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 			finish();
 		}
 	};
+	
+	private Integer getCommentIndex(ArrayList<?> theArrayList, PostModel theTargetModel){
+		for(int i = 0; i < theArrayList.size(); i++){
+			Log.w("EditCommentActivity",((PostModel) theArrayList.get(i)).getCommentText() + " :: " + theTargetModel.getCommentText());
+			if (((PostModel) theArrayList.get(i)).getCommentText().contains(theTargetModel.getCommentText()))
+				return i;
+		}
+		
+		return -11;
+		
+	}
 
 	/*
 	 * (non-Javadoc)

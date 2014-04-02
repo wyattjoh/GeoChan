@@ -2,7 +2,7 @@ package ca.ualberta.cs.models;
 
 public class EditPostModel {
 	private static EditPostModel singleton = null;
-	private PostModel theParent = null;
+	private static PostModel theParent = null;
 	private PostModel thePost = null;
 	
 	public static EditPostModel getInstance() {
@@ -28,7 +28,7 @@ public class EditPostModel {
 	/**
 	 * @return the theParent
 	 */
-	public PostModel getTheParent() {
+	public static PostModel getTheParent() {
 		return theParent;
 	}
 
