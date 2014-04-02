@@ -14,11 +14,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
+import ca.ualberta.cs.models.TopicModel;
 
 public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	public static final String IS_NEW = "IS_NEW_TOPIC";
@@ -62,15 +64,35 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
 		saveButton.setText(getSaveButtonText());
 
-		Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
-		Location temploc = ActiveUserModel.getInstance().getUser().getLocation();
-		distanceButton.setText(String.valueOf(temploc.getLatitude() + " , " +
-				String.valueOf(temploc.getLongitude())));
+
 		
 		if (theEditPostModel.isNewPost()) {
 			saveButton.setOnClickListener(getNewOnClickListener());
+			
+			// set the distance button
+			Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
+			Location temploc = theModel.getLocation();
+			distanceButton.setText(String.valueOf(temploc.getLatitude() + " , " +
+					String.valueOf(temploc.getLongitude())));
+			
 		} else {
 			saveButton.setOnClickListener(getUpdateOnClickListener());
+			
+			// set the title to model title
+			TextView titleText = (TextView) findViewById(R.id.titleTextField);
+			if (theModel.getClass().equals(TopicModel.class)) {
+				titleText.setText(((TopicModel) theModel).getTitle());
+			}
+			
+			// set the comment text
+			TextView commentText = (TextView) findViewById(R.id.commentTextField);
+			commentText.setText(theModel.getCommentText());
+			
+			Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
+			Location temploc = theModel.getLocation();
+			distanceButton.setText(String.valueOf(temploc.getLatitude() + " , " +
+					String.valueOf(temploc.getLongitude())));
+			
 		}
 
 		// get photo button
@@ -84,6 +106,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				getPictureIntent();
 			}
 		});
+		
 		if (theEditPostModel.isNewPost() && theModel.hasPicture()) {
 			// get and set image view
 			ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);

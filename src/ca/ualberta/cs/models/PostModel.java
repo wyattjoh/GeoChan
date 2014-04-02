@@ -30,6 +30,7 @@ public abstract class PostModel {
 	public PostModel(UserModel theUser){
 		this();
 		this.postedBy = theUser;
+		this.location = theUser.getLocation();
 	}
 	
 	public void incrementScore(){

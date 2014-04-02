@@ -58,7 +58,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 		this.theController = new TopicModelController();
 		
 		// get the post to edit
-		if (theEditPostModel.isNewPost()){
+		if (!theEditPostModel.isNewPost()){
 			theModel = (TopicModel) theEditPostModel.getThePost();
 		}
 	}
