@@ -11,8 +11,7 @@
         android:id="@+id/cellActiveArea"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="0.14"
-        android:onClick="cellClicked" >
+        android:layout_weight="0.14" >
 
         <LinearLayout
             android:id="@+id/summaryRow"

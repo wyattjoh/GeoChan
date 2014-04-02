@@ -35,8 +35,7 @@ public enum MainActivityFragmentComponent {
 			// Setup the adapter
 			TopicModelList theTopicModelList = TopicModelList.getInstance();
 
-			adapter = new TopicListViewAdapter(theActivity,
-					theTopicModelList.getArrayList());
+			adapter = new TopicListViewAdapter(theActivity, theTopicModelList);
 			topicListView.setAdapter(adapter);
 			
 			theTopicModelList.registerListeningAdapter(adapter);
@@ -68,8 +67,7 @@ public enum MainActivityFragmentComponent {
 			// Setup the adapter
 			FavoriteTopicModelList theFavoriteTopicModelList = FavoriteTopicModelList.getInstance();
 
-			adapter = new TopicListViewAdapter(theActivity,
-					theFavoriteTopicModelList.getArrayList());
+			adapter = new TopicListViewAdapter(theActivity, theFavoriteTopicModelList);
 			topicListView.setAdapter(adapter);
 			
 			theFavoriteTopicModelList.registerListeningAdapter(adapter);
@@ -100,8 +98,7 @@ public enum MainActivityFragmentComponent {
 			// Setup the adapter
 			ReadLaterTopicModelList theReadLaterTopicList = ReadLaterTopicModelList.getInstance();
 
-			adapter = new TopicListViewAdapter(theActivity,
-					theReadLaterTopicList.getArrayList());
+			adapter = new TopicListViewAdapter(theActivity, theReadLaterTopicList);
 			topicListView.setAdapter(adapter);
 			
 			theReadLaterTopicList.registerListeningAdapter(adapter);

@@ -287,10 +287,11 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		// Add comments
 		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
+		
+		CommentModelList theCommentModelList = CommentModelList.getInstanceFromParent(theModel);
 
 		// Has children!
-		thePostAdapter = new CommentListViewAdapter(this,
-				theModel.getChildrenComments());
+		thePostAdapter = new CommentListViewAdapter(this, theCommentModelList);
 		TopicModelList.getInstance().registerListeningAdapter(thePostAdapter);
 		commentsListView.setAdapter(thePostAdapter);
 
