@@ -99,8 +99,14 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		TextView scoreText = (TextView) theView
 				.findViewById(R.id.textViewScore);
 
-		String scoreString = (thePost.getScore() > 0) ? "+"
-				+ thePost.getScore().toString() : thePost.getScore().toString();
+		if (thePost.getScore() >= 0) {
+			scoreText.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_action_good, 0, 0, 0);
+		}
+		else {
+			scoreText.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_action_bad, 0, 0, 0);
+		}
+		
+		String scoreString = thePost.getScore().toString();
 		scoreText.setText(scoreString);
 
 		// Fill picture
