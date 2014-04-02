@@ -7,6 +7,7 @@ import android.widget.EditText;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicModelController;
 import ca.ualberta.cs.models.CurrentUserPostModelFactory;
+import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
 
 public class EditTopicActivity extends EditPostActivity<TopicModel> {
@@ -52,13 +53,14 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.views.EditPostActivity#onCreate(android.os.Bundle)
 	 */
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		
+	protected void setupEditPost() {		
 		// Get the controller
 		this.theController = new TopicModelController();
+		
+		// get the post to edit
+		if (theEditPostModel.isNewPost()){
+			theModel = (TopicModel) theEditPostModel.getThePost();
+		}
 	}
 
 	/* (non-Javadoc)

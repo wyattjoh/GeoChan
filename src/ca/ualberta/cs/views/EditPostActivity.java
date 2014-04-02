@@ -37,7 +37,9 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_post);
 		this.theLocation = ActiveUserModel.getInstance().getUser().getLocation();
-		// Populate the views
+		
+		// Populate the views w/ appropriate info
+		setupEditPost();
 		populateView();
 	}
 
@@ -51,6 +53,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	protected abstract String getSaveButtonText();
 	protected abstract OnClickListener getNewOnClickListener();
 	protected abstract OnClickListener getUpdateOnClickListener();
+	protected abstract void setupEditPost();
 
 	/**
 	 * update and populate the view so as to display the newestt information
@@ -81,6 +84,19 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				getPictureIntent();
 			}
 		});
+		if (theEditPostModel.isNewPost() && theModel.hasPicture()) {
+			// get and set image view
+			ImageView galleryThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
+			// galleryThumbnail.setVisibility(View.VISIBLE);
+
+			// create scaled image for display
+			Bitmap scaledBitmap = scaleBitMapToFit(imageBitmap, galleryThumbnail);
+
+			// set the view image o the selected image
+			galleryThumbnail.setImageBitmap(scaledBitmap);
+			imageBitmap = scaledBitmap;
+		}
+		
 		
 		// get cancel button
 		Button cancelButton = (Button) findViewById(R.id.distanceButton);

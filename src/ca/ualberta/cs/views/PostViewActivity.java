@@ -21,6 +21,7 @@ import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.CommentListViewAdapter;
 import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
@@ -46,6 +47,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	protected void replyToPost() {
 		EditPostModel theEditPostModel = EditPostModel.getInstance();
 		theEditPostModel.setTheParent(theModel);
+		theEditPostModel.setThePost(null);
 		
 		Intent intent = new Intent(this, EditCommentActivity.class);
 		startActivity(intent);
@@ -60,8 +62,14 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		theEditPostModel.setThePost(getSelectedModel());
 		theEditPostModel.setTheParent(theModel);
 		
-		Intent intent = new Intent(this, EditCommentActivity.class);
-		startActivity(intent);
+		if (theModel.getClass() == CommentModel.class) {
+			Intent intent = new Intent(this, EditCommentActivity.class);
+			startActivity(intent);
+		}
+		else{
+			Intent intent = new Intent(this, EditTopicActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	protected CommentListViewAdapter thePostAdapter;

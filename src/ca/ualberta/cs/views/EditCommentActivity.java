@@ -45,11 +45,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 	 * 
 	 * @see ca.ualberta.cs.views.EditPostActivity#onCreate(android.os.Bundle)
 	 */
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-
+	protected void setupEditPost() {
 		if (theEditPostModel.isNewPost()) {
 			theModel = new CommentModel(ActiveUserModel.getInstance().getUser());
 		}
