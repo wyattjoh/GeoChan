@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.controllers.NetworkInterfaceController;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
@@ -110,26 +111,6 @@ public class MainActivity extends FragmentActivity {
 	ViewPager mViewPager;
 
 	BroadcastReceiver connectionBroadcastReceiver = null;
-
-	/**
-	 * Called when the cell is clicked. Starts the detail view activity
-	 * 
-	 * @param v The view that was clicked
-	 */
-	public void cellClicked(View v) {
-		// Get the selected tag position
-		Integer position = (Integer) v.getTag();
-
-		// Get the model list
-		TopicModelList topicModelList = TopicModelList.getInstance();
-
-		// Mark the selected model
-		topicModelList.setSelection(position.intValue());
-
-		// Start intent
-		Intent intent = new Intent(this, TopicViewActivity.class);
-		startActivity(intent);
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -230,13 +211,15 @@ public class MainActivity extends FragmentActivity {
 		case R.id.action_sortLatestGreatest:
 			PostListController.setSort(PostListController.SORT_LATEST_GREATEST);
 			return true;
-		case R.id.action_sortDefault:
-			PostListController.setSort(PostListController.SORT_DEFAULT);
+		case R.id.action_sortPicture:
+			PostListController.setSort(PostListController.SORT_PICTURE);
 			return true;
 		case R.id.action_logout:
 			logout();
 			return true;
-
+		case R.id.refreshButton:
+			NetworkInterfaceController.refreshPosts();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -249,6 +232,17 @@ public class MainActivity extends FragmentActivity {
 	protected void onStart() {
 		super.onStart();
 
+
+	}
+
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
 		// Must be first thing that is started, sets up contexts
 		createSharedSingletons(getApplicationContext());
 
@@ -285,6 +279,8 @@ public class MainActivity extends FragmentActivity {
 	 */
 	protected void newPost() {
 		Intent intent = new Intent(this, EditTopicActivity.class);
+		intent.putExtra(EditPostActivity.IS_NEW, true);
+
 		startActivity(intent);
 	}
 

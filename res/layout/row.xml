@@ -3,27 +3,29 @@
     android:id="@+id/postCell"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/rowborder"
     android:gravity="left"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:id="@+id/cellActiveArea"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.14"
-        android:onClick="cellClicked" >
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.14" >
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
+            android:id="@+id/summaryRow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.14" >
+            android:layout_height="wrap_content" >
 
             <ImageView
                 android:id="@+id/imageViewPicture"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.13"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.10"
+                android:cropToPadding="true"
+                android:maxHeight="50dp"
+                android:maxWidth="50dp"
                 android:scaleType="centerCrop"
                 android:src="@android:drawable/ic_menu_gallery" />
 
@@ -36,7 +38,7 @@
                 android:text="Title" />
 
             <RelativeLayout
-                android:id="@+id/RelativeLayout1"
+                android:id="@+id/rightSummaryRow"
                 android:layout_width="74dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.02"
@@ -46,82 +48,63 @@
                     android:id="@+id/textViewComments"
                     android:layout_width="42dp"
                     android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/imageViewComments"
                     android:layout_alignBottom="@+id/imageViewComments"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:gravity="center"
-                    android:text="5" />
+                    android:text="5"
+                    android:drawableLeft="@android:drawable/sym_action_chat" />
 
                 <TextView
                     android:id="@+id/textViewScore"
                     android:layout_width="match_parent"
-                    android:layout_height="59dp"
+                    android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/textViewComments"
                     android:gravity="center"
                     android:text="Score"
-                    android:textColor="@color/blueColor" />
-
-                <ImageView
-                    android:id="@+id/imageViewComments"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/textViewComments"
-                    android:src="@android:drawable/sym_action_chat" />
+                    android:drawableLeft="@drawable/ic_action_good" />
 
             </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/detailsRow"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/linearLayout1" >
-
-            <ImageView
-                android:id="@+id/imageViewAuthor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_person" />
+            android:layout_below="@+id/summaryRow"
+            android:baselineAligned="true" >
 
             <TextView
                 android:id="@+id/textViewAuthor"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_weight="0.3"
+                android:drawableLeft="@drawable/ic_action_person"
+                android:gravity="center_vertical|center_horizontal"
                 android:text="Author" />
-
-            <ImageView
-                android:id="@+id/imageViewLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_menu_mylocation" />
 
             <TextView
                 android:id="@+id/textViewLocation"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_weight="0.3"
+                android:drawableLeft="@drawable/ic_action_place"
+                android:gravity="center_vertical|center_horizontal"
+                android:padding="2dp"
                 android:text="Location" />
-
-            <ImageView
-                android:id="@+id/imageViewAge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:src="@android:drawable/ic_menu_recent_history" />
 
             <TextView
                 android:id="@+id/textViewAge"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_weight="0.3"
+                android:drawableLeft="@drawable/ic_action_time"
+                android:gravity="center_vertical|center_horizontal"
                 android:text="DatePosted" />
         </LinearLayout>
     </RelativeLayout>

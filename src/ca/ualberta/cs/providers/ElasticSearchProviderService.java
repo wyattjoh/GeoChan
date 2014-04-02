@@ -30,7 +30,7 @@ public class ElasticSearchProviderService extends
 
 		for (int i = 0; i < size; i++) {
 			ElasticSearchOperationResponse theResponse = result[i];
-			ElasticSearchProviderServiceType requestType = theResponse.getRequestType();
+			ElasticSearchProviderServiceHandler requestType = theResponse.getRequestType();
 			requestType.onPostExecute(theResponse);
 		}
 
@@ -49,7 +49,7 @@ public class ElasticSearchProviderService extends
 
 		for (int i = 0; i < size; i++) {
 			ElasticSearchOperationRequest theRequest = requests[i];
-			ElasticSearchProviderServiceType requestType = theRequest.getRequestType();
+			ElasticSearchProviderServiceHandler requestType = theRequest.getRequestType();
 			response[i] = requestType.doInBackground(theRequest);
 		}
 

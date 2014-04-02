@@ -1,20 +1,24 @@
 package ca.ualberta.cs.adapters;
 
-import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.PostModel;
-import ca.ualberta.cs.views.EditPostActivity;
+import ca.ualberta.cs.models.PostModelList;
+import ca.ualberta.cs.views.TopicViewActivity;
 
 /**
  * 
@@ -23,13 +27,17 @@ import ca.ualberta.cs.views.EditPostActivity;
  */
 
 public abstract class PostListViewAdapter<T extends PostModel> extends
-		ArrayAdapter<T> {
+		ArrayAdapter<T> implements OnClickListener {
 	private LayoutInflater layoutInflater = null;
+	protected PostModelList<T> theArrayList;
+	protected Activity theActivity;
 
-	public PostListViewAdapter(Activity activity, ArrayList<T> arrayList) {
-		super(activity, R.layout.row, arrayList);
+	public PostListViewAdapter(Activity activity, PostModelList<T> arrayList) {
+		super(activity, R.layout.row, arrayList.getArrayList());
 		// TODO Auto-generated constructor stub
 		this.layoutInflater = activity.getLayoutInflater();
+		this.theActivity = activity;
+		this.theArrayList = arrayList;
 	}
 
 	@Override
@@ -61,6 +69,7 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		RelativeLayout cellActiveArea = (RelativeLayout) theView
 				.findViewById(R.id.cellActiveArea);
 		cellActiveArea.setTag(thePosition);
+		cellActiveArea.setOnClickListener(this);
 
 		// Fill date
 		TextView dateTextView = (TextView) theView
@@ -77,45 +86,44 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		// Fill comment count
 		TextView commentTextView = (TextView) theView
 				.findViewById(R.id.textViewComments);
-		if (thePost.getChildrenComments() == null) {
-			commentTextView.setText("0");
-		} else {
-			String commentCount = Integer.toString(thePost
-					.getChildrenComments().size());
-			commentTextView.setText(commentCount);
-		}
+		commentTextView.setText(Integer.toString(thePost.getChildrenComments()
+				.size()));
 
 		// Fill location
 		// TODO: Add location text
 		TextView locationText = (TextView) theView
 				.findViewById(R.id.textViewLocation);
 		if (thePost.getLocation() != null) {
-			locationText.setText(thePost.getLocation().toString());
+			Location myLocation = new Location(ActiveUserModel.getInstance().getUser().getLocation());
+			float distanceToPost = (thePost.getLocation().distanceTo(myLocation))/1000;
+			String distanceButtonText = String.format("%.2f",distanceToPost) + "km";
+			locationText.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
+		} else {
+			locationText.setText(thePost.getLocationAsString());
 		}
+
 
 		// Fill score
 		TextView scoreText = (TextView) theView
 				.findViewById(R.id.textViewScore);
-		String scoreString = "";
-		if (thePost.getScore() > 0) {
-			scoreString = "+";
-		} else if (thePost.getScore() < 0) {
-			scoreString = "-";
+
+		if (thePost.getScore() >= 0) {
+			scoreText.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_action_good, 0, 0, 0);
 		}
-		scoreString = scoreString + thePost.getScore().toString();
+		else {
+			scoreText.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_action_bad, 0, 0, 0);
+		}
+		
+		String scoreString = thePost.getScore().toString();
 		scoreText.setText(scoreString);
 
-		
-		System.out.println("PostPic: " + thePost.getCommentText() + " " + thePost.hasPicture());
 		// Fill picture
 		ImageView imageView = (ImageView) theView
 				.findViewById(R.id.imageViewPicture);
-		Bitmap thePicture = thePost.getPicture();
-		if (thePicture == null) {
+		if (thePost.hasPicture()) {
+			imageView.setImageBitmap(thePost.getPicture());
+		} else {
 			imageView.setVisibility(View.GONE);
-		}
-		else {
-			imageView.setImageBitmap(thePicture);
 		}
 
 		populateCellTitle(theView, theObject);
@@ -132,12 +140,49 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 	 */
 	public Bitmap scaleBitMapToImageView(Bitmap bitmapImage,
 			ImageView imageViewScale) {
-		System.out.println("Height"+imageViewScale.getHeight()+" Width"+imageViewScale.getWidth());
+		System.out.println("Height" + imageViewScale.getHeight() + " Width"
+				+ imageViewScale.getWidth());
 		Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmapImage,
 				imageViewScale.getWidth(), imageViewScale.getHeight(),
 				imageViewScale.getFilterTouchesWhenObscured());
 		return scaledBitmap;
 	}
 
+	/**
+	 * Trims a string to a max length
+	 * 
+	 * @param theString
+	 *            the string to trim
+	 * @param theLength
+	 *            the max length of the string
+	 * @return a trimmed string
+	 */
+	protected String trimString(String theString, int theLength) {
+		if (theString.length() > theLength) {
+			return theString.substring(0, theLength);
+		} else {
+			return theString;
+		}
+	}
+
 	abstract protected void populateCellTitle(View theView, T thePost);
+	abstract protected Class<?> getViewClass();
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.view.View.OnClickListener#onClick(android.view.View)
+	 */
+	@Override
+	public void onClick(View v) {
+		// Get the selected tag position
+		Integer position = (Integer) v.getTag();
+
+		// Mark the selected model
+		this.theArrayList.addToSelectionStackFromPosition(position.intValue());
+
+		// Start intent
+		Intent intent = new Intent(this.theActivity, getViewClass());
+		this.theActivity.startActivity(intent);
+	}
 }

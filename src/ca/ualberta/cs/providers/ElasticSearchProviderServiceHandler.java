@@ -19,12 +19,13 @@ import ca.ualberta.cs.models.ElasticSearchOperationFactory;
 import ca.ualberta.cs.models.ElasticSearchOperationRequest;
 import ca.ualberta.cs.models.ElasticSearchOperationResponse;
 import ca.ualberta.cs.models.ElasticSearchResponse;
+import ca.ualberta.cs.models.ElasticSearchSearchResponse;
 import ca.ualberta.cs.models.TopicModel;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public enum ElasticSearchProviderServiceType {
+public enum ElasticSearchProviderServiceHandler {
 	ADD_TOPIC {
 
 		@Override
@@ -44,7 +45,7 @@ public enum ElasticSearchProviderServiceType {
 				String jsonResponse = getStringFromResponse(response);
 
 				Log.w("ElasticSearchProviderService", jsonResponse);
-
+				
 				// We have to tell GSON what type we expect
 				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<TopicModel>>() {
 				}.getType();
@@ -52,14 +53,7 @@ public enum ElasticSearchProviderServiceType {
 				ElasticSearchResponse<TopicModel> esResponse = gson.fromJson(
 						jsonResponse, elasticSearchResponseType);
 				
-				String theId = esResponse.getId();
-				theTopic.setId(theId);
-				
-				int theVersion = esResponse.getVersion();
-				theTopic.setVersion(theVersion);
-				
-				ElasticSearchOperationResponse theResponse = ElasticSearchOperationFactory.responseFromRequest(theRequest);
-				theResponse.setTopicModel(theTopic);
+				ElasticSearchOperationResponse theResponse = ElasticSearchOperationFactory.responseFromRequest(theRequest, esResponse);
 				
 				return theResponse;
 			} catch (UnsupportedEncodingException e) {
@@ -88,13 +82,7 @@ public enum ElasticSearchProviderServiceType {
 		public ElasticSearchOperationResponse doInBackground(ElasticSearchOperationRequest theRequest) {
 			TopicModel theTopic = theRequest.getTopicModel();
 			
-			HttpPost request;
-			if (theTopic.getVersion() > 1) {
-				request = new HttpPost(getVersionedEndpoint("topic", theTopic));
-			}
-			else {
-				request = new HttpPost(getEndpointUrl("topic"));
-			}
+			HttpPost request = new HttpPost(getVersionedEndpoint("topic", theTopic));
 
 			String jsonString = gson.toJson(theTopic);
 
@@ -107,6 +95,10 @@ public enum ElasticSearchProviderServiceType {
 				String jsonResponse = getStringFromResponse(response);
 
 				Log.w("ElasticSearchProviderService", jsonResponse);
+				
+				int responseCode = response.getStatusLine().getStatusCode();
+				
+				// TODO: Handle a 409 error (When a version mismatch occurs)
 
 				// We have to tell GSON what type we expect
 				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<TopicModel>>() {
@@ -115,14 +107,7 @@ public enum ElasticSearchProviderServiceType {
 				ElasticSearchResponse<TopicModel> esResponse = gson.fromJson(
 						jsonResponse, elasticSearchResponseType);
 				
-				String theId = esResponse.getId();
-				theTopic.setId(theId);
-				
-				int theVersion = esResponse.getVersion();
-				theTopic.setVersion(theVersion);
-				
-				ElasticSearchOperationResponse theResponse = ElasticSearchOperationFactory.responseFromRequest(theRequest);
-				theResponse.setTopicModel(theTopic);
+				ElasticSearchOperationResponse theResponse = ElasticSearchOperationFactory.responseFromRequest(theRequest, esResponse);
 				
 				return theResponse;
 			} catch (UnsupportedEncodingException e) {
@@ -142,6 +127,54 @@ public enum ElasticSearchProviderServiceType {
 		@Override
 		public void onPostExecute(ElasticSearchOperationResponse theResponse) {
 			theResponse.getPostModelList().update(theResponse.getTopicModel());
+		}
+		
+	},
+	
+	GET_POSTS {
+
+		@Override
+		public ElasticSearchOperationResponse doInBackground(
+				ElasticSearchOperationRequest theRequest) {
+			HttpPost request = new HttpPost(getEndpointUrl("topic/_search"));
+			String query = theRequest.generateSearchQueryString();
+			
+			try {
+				StringEntity stringentity = new StringEntity(query);
+				request.setHeader("Accept","application/json");
+				request.setEntity(stringentity);
+				
+				HttpResponse response = client.execute(request);
+				
+				String jsonResponse = getStringFromResponse(response);
+				
+				// We have to tell GSON what type we expect
+				Type elasticSearchResponseType = new TypeToken<ElasticSearchSearchResponse<TopicModel>>() {
+				}.getType();
+
+				ElasticSearchSearchResponse<TopicModel> esResponse = gson.fromJson(
+						jsonResponse, elasticSearchResponseType);
+				
+				ElasticSearchOperationResponse theResponse = ElasticSearchOperationFactory.responseFromRequest(theRequest, esResponse);
+				
+				return theResponse;				
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return null;
+		}
+
+		@Override
+		public void onPostExecute(ElasticSearchOperationResponse theResponse) {
+			theResponse.getPostModelList().setArrayList(theResponse.getTheTopicModels());
 		}
 		
 	};
