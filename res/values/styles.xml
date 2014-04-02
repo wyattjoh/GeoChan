@@ -24,5 +24,8 @@
         <item name="android:padding">16dp</item>
     </style>
     <color name="blueColor">#007aff</color>
+    <color name="whiteSmoke">#F5F5F4</color>
+    <color name="darkGray">#6e6e6e</color>
+    <color name="white">#FFFF</color>
 
 </resources>
