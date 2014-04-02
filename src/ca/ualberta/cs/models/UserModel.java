@@ -14,12 +14,17 @@ import ca.ualberta.cs.providers.LocationProvider;
  */
 public class UserModel {
 	private String userName;
+	private String userHash;
 	private Location location;
 	private ArrayList<String> upVoteList = new ArrayList<String>();
 	private ArrayList<String> downVoteList = new ArrayList<String>();
 
 	public UserModel(String theUserName) {
 		userName = theUserName;
+		this.location = new Location("");
+		this.location.setLatitude(0);
+		this.location.setLongitude(0);
+		this.userHash = userName + this.location.toString();
 	}
 	
 	public ArrayList<String> getUpVoteList() {

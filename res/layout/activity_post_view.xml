@@ -88,7 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/mutateButtons"
                 android:layout_alignRight="@+id/mutateButtons"
-                android:layout_below="@+id/mutateButtons" >
+                android:layout_below="@+id/mutateButtons"
+                android:gravity="center_vertical|center_horizontal" >
 
                 <TextView
                     android:id="@+id/authorTextView"

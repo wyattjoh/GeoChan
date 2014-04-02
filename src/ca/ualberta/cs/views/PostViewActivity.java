@@ -248,6 +248,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 					}
 				}
 			}
+			
 		});
 
 		// Add Author
@@ -272,21 +273,26 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		// Distance button
 		Button distanceButton = (Button) findViewById(R.id.distanceButton);
 		if (theModel.getLocation() != null) {
+/*			
+			 if (theLoggedInUser.getLocation() != null) {
+				Location myLocation = new Location(ActiveUserModel.getInstance().getUser().getLocation());
+				float distanceToPost = (thePost.getLocation().distanceTo(myLocation))/1000;
+				String distanceButtonText = String.format("%.2f",distanceToPost) + "km";
+				distanceButton.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
+			} else {
+			}
+*/					
 			distanceButton.setText(theModel.getLocationAsString());
-/*			Location myLocation = new Location(ActiveUserModel.getInstance().getUser().getLocation());
-			float distanceToPost = theModel.getLocation().distanceTo(myLocation);
-			String distanceButtonText = String.valueOf(distanceToPost) + " m";
-			distanceButton.setText(distanceButtonText.toCharArray(), 0,
-					distanceButtonText.length());
-*/
+			
 		}
 
 		// Add comments
 		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
+		
+		CommentModelList theCommentModelList = CommentModelList.getInstanceFromParent(theModel);
 
 		// Has children!
-		thePostAdapter = new CommentListViewAdapter(this,
-				theModel.getChildrenComments());
+		thePostAdapter = new CommentListViewAdapter(this, theCommentModelList);
 		TopicModelList.getInstance().registerListeningAdapter(thePostAdapter);
 		commentsListView.setAdapter(thePostAdapter);
 

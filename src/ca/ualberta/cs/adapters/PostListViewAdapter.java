@@ -1,19 +1,24 @@
 package ca.ualberta.cs.adapters;
 
-import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.PostModel;
+import ca.ualberta.cs.models.PostModelList;
+import ca.ualberta.cs.views.TopicViewActivity;
 
 /**
  * 
@@ -22,13 +27,17 @@ import ca.ualberta.cs.models.PostModel;
  */
 
 public abstract class PostListViewAdapter<T extends PostModel> extends
-		ArrayAdapter<T> {
+		ArrayAdapter<T> implements OnClickListener {
 	private LayoutInflater layoutInflater = null;
+	protected PostModelList<T> theArrayList;
+	protected Activity theActivity;
 
-	public PostListViewAdapter(Activity activity, ArrayList<T> arrayList) {
-		super(activity, R.layout.row, arrayList);
+	public PostListViewAdapter(Activity activity, PostModelList<T> arrayList) {
+		super(activity, R.layout.row, arrayList.getArrayList());
 		// TODO Auto-generated constructor stub
 		this.layoutInflater = activity.getLayoutInflater();
+		this.theActivity = activity;
+		this.theArrayList = arrayList;
 	}
 
 	@Override
@@ -60,6 +69,7 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		RelativeLayout cellActiveArea = (RelativeLayout) theView
 				.findViewById(R.id.cellActiveArea);
 		cellActiveArea.setTag(thePosition);
+		cellActiveArea.setOnClickListener(this);
 
 		// Fill date
 		TextView dateTextView = (TextView) theView
@@ -84,15 +94,27 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		TextView locationText = (TextView) theView
 				.findViewById(R.id.textViewLocation);
 		if (thePost.getLocation() != null) {
+			Location myLocation = new Location(ActiveUserModel.getInstance().getUser().getLocation());
+			float distanceToPost = (thePost.getLocation().distanceTo(myLocation))/1000;
+			String distanceButtonText = String.format("%.2f",distanceToPost) + "km";
+			locationText.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
+		} else {
 			locationText.setText(thePost.getLocationAsString());
 		}
+
 
 		// Fill score
 		TextView scoreText = (TextView) theView
 				.findViewById(R.id.textViewScore);
 
-		String scoreString = (thePost.getScore() > 0) ? "+"
-				+ thePost.getScore().toString() : thePost.getScore().toString();
+		if (thePost.getScore() >= 0) {
+			scoreText.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_action_good, 0, 0, 0);
+		}
+		else {
+			scoreText.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_action_bad, 0, 0, 0);
+		}
+		
+		String scoreString = thePost.getScore().toString();
 		scoreText.setText(scoreString);
 
 		// Fill picture
@@ -144,4 +166,23 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 	}
 
 	abstract protected void populateCellTitle(View theView, T thePost);
+	abstract protected Class<?> getViewClass();
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.view.View.OnClickListener#onClick(android.view.View)
+	 */
+	@Override
+	public void onClick(View v) {
+		// Get the selected tag position
+		Integer position = (Integer) v.getTag();
+
+		// Mark the selected model
+		this.theArrayList.addToSelectionStackFromPosition(position.intValue());
+
+		// Start intent
+		Intent intent = new Intent(this.theActivity, getViewClass());
+		this.theActivity.startActivity(intent);
+	}
 }

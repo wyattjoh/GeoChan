@@ -36,7 +36,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_post);
-		
+		this.theLocation = ActiveUserModel.getInstance().getUser().getLocation();
 		// Populate the views
 		populateView();
 	}
@@ -57,9 +57,13 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	 */
 	protected void populateView() {
 		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
-		
 		saveButton.setText(getSaveButtonText());
 
+		Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
+		Location temploc = ActiveUserModel.getInstance().getUser().getLocation();
+		distanceButton.setText(String.valueOf(temploc.getLatitude() + " , " +
+				String.valueOf(temploc.getLongitude())));
+		
 		if (theEditPostModel.isNewPost()) {
 			saveButton.setOnClickListener(getNewOnClickListener());
 		} else {
@@ -161,6 +165,15 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 					theCurrentLocation.setLongitude(retLongitude);
 					this.theLocation = theCurrentLocation;
 					
+					Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
+					distanceButton.setText(String.valueOf(this.theLocation.getLatitude() + " , " +
+							String.valueOf(this.theLocation.getLongitude())));
+					
+					Toast.makeText(this, "Current Location is now:" +
+							String.valueOf(this.theLocation.getLatitude()) + " , " +
+							String.valueOf(this.theLocation.getLongitude()),
+							Toast.LENGTH_LONG).show();
+					
 				} catch (Exception e) {
 					Toast.makeText(this, "FAILED " +
 							Double.toString(data.getDoubleExtra("extLatitude", 0)) +
@@ -168,7 +181,12 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 							Toast.LENGTH_LONG).show();
 				}
 			}
-			//on result code cancel, don't do anything
+			if (resultCode == RESULT_CANCELED) {
+				Toast.makeText(this, "Location is still: s" +
+						String.valueOf(this.theLocation.getLatitude()) + " , " +
+						String.valueOf(this.theLocation.getLongitude()),
+						Toast.LENGTH_LONG).show();
+			}
 		}
 	}
 
