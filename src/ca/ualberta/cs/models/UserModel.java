@@ -6,6 +6,7 @@ package ca.ualberta.cs.models;
 import java.util.ArrayList;
 
 import android.location.Location;
+import android.util.Log;
 
 /**
  * @author wyatt
@@ -24,6 +25,7 @@ public class UserModel {
 		this.location.setLatitude(0);
 		this.location.setLongitude(0);
 		this.userHash = userName + this.location.toString();
+		Log.w("UserModel", this.userHash);
 	}
 	
 	public ArrayList<String> getUpVoteList() {
@@ -60,5 +62,10 @@ public class UserModel {
 
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+	
+	public String getUserHash(){
+		return this.userHash;
+		
 	}
 }

@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/scorePostTextView" >
+                android:layout_below="@+id/editButton" >
 
                 <ImageButton
                     android:id="@+id/downVoteButton"
@@ -117,6 +117,16 @@
                     android:text="Age"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/editButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/scorePostTextView"
+                android:layout_centerHorizontal="true"
+                android:text="Edit"
+                android:visibility="gone" />
+
         </RelativeLayout>
 
         <ListView

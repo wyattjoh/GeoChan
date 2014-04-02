@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +45,19 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	 */
 	protected void replyToPost() {
 		EditPostModel theEditPostModel = EditPostModel.getInstance();
+		theEditPostModel.setTheParent(theModel);
+		
+		Intent intent = new Intent(this, EditCommentActivity.class);
+		startActivity(intent);
+	}
+	
+	/**
+	 * starts the edit topic activity to edit the selected post
+	 */
+	protected void editPost() {
+		// set the edit post model attributes
+		EditPostModel theEditPostModel = EditPostModel.getInstance();
+		theEditPostModel.setThePost(getSelectedModel());
 		theEditPostModel.setTheParent(theModel);
 		
 		Intent intent = new Intent(this, EditCommentActivity.class);
@@ -142,6 +156,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		startActivity(intent);
 	}
 
+	/**
+	 * populates the view with the proper values
+	 */
 	protected void populateView() {
 		// Add comment
 		TextView commentView = (TextView) findViewById(R.id.commentTextView);
@@ -157,6 +174,22 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		scoreString = scoreString + theModel.getScore().toString();
 		scoreView.setText(scoreString);
 
+		// get the edit button if possible
+		if (theModel.getPostedBy().getUserHash().equals(ActiveUserModel.getInstance().getUser().getUserHash())){
+			// set the visibility to visible
+			Button editButton = (Button) findViewById(R.id.editButton);
+			editButton.setVisibility(View.VISIBLE);
+			
+			// add onclick listener
+			editButton.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					editPost();
+				}
+			});
+		}
+		
 		// Add Buttons
 		final ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
 		
