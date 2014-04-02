@@ -202,6 +202,19 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 						
 					}
 				}
+				else {
+					theLoggedInUser.removePostIdUpVoteList(theModel.getId());
+					theLoggedInUser.addPostIdDownVoteList(theModel.getId());
+					theModel.decrementScore();
+					theModel.decrementScore();
+					String string = "";
+					if (theModel.getScore() > 0) {
+						string = "+";
+					}
+
+					string = string + theModel.getScore().toString();
+					scoreView.setText(string);
+				}
 			}
 		});
 		
@@ -245,6 +258,19 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 						scoreView.setText(string);
 						
 					}
+				}
+				else {
+					theLoggedInUser.removePostIdDownVoteList(theModel.getId());
+					theLoggedInUser.addPostIdUpVoteList(theModel.getId());
+					theModel.incrementScore();
+					theModel.incrementScore();
+					String string = "";
+					if (theModel.getScore() > 0) {
+						string = "+";
+					}
+
+					string = string + theModel.getScore().toString();
+					scoreView.setText(string);
 				}
 			}
 			
