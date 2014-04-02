@@ -39,6 +39,36 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 			finish();
 		}
 	};
+	
+	OnClickListener upateOnClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			// Get the comment
+			EditText commentField = (EditText) findViewById(R.id.commentTextField);
+			String theComment = commentField.getText().toString();
+			
+			if (theComment.length() <= 0) {
+				failedDueToReason("Cannot create a comment without any text!");
+				return;
+			}
+			
+			// get model index
+			Integer modelIndex = theEditPostModel.getTheParent().getChildrenComments().indexOf(theModel);
+
+			// set the model text
+			theModel.setCommentText(theComment);
+
+			if (imageBitmap != null) {
+				// add the picture
+				theModel.setPicture(imageBitmap);
+			}
+
+			theController.updateComment(theModel, theEditPostModel.getTheParent(), modelIndex);
+
+			finish();
+		}
+	};
 
 	/*
 	 * (non-Javadoc)
@@ -94,6 +124,6 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 	@Override
 	protected OnClickListener getUpdateOnClickListener() {
 		// TODO Auto-generated method stub
-		return null;
+		return upateOnClickListener;
 	}
 }

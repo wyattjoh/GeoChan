@@ -25,4 +25,11 @@ public class TopicModelController {
 		theProvider.addTopic(theTopicModel, this.theTopicModelList);
 	}
 	
+	public void updateTopic(TopicModel theTopicModel){
+		// Get the provider
+		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();
+		// Add it to the list!
+		theProvider.updateTopic(theTopicModel, this.theTopicModelList);
+	}
+	
 }

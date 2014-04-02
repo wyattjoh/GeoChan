@@ -1,5 +1,7 @@
 package ca.ualberta.cs.controllers;
 
+import java.util.ArrayList;
+
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.PostModelList;
@@ -19,7 +21,15 @@ public class CommentModelController {
 		
 		// Get the provider
 		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();
+		theProvider.updateTopic((TopicModel) theParent.getMyFirstAncestor(), thePostModelList);
+	}
+	
+	public void updateComment(CommentModel theComment, PostModel theParent, Integer theModelIndex) {
+		ArrayList<CommentModel> theChildComments = (ArrayList<CommentModel>) theParent.getChildrenComments();
+		theChildComments.set(theModelIndex, theComment);
 		
+		// Get the provider
+		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();
 		theProvider.updateTopic((TopicModel) theParent.getMyFirstAncestor(), thePostModelList);
 	}
 }

@@ -99,7 +99,10 @@ public abstract class PostModel {
 		}
 		this.childrenComments.add(theChildComment);
 	}
-	/**
+	public void setChildComment(ArrayList<CommentModel> theNewComments){
+		this.childrenComments = theNewComments;
+	}
+	/*
 	 * end of auto generated setters and getters
 	 */
 

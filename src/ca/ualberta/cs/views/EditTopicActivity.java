@@ -44,8 +44,46 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 			// add the picture
 			theTopicModel.setPicture(imageBitmap);
 			theTopicModel.setLocation(theLocation);
+			
+			// create new topic on network
 			theController.newTopic(theTopicModel);
 
+			finish();
+		}
+	};
+	
+	private OnClickListener updateOnClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			// Get the title
+			EditText titleField = (EditText) findViewById(R.id.titleTextField);
+			String theTitle = titleField.getText().toString();
+			
+			if (theTitle.length() <= 0) {
+				failedDueToReason("Cannot create a topic with an empty title!");
+				return;
+			}
+			
+			theModel.setTitle(theTitle);
+
+			// Get the comment
+			EditText commentField = (EditText) findViewById(R.id.commentTextField);
+			String theComment = commentField.getText().toString();
+			
+			if (theComment.length() <= 0) {
+				failedDueToReason("Cannot create a topic with an empty comment!");
+				return;
+			}
+			
+			theModel.setCommentText(theComment);
+
+			// add the picture
+			theModel.setPicture(imageBitmap);
+			theModel.setLocation(theLocation);
+			
+			// edit topic on network
+			theController.updateTopic(theModel);
 			finish();
 		}
 	};
@@ -89,7 +127,6 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	 */
 	@Override
 	protected OnClickListener getUpdateOnClickListener() {
-		// TODO Auto-generated method stub
-		return null;
+		return updateOnClickListener;
 	}
 }

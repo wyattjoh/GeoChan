@@ -103,6 +103,13 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		// Populate the view!
 		populateView();
 	}
+	
+	@Override
+	protected void onStart(){
+		super.onStart();
+		// Populate the view!
+		populateView();
+	}
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onPrepareOptionsMenu(android.view.Menu)
