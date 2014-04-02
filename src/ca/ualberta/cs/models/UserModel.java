@@ -13,6 +13,7 @@ import android.location.Location;
  */
 public class UserModel {
 	private String userName;
+	private String userHash;
 	private Location location;
 	private ArrayList<String> upVoteList = new ArrayList<String>();
 	private ArrayList<String> downVoteList = new ArrayList<String>();
@@ -22,6 +23,7 @@ public class UserModel {
 		this.location = new Location("");
 		this.location.setLatitude(0);
 		this.location.setLongitude(0);
+		this.userHash = userName + this.location.toString();
 	}
 	
 	public ArrayList<String> getUpVoteList() {
