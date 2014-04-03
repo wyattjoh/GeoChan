@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,12 +17,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.NetworkInterfaceController;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.ReadLaterTopicModelList;
+import ca.ualberta.cs.models.TopicModelList;
 
 /**
  * 
@@ -31,6 +34,17 @@ import ca.ualberta.cs.models.ReadLaterTopicModelList;
  * @author wyatt
  */
 public class MainActivity extends FragmentActivity {
+	
+	/*
+	 * Intent request codes
+	 */
+	private static final int LOGIN_ACTIVITY = 1;
+	private static final int GET_LOCATION = 2;
+	
+	/*
+	 * Post sorting location
+	 */
+	private Location theSortLocation = new Location("");
 
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -118,9 +132,36 @@ public class MainActivity extends FragmentActivity {
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1) {
+		if (requestCode == LOGIN_ACTIVITY) {
 			if (resultCode == Activity.RESULT_OK) {
 				loginFlow();
+			}
+		} else if (requestCode == GET_LOCATION) {
+			if (resultCode == RESULT_OK) {
+				try {
+					Double retLatitude = data.getDoubleExtra("extLatitude", 0);
+					Double retLongitude = data
+							.getDoubleExtra("extLongitude", 0);
+
+					this.theSortLocation.setLatitude(retLatitude);
+					this.theSortLocation.setLongitude(retLongitude);
+					TopicModelList.getInstance().sortByProximityTo(this.theSortLocation);
+
+				} catch (Exception e) {
+					Toast.makeText(
+							this,
+							"FAILED "
+									+ Double.toString(data.getDoubleExtra(
+											"extLatitude", 0))
+									+ Double.toString(data.getDoubleExtra(
+											"extLongitude", 0)),
+							Toast.LENGTH_LONG).show();
+				}
+			}
+			if (resultCode == RESULT_CANCELED) {
+				this.theSortLocation = ActiveUserModel.getInstance().getUser().getLocation();
+				Toast.makeText(this, "Sorting by proximity to current location", Toast.LENGTH_LONG).show();
+				PostListController.setSort(PostListController.SORT_PROXIMITY);
 			}
 		}
 	}
@@ -212,6 +253,9 @@ public class MainActivity extends FragmentActivity {
 		case R.id.action_sortProximity:
 			PostListController.setSort(PostListController.SORT_PROXIMITY);
 			return true;
+		case R.id.action_sortProximityTo:
+			sortPostsByProximityTo();
+			return true;
 		case R.id.action_sortLatestGreatest:
 			PostListController.setSort(PostListController.SORT_LATEST_GREATEST);
 			return true;
@@ -299,6 +343,14 @@ public class MainActivity extends FragmentActivity {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
 	}
+	
+	/**
+	 * Selects the location to sort relative to
+	 */
+	protected void sortPostsByProximityTo() {
+		Intent intent = new Intent(this, LocationActivity.class);
+		startActivityForResult(intent, GET_LOCATION);
+	}
 
 	/**
 	 * Allows the user to log out
@@ -308,7 +360,7 @@ public class MainActivity extends FragmentActivity {
 		userController.performLogout();
 
 		Intent intent = new Intent(this, LoginActivity.class);
-		startActivityForResult(intent, 1);
+		startActivityForResult(intent, LOGIN_ACTIVITY);
 	}
 
 	/**
@@ -321,7 +373,7 @@ public class MainActivity extends FragmentActivity {
 			// continue
 		} else {
 			Intent intent = new Intent(this, LoginActivity.class);
-			startActivityForResult(intent, 1);
+			startActivityForResult(intent, LOGIN_ACTIVITY);
 		}
 	}
 }

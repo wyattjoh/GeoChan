@@ -21,6 +21,11 @@
         android:showAsAction="never"
         android:title="@string/action_sortProximityText"/>
     <item
+        android:id="@+id/action_sortProximityTo"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_sortProximityToText"/>
+    <item
         android:id="@+id/action_sortLatestGreatest"
         android:orderInCategory="100"
         android:showAsAction="never"

@@ -163,6 +163,22 @@ public abstract class PostModel {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+	/**
+	 * Location mapping function
+	 */
+	public ArrayList<Location> getLocationMapArray() {
+		ArrayList<Location> locationMapArray = new ArrayList<Location>();
+		if (this.childrenComments.isEmpty()) {
+			locationMapArray.add(this.location);
+		} else {
+			for (PostModel child : this.childrenComments) {
+				locationMapArray.addAll(child.getLocationMapArray());
+			}
+			locationMapArray.add(this.location);
+		}
+		return locationMapArray;
+	}
 
 	/**
 	 * Comparators
