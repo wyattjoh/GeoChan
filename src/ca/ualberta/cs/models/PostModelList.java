@@ -3,8 +3,10 @@ package ca.ualberta.cs.models;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Deque;
 
+import android.location.Location;
 import android.util.Log;
 import ca.ualberta.cs.adapters.PostListViewAdapter;
 
@@ -133,6 +135,24 @@ public class PostModelList<T extends PostModel> {
 			}
 		}
 
+		updateListeningAdapters();
+	}
+	
+	/*
+	 * Sorts theTopicModelArrayList by distance to a specified location
+	 */
+	public void sortByProximityTo(Location location) {
+		final Location proximitySortLocation = new Location(location);
+		Comparator<PostModel> proximityTo = new Comparator<PostModel>() {
+			@Override
+			public int compare(PostModel one, PostModel other) {
+				float distanceToOneLocation = proximitySortLocation.distanceTo(one.getLocation());
+				float distanceToOtherLocation = proximitySortLocation.distanceTo(other.getLocation());
+				return distanceToOneLocation < distanceToOtherLocation ? -1 : distanceToOneLocation > distanceToOtherLocation ? 1 : 0;
+			}
+		};
+		Collections.sort(this.postModelArrayList, proximityTo);
+		
 		updateListeningAdapters();
 	}
 

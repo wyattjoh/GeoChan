@@ -17,6 +17,7 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.PostModelList;
+import ca.ualberta.cs.views.MainActivity;
 
 /**
  * 
@@ -91,20 +92,12 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		// TODO: Add location text
 		TextView locationText = (TextView) theView
 				.findViewById(R.id.textViewLocation);
-		if (thePost.getLocation() != null) {
-			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
-				Location userLocation = new Location(ActiveUserModel.getInstance()
-					.getUser().getLocation());
-				float distanceToPost = userLocation.distanceTo(thePost.getLocation()) / 1000;
-				String distanceButtonText = String.format("%.2f", distanceToPost) + " km";
+		Location userLocation = new Location(ActiveUserModel.getInstance()
+				.getUser().getLocation());
+		float distanceToPost = userLocation.distanceTo(thePost.getLocation()) / 1000;
+		String distanceButtonText = String.format("%.2f", distanceToPost) + " km";
 
-				locationText.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
-			} else {
-				locationText.setText(thePost.getLocationAsString());
-			}
-		} else {
-			locationText.setText("Location");
-		}
+		locationText.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
 
 		// Fill score
 		TextView scoreText = (TextView) theView

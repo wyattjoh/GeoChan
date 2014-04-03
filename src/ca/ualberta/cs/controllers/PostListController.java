@@ -17,6 +17,7 @@ public class PostListController {
 	public static final int SORT_SCORE = 3;
 	public static final int SORT_DEFAULT = 2;
 	public static final int SORT_LATEST_GREATEST = 4;
+	
 
 	public static void setSort(final int theSortOrder) {
 		switch (theSortOrder) {
