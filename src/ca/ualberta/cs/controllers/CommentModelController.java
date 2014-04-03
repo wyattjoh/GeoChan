@@ -8,18 +8,19 @@ import ca.ualberta.cs.providers.ElasticSearchProvider;
 
 public class CommentModelController {
 	private PostModelList<TopicModel> thePostModelList;
-	
+
 	public CommentModelController(PostModelList<TopicModel> thePostModelList) {
 		this.thePostModelList = thePostModelList;
 	}
-	
+
 	public void addComment(CommentModel theComment, PostModel theParent) {
 		theParent.addChildComment(theComment);
 		theComment.setMyParent(theParent);
-		
+
 		// Get the provider
 		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();
-		
-		theProvider.updateTopic((TopicModel) theParent.getMyFirstAncestor(), thePostModelList);
+
+		theProvider.updateTopic((TopicModel) theParent.getMyFirstAncestor(),
+				thePostModelList);
 	}
 }

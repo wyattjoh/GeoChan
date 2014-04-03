@@ -22,10 +22,12 @@ import ca.ualberta.cs.providers.ElasticSearchProvider;
 public enum MainActivityFragmentComponent {
 	TOPICS_LIST {
 		public TopicListViewAdapter adapter;
-		
+
 		@Override
-		public void setupView(LayoutInflater theInflater, LinearLayout theLayout, FragmentActivity theActivity) {
-			View rootView = theInflater.inflate(R.layout.fragment_single_post_list, null);
+		public void setupView(LayoutInflater theInflater,
+				LinearLayout theLayout, FragmentActivity theActivity) {
+			View rootView = theInflater.inflate(
+					R.layout.fragment_single_post_list, null);
 			theLayout.addView(rootView);
 
 			// Populate list view
@@ -37,9 +39,9 @@ public enum MainActivityFragmentComponent {
 
 			adapter = new TopicListViewAdapter(theActivity, theTopicModelList);
 			topicListView.setAdapter(adapter);
-			
+
 			theTopicModelList.registerListeningAdapter(adapter);
-			
+
 			ElasticSearchProvider.getProvider().getTopics(0, 30);
 		}
 
@@ -50,14 +52,15 @@ public enum MainActivityFragmentComponent {
 		}
 
 	},
-	
+
 	FAVORITES_VIEW {
 		public TopicListViewAdapter adapter;
 
 		@Override
 		public void setupView(LayoutInflater theInflater,
 				LinearLayout theLayout, FragmentActivity theActivity) {
-			View rootView = theInflater.inflate(R.layout.fragment_split_post_list, null);
+			View rootView = theInflater.inflate(
+					R.layout.fragment_split_post_list, null);
 			theLayout.addView(rootView);
 
 			// Populate list view for topics
@@ -65,30 +68,34 @@ public enum MainActivityFragmentComponent {
 					.findViewById(R.id.listTopics);
 
 			// Setup the adapter
-			FavoriteTopicModelList theFavoriteTopicModelList = FavoriteTopicModelList.getInstance();
+			FavoriteTopicModelList theFavoriteTopicModelList = FavoriteTopicModelList
+					.getInstance();
 
-			adapter = new TopicListViewAdapter(theActivity, theFavoriteTopicModelList);
+			adapter = new TopicListViewAdapter(theActivity,
+					theFavoriteTopicModelList);
 			topicListView.setAdapter(adapter);
-			
+
 			theFavoriteTopicModelList.registerListeningAdapter(adapter);
-			
+
 		}
 
 		@Override
 		public void destroy() {
-			FavoriteTopicModelList theFavoriteTopicModelList = FavoriteTopicModelList.getInstance();
-			theFavoriteTopicModelList.unRegisterListeningAdapter(adapter);			
+			FavoriteTopicModelList theFavoriteTopicModelList = FavoriteTopicModelList
+					.getInstance();
+			theFavoriteTopicModelList.unRegisterListeningAdapter(adapter);
 		}
-		
+
 	},
-	
+
 	READ_LATER {
 		public TopicListViewAdapter adapter;
 
 		@Override
 		public void setupView(LayoutInflater theInflater,
 				LinearLayout theLayout, FragmentActivity theActivity) {
-			View rootView = theInflater.inflate(R.layout.fragment_split_post_list, null);
+			View rootView = theInflater.inflate(
+					R.layout.fragment_split_post_list, null);
 			theLayout.addView(rootView);
 
 			// Populate list view for topics
@@ -96,32 +103,40 @@ public enum MainActivityFragmentComponent {
 					.findViewById(R.id.listTopics);
 
 			// Setup the adapter
-			ReadLaterTopicModelList theReadLaterTopicList = ReadLaterTopicModelList.getInstance();
+			ReadLaterTopicModelList theReadLaterTopicList = ReadLaterTopicModelList
+					.getInstance();
 
-			adapter = new TopicListViewAdapter(theActivity, theReadLaterTopicList);
+			adapter = new TopicListViewAdapter(theActivity,
+					theReadLaterTopicList);
 			topicListView.setAdapter(adapter);
-			
+
 			theReadLaterTopicList.registerListeningAdapter(adapter);
-			
+
 		}
 
 		@Override
 		public void destroy() {
-			ReadLaterTopicModelList theReadLaterList = ReadLaterTopicModelList.getInstance();
-			theReadLaterList.unRegisterListeningAdapter(adapter);			
+			ReadLaterTopicModelList theReadLaterList = ReadLaterTopicModelList
+					.getInstance();
+			theReadLaterList.unRegisterListeningAdapter(adapter);
 		}
-		
+
 	};
 
-	abstract public void setupView(LayoutInflater theInflater, LinearLayout theLayout, FragmentActivity theActivity);
+	abstract public void setupView(LayoutInflater theInflater,
+			LinearLayout theLayout, FragmentActivity theActivity);
+
 	abstract public void destroy();
 
 	public static MainActivityFragmentComponent getComponentForPosition(
 			int position) {
 		switch (position) {
-		case 1: return TOPICS_LIST;
-		case 2: return FAVORITES_VIEW;
-		case 3: return READ_LATER;
+		case 1:
+			return TOPICS_LIST;
+		case 2:
+			return FAVORITES_VIEW;
+		case 3:
+			return READ_LATER;
 		}
 		throw new RuntimeException("Invalid position passed.");
 	}

@@ -28,17 +28,17 @@ public class ElasticSearchOperationFactory {
 			ElasticSearchOperationRequest theRequest,
 			ElasticSearchSearchResponse<TopicModel> esResponse) {
 		ArrayList<TopicModel> theTopicModelArrayList = new ArrayList<TopicModel>();
-		
-		for (ElasticSearchResponse<TopicModel> r: esResponse.getHits()) {
+
+		for (ElasticSearchResponse<TopicModel> r : esResponse.getHits()) {
 			TopicModel theTopic = r.getSource();
 			theTopicModelArrayList.add(theTopic);
 		}
-		
+
 		ElasticSearchOperationResponse response = new ElasticSearchOperationResponse(
 				theRequest.getRequestType());
 		response.setTheTopicModels(theTopicModelArrayList);
 		response.setPostModelList(theRequest.getPostModelList());
-		
+
 		return response;
 	}
 }

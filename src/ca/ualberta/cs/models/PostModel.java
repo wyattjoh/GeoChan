@@ -16,88 +16,105 @@ public abstract class PostModel {
 	private Integer score = 0;
 	private transient PostModel myParent = null;
 	private ArrayList<CommentModel> childrenComments = new ArrayList<CommentModel>();
-	
+
 	private transient Boolean isFavorite = false;
 	private String id;
-	
+
 	/**
 	 * Constructors
 	 */
-	public PostModel(){
+	public PostModel() {
 		this.datePosted = new Date();
 	}
-	
-	public PostModel(UserModel theUser){
+
+	public PostModel(UserModel theUser) {
 		this();
 		this.postedBy = theUser;
 	}
-	
-	public void incrementScore(){
+
+	public void incrementScore() {
 		this.score += 1;
 	}
-	
-	public void decrementScore(){
+
+	public void decrementScore() {
 		this.score -= 1;
 	}
-	
-	public boolean hasPicture(){
+
+	public boolean hasPicture() {
 		return this.theBitmap != null;
 	}
+
 	/**
-	 *  Auto generated setters and getters
-	 *  */
+	 * Auto generated setters and getters
+	 * */
 	public String getCommentText() {
 		return commentText;
 	}
+
 	public void setCommentText(String bodyText) {
 		this.commentText = bodyText;
 	}
+
 	public Location getLocation() {
 		return location;
 	}
+
 	public String getLocationAsString() {
 		if (this.location == null) {
 			return "NULL";
 		} else {
-			return String.valueOf(this.location.getLatitude()) + " , " + String.valueOf(this.location.getLongitude());
+			return String.valueOf(this.location.getLatitude()) + " , "
+					+ String.valueOf(this.location.getLongitude());
 		}
 	}
+
 	public void setLocation(Location location) {
 		this.location = location;
 	}
+
 	public Bitmap getPicture() {
 		return this.theBitmap;
 	}
+
 	public void setPicture(Bitmap picture) {
 		this.theBitmap = picture;
 	}
+
 	public UserModel getPostedBy() {
 		return postedBy;
 	}
+
 	public void setPostedBy(UserModel postedBy) {
 		this.postedBy = postedBy;
 	}
+
 	public Date getDatePosted() {
 		return datePosted;
 	}
+
 	public void setDatePosted(Date datePosted) {
 		this.datePosted = datePosted;
 	}
+
 	public Integer getScore() {
 		return score;
 	}
+
 	public void setScore(Integer score) {
 		this.score = score;
 	}
+
 	public ArrayList<CommentModel> getChildrenComments() {
 		return childrenComments;
 	}
+
 	public void addChildComment(CommentModel theChildComment) {
 		if (this.childrenComments == null) {
 			this.childrenComments = new ArrayList<CommentModel>();
 		}
 		this.childrenComments.add(theChildComment);
 	}
+
 	/**
 	 * end of auto generated setters and getters
 	 */
@@ -110,7 +127,8 @@ public abstract class PostModel {
 	}
 
 	/**
-	 * @param isFavorite the isFavorite to set
+	 * @param isFavorite
+	 *            the isFavorite to set
 	 */
 	public void setIsFavorite(Boolean isFavorite) {
 		this.isFavorite = isFavorite;
@@ -124,12 +142,13 @@ public abstract class PostModel {
 	}
 
 	/**
-	 * @param myParent the myParent to set
+	 * @param myParent
+	 *            the myParent to set
 	 */
 	public void setMyParent(PostModel myParent) {
 		this.myParent = myParent;
 	}
-	
+
 	public PostModel getMyFirstAncestor() {
 		if (myParent == null) {
 			return this;
@@ -167,17 +186,22 @@ public abstract class PostModel {
 			UserModel theLoggedInUser = theActiveUserModel.getUser();
 			Location myLocation = new Location(theLoggedInUser.getLocation());
 			float distanceToOneLocation = myLocation.distanceTo(one.location);
-			float distanceToOtherLocation = myLocation.distanceTo(other.location);
-			return distanceToOneLocation < distanceToOtherLocation ? -1 : distanceToOneLocation > distanceToOtherLocation ? 1 : 0;
+			float distanceToOtherLocation = myLocation
+					.distanceTo(other.location);
+			return distanceToOneLocation < distanceToOtherLocation ? -1
+					: distanceToOneLocation > distanceToOtherLocation ? 1 : 0;
 		}
 	};
 	public static Comparator<PostModel> COMPARE_BY_LATEST_GREATEST = new Comparator<PostModel>() {
 		@Override
 		public int compare(PostModel one, PostModel other) {
 			Date currentTime = new Date();
-			float relativeScoreOne = one.getScore() - ((currentTime.getTime() - one.datePosted.getTime())/10000);
-			float relativeScoreOther = other.getScore() - ((currentTime.getTime() - other.datePosted.getTime())/10000);
-			return relativeScoreOne < relativeScoreOther ? -1 : relativeScoreOne > relativeScoreOther ? 1 : 0;
+			float relativeScoreOne = one.getScore()
+					- ((currentTime.getTime() - one.datePosted.getTime()) / 10000);
+			float relativeScoreOther = other.getScore()
+					- ((currentTime.getTime() - other.datePosted.getTime()) / 10000);
+			return relativeScoreOne < relativeScoreOther ? -1
+					: relativeScoreOne > relativeScoreOther ? 1 : 0;
 		}
 	};
 
@@ -186,19 +210,18 @@ public abstract class PostModel {
 		if (o == null) {
 			return false;
 		}
-		
+
 		if (!(o instanceof PostModel)) {
 			return false;
 		}
-		
+
 		PostModel oModel = (PostModel) o;
-		
+
 		if (oModel.getId().equals(getId())) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
-	
+
 }

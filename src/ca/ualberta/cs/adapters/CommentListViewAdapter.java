@@ -22,16 +22,19 @@ public class CommentListViewAdapter extends PostListViewAdapter<CommentModel> {
 	@Override
 	protected void populateCellTitle(View theView, CommentModel thePost) {
 		// List of comments, display an excerpt of their comment
-		
+
 		String commentText = thePost.getCommentText();
-		
+
 		if (commentText != null) {
-			TextView titleText = (TextView) theView.findViewById(R.id.textViewTitle);
+			TextView titleText = (TextView) theView
+					.findViewById(R.id.textViewTitle);
 			titleText.setText(trimString(commentText, excerptLength));
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ca.ualberta.cs.adapters.PostListViewAdapter#getViewClass()
 	 */
 	@Override

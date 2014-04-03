@@ -29,7 +29,9 @@ public class TopicListViewAdapter extends PostListViewAdapter<TopicModel> {
 		titleText.setText(theTitle);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ca.ualberta.cs.adapters.PostListViewAdapter#getViewClass()
 	 */
 	@Override

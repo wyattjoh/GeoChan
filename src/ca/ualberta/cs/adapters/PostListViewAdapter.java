@@ -1,6 +1,5 @@
 package ca.ualberta.cs.adapters;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -94,26 +93,30 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		TextView locationText = (TextView) theView
 				.findViewById(R.id.textViewLocation);
 		if (thePost.getLocation() != null) {
-			Location myLocation = new Location(ActiveUserModel.getInstance().getUser().getLocation());
-			float distanceToPost = (thePost.getLocation().distanceTo(myLocation))/1000;
-			String distanceButtonText = String.format("%.2f",distanceToPost) + "km";
-			locationText.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
+			Location myLocation = new Location(ActiveUserModel.getInstance()
+					.getUser().getLocation());
+			float distanceToPost = (thePost.getLocation()
+					.distanceTo(myLocation)) / 1000;
+			String distanceButtonText = String.format("%.2f", distanceToPost)
+					+ "km";
+			locationText.setText(distanceButtonText.toCharArray(), 0,
+					distanceButtonText.length());
 		} else {
 			locationText.setText(thePost.getLocationAsString());
 		}
-
 
 		// Fill score
 		TextView scoreText = (TextView) theView
 				.findViewById(R.id.textViewScore);
 
 		if (thePost.getScore() >= 0) {
-			scoreText.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_action_good, 0, 0, 0);
+			scoreText.setCompoundDrawablesWithIntrinsicBounds(
+					R.drawable.ic_action_good, 0, 0, 0);
+		} else {
+			scoreText.setCompoundDrawablesWithIntrinsicBounds(
+					R.drawable.ic_action_bad, 0, 0, 0);
 		}
-		else {
-			scoreText.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_action_bad, 0, 0, 0);
-		}
-		
+
 		String scoreString = thePost.getScore().toString();
 		scoreText.setText(scoreString);
 
@@ -166,8 +169,9 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 	}
 
 	abstract protected void populateCellTitle(View theView, T thePost);
+
 	abstract protected Class<?> getViewClass();
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 

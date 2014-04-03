@@ -9,20 +9,20 @@ import ca.ualberta.cs.providers.ElasticSearchProvider;
 
 /**
  * @author wyatt
- *
+ * 
  */
 public class TopicModelController {
 	private TopicModelList theTopicModelList;
-	
+
 	public TopicModelController() {
 		this.theTopicModelList = TopicModelList.getInstance();
 	}
-	
+
 	public void newTopic(TopicModel theTopicModel) {
 		// Get the provider
 		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();
 		// Add it to the list!
 		theProvider.addTopic(theTopicModel, this.theTopicModelList);
 	}
-	
+
 }

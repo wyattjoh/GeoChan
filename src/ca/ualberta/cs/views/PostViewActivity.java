@@ -30,6 +30,7 @@ import ca.ualberta.cs.models.UserModel;
 public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	/**
 	 * Populates theModel with the proper selected model
+	 * 
 	 * @return TODO
 	 */
 	abstract protected T getSelectedModel();
@@ -39,13 +40,14 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	abstract protected OnClickListener getFavoriteOnClickListener();
 
 	protected T theModel = null;
+
 	/**
 	 * Starts an activity to reply to the currently visible post
 	 */
 	protected void replyToPost() {
 		EditPostModel theEditPostModel = EditPostModel.getInstance();
 		theEditPostModel.setTheParent(theModel);
-		
+
 		Intent intent = new Intent(this, EditCommentActivity.class);
 		startActivity(intent);
 	}
@@ -54,10 +56,11 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 	public void cellClicked(View theView) {
 		Integer thePosition = (Integer) theView.getTag();
-	
-		CommentModelList commentModelList = CommentModelList.getInstanceFromParent(theModel);
+
+		CommentModelList commentModelList = CommentModelList
+				.getInstanceFromParent(theModel);
 		commentModelList.addToSelectionStackFromPosition(thePosition);
-	
+
 		Intent intent = new Intent(this, CommentViewActivity.class);
 		startActivity(intent);
 	}
@@ -66,30 +69,33 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_post_view);
-		
+
 		ActionBar actionBar = getActionBar();
-	    actionBar.setDisplayHomeAsUpEnabled(true);
-		
+		actionBar.setDisplayHomeAsUpEnabled(true);
+
 		// Populate the model
 		this.theModel = getSelectedModel();
-		
+
 		// Populate the view
 		if (this.theModel == null) {
-			throw new RuntimeException("Tried to execute the view without selecting anything? (No idea how you got here...)");
+			throw new RuntimeException(
+					"Tried to execute the view without selecting anything? (No idea how you got here...)");
 		}
-		
+
 		// Populate the view!
 		populateView();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onPrepareOptionsMenu(android.view.Menu)
 	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		MenuItem refreshIcon = (MenuItem) menu.findItem(R.id.refreshButton);
 		refreshIcon.setVisible(false);
-		
+
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -159,23 +165,23 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		// Add Buttons
 		final ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
-		
+
 		UserModel theLoggedInUser = ActiveUserModel.getInstance().getUser();
 		ArrayList<String> downVoteList = theLoggedInUser.getDownVoteList();
 
 		if (downVoteList.contains(theModel.getId())) {
 			downVoteButton.setPressed(true);
-		}
-		else {
+		} else {
 			downVoteButton.setPressed(false);
 		}
-		
+
 		downVoteButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				UserModel theLoggedInUser = ActiveUserModel.getInstance().getUser();
-				
+				UserModel theLoggedInUser = ActiveUserModel.getInstance()
+						.getUser();
+
 				if (!theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
 					if (theLoggedInUser.getDownVoteList().contains(
 							theModel.getId())) {
@@ -199,10 +205,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 						string = string + theModel.getScore().toString();
 						scoreView.setText(string);
-						
+
 					}
-				}
-				else {
+				} else {
 					theLoggedInUser.removePostIdUpVoteList(theModel.getId());
 					theLoggedInUser.addPostIdDownVoteList(theModel.getId());
 					theModel.decrementScore();
@@ -217,13 +222,12 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 				}
 			}
 		});
-		
+
 		final ImageButton upVoteButton = (ImageButton) findViewById(R.id.upVoteButton);
-		
+
 		if (theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
 			upVoteButton.setPressed(true);
-		}
-		else {
+		} else {
 			upVoteButton.setPressed(false);
 		}
 
@@ -231,8 +235,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				UserModel theLoggedInUser = ActiveUserModel.getInstance().getUser();
-				
+				UserModel theLoggedInUser = ActiveUserModel.getInstance()
+						.getUser();
+
 				if (!theLoggedInUser.getDownVoteList().contains(
 						theModel.getId())) {
 					if (theLoggedInUser.getUpVoteList().contains(
@@ -256,10 +261,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 						string = string + theModel.getScore().toString();
 						scoreView.setText(string);
-						
+
 					}
-				}
-				else {
+				} else {
 					theLoggedInUser.removePostIdDownVoteList(theModel.getId());
 					theLoggedInUser.addPostIdUpVoteList(theModel.getId());
 					theModel.incrementScore();
@@ -273,7 +277,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 					scoreView.setText(string);
 				}
 			}
-			
+
 		});
 
 		// Add Author
@@ -298,23 +302,25 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		// Distance button
 		Button distanceButton = (Button) findViewById(R.id.distanceButton);
 		if (theModel.getLocation() != null) {
-/*			
-			 if (theLoggedInUser.getLocation() != null) {
-				Location myLocation = new Location(ActiveUserModel.getInstance().getUser().getLocation());
-				float distanceToPost = (thePost.getLocation().distanceTo(myLocation))/1000;
-				String distanceButtonText = String.format("%.2f",distanceToPost) + "km";
-				distanceButton.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
-			} else {
-			}
-*/					
+			/*
+			 * if (theLoggedInUser.getLocation() != null) { Location myLocation
+			 * = new
+			 * Location(ActiveUserModel.getInstance().getUser().getLocation());
+			 * float distanceToPost =
+			 * (thePost.getLocation().distanceTo(myLocation))/1000; String
+			 * distanceButtonText = String.format("%.2f",distanceToPost) + "km";
+			 * distanceButton.setText(distanceButtonText.toCharArray(), 0,
+			 * distanceButtonText.length()); } else { }
+			 */
 			distanceButton.setText(theModel.getLocationAsString());
-			
+
 		}
 
 		// Add comments
 		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
-		
-		CommentModelList theCommentModelList = CommentModelList.getInstanceFromParent(theModel);
+
+		CommentModelList theCommentModelList = CommentModelList
+				.getInstanceFromParent(theModel);
 
 		// Has children!
 		thePostAdapter = new CommentListViewAdapter(this, theCommentModelList);

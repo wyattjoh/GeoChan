@@ -7,15 +7,15 @@ public class TopicModel extends PostModel {
 	/**
 	 * Constructors
 	 */
-	public TopicModel(){
+	public TopicModel() {
 		super();
 		this.title = "Default Title";
 	}
-	
+
 	public TopicModel(UserModel theUser) {
-		super(theUser); 
+		super(theUser);
 	}
-	
+
 	/**
 	 * auto generated setters and getters
 	 */
@@ -26,7 +26,7 @@ public class TopicModel extends PostModel {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	/**
 	 * @return the version
 	 */
@@ -35,10 +35,11 @@ public class TopicModel extends PostModel {
 	}
 
 	/**
-	 * @param version the version to set
+	 * @param version
+	 *            the version to set
 	 */
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
-	
+
 }

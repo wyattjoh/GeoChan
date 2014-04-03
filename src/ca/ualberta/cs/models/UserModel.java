@@ -9,7 +9,7 @@ import android.location.Location;
 
 /**
  * @author wyatt
- *
+ * 
  */
 public class UserModel {
 	private String userName;
@@ -25,31 +25,31 @@ public class UserModel {
 		this.location.setLongitude(0);
 		this.userHash = userName + this.location.toString();
 	}
-	
+
 	public ArrayList<String> getUpVoteList() {
 		return upVoteList;
 	}
-	
+
 	public void addPostIdUpVoteList(String id) {
 		upVoteList.add(id);
 	}
-	
+
 	public void removePostIdUpVoteList(String id) {
 		upVoteList.remove(id);
 	}
-	
+
 	public ArrayList<String> getDownVoteList() {
 		return downVoteList;
 	}
-	
+
 	public void addPostIdDownVoteList(String id) {
 		downVoteList.add(id);
 	}
-	
+
 	public void removePostIdDownVoteList(String id) {
 		downVoteList.remove(id);
 	}
-	
+
 	public String getUserName() {
 		return userName;
 	}

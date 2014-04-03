@@ -21,12 +21,12 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 			// Get the comment
 			EditText commentField = (EditText) findViewById(R.id.commentTextField);
 			String theComment = commentField.getText().toString();
-			
+
 			if (theComment.length() <= 0) {
 				failedDueToReason("Cannot create a comment without any text!");
 				return;
 			}
-			
+
 			theModel.setCommentText(theComment);
 
 			if (imageBitmap != null) {
@@ -52,8 +52,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 		if (theEditPostModel.isNewPost()) {
 			theModel = new CommentModel(ActiveUserModel.getInstance().getUser());
-		}
-		else {
+		} else {
 			theModel = (CommentModel) theEditPostModel.getThePost();
 		}
 

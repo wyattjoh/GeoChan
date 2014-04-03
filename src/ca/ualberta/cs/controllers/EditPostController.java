@@ -8,6 +8,7 @@ import android.graphics.Bitmap.CompressFormat;
 public class EditPostController {
 	/**
 	 * Compresses the bitmap to a WEBP formatted image
+	 * 
 	 * @param theBitmap
 	 * @return the compressed bitmap byte array
 	 */
@@ -20,11 +21,11 @@ public class EditPostController {
 					(int) (theBitmap.getWidth() * factor), height, false);
 			theBitmap = bm;
 		}
-		
+
 		ByteArrayOutputStream blob = new ByteArrayOutputStream();
-		
+
 		theBitmap.compress(CompressFormat.WEBP, 20, blob);
-		
+
 		return blob.toByteArray();
 	}
 }

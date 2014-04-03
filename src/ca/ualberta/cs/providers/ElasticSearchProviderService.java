@@ -13,7 +13,8 @@ import ca.ualberta.cs.models.ElasticSearchOperationResponse;
  *         Provides async http requests against the proxy provider
  * 
  */
-public class ElasticSearchProviderService extends
+public class ElasticSearchProviderService
+		extends
 		AsyncTask<ElasticSearchOperationRequest, Integer, ElasticSearchOperationResponse[]> {
 
 	/*
@@ -30,7 +31,8 @@ public class ElasticSearchProviderService extends
 
 		for (int i = 0; i < size; i++) {
 			ElasticSearchOperationResponse theResponse = result[i];
-			ElasticSearchProviderServiceHandler requestType = theResponse.getRequestType();
+			ElasticSearchProviderServiceHandler requestType = theResponse
+					.getRequestType();
 			requestType.onPostExecute(theResponse);
 		}
 
@@ -49,7 +51,8 @@ public class ElasticSearchProviderService extends
 
 		for (int i = 0; i < size; i++) {
 			ElasticSearchOperationRequest theRequest = requests[i];
-			ElasticSearchProviderServiceHandler requestType = theRequest.getRequestType();
+			ElasticSearchProviderServiceHandler requestType = theRequest
+					.getRequestType();
 			response[i] = requestType.doInBackground(theRequest);
 		}
 

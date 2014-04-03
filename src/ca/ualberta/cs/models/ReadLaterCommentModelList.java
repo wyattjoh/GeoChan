@@ -12,10 +12,10 @@ import com.google.gson.Gson;
 import android.content.Context;
 
 /**
- * @author wyatt
- * A list for managing the list of favorite comment models
+ * @author wyatt A list for managing the list of favorite comment models
  */
-public class ReadLaterCommentModelList extends FollowingPostModelList<CommentModel> {
+public class ReadLaterCommentModelList extends
+		FollowingPostModelList<CommentModel> {
 	private static ReadLaterCommentModelList singleton = null;
 
 	protected ReadLaterCommentModelList(Context applicationContext) {
@@ -24,28 +24,35 @@ public class ReadLaterCommentModelList extends FollowingPostModelList<CommentMod
 
 	/**
 	 * Creates a instance of FavoriteCommentModelList to live on the stack
+	 * 
 	 * @param applicationContext
 	 * @return FavoriteCommentModelList singleton
 	 */
-	public static ReadLaterCommentModelList createInstance(Context applicationContext) {
+	public static ReadLaterCommentModelList createInstance(
+			Context applicationContext) {
 		if (singleton == null) {
 			singleton = new ReadLaterCommentModelList(applicationContext);
 		}
 		return singleton;
 	}
-	
+
 	/**
-	 * Returns the singleton of FavoriteCommentModelList or throws an exception if none created
+	 * Returns the singleton of FavoriteCommentModelList or throws an exception
+	 * if none created
+	 * 
 	 * @return FavoriteCommentModelList singleton
 	 */
 	public static ReadLaterCommentModelList getInstance() {
 		if (singleton == null) {
-			throw new RuntimeException("Cannot get an instance before you create it!");
+			throw new RuntimeException(
+					"Cannot get an instance before you create it!");
 		}
 		return singleton;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ca.ualberta.cs.models.FollowingPostModelList#getFilenameString()
 	 */
 	@Override
@@ -54,7 +61,9 @@ public class ReadLaterCommentModelList extends FollowingPostModelList<CommentMod
 		return "FavoriteCommentModelList.json";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ca.ualberta.cs.models.FollowingPostModelList#arrayListToArray()
 	 */
 	@Override
@@ -62,13 +71,17 @@ public class ReadLaterCommentModelList extends FollowingPostModelList<CommentMod
 		return this.getArrayList().toArray(new CommentModel[0]);
 	}
 
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.models.FollowingPostModelList#inputStreaReaderToArray(java.io.InputStreamReader)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.ualberta.cs.models.FollowingPostModelList#inputStreaReaderToArray(
+	 * java.io.InputStreamReader)
 	 */
 	@Override
 	protected CommentModel[] inputStreaReaderToArray(InputStreamReader isr) {
 		Gson gson = GeoChanGson.getGson();
-		
+
 		return gson.fromJson(isr, CommentModel[].class);
 	}
 
