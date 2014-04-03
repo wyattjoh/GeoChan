@@ -32,7 +32,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 				// add the picture
 				theModel.setPicture(imageBitmap);
 			}
-
+			theModel.setLocation(theLocation);
 			theController.addComment(theModel, theEditPostModel.getTheParent());
 
 			finish();
