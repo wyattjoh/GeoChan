@@ -5,16 +5,19 @@ import java.lang.reflect.Type;
 import java.util.Date;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.util.Base64;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
@@ -97,6 +100,46 @@ public class GeoChanGson {
 
 	}
 
+	/*
+	 * JsonSerializer<Location>, JsonDeserializer<Location>
+	 */
+	private static class LocationTypeAdapter implements
+			JsonSerializer<Location>, JsonDeserializer<Location> {
+
+		@Override
+		public Location deserialize(JsonElement json, Type arg1,
+				JsonDeserializationContext arg2) throws JsonParseException {
+			// return new Date(arg0.getAsJsonPrimitive().getAsLong());
+
+			final JsonObject jsonObject = json.getAsJsonObject();
+
+			final JsonElement jsonLat = jsonObject.get("lat");
+			final double lat = jsonLat.getAsDouble();
+
+			final JsonElement jsonLon = jsonObject.get("lon");
+			final double lon = jsonLon.getAsDouble();
+
+			Location newLocation = new Location("");
+
+			newLocation.setLatitude(lat);
+			newLocation.setLongitude(lon);
+
+			return newLocation;
+		}
+
+		@Override
+		public JsonElement serialize(Location arg0, Type arg1,
+				JsonSerializationContext arg2) {
+
+			JsonObject result = new JsonObject();
+			result.add("lat", new JsonPrimitive(arg0.getLatitude()));
+			result.add("lon", new JsonPrimitive(arg0.getLongitude()));
+
+			return result;
+		}
+
+	}
+
 	private GeoChanGson() {
 		// Get builder
 		GsonBuilder gsonBuilder = new GsonBuilder();
@@ -112,6 +155,10 @@ public class GeoChanGson {
 		// Bitmap objects
 		gsonBuilder.registerTypeHierarchyAdapter(Bitmap.class,
 				new BitmapToBase64TypeAdapyer());
+
+		// Location objects
+		gsonBuilder.registerTypeHierarchyAdapter(Location.class,
+				new LocationTypeAdapter());
 
 		// Generate gson object
 		gson = gsonBuilder.create();
