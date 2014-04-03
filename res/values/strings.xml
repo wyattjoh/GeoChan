@@ -35,4 +35,6 @@
     <string name="comment_view_activity">Comment View Activity</string>
     <string name="title_activity_location">LocationActivity</string>
     <string name="refresh">Refresh</string>
+    <string name="title_activity_map_view_location">MapViewLocation</string>
+
 </resources>
