@@ -1,130 +1,118 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/postViewScrollView"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/LinearLayout1"
+    <TextView
+        android:id="@+id/titleTextView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context=".PostViewActivity" >
+        android:layout_height="wrap_content"
+        android:text="Title Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/commentTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Comment Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <RelativeLayout
+        android:id="@+id/buttonsAndImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/mutateButtons"
+            android:layout_alignRight="@+id/mutateButtons"
+            android:src="@android:drawable/ic_menu_gallery" />
 
         <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/scorePostTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Title Text"
+            android:layout_below="@+id/imageView"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Score"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <TextView
-            android:id="@+id/commentTextView"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/mutateButtons"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Comment Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/scorePostTextView" >
 
-        <RelativeLayout
-            android:id="@+id/buttonsAndImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
+            <ImageButton
+                android:id="@+id/downVoteButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/mutateButtons"
-                android:layout_alignRight="@+id/mutateButtons"
-                android:src="@android:drawable/ic_menu_gallery" />
+                android:layout_weight=".30"
+                android:src="@drawable/ic_action_bad" />
+
+            <ImageButton
+                android:id="@+id/favoriteButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".39"
+                android:src="@android:drawable/btn_star_big_off" />
+
+            <ImageButton
+                android:id="@+id/upVoteButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".30"
+                android:src="@drawable/ic_action_good" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/mutateButtons"
+            android:layout_alignRight="@+id/mutateButtons"
+            android:layout_below="@+id/mutateButtons"
+            android:gravity="center_vertical|center_horizontal" >
 
             <TextView
-                android:id="@+id/scorePostTextView"
-                android:layout_width="match_parent"
+                android:id="@+id/authorTextView"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="Score"
-                android:layout_below="@+id/imageView"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:layout_weight=".30"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Author"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <LinearLayout
-                android:id="@+id/mutateButtons"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/distanceButton"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/scorePostTextView" >
+                android:layout_weight=".39"
+                android:drawableLeft="@android:drawable/ic_menu_mylocation"
+                android:text="Distance" />
 
-                <ImageButton
-                    android:id="@+id/downVoteButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".30"
-                    android:src="@drawable/ic_action_bad" />
-
-                <ImageButton
-                    android:id="@+id/favoriteButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".39"
-                    android:src="@android:drawable/btn_star_big_off" />
-
-                <ImageButton
-                    android:id="@+id/upVoteButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".30"
-                    android:src="@drawable/ic_action_good" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout1"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/ageTextView"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/mutateButtons"
-                android:layout_alignRight="@+id/mutateButtons"
-                android:layout_below="@+id/mutateButtons"
-                android:gravity="center_vertical|center_horizontal" >
+                android:layout_weight=".30"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Age"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
+    </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/authorTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".30"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="Author"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+    <ListView
+        android:id="@+id/commentsListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </ListView>
 
-                <Button
-                    android:id="@+id/distanceButton"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".39"
-                    android:drawableLeft="@android:drawable/ic_menu_mylocation"
-                    android:text="Distance" />
-
-                <TextView
-                    android:id="@+id/ageTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".30"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="Age"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-            </LinearLayout>
-        </RelativeLayout>
-
-        <ListView
-            android:id="@+id/commentsListView"
-            android:layout_width="match_parent"
-            android:layout_height="325dp" >
-        </ListView>
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>
