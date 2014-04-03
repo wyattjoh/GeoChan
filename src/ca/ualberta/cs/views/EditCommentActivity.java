@@ -61,7 +61,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 		// customize UI
 		EditText commentEditTitle = (EditText) findViewById(R.id.titleTextField);
-		commentEditTitle.setVisibility(View.INVISIBLE);
+		commentEditTitle.setVisibility(View.GONE);
 	}
 
 	/*

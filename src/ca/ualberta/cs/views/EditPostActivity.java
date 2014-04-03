@@ -39,6 +39,10 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		setContentView(R.layout.activity_edit_post);
 		this.theLocation = ActiveUserModel.getInstance().getUser()
 				.getLocation();
+		
+		// Add title
+		setTitle(getSaveButtonText());
+		
 		// Populate the views
 		populateView();
 	}

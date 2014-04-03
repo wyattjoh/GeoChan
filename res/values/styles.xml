@@ -23,7 +23,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">16dp</item>
     </style>
-    <color name="blueColor">#007aff</color>
+    <color name="blueColor">#2aa3dc</color>
     <color name="whiteSmoke">#F5F5F4</color>
     <color name="darkGray">#6e6e6e</color>
     <color name="white">#FFFF</color>
