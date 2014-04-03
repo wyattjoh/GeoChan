@@ -95,7 +95,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".39"
-                android:drawableLeft="@android:drawable/ic_menu_mylocation"
+                android:drawableLeft="@drawable/ic_action_place"
                 android:text="Distance" />
 
             <TextView
