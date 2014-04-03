@@ -1,15 +1,11 @@
 package ca.ualberta.cs.adapters;
 
-import java.util.ArrayList;
-
-import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.PostModelList;
 import ca.ualberta.cs.models.TopicModel;
-import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.views.TopicViewActivity;
 
 public class TopicListViewAdapter extends PostListViewAdapter<TopicModel> {

@@ -3,15 +3,12 @@
  */
 package ca.ualberta.cs.views;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
-import ca.ualberta.cs.models.TopicModelList;
 
 /**
  * @author wyatt

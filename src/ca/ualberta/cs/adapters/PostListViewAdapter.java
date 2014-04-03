@@ -17,7 +17,6 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.PostModelList;
-import ca.ualberta.cs.views.TopicViewActivity;
 
 /**
  * 

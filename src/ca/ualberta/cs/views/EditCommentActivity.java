@@ -8,7 +8,6 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.CommentModelController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModel;
-import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.TopicModelList;
 
 public class EditCommentActivity extends EditPostActivity<CommentModel> {

@@ -6,7 +6,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +22,6 @@ import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
-import ca.ualberta.cs.models.PostModelList;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
 
@@ -93,7 +91,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		MenuItem refreshIcon = (MenuItem) menu.findItem(R.id.refreshButton);
+		MenuItem refreshIcon = menu.findItem(R.id.refreshButton);
 		refreshIcon.setVisible(false);
 
 		return super.onPrepareOptionsMenu(menu);
