@@ -300,20 +300,15 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		// Distance button
 		Button distanceButton = (Button) findViewById(R.id.distanceButton);
-		if (theModel.getLocation() != null) {
-			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
-				Location userLocation = new Location(ActiveUserModel.getInstance()
-					.getUser().getLocation());
-				float distanceToPost = userLocation.distanceTo(theModel.getLocation()) / 1000;
-				String distanceButtonText = String.format("%.2f", distanceToPost) + " km";
-
-				distanceButton.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
-			} else {
-				distanceButton.setText(theModel.getLocationAsString());
-			}
-		} else {
-			distanceButton.setText("Location");
+		
+		if (theLoggedInUser.getLocation() != null) {
+			Location userLocation = new Location(ActiveUserModel.getInstance().getUser().getLocation());
+			float distanceToPost = theModel.getLocation().distanceTo(userLocation);
+			String distanceButtonText = String.valueOf(distanceToPost) + " m";
+			distanceButton.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
 		}
+			distanceButton.setText(theModel.getLocationAsString());
+	
 
 		// Add comments
 		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
