@@ -98,7 +98,6 @@ public class PostModelList<T extends PostModel> {
 	public void sortByProximity() {
 		Collections.sort(this.postModelArrayList,
 				PostModel.COMPARE_BY_PROXIMITY);
-		Collections.reverse(this.postModelArrayList);
 
 		updateListeningAdapters();
 	}

@@ -6,6 +6,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -300,18 +301,18 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		// Distance button
 		Button distanceButton = (Button) findViewById(R.id.distanceButton);
 		if (theModel.getLocation() != null) {
-			/*
-			 * if (theLoggedInUser.getLocation() != null) { Location myLocation
-			 * = new
-			 * Location(ActiveUserModel.getInstance().getUser().getLocation());
-			 * float distanceToPost =
-			 * (thePost.getLocation().distanceTo(myLocation))/1000; String
-			 * distanceButtonText = String.format("%.2f",distanceToPost) + "km";
-			 * distanceButton.setText(distanceButtonText.toCharArray(), 0,
-			 * distanceButtonText.length()); } else { }
-			 */
-			distanceButton.setText(theModel.getLocationAsString());
+			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
+				Location userLocation = new Location(ActiveUserModel.getInstance()
+					.getUser().getLocation());
+				float distanceToPost = userLocation.distanceTo(theModel.getLocation()) / 1000;
+				String distanceButtonText = String.format("%.2f", distanceToPost) + " km";
 
+				distanceButton.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
+			} else {
+				distanceButton.setText(theModel.getLocationAsString());
+			}
+		} else {
+			distanceButton.setText("Location");
 		}
 
 		// Add comments
