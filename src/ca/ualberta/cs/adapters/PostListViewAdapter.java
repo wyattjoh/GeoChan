@@ -95,13 +95,13 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
 				Location userLocation = new Location(ActiveUserModel.getInstance()
 					.getUser().getLocation());
-				float distanceToPost = (thePost.getLocation().distanceTo(userLocation)) / 1000;
-				String distanceButtonText = String.format("%.2f", distanceToPost)
-					+ "km";
+				float distanceToPost = userLocation.distanceTo(thePost.getLocation()) / 1000;
+				String distanceButtonText = String.format("%.2f", distanceToPost)+ "km";
+
 				locationText.setText(distanceButtonText.toCharArray(), 0,
 					distanceButtonText.length());
 			} else {
-			locationText.setText(thePost.getLocationAsString());
+				locationText.setText(thePost.getLocationAsString());
 			}
 		} else {
 			locationText.setText("Location");
