@@ -39,6 +39,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 				theModel.setPicture(imageBitmap);
 			}
 
+			System.out.println(theEditPostModel.getTheParent().getCommentText());
 			theController.addComment(theModel, theEditPostModel.getTheParent());
 
 			finish();
@@ -75,17 +76,6 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 			finish();
 		}
 	};
-	
-	private Integer getCommentIndex(ArrayList<?> theArrayList, PostModel theTargetModel){
-		for(int i = 0; i < theArrayList.size(); i++){
-			Log.w("EditCommentActivity",((PostModel) theArrayList.get(i)).getCommentText() + " :: " + theTargetModel.getCommentText());
-			if (((PostModel) theArrayList.get(i)).getCommentText().contains(theTargetModel.getCommentText()))
-				return i;
-		}
-		
-		return -11;
-		
-	}
 
 	/*
 	 * (non-Javadoc)

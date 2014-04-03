@@ -28,7 +28,7 @@ public class EditPostModel {
 	/**
 	 * @return the theParent
 	 */
-	public static PostModel getTheParent() {
+	public PostModel getTheParent() {
 		return theParent;
 	}
 
