@@ -177,8 +177,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 					this.theLocation = theCurrentLocation;
 
 					Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
-					distanceButton.setText(String.valueOf(this.theLocation
-							.getLatitude()
+					distanceButton.setText(String.valueOf(this.theLocation.getLatitude()
 							+ " , "
 							+ String.valueOf(this.theLocation.getLongitude())));
 
