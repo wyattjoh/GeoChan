@@ -206,7 +206,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 			if (resultCode == RESULT_CANCELED) {
 				Toast.makeText(
 						this,
-						"Location is still: s"
+						"Location is still: "
 								+ String.valueOf(this.theLocation.getLatitude())
 								+ " , "
 								+ String.valueOf(this.theLocation
