@@ -61,7 +61,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	protected abstract OnClickListener getUpdateOnClickListener();
 
 	/**
-	 * update and populate the view so as to display the newestt information
+	 * update and populate the view so as to display the newest information
 	 */
 	protected void populateView() {
 		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
@@ -74,12 +74,15 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		}
 		
 		if (EditPostModel.getInstance().isNewPost()){
-			populateEdit();
-		} else{
 			populateNew();
+		} else{
+			populateEdit();
 		}
 	}
 
+	/**
+	 * fill in edit post with new values
+	 */
 	private void populateNew() {
 		// set distance button
 		Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
@@ -114,9 +117,51 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		
 	}
 
+	/**
+	 * fill in edit post view with post values
+	 */
 	private void populateEdit() {
-		// TODO Auto-generated method stub
+		// get the post to fill values from
+		PostModel theModel = EditPostModel.getInstance().getThePost();
 		
+		// set distance button to post value
+		Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
+		Location tempLocation = theModel.getLocation();
+		distanceButton.setText(String.valueOf(tempLocation.getLatitude() + " , "
+				+ String.valueOf(tempLocation.getLongitude())));
+	
+		// get photo button
+		Button cameraButton = (Button) findViewById(R.id.pictureButton);
+		
+		// set onclick listener
+		cameraButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// start camera activity
+				getPictureIntent();
+			}
+		});
+		
+		// set the camera text if and get the picture
+		if (theModel.hasPicture()){
+			cameraButton.setText("Change Picture");
+			
+			// set the picture
+			ImageView immageThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
+			immageThumbnail.setImageBitmap(theModel.getPicture());
+		}
+		
+		// get cancel button
+		Button cancelButton = (Button) findViewById(R.id.distanceButton);
+
+		// set onclick listener
+		cancelButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// return to previous activity
+				finish();
+			}
+		});
 	}
 
 	/**
