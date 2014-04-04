@@ -314,18 +314,11 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		} else {
 			distanceButton.setText("Location");
 		}
-	
 
 		// Add comments
 		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
 
-		CommentModelList theCommentModelList = CommentModelList
-				.getInstanceFromParent(theModel);
-
-		// Has children!
-		thePostAdapter = new CommentListViewAdapter(this, theCommentModelList);
-		TopicModelList.getInstance().registerListeningAdapter(thePostAdapter);
-		commentsListView.setAdapter(thePostAdapter);
+		populateCommentsView(commentsListView);
 
 		// Favorite Button
 		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
@@ -338,5 +331,14 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			favoriteButton
 					.setImageResource(android.R.drawable.btn_star_big_off);
 		}
+	}
+
+	private void populateCommentsView(ListView commentsListView) {
+		CommentModelList theCommentModelList = CommentModelList
+				.getInstanceFromParent(theModel);
+
+		// Has children!
+		thePostAdapter = new CommentListViewAdapter(this, theCommentModelList);
+		commentsListView.setAdapter(thePostAdapter);
 	}
 }
