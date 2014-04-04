@@ -1,14 +1,19 @@
-package ca.ualberta.cs;
+package ca.ualberta.cs.views;
 
-import android.os.Bundle;
+import org.osmdroid.views.MapController;
+import org.osmdroid.views.MapView;
+
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+import ca.ualberta.cs.R;
 
 public class MapViewLocationActivity extends Activity {
-
+	 private MapView myOpenMapView;
+	 private MapController myMapController;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.activity_map_view_location);
 	}
 
@@ -18,5 +23,5 @@ public class MapViewLocationActivity extends Activity {
 		getMenuInflater().inflate(R.menu.map_view_location, menu);
 		return true;
 	}
-
 }
+	

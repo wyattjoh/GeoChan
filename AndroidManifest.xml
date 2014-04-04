@@ -12,7 +12,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+	<uses-permission android:name="android.permission.READ_INTERNAL_STORAGE"></uses-permission>
+	<uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE"></uses-permission>
+    
     <uses-feature android:name="android.hardware.camera" />
 
     <uses-sdk
@@ -66,7 +69,11 @@
             android:label="@string/title_activity_map_view_location" >
         </activity>
         <activity
-            android:name="ca.ualberta.cs.MapViewLocationActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:name="ca.ualberta.cs.views.MapViewLocationActivity"
+            android:noHistory="false"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:label="@string/title_activity_map_view_location" >
         </activity>
     </application>

@@ -101,6 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".39"
                 android:drawableLeft="@drawable/ic_action_place"
+                android:onClick="onClick_ViewOnMap"
                 android:text="Distance" />
 
             <TextView

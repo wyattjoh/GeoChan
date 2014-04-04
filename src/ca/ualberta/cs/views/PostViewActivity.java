@@ -139,6 +139,13 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		}
 	}
 
+	public void onClick_ViewOnMap(View theView) {
+		
+		Intent mapIntent = new Intent(this, MapViewLocationActivity.class);
+		mapIntent.putExtra("postLocation", theModel.getLocation());
+		startActivity(mapIntent);
+	}
+	
 	/**
 	 * Starts the settings activity
 	 */
@@ -278,7 +285,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			}
 
 		});
-
+				
+		
 		// Add Author
 		TextView authorView = (TextView) findViewById(R.id.authorTextView);
 		authorView.setText(theModel.getPostedBy().getUserName());
