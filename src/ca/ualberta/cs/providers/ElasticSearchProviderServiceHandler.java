@@ -23,6 +23,7 @@ import ca.ualberta.cs.models.ElasticSearchSearchResponse;
 import ca.ualberta.cs.models.TopicModel;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 public enum ElasticSearchProviderServiceHandler {
@@ -58,6 +59,8 @@ public enum ElasticSearchProviderServiceHandler {
 						.responseFromRequest(theRequest, esResponse);
 
 				return theResponse;
+			} catch (JsonParseException e) {
+				e.printStackTrace();
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -115,6 +118,8 @@ public enum ElasticSearchProviderServiceHandler {
 						.responseFromRequest(theRequest, esResponse);
 
 				return theResponse;
+			} catch (JsonParseException e) {
+				e.printStackTrace();
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -164,6 +169,8 @@ public enum ElasticSearchProviderServiceHandler {
 						.responseFromRequest(theRequest, esResponse);
 
 				return theResponse;
+			} catch (JsonParseException e) {
+				e.printStackTrace();
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

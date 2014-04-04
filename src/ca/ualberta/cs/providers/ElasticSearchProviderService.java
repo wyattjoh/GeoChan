@@ -31,9 +31,12 @@ public class ElasticSearchProviderService
 
 		for (int i = 0; i < size; i++) {
 			ElasticSearchOperationResponse theResponse = result[i];
-			ElasticSearchProviderServiceHandler requestType = theResponse
-					.getRequestType();
-			requestType.onPostExecute(theResponse);
+
+			if (theResponse != null) {
+				ElasticSearchProviderServiceHandler requestType = theResponse
+						.getRequestType();
+				requestType.onPostExecute(theResponse);
+			}
 		}
 
 	}

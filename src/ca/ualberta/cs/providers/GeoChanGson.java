@@ -114,9 +114,21 @@ public class GeoChanGson {
 			final JsonObject jsonObject = json.getAsJsonObject();
 
 			final JsonElement jsonLat = jsonObject.get("lat");
+
+			if (jsonLat == null) {
+				throw new JsonParseException("No lat field found on object: "
+						+ jsonObject.toString());
+			}
+
 			final double lat = jsonLat.getAsDouble();
 
 			final JsonElement jsonLon = jsonObject.get("lon");
+
+			if (jsonLon == null) {
+				throw new JsonParseException("No lon field found on object: "
+						+ jsonObject.toString());
+			}
+
 			final double lon = jsonLon.getAsDouble();
 
 			Location newLocation = new Location("");
