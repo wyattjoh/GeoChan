@@ -109,40 +109,47 @@ public class GeoChanGson {
 		@Override
 		public Location deserialize(JsonElement json, Type arg1,
 				JsonDeserializationContext arg2) throws JsonParseException {
-			// return new Date(arg0.getAsJsonPrimitive().getAsLong());
 
+			// Load the object
 			final JsonObject jsonObject = json.getAsJsonObject();
 
+			// Get the lat element
 			final JsonElement jsonLat = jsonObject.get("lat");
 
+			// Check that it's there
 			if (jsonLat == null) {
+				// Else, freak out
 				throw new JsonParseException("No lat field found on object: "
 						+ jsonObject.toString());
 			}
 
+			// Get the double for the lat
 			final double lat = jsonLat.getAsDouble();
 
+			// Get the lon element
 			final JsonElement jsonLon = jsonObject.get("lon");
 
+			// Check that it's there
 			if (jsonLon == null) {
+				// Else, freak out
 				throw new JsonParseException("No lon field found on object: "
 						+ jsonObject.toString());
 			}
 
+			// Get the lon double
 			final double lon = jsonLon.getAsDouble();
 
+			// Construct a new location from the data and return
 			Location newLocation = new Location("");
-
 			newLocation.setLatitude(lat);
 			newLocation.setLongitude(lon);
-
 			return newLocation;
 		}
 
 		@Override
 		public JsonElement serialize(Location arg0, Type arg1,
 				JsonSerializationContext arg2) {
-
+			// Construct a raw Json object from the location data
 			JsonObject result = new JsonObject();
 			result.add("lat", new JsonPrimitive(arg0.getLatitude()));
 			result.add("lon", new JsonPrimitive(arg0.getLongitude()));
