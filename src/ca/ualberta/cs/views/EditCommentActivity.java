@@ -38,6 +38,16 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 			finish();
 		}
 	};
+	
+	private OnClickListener updateCommentOnClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
 
 	/*
 	 * (non-Javadoc)
@@ -95,7 +105,6 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 	 */
 	@Override
 	protected OnClickListener getUpdateOnClickListener() {
-		// TODO Auto-generated method stub
-		return null;
+		return updateCommentOnClickListener;
 	}
 }

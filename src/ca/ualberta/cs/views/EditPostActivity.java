@@ -67,17 +67,26 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
 		saveButton.setText(getSaveButtonText());
 
-		Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
-		Location temploc = ActiveUserModel.getInstance().getUser()
-				.getLocation();
-		distanceButton.setText(String.valueOf(temploc.getLatitude() + " , "
-				+ String.valueOf(temploc.getLongitude())));
-
 		if (theEditPostModel.isNewPost()) {
 			saveButton.setOnClickListener(getNewOnClickListener());
 		} else {
 			saveButton.setOnClickListener(getUpdateOnClickListener());
 		}
+		
+		if (EditPostModel.getInstance().isNewPost()){
+			populateEdit();
+		} else{
+			populateNew();
+		}
+	}
+
+	private void populateNew() {
+		// set distance button
+		Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
+		Location temploc = ActiveUserModel.getInstance().getUser()
+				.getLocation();
+		distanceButton.setText(String.valueOf(temploc.getLatitude() + " , "
+				+ String.valueOf(temploc.getLongitude())));
 
 		// get photo button
 		Button cameraButton = (Button) findViewById(R.id.pictureButton);
@@ -102,6 +111,12 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				finish();
 			}
 		});
+		
+	}
+
+	private void populateEdit() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**

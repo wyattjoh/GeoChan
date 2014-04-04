@@ -50,7 +50,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 		}
 	};
 	
-	private OnClickListener updateOnClickListener = new OnClickListener() {
+	private OnClickListener updateTopicOnClickListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
@@ -105,7 +105,6 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	 */
 	@Override
 	protected OnClickListener getUpdateOnClickListener() {
-		// TODO Auto-generated method stub
-		return null;
+		return updateTopicOnClickListener;
 	}
 }
