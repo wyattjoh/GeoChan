@@ -51,6 +51,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		Intent intent = new Intent(this, EditCommentActivity.class);
 		startActivity(intent);
 	}
+	
+	abstract protected void editPost();
 
 	protected CommentListViewAdapter thePostAdapter;
 
@@ -207,7 +209,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO add editing on edit post
-					// editPost();
+					editPost();
 				}
 			});
 		}

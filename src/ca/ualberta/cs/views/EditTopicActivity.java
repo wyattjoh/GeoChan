@@ -49,6 +49,16 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 			finish();
 		}
 	};
+	
+	private OnClickListener updateOnClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
 
 	/*
 	 * (non-Javadoc)
