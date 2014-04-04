@@ -123,6 +123,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	private void populateEdit() {
 		// get the post to fill values from
 		PostModel theModel = EditPostModel.getInstance().getThePost();
+		EditPostModel.getInstance().setThePost(null);
 		
 		// set distance button to post value
 		Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
