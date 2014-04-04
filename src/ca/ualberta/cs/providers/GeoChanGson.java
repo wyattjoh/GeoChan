@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -22,8 +23,9 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-abstract public class GeoChanGson {
-	protected Gson gson;
+public class GeoChanGson {
+	private static GeoChanGson singleton = null;
+	private Gson gson;
 
 	// https://gist.github.com/orip/3635246
 	// Using Android's base64 libraries. This can be replaced with any base64
@@ -157,14 +159,7 @@ abstract public class GeoChanGson {
 
 	}
 
-	protected GeoChanGson() {
-		GsonBuilder gsonBuilder = createGsonBuilder();
-
-		// Generate gson object
-		gson = gsonBuilder.create();
-	}
-
-	protected GsonBuilder createGsonBuilder() {
+	private GeoChanGson() {
 		// Get builder
 		GsonBuilder gsonBuilder = new GsonBuilder();
 
@@ -184,6 +179,15 @@ abstract public class GeoChanGson {
 		gsonBuilder.registerTypeHierarchyAdapter(Location.class,
 				new LocationTypeAdapter());
 
-		return gsonBuilder;
+		// Generate gson object
+		gson = gsonBuilder.create();
+	}
+
+	public static Gson getGson() {
+		if (singleton == null) {
+			singleton = new GeoChanGson();
+		}
+
+		return singleton.gson;
 	}
 }

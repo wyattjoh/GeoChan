@@ -26,30 +26,6 @@ public class UserModel {
 		this.userHash = userName + this.location.toString();
 	}
 
-	/**
-	 * @param userHash
-	 *            the userHash to set
-	 */
-	public void setUserHash(String userHash) {
-		this.userHash = userHash;
-	}
-
-	/**
-	 * @param upVoteList
-	 *            the upVoteList to set
-	 */
-	public void setUpVoteList(ArrayList<String> upVoteList) {
-		this.upVoteList = upVoteList;
-	}
-
-	/**
-	 * @param downVoteList
-	 *            the downVoteList to set
-	 */
-	public void setDownVoteList(ArrayList<String> downVoteList) {
-		this.downVoteList = downVoteList;
-	}
-
 	public ArrayList<String> getUpVoteList() {
 		return upVoteList;
 	}
