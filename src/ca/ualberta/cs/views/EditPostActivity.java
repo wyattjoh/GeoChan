@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.ActiveUserModel;
@@ -122,7 +123,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	 */
 	private void populateEdit() {
 		// get the post to fill values from
-		PostModel theModel = EditPostModel.getInstance().getThePost();
+		theModel = (T) EditPostModel.getInstance().getThePost();
 		EditPostModel.getInstance().setThePost(null);
 		
 		// set distance button to post value
@@ -130,7 +131,14 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		Location tempLocation = theModel.getLocation();
 		distanceButton.setText(String.valueOf(tempLocation.getLatitude() + " , "
 				+ String.valueOf(tempLocation.getLongitude())));
-	
+		
+		// set the comment text
+		TextView commentText = (TextView) findViewById(R.id.commentTextField);
+		commentText.setText(theModel.getCommentText());
+		
+		// set the title
+		populateTitle(theModel);
+		
 		// get photo button
 		Button cameraButton = (Button) findViewById(R.id.pictureButton);
 		
@@ -164,6 +172,8 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 			}
 		});
 	}
+	
+	protected abstract void populateTitle(PostModel theModel);
 
 	/**
 	 * start up the gallery activity, and set to receive the on activity result

@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicModelController;
 import ca.ualberta.cs.models.CurrentUserPostModelFactory;
+import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
 
 public class EditTopicActivity extends EditPostActivity<TopicModel> {
@@ -16,7 +18,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 
 		@Override
 		public void onClick(View v) {
-			TopicModel theTopicModel = CurrentUserPostModelFactory
+			theModel = CurrentUserPostModelFactory
 					.newTopicModel();
 
 			// Get the title
@@ -28,7 +30,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 				return;
 			}
 
-			theTopicModel.setTitle(theTitle);
+			theModel.setTitle(theTitle);
 
 			// Get the comment
 			EditText commentField = (EditText) findViewById(R.id.commentTextField);
@@ -39,12 +41,12 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 				return;
 			}
 
-			theTopicModel.setCommentText(theComment);
+			theModel.setCommentText(theComment);
 
 			// add the picture
-			theTopicModel.setPicture(imageBitmap);
-			theTopicModel.setLocation(theLocation);
-			theController.newTopic(theTopicModel);
+			theModel.setPicture(imageBitmap);
+			theModel.setLocation(theLocation);
+			theController.newTopic(theModel);
 
 			finish();
 		}
@@ -106,5 +108,11 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	@Override
 	protected OnClickListener getUpdateOnClickListener() {
 		return updateTopicOnClickListener;
+	}
+
+	@Override
+	protected void populateTitle(PostModel theModel) {
+		TextView title = (TextView) findViewById(R.id.titleTextField);
+		title.setText(((TopicModel) theModel).getTitle());
 	}
 }

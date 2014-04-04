@@ -8,6 +8,7 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.CommentModelController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModel;
+import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModelList;
 
 public class EditCommentActivity extends EditPostActivity<CommentModel> {
@@ -106,5 +107,10 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 	@Override
 	protected OnClickListener getUpdateOnClickListener() {
 		return updateCommentOnClickListener;
+	}
+
+	@Override
+	protected void populateTitle(PostModel theModel) {
+		// lol no comment title
 	}
 }
