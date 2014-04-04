@@ -71,10 +71,10 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 					"Tried to execute the view without selecting anything? (No idea how you got here...)");
 		}
 	}
-	
-	
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onResume()
 	 */
 	@Override
@@ -84,19 +84,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		// Populate the view!
 		populateView();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onPrepareOptionsMenu(android.view.Menu)
-	 */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		MenuItem refreshIcon = menu.findItem(R.id.refreshButton);
-		refreshIcon.setVisible(false);
-
-		return super.onPrepareOptionsMenu(menu);
 	}
 
 	/*
@@ -134,6 +121,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			return true;
 		case android.R.id.home:
 			onBackPressed();
+			return true;
+		case R.id.refreshButton:
+			populateView();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
