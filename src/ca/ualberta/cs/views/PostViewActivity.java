@@ -71,10 +71,10 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 					"Tried to execute the view without selecting anything? (No idea how you got here...)");
 		}
 	}
-	
-	
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onResume()
 	 */
 	@Override
@@ -178,6 +178,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		ImageView imageView = (ImageView) findViewById(R.id.imageView);
 		populateImageView(imageView);
 
+		// add edit if required
+		populateEditButton();
+
 		// Distance button
 		Button distanceButton = (Button) findViewById(R.id.distanceButton);
 		populateDistanceButton(distanceButton);
@@ -188,6 +191,26 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		// Favorite Button
 		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
 		populateFavoritesButton(favoriteButton);
+	}
+
+	private void populateEditButton() {
+		// get the edit button if required
+		if (theModel.getPostedBy().getUserHash()
+				.equals(ActiveUserModel.getInstance().getUser().getUserHash())) {
+			// set the visibility to visible
+			Button editButton = (Button) findViewById(R.id.editButton);
+			editButton.setVisibility(View.VISIBLE);
+
+			// add onclick listener
+			editButton.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO add editing on edit post
+					// editPost();
+				}
+			});
+		}
 	}
 
 	private void populateScoreControlsAndView(final TextView scoreView,
@@ -325,7 +348,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		}
 	}
 
-
 	private void populateFavoritesButton(ImageButton favoriteButton) {
 		favoriteButton.setOnClickListener(getFavoriteOnClickListener());
 
@@ -340,19 +362,21 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	private void populateDistanceButton(Button distanceButton) {
 		if (theModel.getLocation() != null) {
 			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
-				Location userLocation = new Location(ActiveUserModel.getInstance()
-					.getUser().getLocation());
-				float distanceToPost = userLocation.distanceTo(theModel.getLocation()) / 1000;
-				String distanceButtonText = String.format("%.2f", distanceToPost) + " km";
+				Location userLocation = new Location(ActiveUserModel
+						.getInstance().getUser().getLocation());
+				float distanceToPost = userLocation.distanceTo(theModel
+						.getLocation()) / 1000;
+				String distanceButtonText = String.format("%.2f",
+						distanceToPost) + " km";
 
-				distanceButton.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
+				distanceButton.setText(distanceButtonText.toCharArray(), 0,
+						distanceButtonText.length());
 			} else {
 				distanceButton.setText(theModel.getLocationAsString());
 			}
 		} else {
 			distanceButton.setText("Location");
 		}
-	
 
 	}
 
