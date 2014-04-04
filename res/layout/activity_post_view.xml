@@ -125,7 +125,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/authorAndAgeLayout"
             android:drawableLeft="@drawable/ic_action_place"
+            android:onClick="onClick_OpenMap"
             android:text="Distance" />
+
     </RelativeLayout>
 
     <ListView
