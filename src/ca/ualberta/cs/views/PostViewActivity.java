@@ -54,17 +54,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 	protected CommentListViewAdapter thePostAdapter;
 
-	public void cellClicked(View theView) {
-		Integer thePosition = (Integer) theView.getTag();
-
-		CommentModelList commentModelList = CommentModelList
-				.getInstanceFromParent(theModel);
-		commentModelList.addToSelectionStackFromPosition(thePosition);
-
-		Intent intent = new Intent(this, CommentViewActivity.class);
-		startActivity(intent);
-	}
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,6 +70,17 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			throw new RuntimeException(
 					"Tried to execute the view without selecting anything? (No idea how you got here...)");
 		}
+	}
+	
+	
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 
 		// Populate the view!
 		populateView();
@@ -183,8 +183,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		populateDistanceButton(distanceButton);
 
 		// Add comments
-		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
-		populateCommentsView(commentsListView);
+		populateCommentsView();
 
 		// Favorite Button
 		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
@@ -357,7 +356,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		}
 	}
 
-	private void populateCommentsView(ListView commentsListView) {
+	private void populateCommentsView() {
+		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
 		CommentModelList theCommentModelList = CommentModelList
 				.getInstanceFromParent(theModel);
 
