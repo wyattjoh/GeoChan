@@ -13,6 +13,7 @@
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bottom_border"
         android:text="Title Text"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/blueColor" />
@@ -21,30 +22,33 @@
         android:id="@+id/commentTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="5dp"
         android:text="Comment Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:src="@android:drawable/ic_menu_gallery" />
+
+    <TextView
+        android:id="@+id/scorePostTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_border"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Score"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/blueColor" />
 
     <RelativeLayout
         android:id="@+id/buttonsAndImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/mutateButtons"
-            android:layout_alignRight="@+id/mutateButtons"
-            android:src="@android:drawable/ic_menu_gallery" />
-
-        <TextView
-            android:id="@+id/scorePostTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="Score"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp" >
 
         <Button
             android:id="@+id/editButton"
@@ -53,9 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/scorePostTextView"
-            android:visibility="gone"
-            android:text="Edit" />
+            android:text="Edit"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/mutateButtons"
@@ -88,11 +91,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="wrap_content"
+            android:id="@+id/authorAndAgeLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/mutateButtons"
-            android:layout_alignRight="@+id/mutateButtons"
             android:layout_below="@+id/mutateButtons"
             android:gravity="center_vertical|center_horizontal" >
 
@@ -100,29 +101,31 @@
                 android:id="@+id/authorTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".30"
+                android:layout_weight=".50"
+                android:drawableLeft="@drawable/ic_action_person"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="Author"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <Button
-                android:id="@+id/distanceButton"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".39"
-                android:drawableLeft="@drawable/ic_action_place"
-                android:text="Distance" />
 
             <TextView
                 android:id="@+id/ageTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".30"
+                android:layout_weight=".50"
+                android:drawableLeft="@drawable/ic_action_time"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="Age"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/distanceButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/authorAndAgeLayout"
+            android:drawableLeft="@drawable/ic_action_place"
+            android:text="Distance" />
     </RelativeLayout>
 
     <ListView

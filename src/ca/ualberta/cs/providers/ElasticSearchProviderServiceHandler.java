@@ -200,7 +200,7 @@ public enum ElasticSearchProviderServiceHandler {
 			ElasticSearchOperationResponse theResponse);
 
 	private static String urlIndex = "http://cmput301.softwareprocess.es:8080/cmput301w14t12/";
-	private static Gson gson = GeoChanGson.getGson();
+	private static Gson gson = GeoChanGsonNetworked.getGson();
 	private static HttpClient client = new DefaultHttpClient();
 
 	private static String getStringFromResponse(HttpResponse response) {

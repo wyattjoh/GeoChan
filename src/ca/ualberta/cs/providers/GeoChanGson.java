@@ -13,7 +13,6 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -23,9 +22,8 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-public class GeoChanGson {
-	private static GeoChanGson singleton = null;
-	private Gson gson;
+abstract public class GeoChanGson {
+	protected Gson gson;
 
 	// https://gist.github.com/orip/3635246
 	// Using Android's base64 libraries. This can be replaced with any base64
@@ -109,40 +107,47 @@ public class GeoChanGson {
 		@Override
 		public Location deserialize(JsonElement json, Type arg1,
 				JsonDeserializationContext arg2) throws JsonParseException {
-			// return new Date(arg0.getAsJsonPrimitive().getAsLong());
 
+			// Load the object
 			final JsonObject jsonObject = json.getAsJsonObject();
 
+			// Get the lat element
 			final JsonElement jsonLat = jsonObject.get("lat");
 
+			// Check that it's there
 			if (jsonLat == null) {
+				// Else, freak out
 				throw new JsonParseException("No lat field found on object: "
 						+ jsonObject.toString());
 			}
 
+			// Get the double for the lat
 			final double lat = jsonLat.getAsDouble();
 
+			// Get the lon element
 			final JsonElement jsonLon = jsonObject.get("lon");
 
+			// Check that it's there
 			if (jsonLon == null) {
+				// Else, freak out
 				throw new JsonParseException("No lon field found on object: "
 						+ jsonObject.toString());
 			}
 
+			// Get the lon double
 			final double lon = jsonLon.getAsDouble();
 
+			// Construct a new location from the data and return
 			Location newLocation = new Location("");
-
 			newLocation.setLatitude(lat);
 			newLocation.setLongitude(lon);
-
 			return newLocation;
 		}
 
 		@Override
 		public JsonElement serialize(Location arg0, Type arg1,
 				JsonSerializationContext arg2) {
-
+			// Construct a raw Json object from the location data
 			JsonObject result = new JsonObject();
 			result.add("lat", new JsonPrimitive(arg0.getLatitude()));
 			result.add("lon", new JsonPrimitive(arg0.getLongitude()));
@@ -152,7 +157,14 @@ public class GeoChanGson {
 
 	}
 
-	private GeoChanGson() {
+	protected GeoChanGson() {
+		GsonBuilder gsonBuilder = createGsonBuilder();
+
+		// Generate gson object
+		gson = gsonBuilder.create();
+	}
+
+	protected GsonBuilder createGsonBuilder() {
 		// Get builder
 		GsonBuilder gsonBuilder = new GsonBuilder();
 
@@ -172,15 +184,6 @@ public class GeoChanGson {
 		gsonBuilder.registerTypeHierarchyAdapter(Location.class,
 				new LocationTypeAdapter());
 
-		// Generate gson object
-		gson = gsonBuilder.create();
-	}
-
-	public static Gson getGson() {
-		if (singleton == null) {
-			singleton = new GeoChanGson();
-		}
-
-		return singleton.gson;
+		return gsonBuilder;
 	}
 }
