@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -154,6 +155,44 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		// Add score
 		final TextView scoreView = (TextView) findViewById(R.id.scorePostTextView);
+
+		// Add Buttons
+		final ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
+		final ImageButton upVoteButton = (ImageButton) findViewById(R.id.upVoteButton);
+		populateScoreControlsAndView(scoreView, downVoteButton, upVoteButton);
+
+		// Add Date
+		TextView dateView = (TextView) findViewById(R.id.ageTextView);
+		String date = (String) DateFormat.format("yyyy/MM/dd",
+				theModel.getDatePosted());
+		dateView.setText(date);
+
+		// Add Author
+		TextView authorView = (TextView) findViewById(R.id.authorTextView);
+		authorView.setText(theModel.getPostedBy().getUserName());
+
+		// Add or remove title text
+		setTitleText();
+
+		// Add image
+		ImageView imageView = (ImageView) findViewById(R.id.imageView);
+		populateImageView(imageView);
+
+		// Distance button
+		Button distanceButton = (Button) findViewById(R.id.distanceButton);
+		populateDistanceButton(distanceButton);
+
+		// Add comments
+		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
+		populateCommentsView(commentsListView);
+
+		// Favorite Button
+		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
+		populateFavoritesButton(favoriteButton);
+	}
+
+	private void populateScoreControlsAndView(final TextView scoreView,
+			final ImageButton downVoteButton, final ImageButton upVoteButton) {
 		String scoreString = "";
 		if (theModel.getScore() > 0) {
 			scoreString = "+";
@@ -161,9 +200,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		scoreString = scoreString + theModel.getScore().toString();
 		scoreView.setText(scoreString);
-
-		// Add Buttons
-		final ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
 
 		UserModel theLoggedInUser = ActiveUserModel.getInstance().getUser();
 		ArrayList<String> downVoteList = theLoggedInUser.getDownVoteList();
@@ -222,8 +258,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			}
 		});
 
-		final ImageButton upVoteButton = (ImageButton) findViewById(R.id.upVoteButton);
-
 		if (theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
 			upVoteButton.setPressed(true);
 		} else {
@@ -278,16 +312,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			}
 
 		});
+	}
 
-		// Add Author
-		TextView authorView = (TextView) findViewById(R.id.authorTextView);
-		authorView.setText(theModel.getPostedBy().getUserName());
-
-		// Add or remove title text
-		setTitleText();
-
-		// Add image
-		ImageView imageView = (ImageView) findViewById(R.id.imageView);
+	private void populateImageView(ImageView imageView) {
 		Bitmap thePicture = theModel.getPicture();
 		if (thePicture == null) {
 			// No picture, hide the field
@@ -297,32 +324,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			// TODO: Implement
 			imageView.setImageBitmap(thePicture);
 		}
+	}
 
-		// Distance button	
-		Button distanceButton = (Button) findViewById(R.id.distanceButton);
-		if (theModel.getLocation() != null) {
-			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
-				Location userLocation = new Location(ActiveUserModel.getInstance()
-					.getUser().getLocation());
-				float distanceToPost = userLocation.distanceTo(theModel.getLocation()) / 1000;
-				String distanceButtonText = String.format("%.2f", distanceToPost) + " km";
-
-				distanceButton.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
-			} else {
-				distanceButton.setText(theModel.getLocationAsString());
-			}
-		} else {
-			distanceButton.setText("Location");
-		}
-
-		// Add comments
-		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
-
-		populateCommentsView(commentsListView);
-
-		// Favorite Button
-		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
-
+	private void populateFavoritesButton(ImageButton favoriteButton) {
 		favoriteButton.setOnClickListener(getFavoriteOnClickListener());
 
 		if (theModel.isFavorite()) {
@@ -330,6 +334,26 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		} else {
 			favoriteButton
 					.setImageResource(android.R.drawable.btn_star_big_off);
+		}
+	}
+
+	private void populateDistanceButton(Button distanceButton) {
+		if (theModel.getLocation() != null) {
+			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
+				Location userLocation = new Location(ActiveUserModel
+						.getInstance().getUser().getLocation());
+				float distanceToPost = userLocation.distanceTo(theModel
+						.getLocation()) / 1000;
+				String distanceButtonText = String.format("%.2f",
+						distanceToPost) + " km";
+
+				distanceButton.setText(distanceButtonText.toCharArray(), 0,
+						distanceButtonText.length());
+			} else {
+				distanceButton.setText(theModel.getLocationAsString());
+			}
+		} else {
+			distanceButton.setText("Location");
 		}
 	}
 
