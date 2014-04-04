@@ -3,6 +3,7 @@
  */
 package ca.ualberta.cs.controllers;
 
+import ca.ualberta.cs.models.PostModelList;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.providers.ElasticSearchProvider;
@@ -23,6 +24,15 @@ public class TopicModelController {
 		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();
 		// Add it to the list!
 		theProvider.addTopic(theTopicModel, this.theTopicModelList);
+	}
+
+	public void updateTopic(PostModelList<TopicModel> thePostModelList) {
+		// Get the provider
+		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();
+
+		theProvider.updateTopic(
+				TopicModelList.getInstance().getLastSelection(),
+				thePostModelList);
 	}
 
 }

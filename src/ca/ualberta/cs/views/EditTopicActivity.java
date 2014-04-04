@@ -10,6 +10,7 @@ import ca.ualberta.cs.controllers.TopicModelController;
 import ca.ualberta.cs.models.CurrentUserPostModelFactory;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.models.TopicModelList;
 
 public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	private TopicModelController theController;
@@ -56,8 +57,34 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			
+			// Get the title
+			EditText titleField = (EditText) findViewById(R.id.titleTextField);
+			String theTitle = titleField.getText().toString();
+
+			if (theTitle.length() <= 0) {
+				failedDueToReason("Cannot create a topic with an empty title!");
+				return;
+			}
+
+			theModel.setTitle(theTitle);
+
+			// Get the comment
+			EditText commentField = (EditText) findViewById(R.id.commentTextField);
+			String theComment = commentField.getText().toString();
+
+			if (theComment.length() <= 0) {
+				failedDueToReason("Cannot create a topic with an empty comment!");
+				return;
+			}
+
+			theModel.setCommentText(theComment);
+
+			// add the picture
+			theModel.setPicture(imageBitmap);
+			theModel.setLocation(theLocation);
+			theController.updateTopic(TopicModelList.getInstance());
+
+			finish();
 		}
 		
 	};
