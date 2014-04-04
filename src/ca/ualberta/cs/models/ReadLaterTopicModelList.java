@@ -6,6 +6,7 @@ package ca.ualberta.cs.models;
 import java.io.InputStreamReader;
 
 import ca.ualberta.cs.providers.GeoChanGson;
+import ca.ualberta.cs.providers.GeoChanGsonOffline;
 
 import com.google.gson.Gson;
 
@@ -47,7 +48,7 @@ public class ReadLaterTopicModelList extends FollowingPostModelList<TopicModel> 
 
 	@Override
 	protected TopicModel[] inputStreaReaderToArray(InputStreamReader isr) {
-		Gson gson = GeoChanGson.getGson();
+		Gson gson = GeoChanGsonOffline.getGson();
 
 		return gson.fromJson(isr, TopicModel[].class);
 	}

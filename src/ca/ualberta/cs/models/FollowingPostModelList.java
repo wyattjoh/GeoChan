@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.util.Log;
 import ca.ualberta.cs.providers.GeoChanGson;
+import ca.ualberta.cs.providers.GeoChanGsonOffline;
 
 import com.google.gson.Gson;
 
@@ -63,7 +64,7 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	 * Saves the current state to the disk
 	 */
 	private void save() {
-		Gson gson = GeoChanGson.getGson();
+		Gson gson = GeoChanGsonOffline.getGson();
 
 		T[] dataToSave = arrayListToArray();
 
