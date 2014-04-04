@@ -90,22 +90,11 @@
                 android:src="@drawable/ic_action_good" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/distanceButton"
-            style="?android:attr/buttonStyleSmall"
+        <LinearLayout
+            android:id="@+id/authorAndAgeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/mutateButtons"
-            android:drawableLeft="@drawable/ic_action_place"
-            android:text="Distance" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/distanceButton"
-            android:layout_alignRight="@+id/distanceButton"
-            android:layout_below="@+id/distanceButton"
             android:gravity="center_vertical|center_horizontal" >
 
             <TextView
@@ -128,6 +117,15 @@
                 android:text="Age"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/distanceButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/authorAndAgeLayout"
+            android:drawableLeft="@drawable/ic_action_place"
+            android:text="Distance" />
     </RelativeLayout>
 
     <ListView
