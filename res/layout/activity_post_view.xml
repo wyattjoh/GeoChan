@@ -46,13 +46,24 @@
             android:text="Score"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <Button
+            android:id="@+id/editButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/scorePostTextView"
+            android:visibility="gone"
+            android:text="Edit" />
+
         <LinearLayout
             android:id="@+id/mutateButtons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/scorePostTextView" >
+            android:layout_below="@+id/editButton" >
 
             <ImageButton
                 android:id="@+id/downVoteButton"
