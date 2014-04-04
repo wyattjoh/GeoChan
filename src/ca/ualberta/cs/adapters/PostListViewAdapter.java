@@ -92,12 +92,20 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		// TODO: Add location text
 		TextView locationText = (TextView) theView
 				.findViewById(R.id.textViewLocation);
-		Location userLocation = new Location(ActiveUserModel.getInstance()
-				.getUser().getLocation());
-		float distanceToPost = userLocation.distanceTo(thePost.getLocation()) / 1000;
-		String distanceButtonText = String.format("%.2f", distanceToPost) + " km";
+		if (thePost.getLocation() != null) {
+			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
+				Location userLocation = new Location(ActiveUserModel.getInstance()
+					.getUser().getLocation());
+				float distanceToPost = userLocation.distanceTo(thePost.getLocation()) / 1000;
+				String distanceButtonText = String.format("%.2f", distanceToPost) + " km";
 
-		locationText.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
+				locationText.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
+			} else {
+				locationText.setText(thePost.getLocationAsString());
+			}
+		} else {
+			locationText.setText("Location");
+		}
 
 		// Fill score
 		TextView scoreText = (TextView) theView
