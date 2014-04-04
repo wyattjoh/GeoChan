@@ -45,9 +45,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	 * Starts an activity to reply to the currently visible post
 	 */
 	protected void replyToPost() {
-		EditPostModel theEditPostModel = EditPostModel.getInstance();
-		theEditPostModel.setTheParent(theModel);
-
+		EditPostModel.getInstance().setTheParent(theModel);
+		
 		Intent intent = new Intent(this, EditCommentActivity.class);
 		startActivity(intent);
 	}

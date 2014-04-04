@@ -66,6 +66,15 @@ public class PostModelList<T extends PostModel> {
 
 		updateListeningAdapters();
 	}
+	
+	public PostModel getSelectionOffsetFromEnd(Integer theIndex) {
+		Object[] temp = this.selectedPostModelStack.toArray();
+		if (temp.length == 1){
+			return ((PostModel)temp[temp.length-theIndex]);
+		}
+		System.out.println("Array length"+temp.length);
+		return ((PostModel)temp[temp.length-(theIndex+1)]);
+	}
 
 	/*
 	 * Gets the topic model array list

@@ -20,6 +20,7 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
+import ca.ualberta.cs.models.PostModelList;
 
 public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	public static final String IS_NEW = "IS_NEW_TOPIC";
@@ -123,7 +124,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	 */
 	private void populateEdit() {
 		// get the post to fill values from
-		theModel = (T) EditPostModel.getInstance().getThePost();
+		theModel = (T) theEditPostModel.getThePost();
 		EditPostModel.getInstance().setThePost(null);
 		
 		// set distance button to post value
