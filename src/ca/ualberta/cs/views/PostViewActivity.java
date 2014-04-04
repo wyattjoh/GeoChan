@@ -325,8 +325,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		}
 	}
 
-		// Distance button	
-		Button distanceButton = (Button) findViewById(R.id.distanceButton);
+
 	private void populateFavoritesButton(ImageButton favoriteButton) {
 		favoriteButton.setOnClickListener(getFavoriteOnClickListener());
 
