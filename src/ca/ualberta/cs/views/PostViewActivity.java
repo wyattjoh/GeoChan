@@ -148,6 +148,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	}
 
 	protected void populateView() {
+
 		// Add comment
 		TextView commentView = (TextView) findViewById(R.id.commentTextView);
 		commentView.setText(theModel.getCommentText());
@@ -298,23 +299,25 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			imageView.setImageBitmap(thePicture);
 		}
 
-		// Distance button	
+		// Distance button
 		Button distanceButton = (Button) findViewById(R.id.distanceButton);
 		if (theModel.getLocation() != null) {
 			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
-				Location userLocation = new Location(ActiveUserModel.getInstance()
-					.getUser().getLocation());
-				float distanceToPost = userLocation.distanceTo(theModel.getLocation()) / 1000;
-				String distanceButtonText = String.format("%.2f", distanceToPost) + " km";
+				Location userLocation = new Location(ActiveUserModel
+						.getInstance().getUser().getLocation());
+				float distanceToPost = userLocation.distanceTo(theModel
+						.getLocation()) / 1000;
+				String distanceButtonText = String.format("%.2f",
+						distanceToPost) + " km";
 
-				distanceButton.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
+				distanceButton.setText(distanceButtonText.toCharArray(), 0,
+						distanceButtonText.length());
 			} else {
 				distanceButton.setText(theModel.getLocationAsString());
 			}
 		} else {
 			distanceButton.setText("Location");
 		}
-	
 
 		// Add comments
 		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
@@ -337,6 +340,24 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		} else {
 			favoriteButton
 					.setImageResource(android.R.drawable.btn_star_big_off);
+		}
+
+		// get the edit button if required
+		if (theModel.getPostedBy().getUserHash()
+				.equals(ActiveUserModel.getInstance().getUser().getUserHash())) {
+			// set the visibility to visible
+			Button editButton = (Button) findViewById(R.id.editButton);
+			editButton.setVisibility(View.VISIBLE);
+
+			// add onclick listener
+			editButton.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO add editing on edit post
+					//editPost();
+				}
+			});
 		}
 	}
 }
