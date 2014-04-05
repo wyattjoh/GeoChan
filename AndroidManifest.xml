@@ -9,12 +9,18 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	
-    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+ 	<uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE"/>
+ 	<uses-permission android:name="android.permission.READ_INTERNAL_STORAGE"/>
 
+ 	<uses-feature android:name="android.hardware.camera" />
+	<uses-feature android:name="android.hardware.location.network" />
+	<uses-feature android:name="android.hardware.location.gps" />   
+	<uses-feature android:name="android.hardware.wifi" />
+    
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="16" />
@@ -43,23 +49,32 @@
         </activity>
         <activity
             android:name="ca.ualberta.cs.views.TopicViewActivity"
-            android:label="@string/topic_view_vctivity">
+            android:label="@string/topic_view_vctivity" >
         </activity>
         <activity
             android:name="ca.ualberta.cs.views.EditTopicActivity"
-            android:label="@string/title_activity_edit_topic">
+            android:label="@string/title_activity_edit_topic" >
         </activity>
         <activity
             android:name="ca.ualberta.cs.views.EditCommentActivity"
-            android:label="@string/title_activity_edit_topic">
+            android:label="@string/title_activity_edit_topic" >
         </activity>
         <activity
             android:name="ca.ualberta.cs.views.CommentViewActivity"
-            android:label="@string/comment_view_activity">
+            android:label="@string/comment_view_activity" >
         </activity>
         <activity
             android:name="ca.ualberta.cs.views.LocationActivity"
             android:label="@string/title_activity_location" >
+        </activity>
+        <activity
+            android:name="ca.ualberta.cs.views.MapViewActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:noHistory="false"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:label="@string/title_activity_map_view" >
+
         </activity>
     </application>
 

@@ -3,7 +3,12 @@
  */
 package ca.ualberta.cs.views;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
+import android.location.Location;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -19,6 +24,9 @@ import ca.ualberta.cs.models.TopicModelList;
  * 
  */
 public class TopicViewActivity extends PostViewActivity<TopicModel> {
+	
+	private static final int IS_TOPIC = 0;
+	private static final int Location = 0;
 	private TopicViewController theTopicViewController;
 
 	public TopicViewActivity() {
@@ -84,5 +92,21 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 		
 		Intent intent = new Intent(this, EditTopicActivity.class);
 		startActivity(intent);
+	}
+
+	@Override
+	public void onClick_OpenMap(View theView) {
+		// TODO Auto-generated method stub
+		Intent mapIntent = new Intent(this, MapViewActivity.class);
+		ArrayList<Location> allLocations = theModel.getLocationMapArray();
+		for(Location loc: allLocations){
+			Log.i("Passing Locations", String.valueOf(loc.getLatitude()+","+String.valueOf(loc.getLongitude())));
+		}
+		Bundle b = new Bundle();
+		b.putParcelableArrayList("allPostLocations", allLocations);
+		mapIntent.putExtra("locationBundle", b);
+		mapIntent.putExtra("selfLocation", this.theModel.getLocation());
+		mapIntent.putExtra("postType", IS_TOPIC);
+		startActivity(mapIntent);
 	}
 }

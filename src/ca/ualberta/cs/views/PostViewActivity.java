@@ -51,6 +51,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		startActivity(intent);
 	}
 	
+	
+	
 	abstract protected void editPost();
 
 	protected CommentListViewAdapter thePostAdapter;
@@ -144,6 +146,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	/**
 	 * Starts the settings activity
 	 */
+	
 	protected void startSettingsActivity() {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
@@ -193,7 +196,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
 		populateFavoritesButton(favoriteButton);
 	}
-
+	
+	
+	
 	private void populateEditButton() {
 		// get the edit button if required
 		if (theModel.getPostedBy().getUserHash()
@@ -336,7 +341,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		});
 	}
-
+	
+	public abstract void onClick_OpenMap(View theView);
+	
 	private void populateImageView(ImageView imageView) {
 		Bitmap thePicture = theModel.getPicture();
 		if (thePicture == null) {
