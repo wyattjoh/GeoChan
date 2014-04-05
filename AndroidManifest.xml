@@ -74,6 +74,7 @@
             android:noHistory="false"
             android:theme="@android:style/Theme.NoTitleBar"
             android:label="@string/title_activity_map_view" >
+
         </activity>
     </application>
 
