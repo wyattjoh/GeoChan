@@ -46,7 +46,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 		@Override
 		public void onClick(View v) {
-			
+			CommentModel comparatorModel = theModel;
 			//System.out.println(theModel.getMyParent().getChildrenComments().get(0));
 
 			// Get the comment
@@ -65,8 +65,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 				theModel.setPicture(imageBitmap);
 			}
 			theModel.setLocation(theLocation);
-			theController.updateComment(theModel,
-					theModel.getMyParent(), 0);
+			theController.updateComment(comparatorModel, theModel, theModel.getMyParent());
 
 			finish();
 		}
