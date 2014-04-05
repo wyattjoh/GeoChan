@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.adapters.TopicListViewAdapter;
 import ca.ualberta.cs.controllers.CommentModelController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModel;
@@ -46,8 +47,8 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 		@Override
 		public void onClick(View v) {
+			theModel.setId(postId);
 			CommentModel comparatorModel = theModel;
-			//System.out.println(theModel.getMyParent().getChildrenComments().get(0));
 
 			// Get the comment
 			EditText commentField = (EditText) findViewById(R.id.commentTextField);
@@ -65,7 +66,11 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 				theModel.setPicture(imageBitmap);
 			}
 			theModel.setLocation(theLocation);
-			theController.updateComment(comparatorModel, theModel, theModel.getMyParent());
+			
+			// set the comment list
+			theModel.setChildComments(commentList);
+			
+			theController.updateComment(theModel);
 
 			finish();
 		}
@@ -84,8 +89,6 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 		if (theEditPostModel.isNewPost()) {
 			theModel = new CommentModel(ActiveUserModel.getInstance().getUser());
 			theModel.setMyParent(theEditPostModel.getTheParent());
-		} else {
-			theModel = (CommentModel) theEditPostModel.getThePost();
 		}
 
 		// Get the controller
