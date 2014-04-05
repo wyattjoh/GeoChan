@@ -8,6 +8,9 @@ import ca.ualberta.cs.adapters.CommentListViewAdapter;
 import ca.ualberta.cs.adapters.PostListViewAdapter;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.CommentModel;
+import ca.ualberta.cs.models.CommentModelList;
+import ca.ualberta.cs.models.PostModelList;
+import ca.ualberta.cs.models.ReadLaterTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
 
@@ -24,7 +27,10 @@ public class PostApaterTest extends
 		CommentModel comment = new CommentModel(user);
 		ArrayList<CommentModel> commentList = new ArrayList<CommentModel>();
 		commentList.add(comment);
-		CommentListViewAdapter adapter = new CommentListViewAdapter(getActivity(), null);
+		
+		PostModelList<CommentModel> comments = CommentModelList.getInstance();
+		comments.setArrayList(commentList);
+		CommentListViewAdapter adapter = new CommentListViewAdapter(getActivity(), comments);
 
 		// make sure the adapter isnt null
 		assertNotNull("The objcet is not null", adapter);

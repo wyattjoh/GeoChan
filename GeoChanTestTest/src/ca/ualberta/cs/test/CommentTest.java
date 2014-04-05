@@ -1,3 +1,4 @@
+package ca.ualberta.cs.test;
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 

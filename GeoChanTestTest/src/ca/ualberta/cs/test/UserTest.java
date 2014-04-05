@@ -1,3 +1,4 @@
+package ca.ualberta.cs.test;
 import ca.ualberta.cs.models.ActiveUserModel;
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
