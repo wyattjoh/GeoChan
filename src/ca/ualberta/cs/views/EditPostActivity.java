@@ -1,5 +1,7 @@
 package ca.ualberta.cs.views;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,8 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
+import ca.ualberta.cs.models.PostModelList;
 
 public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	public static final String IS_NEW = "IS_NEW_TOPIC";
@@ -33,6 +37,8 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	protected Location theLocation = null;
 
 	protected T theModel;
+	protected String postId = null;
+	protected ArrayList<CommentModel> commentList = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +129,10 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	 */
 	private void populateEdit() {
 		// get the post to fill values from
-		theModel = (T) EditPostModel.getInstance().getThePost();
+		theModel = (T) theEditPostModel.getThePost();
+		postId = theEditPostModel.getThePost().getId();
+		commentList = theEditPostModel.getThePost().getChildrenComments();
+		
 		EditPostModel.getInstance().setThePost(null);
 		
 		// set distance button to post value

@@ -87,6 +87,7 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 	protected void editPost() {
 		// TODO Auto-generated method stub
 		EditPostModel theEditPostModel = EditPostModel.getInstance();
+		theEditPostModel.setTheParent(null);
 		theEditPostModel.setThePost(theModel);
 		
 		Intent intent = new Intent(this, EditTopicActivity.class);
