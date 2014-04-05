@@ -36,7 +36,4 @@ public class TopicListViewAdapter extends PostListViewAdapter<TopicModel> {
 		// TODO Auto-generated method stub
 		return TopicViewActivity.class;
 	}
-
-	@Override
-	protected void setParent() {}
 }

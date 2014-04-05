@@ -189,14 +189,10 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 
 		// Mark the selected model
 		this.theArrayList.addToSelectionStackFromPosition(position.intValue());
-
-		// lol breaking MVC, sorta...
-		setParent();
 		
 		// Start intent
 		Intent intent = new Intent(this.theActivity, getViewClass());
 		this.theActivity.startActivity(intent);
 	}
 	
-	abstract protected void setParent();
 }

@@ -42,9 +42,4 @@ public class CommentListViewAdapter extends PostListViewAdapter<CommentModel> {
 		// TODO Auto-generated method stub
 		return CommentViewActivity.class;
 	}
-
-	@Override
-	protected void setParent() {
-		// TODO Auto-generated method stub
-	}
 }
