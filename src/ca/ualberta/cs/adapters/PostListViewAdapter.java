@@ -15,8 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.CommentModelList;
+import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.PostModelList;
+import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.views.MainActivity;
 
 /**
@@ -186,9 +189,10 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 
 		// Mark the selected model
 		this.theArrayList.addToSelectionStackFromPosition(position.intValue());
-
+		
 		// Start intent
 		Intent intent = new Intent(this.theActivity, getViewClass());
 		this.theActivity.startActivity(intent);
 	}
+	
 }
