@@ -3,12 +3,14 @@
  */
 package ca.ualberta.cs.views;
 
+import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicViewController;
+import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 
@@ -72,4 +74,14 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 			}
 		}
 	};
+
+	@Override
+	protected void editPost() {
+		// TODO Auto-generated method stub
+		EditPostModel theEditPostModel = EditPostModel.getInstance();
+		theEditPostModel.setThePost(theModel);
+		
+		Intent intent = new Intent(this, EditTopicActivity.class);
+		startActivity(intent);
+	}
 }

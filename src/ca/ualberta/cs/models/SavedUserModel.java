@@ -1,6 +1,7 @@
 package ca.ualberta.cs.models;
 
 import ca.ualberta.cs.providers.GeoChanGson;
+import ca.ualberta.cs.providers.GeoChanGsonOffline;
 
 import com.google.gson.Gson;
 
@@ -46,7 +47,7 @@ public class SavedUserModel {
 	 */
 	public void save(UserModel theUser) {
 		// Serialize the UserModel object
-		Gson gson = GeoChanGson.getGson();
+		Gson gson = GeoChanGsonOffline.getGson();
 		String jsonString = gson.toJson(theUser);
 
 		// Get editor
@@ -65,7 +66,7 @@ public class SavedUserModel {
 	 */
 	public UserModel load() {
 		// Serialize the UserModel object
-		Gson gson = GeoChanGson.getGson();
+		Gson gson = GeoChanGsonOffline.getGson();
 
 		// Get preferences
 		SharedPreferences settings = getSharedPreferences();

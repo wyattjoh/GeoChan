@@ -51,6 +51,10 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		Intent intent = new Intent(this, EditCommentActivity.class);
 		startActivity(intent);
 	}
+	
+	
+	
+	abstract protected void editPost();
 
 	protected CommentListViewAdapter thePostAdapter;
 
@@ -133,6 +137,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	/**
 	 * Starts the settings activity
 	 */
+	
 	protected void startSettingsActivity() {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
@@ -168,6 +173,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		ImageView imageView = (ImageView) findViewById(R.id.imageView);
 		populateImageView(imageView);
 
+		// add edit if required
+		populateEditButton();
+
 		// Distance button
 		Button distanceButton = (Button) findViewById(R.id.distanceButton);
 		populateDistanceButton(distanceButton);
@@ -178,6 +186,28 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		// Favorite Button
 		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
 		populateFavoritesButton(favoriteButton);
+	}
+	
+	
+	
+	private void populateEditButton() {
+		// get the edit button if required
+		if (theModel.getPostedBy().getUserHash()
+				.equals(ActiveUserModel.getInstance().getUser().getUserHash())) {
+			// set the visibility to visible
+			Button editButton = (Button) findViewById(R.id.editButton);
+			editButton.setVisibility(View.VISIBLE);
+
+			// add onclick listener
+			editButton.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO add editing on edit post
+					editPost();
+				}
+			});
+		}
 	}
 
 	private void populateScoreControlsAndView(final TextView scoreView,
@@ -302,7 +332,13 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		});
 	}
-
+	
+	public void onClick_OpenMap(View theView) {
+		Intent mapIntent = new Intent(this, MapViewActivity.class);
+		mapIntent.putExtra("postLocation", this.theModel.getLocation());
+		startActivity(mapIntent);
+	}
+	
 	private void populateImageView(ImageView imageView) {
 		Bitmap thePicture = theModel.getPicture();
 		if (thePicture == null) {
@@ -344,6 +380,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		} else {
 			distanceButton.setText("Location");
 		}
+
 	}
 
 	private void populateCommentsView() {
@@ -354,5 +391,17 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		// Has children!
 		thePostAdapter = new CommentListViewAdapter(this, theCommentModelList);
 		commentsListView.setAdapter(thePostAdapter);
+
+		// Favorite Button
+		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
+
+		favoriteButton.setOnClickListener(getFavoriteOnClickListener());
+
+		if (theModel.isFavorite()) {
+			favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
+		} else {
+			favoriteButton
+					.setImageResource(android.R.drawable.btn_star_big_off);
+		}
 	}
 }

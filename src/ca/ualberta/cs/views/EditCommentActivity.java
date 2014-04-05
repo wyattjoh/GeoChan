@@ -8,6 +8,7 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.CommentModelController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModel;
+import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModelList;
 
 public class EditCommentActivity extends EditPostActivity<CommentModel> {
@@ -37,6 +38,16 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 			finish();
 		}
+	};
+	
+	private OnClickListener updateCommentOnClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	};
 
 	/*
@@ -95,7 +106,11 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 	 */
 	@Override
 	protected OnClickListener getUpdateOnClickListener() {
-		// TODO Auto-generated method stub
-		return null;
+		return updateCommentOnClickListener;
+	}
+
+	@Override
+	protected void populateTitle(PostModel theModel) {
+		// lol no comment title
 	}
 }

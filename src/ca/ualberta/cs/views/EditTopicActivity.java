@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicModelController;
 import ca.ualberta.cs.models.CurrentUserPostModelFactory;
+import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.models.TopicModelList;
 
 public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	private TopicModelController theController;
@@ -16,7 +19,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 
 		@Override
 		public void onClick(View v) {
-			TopicModel theTopicModel = CurrentUserPostModelFactory
+			theModel = CurrentUserPostModelFactory
 					.newTopicModel();
 
 			// Get the title
@@ -28,7 +31,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 				return;
 			}
 
-			theTopicModel.setTitle(theTitle);
+			theModel.setTitle(theTitle);
 
 			// Get the comment
 			EditText commentField = (EditText) findViewById(R.id.commentTextField);
@@ -39,15 +42,51 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 				return;
 			}
 
-			theTopicModel.setCommentText(theComment);
+			theModel.setCommentText(theComment);
 
 			// add the picture
-			theTopicModel.setPicture(imageBitmap);
-			theTopicModel.setLocation(theLocation);
-			theController.newTopic(theTopicModel);
+			theModel.setPicture(imageBitmap);
+			theModel.setLocation(theLocation);
+			theController.newTopic(theModel);
 
 			finish();
 		}
+	};
+	
+	private OnClickListener updateTopicOnClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			// Get the title
+			EditText titleField = (EditText) findViewById(R.id.titleTextField);
+			String theTitle = titleField.getText().toString();
+
+			if (theTitle.length() <= 0) {
+				failedDueToReason("Cannot create a topic with an empty title!");
+				return;
+			}
+
+			theModel.setTitle(theTitle);
+
+			// Get the comment
+			EditText commentField = (EditText) findViewById(R.id.commentTextField);
+			String theComment = commentField.getText().toString();
+
+			if (theComment.length() <= 0) {
+				failedDueToReason("Cannot create a topic with an empty comment!");
+				return;
+			}
+
+			theModel.setCommentText(theComment);
+
+			// add the picture
+			theModel.setPicture(imageBitmap);
+			theModel.setLocation(theLocation);
+			theController.updateTopic(TopicModelList.getInstance());
+
+			finish();
+		}
+		
 	};
 
 	/*
@@ -95,7 +134,12 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	 */
 	@Override
 	protected OnClickListener getUpdateOnClickListener() {
-		// TODO Auto-generated method stub
-		return null;
+		return updateTopicOnClickListener;
+	}
+
+	@Override
+	protected void populateTitle(PostModel theModel) {
+		TextView title = (TextView) findViewById(R.id.titleTextField);
+		title.setText(((TopicModel) theModel).getTitle());
 	}
 }
