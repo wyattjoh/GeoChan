@@ -40,6 +40,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	abstract protected OnClickListener getFavoriteOnClickListener();
 
 	protected T theModel = null;
+	
+	protected static Bitmap currentBitmap = null;
 
 	/**
 	 * Starts an activity to reply to the currently visible post
@@ -180,8 +182,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		setTitleText();
 
 		// Add image
-		ImageView imageView = (ImageView) findViewById(R.id.imageView);
-		populateImageView(imageView);
+		Button imageViewButton = (Button) findViewById(R.id.pictureButton);
+		populateImageView(imageViewButton);
 
 		// add edit if required
 		populateEditButton();
@@ -345,15 +347,23 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	
 	public abstract void onClick_OpenMap(View theView);
 	
-	private void populateImageView(ImageView imageView) {
-		Bitmap thePicture = theModel.getPicture();
+	private void populateImageView(Button imageView) {
+		final Bitmap thePicture = theModel.getPicture();
 		if (thePicture == null) {
 			// No picture, hide the field
 			imageView.setVisibility(View.GONE);
 		} else {
 			// A picture, add the image
-			// TODO: Implement
-			imageView.setImageBitmap(thePicture);
+			currentBitmap = thePicture;
+
+			imageView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(PostViewActivity.this, PictureViewActivity.class);
+					startActivity(intent);
+				}
+			});
 		}
 	}
 
@@ -409,5 +419,12 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			favoriteButton
 					.setImageResource(android.R.drawable.btn_star_big_off);
 		}
+	}
+
+	/**
+	 * @return the currentBitmap
+	 */
+	public static Bitmap getCurrentBitmap() {
+		return currentBitmap;
 	}
 }
