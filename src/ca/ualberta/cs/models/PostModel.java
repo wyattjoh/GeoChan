@@ -170,12 +170,10 @@ public abstract class PostModel {
 	public ArrayList<Location> getLocationMapArray() {
 		ArrayList<Location> locationMapArray = new ArrayList<Location>();
 		if (this.childrenComments.isEmpty()) {
-			locationMapArray.add(this.location);
 		} else {
 			for (PostModel child : this.childrenComments) {
 				locationMapArray.addAll(child.getLocationMapArray());
 			}
-			locationMapArray.add(this.location);
 		}
 		return locationMapArray;
 	}

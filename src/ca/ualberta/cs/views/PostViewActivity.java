@@ -343,11 +343,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		});
 	}
 	
-	public void onClick_OpenMap(View theView) {
-		Intent mapIntent = new Intent(this, MapViewActivity.class);
-		mapIntent.putExtra("postLocation", this.theModel.getLocation());
-		startActivity(mapIntent);
-	}
+	public abstract void onClick_OpenMap(View theView);
 	
 	private void populateImageView(ImageView imageView) {
 		Bitmap thePicture = theModel.getPicture();
