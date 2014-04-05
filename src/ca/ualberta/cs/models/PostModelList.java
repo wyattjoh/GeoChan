@@ -72,7 +72,6 @@ public class PostModelList<T extends PostModel> {
 		if (temp.length == 1){
 			return ((PostModel)temp[temp.length-theIndex]);
 		}
-		System.out.println("Array length"+temp.length);
 		return ((PostModel)temp[temp.length-(theIndex+1)]);
 	}
 

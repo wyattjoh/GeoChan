@@ -58,8 +58,6 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 		EditPostModel theEditPostModel = EditPostModel.getInstance();
 		theEditPostModel.setThePost(theModel);
 		
-		System.out.println("editPostModel"+theEditPostModel.getThePost().getId());
-
 		Intent intent = new Intent(this, EditCommentActivity.class);
 		startActivity(intent);
 	}
