@@ -18,8 +18,6 @@ import android.content.Context;
 public class ReadLaterTopicModelList extends FollowingPostModelList<TopicModel> {
 	private static ReadLaterTopicModelList singleton = null;
 
-	private static final String FILENAME = "FavoriteTopicModelList.json";
-
 	private ReadLaterTopicModelList(Context applicationContext) {
 		super(applicationContext);
 	}
@@ -42,7 +40,7 @@ public class ReadLaterTopicModelList extends FollowingPostModelList<TopicModel> 
 
 	@Override
 	protected String getFilenameString() {
-		return FILENAME;
+		return "ReadLaterTopicModelList.json";
 	}
 
 	@Override

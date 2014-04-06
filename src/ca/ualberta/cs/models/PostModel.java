@@ -18,6 +18,7 @@ public abstract class PostModel {
 	private ArrayList<CommentModel> childrenComments = new ArrayList<CommentModel>();
 
 	private transient Boolean isFavorite = false;
+	private transient Boolean isReadLater = false;
 	private String id;
 
 	/**
@@ -136,6 +137,20 @@ public abstract class PostModel {
 	 */
 	public void setIsFavorite(Boolean isFavorite) {
 		this.isFavorite = isFavorite;
+	}
+
+	/**
+	 * @return the isReadLater
+	 */
+	public Boolean isReadLater() {
+		return isReadLater;
+	}
+
+	/**
+	 * @param isReadLater the isReadLater to set
+	 */
+	public void setIsReadLater(Boolean isReadLater) {
+		this.isReadLater = isReadLater;
 	}
 
 	/**

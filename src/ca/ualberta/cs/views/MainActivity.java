@@ -24,6 +24,7 @@ import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.FavoriteCommentModelList;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
+import ca.ualberta.cs.models.ReadLaterCommentModelList;
 import ca.ualberta.cs.models.ReadLaterTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
 
@@ -228,7 +229,7 @@ public class MainActivity extends FragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-
+		menu.findItem(R.id.readLaterButton).setVisible(false);
 		return true;
 	}
 
@@ -323,6 +324,7 @@ public class MainActivity extends FragmentActivity {
 
 		// Create Read Later list
 		ReadLaterTopicModelList.createInstance(applicationContext);
+		ReadLaterCommentModelList.createInstance(applicationContext);
 	}
 
 	/**

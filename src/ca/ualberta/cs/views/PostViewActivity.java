@@ -69,6 +69,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	protected LinearLayout headerView = null;
 	
 	protected ListView commentsListView;
+
+	private Menu menu;
 	
 	abstract protected void editPost();
 
@@ -117,6 +119,13 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		
+		// Grab the menu for later...
+		this.menu = menu;
+		
+		// Read later text
+		updateReadLaterText();
+		
 		return true;
 	}
 
@@ -149,8 +158,31 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		case android.R.id.home:
 			onBackPressed();
 			return true;
+		case R.id.readLaterButton:
+			onReadLaterPressed();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	/**
+	 * Is fired when the read later button is clicked in the model
+	 */
+	private void onReadLaterPressed() {
+		theController.toggleReadLater(getSelectedModel());
+		
+		updateReadLaterText();
+	}
+
+	private void updateReadLaterText() {
+		MenuItem theReadLaterButton = (MenuItem) this.menu.findItem(R.id.readLaterButton);
+		
+		if (this.theModel.isReadLater()) {
+			theReadLaterButton.setTitle("Mark as read");
+		}
+		else {
+			theReadLaterButton.setTitle("Read Later");
 		}
 	}
 
