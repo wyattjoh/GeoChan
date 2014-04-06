@@ -39,7 +39,6 @@ public class CommentListViewAdapter extends PostListViewAdapter<CommentModel> {
 	 */
 	@Override
 	protected Class<?> getViewClass() {
-		// TODO Auto-generated method stub
 		return CommentViewActivity.class;
 	}
 }

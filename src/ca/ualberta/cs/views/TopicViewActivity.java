@@ -16,6 +16,7 @@ import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicViewController;
 import ca.ualberta.cs.models.EditPostModel;
+import ca.ualberta.cs.models.SelectedTopicModelList;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 
@@ -35,7 +36,7 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 
 	@Override
 	protected TopicModel getSelectedModel() {
-		return TopicModelList.getInstance().getLastSelection();
+		return SelectedTopicModelList.getTopicList().getLastSelection();
 	}
 
 	@Override
@@ -61,7 +62,7 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		TopicModelList.getInstance().popFromSelectionStack();
+		SelectedTopicModelList.getTopicList().popFromSelectionStack();
 	}
 
 	private OnClickListener favoriteOnClickListener = new OnClickListener() {

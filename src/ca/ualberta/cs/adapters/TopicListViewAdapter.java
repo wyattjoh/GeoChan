@@ -6,6 +6,7 @@ import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModelList;
+import ca.ualberta.cs.models.SelectedTopicModelList;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.views.TopicViewActivity;
 
@@ -35,5 +36,10 @@ public class TopicListViewAdapter extends PostListViewAdapter<TopicModel> {
 	protected Class<?> getViewClass() {
 		// TODO Auto-generated method stub
 		return TopicViewActivity.class;
+	}
+
+	@Override
+	protected void setSelectedList() {
+		SelectedTopicModelList.setTopicList(theArrayList);
 	}
 }

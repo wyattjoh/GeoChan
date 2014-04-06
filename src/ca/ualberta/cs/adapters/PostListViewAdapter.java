@@ -176,6 +176,8 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 	abstract protected void populateCellTitle(View theView, T thePost);
 
 	abstract protected Class<?> getViewClass();
+	
+	abstract protected void setSelectedList();
 
 	/*
 	 * (non-Javadoc)
@@ -192,6 +194,7 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		
 		// Start intent
 		Intent intent = new Intent(this.theActivity, getViewClass());
+		setSelectedList();
 		this.theActivity.startActivity(intent);
 	}
 	
