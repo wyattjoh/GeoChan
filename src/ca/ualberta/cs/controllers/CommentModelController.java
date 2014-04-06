@@ -4,6 +4,7 @@ import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.PostModelList;
+import ca.ualberta.cs.models.SelectedTopicModelList;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.providers.ElasticSearchProvider;
@@ -23,7 +24,7 @@ public class CommentModelController {
 		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();
 
 		theProvider.updateTopic(
-				TopicModelList.getInstance().getLastSelection(),
+				SelectedTopicModelList.getTopicList().getLastSelection(),
 				thePostModelList);
 	}
 
