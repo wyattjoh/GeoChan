@@ -58,19 +58,20 @@ public class MapViewActivity extends Activity {
 	}
 
 	OnItemGestureListener<OverlayItem> myOnItemGestureListener = new OnItemGestureListener<OverlayItem>() {
-		@Override
-		public boolean onItemLongPress(int arg0, OverlayItem arg1) {
-			// TODO Auto-generated method stub
-			return false;
-		}
+		  @Override
+		  public boolean onItemLongPress(int arg0, OverlayItem arg1) {
+		   // TODO Auto-generated method stub
+		   return false;
+		  }
 
-		@Override
-		public boolean onItemSingleTapUp(int index, OverlayItem item) {
-			Toast.makeText(MapViewActivity.this,
-					item.getTitle() + "\n" + item.getSnippet() + "\n",
-					Toast.LENGTH_SHORT).show();
-			return true;
-		}
+		  @Override
+		  public boolean onItemSingleTapUp(int index, OverlayItem item) {
+			  Toast.makeText(MapViewActivity.this,
+					  item.getTitle() + "\n"
+					  + item.getSnippet()+ "\n",
+					  Toast.LENGTH_SHORT).show();
+			  return true;
+		  }
 	};
 
 	public void markSelfOnMap() {
@@ -95,29 +96,25 @@ public class MapViewActivity extends Activity {
 
 	public void markThreadOnMap() {
 
-		Bundle locationBundle = getIntent().getExtras().getBundle(
-				"locationBundle");
-		ArrayList<Location> postLocations = locationBundle
-				.getParcelableArrayList("allPostLocations");
-
-		ArrayList<OverlayItem> theThreadOverlayItemArray = new ArrayList<OverlayItem>();
-
-		if (postLocations.size() == 0) {
-			Toast.makeText(this, "No Other Thread Locations To Display",
-					Toast.LENGTH_SHORT).show();
-		}
-		for (Location loc : postLocations) {
-			Log.i("Received Locations", String.valueOf(loc.getLatitude()) + ","
-					+ String.valueOf(loc.getLongitude()));
-			GeoPoint gp_loc = new GeoPoint(loc.getLatitude(),
-					loc.getLongitude());
-			theThreadOverlayItemArray.add(new OverlayItem("Post Location",
-					String.valueOf(gp_loc.getLatitude()) + " , "
-							+ String.valueOf(gp_loc.getLongitude()), gp_loc));
-		}
-		ItemizedIconOverlay<OverlayItem> theItemizedIconOverlay = new ItemizedIconOverlay<OverlayItem>(
-				this, theThreadOverlayItemArray, myOnItemGestureListener);
-		mMapView.getOverlays().add(theItemizedIconOverlay);
+		Bundle locationBundle = getIntent().getExtras().getBundle("locationBundle");
+    	ArrayList<Location> postLocations = locationBundle.getParcelableArrayList("allPostLocations");
+    	
+    	ArrayList<OverlayItem> theThreadOverlayItemArray = new ArrayList<OverlayItem>();
+    	
+    	if (postLocations.size()==0){
+    		Toast.makeText(this, "No Other Thread Locations To Display", Toast.LENGTH_SHORT).show();
+    	}
+    	for(Location loc: postLocations){
+    		Log.i("Received Locations",String.valueOf(loc.getLatitude())+","+String.valueOf(loc.getLongitude()));
+    		GeoPoint gp_loc = new GeoPoint(loc.getLatitude(), loc.getLongitude());
+    		theThreadOverlayItemArray.add(new OverlayItem(
+    	    		"Post Location",
+    	    		String.valueOf(gp_loc.getLatitude()) + " , " + String.valueOf(gp_loc.getLongitude()),
+    	    		gp_loc));
+    	}
+        ItemizedIconOverlay<OverlayItem> theItemizedIconOverlay = new ItemizedIconOverlay<OverlayItem>(
+	    		this, theThreadOverlayItemArray, myOnItemGestureListener);
+	    mMapView.getOverlays().add(theItemizedIconOverlay);
 	}
 
 	public void printLocation() {
