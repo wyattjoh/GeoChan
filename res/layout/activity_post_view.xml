@@ -5,50 +5,53 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <TextView
-        android:id="@+id/titleTextView"
+    <LinearLayout
+        android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bottom_border"
-        android:text="Title Text"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/blueColor" />
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin" >
 
-    <TextView
-        android:id="@+id/commentTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:text="Comment Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_border"
+            android:text="Title Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/blueColor" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:src="@android:drawable/ic_menu_gallery" />
-
-    <TextView
-        android:id="@+id/scorePostTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bottom_border"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="Score"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/blueColor" />
+        <TextView
+            android:id="@+id/commentTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:text="Comment Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/buttonsAndImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp" >
+        android:background="@color/blueColor"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin" >
+
+        <TextView
+            android:id="@+id/scorePostTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_border_dark"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Score"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/whiteSmoke" />
 
         <Button
             android:id="@+id/editButton"
@@ -57,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
+            android:layout_below="@+id/scorePostTextView"
             android:text="Edit"
             android:visibility="gone" />
 
@@ -105,7 +109,8 @@
                 android:drawableLeft="@drawable/ic_action_person"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="Author"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/whiteSmoke" />
 
             <TextView
                 android:id="@+id/ageTextView"
@@ -115,25 +120,43 @@
                 android:drawableLeft="@drawable/ic_action_time"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="Age"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/whiteSmoke" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/distanceButton"
-            style="?android:attr/buttonStyleSmall"
+        <LinearLayout
+            android:id="@+id/distancePictureButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/authorAndAgeLayout"
-            android:drawableLeft="@drawable/ic_action_place"
-            android:onClick="onClick_OpenMap"
-            android:text="Distance" />
+            android:layout_below="@+id/authorAndAgeLayout" >
 
-    </RelativeLayout>
+            <Button
+                android:id="@+id/distanceButton"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_action_place"
+                android:onClick="onClick_OpenMap"
+                android:text="Distance"
+                android:textColor="@color/whiteSmoke" />
 
+            <Button
+                android:id="@+id/pictureButton"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="View Picture"
+                android:textColor="@color/whiteSmoke" />
+
+        </LinearLayout>
+</RelativeLayout>
+        
     <ListView
         android:id="@+id/commentsListView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="248dp" >
     </ListView>
 
 </LinearLayout>

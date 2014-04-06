@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.providers.LocationProvider;
@@ -31,6 +32,13 @@ public class LoginActivity extends Activity {
 				EditText theTextField = (EditText) findViewById(R.id.userNameEditText);
 
 				String theUserName = theTextField.getText().toString();
+
+				if (theUserName.length() <= 0) {
+					Toast.makeText(getApplicationContext(),
+							"Cannot create an empty Username",
+							Toast.LENGTH_LONG).show();
+					return;
+				}
 
 				// Perform action on click
 				ActiveUserModel userController = ActiveUserModel

@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
@@ -39,21 +38,27 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 	abstract protected OnClickListener getFavoriteOnClickListener();
 
+	/**
+	 * Gets the title string associated with the currently displayed post.
+	 * 
+	 * @return
+	 */
+	abstract protected String getTitleString();
+
 	protected T theModel = null;
+
+	protected static Bitmap currentBitmap = null;
 
 	/**
 	 * Starts an activity to reply to the currently visible post
 	 */
 	protected void replyToPost() {
-		EditPostModel theEditPostModel = EditPostModel.getInstance();
-		theEditPostModel.setTheParent(theModel);
+		EditPostModel.getInstance().setTheParent(theModel);
 
 		Intent intent = new Intent(this, EditCommentActivity.class);
 		startActivity(intent);
 	}
-	
-	
-	
+
 	abstract protected void editPost();
 
 	protected CommentListViewAdapter thePostAdapter;
@@ -147,7 +152,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	/**
 	 * Starts the settings activity
 	 */
-	
+
 	protected void startSettingsActivity() {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
@@ -180,8 +185,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		setTitleText();
 
 		// Add image
-		ImageView imageView = (ImageView) findViewById(R.id.imageView);
-		populateImageView(imageView);
+		Button imageViewButton = (Button) findViewById(R.id.pictureButton);
+		populateImageView(imageViewButton);
 
 		// add edit if required
 		populateEditButton();
@@ -197,9 +202,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
 		populateFavoritesButton(favoriteButton);
 	}
-	
-	
-	
+
 	private void populateEditButton() {
 		// get the edit button if required
 		if (theModel.getPostedBy().getUserHash()
@@ -342,18 +345,29 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		});
 	}
-	
+
 	public abstract void onClick_OpenMap(View theView);
-	
-	private void populateImageView(ImageView imageView) {
-		Bitmap thePicture = theModel.getPicture();
+
+	private void populateImageView(Button imageView) {
+		final Bitmap thePicture = theModel.getPicture();
 		if (thePicture == null) {
 			// No picture, hide the field
 			imageView.setVisibility(View.GONE);
 		} else {
 			// A picture, add the image
-			// TODO: Implement
-			imageView.setImageBitmap(thePicture);
+			currentBitmap = thePicture;
+
+			imageView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(PostViewActivity.this,
+							PictureViewActivity.class);
+					intent.putExtra(PictureViewActivity.TITLE_KEY,
+							PostViewActivity.this.getTitleString());
+					startActivity(intent);
+				}
+			});
 		}
 	}
 
@@ -409,5 +423,12 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			favoriteButton
 					.setImageResource(android.R.drawable.btn_star_big_off);
 		}
+	}
+
+	/**
+	 * @return the currentBitmap
+	 */
+	public static Bitmap getCurrentBitmap() {
+		return currentBitmap;
 	}
 }

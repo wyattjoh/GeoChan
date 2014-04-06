@@ -37,5 +37,6 @@
     <string name="title_activity_location">LocationActivity</string>
     <string name="refresh">Refresh</string>
     <string name="title_activity_map_view">MapViewActivity</string>
+    <string name="title_activity_picture_view">PictureViewActivity</string>
 
 </resources>

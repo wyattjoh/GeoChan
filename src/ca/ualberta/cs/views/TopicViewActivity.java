@@ -16,15 +16,15 @@ import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicViewController;
 import ca.ualberta.cs.models.EditPostModel;
+import ca.ualberta.cs.models.SelectedTopicModelList;
 import ca.ualberta.cs.models.TopicModel;
-import ca.ualberta.cs.models.TopicModelList;
 
 /**
  * @author wyatt
  * 
  */
 public class TopicViewActivity extends PostViewActivity<TopicModel> {
-	
+
 	private static final int IS_TOPIC = 0;
 	private static final int Location = 0;
 	private TopicViewController theTopicViewController;
@@ -35,7 +35,7 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 
 	@Override
 	protected TopicModel getSelectedModel() {
-		return TopicModelList.getInstance().getLastSelection();
+		return SelectedTopicModelList.getTopicList().getLastSelection();
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		TopicModelList.getInstance().popFromSelectionStack();
+		SelectedTopicModelList.getTopicList().popFromSelectionStack();
 	}
 
 	private OnClickListener favoriteOnClickListener = new OnClickListener() {
@@ -87,8 +87,9 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 	protected void editPost() {
 		// TODO Auto-generated method stub
 		EditPostModel theEditPostModel = EditPostModel.getInstance();
+		theEditPostModel.setTheParent(null);
 		theEditPostModel.setThePost(theModel);
-		
+
 		Intent intent = new Intent(this, EditTopicActivity.class);
 		startActivity(intent);
 	}
@@ -98,8 +99,10 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 		// TODO Auto-generated method stub
 		Intent mapIntent = new Intent(this, MapViewActivity.class);
 		ArrayList<Location> allLocations = theModel.getLocationMapArray();
-		for(Location loc: allLocations){
-			Log.i("Passing Locations", String.valueOf(loc.getLatitude()+","+String.valueOf(loc.getLongitude())));
+		for (Location loc : allLocations) {
+			Log.i("Passing Locations",
+					String.valueOf(loc.getLatitude() + ","
+							+ String.valueOf(loc.getLongitude())));
 		}
 		Bundle b = new Bundle();
 		b.putParcelableArrayList("allPostLocations", allLocations);
@@ -107,5 +110,10 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 		mapIntent.putExtra("selfLocation", this.theModel.getLocation());
 		mapIntent.putExtra("postType", IS_TOPIC);
 		startActivity(mapIntent);
+	}
+
+	@Override
+	protected String getTitleString() {
+		return this.theModel.getTitle();
 	}
 }
