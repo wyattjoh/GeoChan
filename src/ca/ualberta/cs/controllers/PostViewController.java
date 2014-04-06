@@ -5,15 +5,26 @@ import ca.ualberta.cs.models.PostModelList;
 
 abstract public class PostViewController<T extends PostModel> {
 
-	protected PostModelList<T> modelList;
+	protected PostModelList<T> favModelList;
+	protected PostModelList<T> readModelList;
 
 	public void toggleFavorite(T theModel) {
 		if (theModel.isFavorite()) {
 			theModel.setIsFavorite(false);
-			modelList.remove(theModel);
+			favModelList.remove(theModel);
 		} else {
 			theModel.setIsFavorite(true);
-			modelList.add(theModel);
+			favModelList.add(theModel);
+		}
+	}
+	
+	public void toggleReadLater(T theModel) {
+		if (theModel.isReadLater()) {
+			theModel.setIsReadLater(false);;
+			readModelList.remove(theModel);
+		} else {
+			theModel.setIsReadLater(true);
+			readModelList.add(theModel);
 		}
 	}
 

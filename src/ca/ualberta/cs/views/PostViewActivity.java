@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
@@ -29,41 +32,14 @@ import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
 
 public abstract class PostViewActivity<T extends PostModel> extends Activity {
-	/**
-	 * Populates theModel with the proper selected model
-	 * 
-	 * @return TODO
-	 */
-	abstract protected T getSelectedModel();
-
-	abstract void setTitleText();
-
-	/**
-	 * Gets the title string associated with the currently displayed post.
-	 * 
-	 * @return
-	 */
-	abstract protected String getTitleString();
-
-	protected T theModel = null;
-
 	protected static Bitmap currentBitmap = null;
 
-	protected PostViewController<T> theController;
-
 	/**
-	 * Starts an activity to reply to the currently visible post
+	 * @return the currentBitmap
 	 */
-	protected void replyToPost() {
-		EditPostModel.getInstance().setTheParent(theModel);
-
-		Intent intent = new Intent(this, EditCommentActivity.class);
-		startActivity(intent);
+	public static Bitmap getCurrentBitmap() {
+		return currentBitmap;
 	}
-
-	abstract protected void editPost();
-
-	protected CommentListViewAdapter thePostAdapter;
 
 	protected OnClickListener favoriteOnClickListener = new OnClickListener() {
 
@@ -84,9 +60,40 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		}
 	};
 
+	protected PostViewController<T> theController;
+
+	protected T theModel = null;
+
+	protected CommentListViewAdapter thePostAdapter;
+
+	protected LinearLayout headerView = null;
+	
+	protected ListView commentsListView;
+
+	private Menu menu;
+	
+	abstract protected void editPost();
+
+	/**
+	 * Populates theModel with the proper selected model
+	 * 
+	 * @return TODO
+	 */
+	abstract protected T getSelectedModel();
+
+	/**
+	 * Gets the title string associated with the currently displayed post.
+	 * 
+	 * @return
+	 */
+	abstract protected String getTitleString();
+
+	public abstract void onClick_OpenMap(View theView);
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_post_view);
 
 		ActionBar actionBar = getActionBar();
@@ -94,6 +101,12 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		// Populate the model
 		this.theModel = getSelectedModel();
+		
+		LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.headerView = (LinearLayout) inflator.inflate(R.layout.post_header, null);
+		
+		commentsListView = (ListView) findViewById(R.id.commentsListView);
+		commentsListView.addHeaderView(headerView);
 
 		// Populate the view
 		if (this.theModel == null) {
@@ -102,31 +115,18 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onResume()
-	 */
 	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-
-		// Populate the view!
-		populateView();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onPrepareOptionsMenu(android.view.Menu)
-	 */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		MenuItem refreshIcon = menu.findItem(R.id.refreshButton);
-		refreshIcon.setVisible(false);
-
-		return super.onPrepareOptionsMenu(menu);
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		
+		// Grab the menu for later...
+		this.menu = menu;
+		
+		// Read later text
+		updateReadLaterText();
+		
+		return true;
 	}
 
 	/*
@@ -146,13 +146,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
@@ -165,63 +158,88 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		case android.R.id.home:
 			onBackPressed();
 			return true;
+		case R.id.readLaterButton:
+			onReadLaterPressed();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
 	/**
-	 * Starts the settings activity
+	 * Is fired when the read later button is clicked in the model
 	 */
-
-	protected void startSettingsActivity() {
-		Intent intent = new Intent(this, SettingsActivity.class);
-		startActivity(intent);
+	private void onReadLaterPressed() {
+		theController.toggleReadLater(getSelectedModel());
+		
+		updateReadLaterText();
 	}
 
-	protected void populateView() {
-		// Add comment
-		TextView commentView = (TextView) findViewById(R.id.commentTextView);
-		commentView.setText(theModel.getCommentText());
+	private void updateReadLaterText() {
+		MenuItem theReadLaterButton = (MenuItem) this.menu.findItem(R.id.readLaterButton);
+		
+		if (this.theModel.isReadLater()) {
+			theReadLaterButton.setTitle("Mark as read");
+		}
+		else {
+			theReadLaterButton.setTitle("Read Later");
+		}
+	}
 
-		// Add score
-		final TextView scoreView = (TextView) findViewById(R.id.scorePostTextView);
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onPrepareOptionsMenu(android.view.Menu)
+	 */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		MenuItem refreshIcon = menu.findItem(R.id.refreshButton);
+		refreshIcon.setVisible(false);
 
-		// Add Buttons
-		final ImageButton downVoteButton = (ImageButton) findViewById(R.id.downVoteButton);
-		final ImageButton upVoteButton = (ImageButton) findViewById(R.id.upVoteButton);
-		populateScoreControlsAndView(scoreView, downVoteButton, upVoteButton);
+		return super.onPrepareOptionsMenu(menu);
+	}
 
-		// Add Date
-		TextView dateView = (TextView) findViewById(R.id.ageTextView);
-		String date = (String) DateFormat.format("yyyy/MM/dd",
-				theModel.getDatePosted());
-		dateView.setText(date);
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
 
-		// Add Author
-		TextView authorView = (TextView) findViewById(R.id.authorTextView);
-		authorView.setText(theModel.getPostedBy().getUserName());
+		// Populate the view!
+		populateView();
+	}
 
-		// Add or remove title text
-		setTitleText();
+	private void populateCommentsView() {
+		CommentModelList theCommentModelList = CommentModelList
+				.getInstanceFromParent(theModel);
 
-		// Add image
-		Button imageViewButton = (Button) findViewById(R.id.pictureButton);
-		populateImageView(imageViewButton);
+		// Has children!
+		thePostAdapter = new CommentListViewAdapter(this, theCommentModelList);
+		commentsListView.setAdapter(thePostAdapter);
+	}
 
-		// add edit if required
-		populateEditButton();
+	private void populateDistanceButton(Button distanceButton) {
+		if (theModel.getLocation() != null) {
+			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
+				Location userLocation = new Location(ActiveUserModel
+						.getInstance().getUser().getLocation());
+				float distanceToPost = userLocation.distanceTo(theModel
+						.getLocation()) / 1000;
+				String distanceButtonText = String.format("%.2f",
+						distanceToPost) + " km";
 
-		// Distance button
-		Button distanceButton = (Button) findViewById(R.id.distanceButton);
-		populateDistanceButton(distanceButton);
+				distanceButton.setText(distanceButtonText.toCharArray(), 0,
+						distanceButtonText.length());
+			} else {
+				distanceButton.setText(theModel.getLocationAsString());
+			}
+		} else {
+			distanceButton.setText("Location");
+		}
 
-		// Add comments
-		populateCommentsView();
-
-		// Favorite Button
-		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
-		populateFavoritesButton(favoriteButton);
 	}
 
 	private void populateEditButton() {
@@ -229,7 +247,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		if (theModel.getPostedBy().getUserHash()
 				.equals(ActiveUserModel.getInstance().getUser().getUserHash())) {
 			// set the visibility to visible
-			Button editButton = (Button) findViewById(R.id.editButton);
+			Button editButton = (Button) this.headerView.findViewById(R.id.editButton);
 			editButton.setVisibility(View.VISIBLE);
 
 			// add onclick listener
@@ -239,6 +257,40 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 				public void onClick(View v) {
 					// TODO add editing on edit post
 					editPost();
+				}
+			});
+		}
+	}
+
+	private void populateFavoritesButton(ImageButton favoriteButton) {
+		favoriteButton.setOnClickListener(favoriteOnClickListener);
+
+		if (theModel.isFavorite()) {
+			favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
+		} else {
+			favoriteButton
+					.setImageResource(android.R.drawable.btn_star_big_off);
+		}
+	}
+
+	private void populateImageView(Button imageView) {
+		final Bitmap thePicture = theModel.getPicture();
+		if (thePicture == null) {
+			// No picture, hide the field
+			imageView.setVisibility(View.GONE);
+		} else {
+			// A picture, add the image
+			currentBitmap = thePicture;
+
+			imageView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(PostViewActivity.this,
+							PictureViewActivity.class);
+					intent.putExtra(PictureViewActivity.TITLE_KEY,
+							PostViewActivity.this.getTitleString());
+					startActivity(intent);
 				}
 			});
 		}
@@ -367,88 +419,69 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		});
 	}
 
-	public abstract void onClick_OpenMap(View theView);
+	protected void populateView() {
+		// Add comment
+		TextView commentView = (TextView) this.headerView.findViewById(R.id.commentTextView);
+		commentView.setText(theModel.getCommentText());
 
-	private void populateImageView(Button imageView) {
-		final Bitmap thePicture = theModel.getPicture();
-		if (thePicture == null) {
-			// No picture, hide the field
-			imageView.setVisibility(View.GONE);
-		} else {
-			// A picture, add the image
-			currentBitmap = thePicture;
+		// Add score
+		final TextView scoreView = (TextView) this.headerView.findViewById(R.id.scorePostTextView);
 
-			imageView.setOnClickListener(new OnClickListener() {
+		// Add Buttons
+		final ImageButton downVoteButton = (ImageButton) this.headerView.findViewById(R.id.downVoteButton);
+		final ImageButton upVoteButton = (ImageButton) this.headerView.findViewById(R.id.upVoteButton);
+		populateScoreControlsAndView(scoreView, downVoteButton, upVoteButton);
 
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(PostViewActivity.this,
-							PictureViewActivity.class);
-					intent.putExtra(PictureViewActivity.TITLE_KEY,
-							PostViewActivity.this.getTitleString());
-					startActivity(intent);
-				}
-			});
-		}
-	}
+		// Add Date
+		TextView dateView = (TextView) this.headerView.findViewById(R.id.ageTextView);
+		String date = (String) DateFormat.format("yyyy/MM/dd",
+				theModel.getDatePosted());
+		dateView.setText(date);
 
-	private void populateFavoritesButton(ImageButton favoriteButton) {
-		favoriteButton.setOnClickListener(favoriteOnClickListener);
+		// Add Author
+		TextView authorView = (TextView) this.headerView.findViewById(R.id.authorTextView);
+		authorView.setText(theModel.getPostedBy().getUserName());
 
-		if (theModel.isFavorite()) {
-			favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
-		} else {
-			favoriteButton
-					.setImageResource(android.R.drawable.btn_star_big_off);
-		}
-	}
+		// Add or remove title text
+		setTitleText();
 
-	private void populateDistanceButton(Button distanceButton) {
-		if (theModel.getLocation() != null) {
-			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
-				Location userLocation = new Location(ActiveUserModel
-						.getInstance().getUser().getLocation());
-				float distanceToPost = userLocation.distanceTo(theModel
-						.getLocation()) / 1000;
-				String distanceButtonText = String.format("%.2f",
-						distanceToPost) + " km";
+		// Add image
+		Button imageViewButton = (Button) this.headerView.findViewById(R.id.pictureButton);
+		populateImageView(imageViewButton);
 
-				distanceButton.setText(distanceButtonText.toCharArray(), 0,
-						distanceButtonText.length());
-			} else {
-				distanceButton.setText(theModel.getLocationAsString());
-			}
-		} else {
-			distanceButton.setText("Location");
-		}
+		// add edit if required
+		populateEditButton();
 
-	}
+		// Distance button
+		Button distanceButton = (Button) this.headerView.findViewById(R.id.distanceButton);
+		populateDistanceButton(distanceButton);
 
-	private void populateCommentsView() {
-		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
-		CommentModelList theCommentModelList = CommentModelList
-				.getInstanceFromParent(theModel);
-
-		// Has children!
-		thePostAdapter = new CommentListViewAdapter(this, theCommentModelList);
-		commentsListView.setAdapter(thePostAdapter);
+		// Add comments
+		populateCommentsView();
 
 		// Favorite Button
-		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
-		favoriteButton.setOnClickListener(favoriteOnClickListener);
-
-		if (theModel.isFavorite()) {
-			favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
-		} else {
-			favoriteButton
-					.setImageResource(android.R.drawable.btn_star_big_off);
-		}
+		ImageButton favoriteButton = (ImageButton) this.headerView.findViewById(R.id.favoriteButton);
+		populateFavoritesButton(favoriteButton);
 	}
 
 	/**
-	 * @return the currentBitmap
+	 * Starts an activity to reply to the currently visible post
 	 */
-	public static Bitmap getCurrentBitmap() {
-		return currentBitmap;
+	protected void replyToPost() {
+		EditPostModel.getInstance().setTheParent(theModel);
+
+		Intent intent = new Intent(this, EditCommentActivity.class);
+		startActivity(intent);
+	}
+
+	abstract void setTitleText();
+
+	/**
+	 * Starts the settings activity
+	 */
+
+	protected void startSettingsActivity() {
+		Intent intent = new Intent(this, SettingsActivity.class);
+		startActivity(intent);
 	}
 }

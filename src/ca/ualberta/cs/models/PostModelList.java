@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
+import java.util.Iterator;
 
 import android.location.Location;
 import android.util.Log;
@@ -214,9 +215,16 @@ public class PostModelList<T extends PostModel> {
 	}
 
 	public void remove(T theModel) {
-		this.postModelArrayList.remove(theModel);
-
-		updateListeningAdapters();
+		String removingId = theModel.getId();
+		
+		Iterator<T> iter = this.postModelArrayList.iterator();
+		while (iter.hasNext()) {
+		    if (iter.next().getId().equals(removingId)) {
+		        iter.remove();
+		        updateListeningAdapters();
+		        return;
+		    }
+		}
 	}
 
 	public Boolean contains(T theModelToSearchFor) {

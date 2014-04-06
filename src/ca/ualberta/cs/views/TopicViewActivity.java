@@ -37,7 +37,7 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 
 	@Override
 	void setTitleText() {
-		TextView titleView = (TextView) findViewById(R.id.titleTextView);
+		TextView titleView = (TextView) this.headerView.findViewById(R.id.titleTextView);
 		titleView.setText(theModel.getTitle());
 
 		// Fix action bar

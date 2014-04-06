@@ -18,6 +18,7 @@ public abstract class PostModel {
 	private ArrayList<CommentModel> childrenComments = new ArrayList<CommentModel>();
 
 	private transient Boolean isFavorite = false;
+	private transient Boolean isReadLater = false;
 	private String id;
 
 	/**
@@ -139,6 +140,20 @@ public abstract class PostModel {
 	}
 
 	/**
+	 * @return the isReadLater
+	 */
+	public Boolean isReadLater() {
+		return isReadLater;
+	}
+
+	/**
+	 * @param isReadLater the isReadLater to set
+	 */
+	public void setIsReadLater(Boolean isReadLater) {
+		this.isReadLater = isReadLater;
+	}
+
+	/**
 	 * @return the myParent
 	 */
 	public PostModel getMyParent() {
@@ -236,8 +251,9 @@ public abstract class PostModel {
 		}
 
 		PostModel oModel = (PostModel) o;
+		String theId = oModel.getId();
 
-		if (oModel.getId().equals(getId())) {
+		if (theId != null && theId.equals(getId())) {
 			return true;
 		} else {
 			return false;

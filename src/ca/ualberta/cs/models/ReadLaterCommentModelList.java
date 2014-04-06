@@ -58,7 +58,7 @@ public class ReadLaterCommentModelList extends
 	@Override
 	protected String getFilenameString() {
 		// TODO Auto-generated method stub
-		return "FavoriteCommentModelList.json";
+		return "ReadLaterCommentModelList.json";
 	}
 
 	/*
