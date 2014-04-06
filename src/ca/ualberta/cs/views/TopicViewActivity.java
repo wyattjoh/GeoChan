@@ -10,10 +10,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.controllers.PostViewController;
 import ca.ualberta.cs.controllers.TopicViewController;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.SelectedTopicModelList;
@@ -27,7 +25,7 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 
 	private static final int IS_TOPIC = 0;
 	private static final int Location = 0;
-	
+
 	public TopicViewActivity() {
 		theController = new TopicViewController();
 	}

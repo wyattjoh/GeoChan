@@ -23,9 +23,8 @@ public class CommentModelController {
 		// Get the provider
 		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();
 
-		theProvider.updateTopic(
-				SelectedTopicModelList.getTopicList().getLastSelection(),
-				thePostModelList);
+		theProvider.updateTopic(SelectedTopicModelList.getTopicList()
+				.getLastSelection(), thePostModelList);
 	}
 
 	public void updateComment(CommentModel theModel) {
