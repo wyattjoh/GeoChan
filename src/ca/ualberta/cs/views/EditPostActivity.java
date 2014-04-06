@@ -208,7 +208,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	 */
 	public void onClick_StartLocationActivity(View theView) {
 		Intent locationIntent = new Intent(this, LocationActivity.class);
-		// locationIntent.putExtra(EXTRA_LOCATION, extraLocation);
+		locationIntent.putExtra("previousLocation", this.theLocation);
 		startActivityForResult(locationIntent, GET_LOCATION);
 	}
 
@@ -284,16 +284,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 							Toast.LENGTH_LONG).show();
 				}
 			}
-			if (resultCode == RESULT_CANCELED) {
-				Toast.makeText(
-						this,
-						"Location is still: "
-								+ String.valueOf(this.theLocation.getLatitude())
-								+ " , "
-								+ String.valueOf(this.theLocation
-										.getLongitude()), Toast.LENGTH_LONG)
-						.show();
-			}
+			//do nothing if cancelled
 		}
 	}
 

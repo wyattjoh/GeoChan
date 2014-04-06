@@ -14,7 +14,9 @@ import android.app.Activity;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
 
