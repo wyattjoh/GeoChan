@@ -1,10 +1,16 @@
 package ca.ualberta.cs.test;
 
+import java.util.ArrayList;
+
 import org.osmdroid.tileprovider.modules.NetworkAvailabliltyCheck;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import ca.ualberta.cs.models.NetworkModel;
+import ca.ualberta.cs.models.PostModelList;
+import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.models.TopicModelList;
+import ca.ualberta.cs.providers.ElasticSearchProvider;
 import ca.ualberta.cs.views.MainActivityFragment;
 
 public class ConnectionTesting extends
@@ -31,7 +37,12 @@ public class ConnectionTesting extends
 	 */
 	public void testUpdatingConnection() {
 		NetworkModel.getInstance();
-		assertTrue(NetworkModel.isNetworkAvailable(getActivity()));
+		//assertTrue(NetworkModel.isNetworkAvailable(getActivity()));
+		
+		TopicModelList.getInstance();
+		
+		ElasticSearchProvider.getProvider().getTopics(0, 1);
+		assertNotNull(TopicModelList.getInstance());
 		
 		// TODO add broadcast receiver and then recast it as connected
 	}
