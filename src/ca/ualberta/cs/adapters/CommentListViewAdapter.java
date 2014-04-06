@@ -6,6 +6,7 @@ import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.PostModelList;
+import ca.ualberta.cs.models.SelectedCommentModelList;
 import ca.ualberta.cs.views.CommentViewActivity;
 
 public class CommentListViewAdapter extends PostListViewAdapter<CommentModel> {
@@ -42,6 +43,6 @@ public class CommentListViewAdapter extends PostListViewAdapter<CommentModel> {
 
 	@Override
 	protected void setSelectedList() {
-		// TODO Auto-generated method stub
+		SelectedCommentModelList.setTopicList(theArrayList);
 	}
 }

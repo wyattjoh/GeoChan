@@ -11,6 +11,7 @@ import ca.ualberta.cs.controllers.CommentViewController;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.EditPostModel;
+import ca.ualberta.cs.models.SelectedCommentModelList;
 
 /**
  * @author wyatt
@@ -26,7 +27,7 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 
 	@Override
 	protected CommentModel getSelectedModel() {
-		return CommentModelList.getInstance().getLastSelection();
+		return SelectedCommentModelList.getCommentList().getLastSelection();
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		CommentModelList.getInstance().popFromSelectionStack();
+		SelectedCommentModelList.getCommentList().popFromSelectionStack();
 	}
 
 	@Override
