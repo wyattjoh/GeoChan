@@ -43,24 +43,25 @@ public class DummyPostListFactory {
 		// init array list
 		ArrayList<TopicModel> theModelList = new ArrayList<TopicModel>();
 
-		// populate topic with test entries
+		TopicModel theTopic1 = populateTestTopic(theUser);
+		theModelList.add(theTopic1);
+
+		return theModelList;
+	}
+
+	private static TopicModel populateTestTopic(UserModel theUser) {
 		TopicModel theTopic1 = new TopicModel(theUser);
 		theTopic1.setTitle("TestTitle1");
 		theTopic1.setCommentText("TestText1");
 		theTopic1.setScore(1);
 		theTopic1.setPostedBy(theUser);
-		theModelList.add(theTopic1);
-
-		// Create a comment
 		CommentModel theComment1 = new CommentModel();
 		theComment1.setCommentText("Test body text1");
 		theComment1.setScore(1);
 		theComment1.setPostedBy(theUser);
-
 		theTopic1.addChildComment(theComment1);
 		theComment1.setMyParent(theTopic1);
-
-		return theModelList;
+		return theTopic1;
 	}
 
 	public static ArrayList<CommentModel> getCommentList(UserModel theUser) {

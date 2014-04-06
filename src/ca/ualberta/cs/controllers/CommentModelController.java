@@ -17,14 +17,17 @@ public class CommentModelController {
 	}
 
 	public void addComment(CommentModel theComment, PostModel theParent) {
-		theParent.addChildComment(theComment);
-		theComment.setMyParent(theParent);
-
+		theComment(theComment, theParent);
 		// Get the provider
 		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();
 
 		theProvider.updateTopic(SelectedTopicModelList.getTopicList()
 				.getLastSelection(), thePostModelList);
+	}
+
+	private void theComment(CommentModel theComment, PostModel theParent) {
+		theParent.addChildComment(theComment);
+		theComment.setMyParent(theParent);
 	}
 
 	public void updateComment(CommentModel theModel) {

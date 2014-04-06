@@ -19,24 +19,22 @@ public class PostListController {
 	public static final int SORT_LATEST_GREATEST = 4;
 
 	public static void setSort(final int theSortOrder) {
+		getTheSortOrderObject(theSortOrder).setSort();
+	}
+
+	private static TheSortOrder getTheSortOrderObject(int theSortOrder) {
 		switch (theSortOrder) {
 		case SORT_DATE:
-			TopicModelList.getInstance().sortByDate();
-			break;
+			return new SortDate();
 		case SORT_SCORE:
-			TopicModelList.getInstance().sortByScore();
-			break;
+			return new SortScore();
 		case SORT_PROXIMITY:
-			TopicModelList.getInstance().sortByProximity();
-			break;
+			return new SortProximity();
 		case SORT_LATEST_GREATEST:
-			TopicModelList.getInstance().sortByLatestGreatest();
-			break;
+			return new SortLatestGreatest();
 		case SORT_PICTURE:
-			TopicModelList.getInstance().sortByPicture();
-			break;
-		default:
-			break;
+			return new SortPicture();
 		}
+		return null;
 	}
 }
