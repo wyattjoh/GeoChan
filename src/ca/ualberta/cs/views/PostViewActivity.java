@@ -68,6 +68,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 	protected LinearLayout headerView = null;
 	
+	protected ListView commentsListView;
+	
 	abstract protected void editPost();
 
 	/**
@@ -97,6 +99,12 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		// Populate the model
 		this.theModel = getSelectedModel();
+		
+		LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.headerView = (LinearLayout) inflator.inflate(R.layout.post_header, null);
+		
+		commentsListView = (ListView) findViewById(R.id.commentsListView);
+		commentsListView.addHeaderView(headerView);
 
 		// Populate the view
 		if (this.theModel == null) {
@@ -166,26 +174,15 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	 */
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
-		
-		LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.headerView = (LinearLayout) inflator.inflate(R.layout.post_header, null);
-		
-		if (this.headerView == null) {
-			throw new RuntimeException("Is dumb.");
-		}
 
 		// Populate the view!
 		populateView();
 	}
 
 	private void populateCommentsView() {
-		ListView commentsListView = (ListView) findViewById(R.id.commentsListView);
 		CommentModelList theCommentModelList = CommentModelList
 				.getInstanceFromParent(theModel);
-		
-		commentsListView.addHeaderView(headerView);
 
 		// Has children!
 		thePostAdapter = new CommentListViewAdapter(this, theCommentModelList);

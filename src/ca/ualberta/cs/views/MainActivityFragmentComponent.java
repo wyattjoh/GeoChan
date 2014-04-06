@@ -56,20 +56,19 @@ public enum MainActivityFragmentComponent {
 
 	},
 
-	FAVORITES_VIEW {
+	FAVORITE_TOPICS {
 		public TopicListViewAdapter favoriteTopicAdapter;
-		public CommentListViewAdapter favoriteCommentAdapter;
 
 		@Override
 		public void setupView(LayoutInflater theInflater,
 				LinearLayout theLayout, FragmentActivity theActivity) {
 			View rootView = theInflater.inflate(
-					R.layout.fragment_split_post_list, null);
+					R.layout.fragment_single_post_list, null);
 			theLayout.addView(rootView);
 
 			// Populate list view for topics
 			ListView topicListView = (ListView) rootView
-					.findViewById(R.id.listTopics);
+					.findViewById(R.id.postListView);
 
 			// Setup the topic adapter
 			FavoriteTopicModelList theFavoriteTopicModelList = FavoriteTopicModelList
@@ -81,13 +80,33 @@ public enum MainActivityFragmentComponent {
 
 			theFavoriteTopicModelList
 					.registerListeningAdapter(favoriteTopicAdapter);
+		}
+
+		@Override
+		public void destroy() {
+			// Unregister the topics
+			FavoriteTopicModelList theFavoriteTopicModelList = FavoriteTopicModelList
+					.getInstance();
+			theFavoriteTopicModelList
+					.unRegisterListeningAdapter(favoriteTopicAdapter);
+		}
+
+	},
+	FAVORITE_COMMENTS {
+		public CommentListViewAdapter favoriteCommentAdapter;
+
+		@Override
+		public void setupView(LayoutInflater theInflater,
+				LinearLayout theLayout, FragmentActivity theActivity) {
+			View rootView = theInflater.inflate(
+					R.layout.fragment_single_post_list, null);
+			theLayout.addView(rootView);
 
 			// Setup the comment adapter
 			FavoriteCommentModelList theFavoriteCommentModelList = FavoriteCommentModelList
 					.getInstance();
 
-			ListView commentsListView = (ListView) rootView
-					.findViewById(R.id.listComments);
+			ListView commentsListView = (ListView) rootView.findViewById(R.id.postListView);
 
 			favoriteCommentAdapter = new CommentListViewAdapter(theActivity,
 					theFavoriteCommentModelList);
@@ -100,12 +119,6 @@ public enum MainActivityFragmentComponent {
 
 		@Override
 		public void destroy() {
-			// Unregister the topics
-			FavoriteTopicModelList theFavoriteTopicModelList = FavoriteTopicModelList
-					.getInstance();
-			theFavoriteTopicModelList
-					.unRegisterListeningAdapter(favoriteTopicAdapter);
-			
 			// Unregister the comments
 			FavoriteCommentModelList theFavoriteCommentModelList = FavoriteCommentModelList
 					.getInstance();
@@ -126,12 +139,14 @@ public enum MainActivityFragmentComponent {
 		case 1:
 			return TOPICS_LIST;
 		case 2:
-			return FAVORITES_VIEW;
+			return FAVORITE_TOPICS;
+		case 3:
+			return FAVORITE_COMMENTS;
 		}
 		throw new RuntimeException("Invalid position passed.");
 	}
 
 	public static int getSize() {
-		return 2;
+		return 3;
 	}
 }
