@@ -85,7 +85,7 @@ public class UserModel {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-	
+
 	public String getUserHash() {
 		return userHash;
 	}

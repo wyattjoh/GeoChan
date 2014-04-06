@@ -18,14 +18,13 @@ import ca.ualberta.cs.controllers.TopicViewController;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.SelectedTopicModelList;
 import ca.ualberta.cs.models.TopicModel;
-import ca.ualberta.cs.models.TopicModelList;
 
 /**
  * @author wyatt
  * 
  */
 public class TopicViewActivity extends PostViewActivity<TopicModel> {
-	
+
 	private static final int IS_TOPIC = 0;
 	private static final int Location = 0;
 	private TopicViewController theTopicViewController;
@@ -90,7 +89,7 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 		EditPostModel theEditPostModel = EditPostModel.getInstance();
 		theEditPostModel.setTheParent(null);
 		theEditPostModel.setThePost(theModel);
-		
+
 		Intent intent = new Intent(this, EditTopicActivity.class);
 		startActivity(intent);
 	}
@@ -100,8 +99,10 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 		// TODO Auto-generated method stub
 		Intent mapIntent = new Intent(this, MapViewActivity.class);
 		ArrayList<Location> allLocations = theModel.getLocationMapArray();
-		for(Location loc: allLocations){
-			Log.i("Passing Locations", String.valueOf(loc.getLatitude()+","+String.valueOf(loc.getLongitude())));
+		for (Location loc : allLocations) {
+			Log.i("Passing Locations",
+					String.valueOf(loc.getLatitude() + ","
+							+ String.valueOf(loc.getLongitude())));
 		}
 		Bundle b = new Bundle();
 		b.putParcelableArrayList("allPostLocations", allLocations);

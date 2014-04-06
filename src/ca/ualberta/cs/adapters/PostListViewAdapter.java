@@ -15,12 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.ActiveUserModel;
-import ca.ualberta.cs.models.CommentModelList;
-import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.PostModelList;
-import ca.ualberta.cs.models.TopicModelList;
-import ca.ualberta.cs.views.MainActivity;
 
 /**
  * 
@@ -97,12 +93,15 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 				.findViewById(R.id.textViewLocation);
 		if (thePost.getLocation() != null) {
 			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
-				Location userLocation = new Location(ActiveUserModel.getInstance()
-					.getUser().getLocation());
-				float distanceToPost = userLocation.distanceTo(thePost.getLocation()) / 1000;
-				String distanceButtonText = String.format("%.2f", distanceToPost) + " km";
+				Location userLocation = new Location(ActiveUserModel
+						.getInstance().getUser().getLocation());
+				float distanceToPost = userLocation.distanceTo(thePost
+						.getLocation()) / 1000;
+				String distanceButtonText = String.format("%.2f",
+						distanceToPost) + " km";
 
-				locationText.setText(distanceButtonText.toCharArray(), 0, distanceButtonText.length());
+				locationText.setText(distanceButtonText.toCharArray(), 0,
+						distanceButtonText.length());
 			} else {
 				locationText.setText(thePost.getLocationAsString());
 			}
@@ -176,7 +175,7 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 	abstract protected void populateCellTitle(View theView, T thePost);
 
 	abstract protected Class<?> getViewClass();
-	
+
 	abstract protected void setSelectedList();
 
 	/*
@@ -191,11 +190,11 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 
 		// Mark the selected model
 		this.theArrayList.addToSelectionStackFromPosition(position.intValue());
-		
+
 		// Start intent
 		Intent intent = new Intent(this.theActivity, getViewClass());
 		setSelectedList();
 		this.theActivity.startActivity(intent);
 	}
-	
+
 }

@@ -1,16 +1,13 @@
 package ca.ualberta.cs.views;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.adapters.TopicListViewAdapter;
 import ca.ualberta.cs.controllers.CommentModelController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModel;
-import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModelList;
 
@@ -66,10 +63,10 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 				theModel.setPicture(imageBitmap);
 			}
 			theModel.setLocation(theLocation);
-			
+
 			// set the comment list
 			theModel.setChildComments(commentList);
-			
+
 			theController.updateComment(theModel);
 
 			finish();

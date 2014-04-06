@@ -4,7 +4,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
-import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModelList;
 import ca.ualberta.cs.models.SelectedTopicModelList;
 import ca.ualberta.cs.models.TopicModel;

@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
@@ -38,15 +37,16 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	abstract void setTitleText();
 
 	abstract protected OnClickListener getFavoriteOnClickListener();
-	
+
 	/**
 	 * Gets the title string associated with the currently displayed post.
+	 * 
 	 * @return
 	 */
 	abstract protected String getTitleString();
 
 	protected T theModel = null;
-	
+
 	protected static Bitmap currentBitmap = null;
 
 	/**
@@ -54,13 +54,11 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	 */
 	protected void replyToPost() {
 		EditPostModel.getInstance().setTheParent(theModel);
-		
+
 		Intent intent = new Intent(this, EditCommentActivity.class);
 		startActivity(intent);
 	}
-	
-	
-	
+
 	abstract protected void editPost();
 
 	protected CommentListViewAdapter thePostAdapter;
@@ -154,7 +152,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	/**
 	 * Starts the settings activity
 	 */
-	
+
 	protected void startSettingsActivity() {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
@@ -204,9 +202,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
 		populateFavoritesButton(favoriteButton);
 	}
-	
-	
-	
+
 	private void populateEditButton() {
 		// get the edit button if required
 		if (theModel.getPostedBy().getUserHash()
@@ -349,9 +345,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		});
 	}
-	
+
 	public abstract void onClick_OpenMap(View theView);
-	
+
 	private void populateImageView(Button imageView) {
 		final Bitmap thePicture = theModel.getPicture();
 		if (thePicture == null) {
@@ -362,11 +358,13 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			currentBitmap = thePicture;
 
 			imageView.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(PostViewActivity.this, PictureViewActivity.class);
-					intent.putExtra(PictureViewActivity.TITLE_KEY, PostViewActivity.this.getTitleString());
+					Intent intent = new Intent(PostViewActivity.this,
+							PictureViewActivity.class);
+					intent.putExtra(PictureViewActivity.TITLE_KEY,
+							PostViewActivity.this.getTitleString());
 					startActivity(intent);
 				}
 			});

@@ -23,7 +23,6 @@ import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
-import ca.ualberta.cs.models.PostModelList;
 
 public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	public static final String IS_NEW = "IS_NEW_TOPIC";
@@ -47,7 +46,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 		this.theLocation = ActiveUserModel.getInstance().getUser()
 				.getLocation();
-		
+
 		// Add title
 		setTitle(getSaveButtonText());
 		// Populate the views
@@ -79,10 +78,10 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		} else {
 			saveButton.setOnClickListener(getUpdateOnClickListener());
 		}
-		
-		if (EditPostModel.getInstance().isNewPost()){
+
+		if (EditPostModel.getInstance().isNewPost()) {
 			populateNew();
-		} else{
+		} else {
 			populateEdit();
 		}
 	}
@@ -121,7 +120,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				finish();
 			}
 		});
-		
+
 	}
 
 	/**
@@ -132,25 +131,25 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		theModel = (T) theEditPostModel.getThePost();
 		postId = theEditPostModel.getThePost().getId();
 		commentList = theEditPostModel.getThePost().getChildrenComments();
-		
+
 		EditPostModel.getInstance().setThePost(null);
-		
+
 		// set distance button to post value
 		Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
 		Location tempLocation = theModel.getLocation();
-		distanceButton.setText(String.valueOf(tempLocation.getLatitude() + " , "
-				+ String.valueOf(tempLocation.getLongitude())));
-		
+		distanceButton.setText(String.valueOf(tempLocation.getLatitude()
+				+ " , " + String.valueOf(tempLocation.getLongitude())));
+
 		// set the comment text
 		TextView commentText = (TextView) findViewById(R.id.commentTextField);
 		commentText.setText(theModel.getCommentText());
-		
+
 		// set the title
 		populateTitle(theModel);
-		
+
 		// get photo button
 		Button cameraButton = (Button) findViewById(R.id.pictureButton);
-		
+
 		// set onclick listener
 		cameraButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -159,16 +158,16 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				getPictureIntent();
 			}
 		});
-		
+
 		// set the camera text if and get the picture
-		if (theModel.hasPicture()){
+		if (theModel.hasPicture()) {
 			cameraButton.setText("Change Picture");
-			
+
 			// set the picture
 			ImageView immageThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
 			immageThumbnail.setImageBitmap(theModel.getPicture());
 		}
-		
+
 		// get cancel button
 		Button cancelButton = (Button) findViewById(R.id.distanceButton);
 
@@ -181,7 +180,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 			}
 		});
 	}
-	
+
 	protected abstract void populateTitle(PostModel theModel);
 
 	/**
@@ -257,7 +256,8 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 					this.theLocation = theCurrentLocation;
 
 					Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
-					distanceButton.setText(String.valueOf(this.theLocation.getLatitude()
+					distanceButton.setText(String.valueOf(this.theLocation
+							.getLatitude()
 							+ " , "
 							+ String.valueOf(this.theLocation.getLongitude())));
 

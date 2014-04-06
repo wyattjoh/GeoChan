@@ -1,7 +1,5 @@
 package ca.ualberta.cs.controllers;
 
-import java.util.ArrayList;
-
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.PostModel;
@@ -48,7 +46,8 @@ public class CommentModelController {
 		}
 
 		else {
-			// other wise we will have the exact comment list needed and just need the index
+			// other wise we will have the exact comment list needed and just
+			// need the index
 			index = CommentModelList.getInstance().getSelectionOffsetFromEnd(1)
 					.getChildrenComments().indexOf(theModel);
 			CommentModelList.getInstance().getSelectionOffsetFromEnd(1)

@@ -1,6 +1,5 @@
 package ca.ualberta.cs.views;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,29 +16,29 @@ public class PictureViewActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_picture_view);
-		
+
 		Bitmap bitmap = PostViewActivity.getCurrentBitmap();
-		
+
 		// Get the intent and extras
 		Intent intent = getIntent();
 		Bundle extras = intent.getExtras();
-		
+
 		// Update the title
 		if (extras != null) {
 			String titleText = extras.getString(TITLE_KEY);
 			getActionBar().setTitle(titleText);
-		} 
-		
+		}
+
 		if (bitmap != null) {
 			setupBitmap(bitmap);
-		}
-		else {
+		} else {
 			finish();
 		}
 	}
 
 	/**
 	 * Inserts the bitmap into the imageView
+	 * 
 	 * @param bitmap
 	 */
 	private void setupBitmap(Bitmap bitmap) {
@@ -53,9 +52,10 @@ public class PictureViewActivity extends Activity {
 		getMenuInflater().inflate(R.menu.picture_view, menu);
 		return true;
 	}
-	
+
 	/**
 	 * Finishes the activity
+	 * 
 	 * @param v
 	 */
 	public void goBack(View v) {

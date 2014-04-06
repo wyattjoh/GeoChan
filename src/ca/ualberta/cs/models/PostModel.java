@@ -114,8 +114,8 @@ public abstract class PostModel {
 		}
 		this.childrenComments.add(theChildComment);
 	}
-	
-	public void setChildComments(ArrayList<CommentModel> commentList){
+
+	public void setChildComments(ArrayList<CommentModel> commentList) {
 		this.childrenComments = commentList;
 	}
 
@@ -167,7 +167,7 @@ public abstract class PostModel {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * Location mapping function
 	 */

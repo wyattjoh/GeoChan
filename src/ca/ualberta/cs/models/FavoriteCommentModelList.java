@@ -5,7 +5,6 @@ package ca.ualberta.cs.models;
 
 import java.io.InputStreamReader;
 
-import ca.ualberta.cs.providers.GeoChanGson;
 import ca.ualberta.cs.providers.GeoChanGsonOffline;
 
 import com.google.gson.Gson;
