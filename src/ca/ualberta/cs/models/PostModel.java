@@ -236,8 +236,9 @@ public abstract class PostModel {
 		}
 
 		PostModel oModel = (PostModel) o;
+		String theId = oModel.getId();
 
-		if (oModel.getId().equals(getId())) {
+		if (theId != null && theId.equals(getId())) {
 			return true;
 		} else {
 			return false;

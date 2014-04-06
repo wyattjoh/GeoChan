@@ -6,10 +6,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.channels.FileLock;
+import java.nio.channels.OverlappingFileLockException;
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.util.Log;
+import ca.ualberta.cs.providers.GeoChanGsonNetworked;
 import ca.ualberta.cs.providers.GeoChanGsonOffline;
 
 import com.google.gson.Gson;
@@ -20,6 +23,43 @@ import com.google.gson.Gson;
  */
 abstract public class FollowingPostModelList<T extends PostModel> extends
 		PostModelList<T> implements UpdateableListInterface {
+
+	private final class SaveThread extends Thread {
+		private final T[] cloned;
+
+		private SaveThread(T[] cloned) {
+			this.cloned = cloned;
+		}
+
+		@Override
+		public void run() {
+			try {
+				Gson gson = GeoChanGsonNetworked.getGson();
+				
+				String FILENAME = getFilenameString();
+				FileOutputStream fos = applicationContext.openFileOutput(
+						FILENAME, Context.MODE_PRIVATE);
+				fos.getChannel().lock();
+				OutputStreamWriter osw = new OutputStreamWriter(fos);
+
+				gson.toJson(cloned, osw);
+				Log.w("FollowingPostModel",
+						"Current Saved: " + gson.toJson(cloned));
+
+				osw.close();
+				fos.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException ee) {
+				// TODO Auto-generated catch block
+				ee.printStackTrace();
+			} catch (OverlappingFileLockException eee) {
+				eee.printStackTrace();
+			}
+
+		}
+	}
 
 	private Context applicationContext;
 
@@ -62,30 +102,9 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	 * Saves the current state to the disk
 	 */
 	private void save() {
-		Gson gson = GeoChanGsonOffline.getGson();
+		final T[] cloned = arrayListToArray().clone();
 
-		T[] dataToSave = arrayListToArray();
-
-		try {
-			String FILENAME = getFilenameString();
-			FileOutputStream fos = applicationContext.openFileOutput(FILENAME,
-					Context.MODE_PRIVATE);
-			OutputStreamWriter osw = new OutputStreamWriter(fos);
-
-			gson.toJson(dataToSave, osw);
-			Log.w("FollowingPostModel",
-					"Current Saved: " + gson.toJson(dataToSave));
-
-			osw.close();
-			fos.close();
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		new SaveThread(cloned).start();
 	}
 
 	/*
@@ -159,6 +178,12 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 
 			isr.close();
 			fis.close();
+			
+			// If there was an error reading, then we should just save over it.
+			if (thePrimative == null) {
+				super.setArrayList(new ArrayList<T>());
+				save();
+			}
 
 			for (int i = 0; i < thePrimative.length; i++) {
 				dataThatLoaded.add(thePrimative[i]);
@@ -168,6 +193,7 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 			super.setArrayList(dataThatLoaded);
 		} catch (FileNotFoundException e) {
 			// File was not found! Create it!
+			super.setArrayList(new ArrayList<T>());
 			save();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
