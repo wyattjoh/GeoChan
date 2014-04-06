@@ -38,6 +38,8 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	protected T theModel;
 	protected String postId = null;
 	protected ArrayList<CommentModel> commentList = null;
+	
+	abstract protected T getUpcastedModel();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +130,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	 */
 	private void populateEdit() {
 		// get the post to fill values from
-		theModel = (T) theEditPostModel.getThePost();
+		theModel = getUpcastedModel();
 		postId = theEditPostModel.getThePost().getId();
 		commentList = theEditPostModel.getThePost().getChildrenComments();
 

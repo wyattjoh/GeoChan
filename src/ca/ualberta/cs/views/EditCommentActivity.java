@@ -45,7 +45,6 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 		@Override
 		public void onClick(View v) {
 			theModel.setId(postId);
-			CommentModel comparatorModel = theModel;
 
 			// Get the comment
 			EditText commentField = (EditText) findViewById(R.id.commentTextField);
@@ -134,5 +133,11 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 	@Override
 	protected void populateTitle(PostModel theModel) {
 		// lol no comment title
+	}
+
+	@Override
+	protected CommentModel getUpcastedModel() {
+		// TODO Auto-generated method stub
+		return (CommentModel) theEditPostModel.getThePost();
 	}
 }

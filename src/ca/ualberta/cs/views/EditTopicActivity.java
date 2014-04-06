@@ -141,4 +141,10 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 		TextView title = (TextView) findViewById(R.id.titleTextField);
 		title.setText(((TopicModel) theModel).getTitle());
 	}
+
+	@Override
+	protected TopicModel getUpcastedModel() {
+		// TODO Auto-generated method stub
+		return (TopicModel) theEditPostModel.getThePost();
+	}
 }
