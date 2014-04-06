@@ -79,6 +79,10 @@
             android:name="ca.ualberta.cs.views.PictureViewActivity"
             android:label="@string/title_activity_picture_view" >
         </activity>
+        <activity
+            android:name="ca.ualberta.cs.views.HelpViewActivity"
+            android:label="@string/title_activity_help_view" >
+        </activity>
     </application>
 
 </manifest>

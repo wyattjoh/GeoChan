@@ -249,6 +249,9 @@ public class MainActivity extends FragmentActivity {
 		case R.id.action_settings:
 			startSettingsActivity();
 			return true;
+		case R.id.action_help:
+			startHelpActivity();
+			return true;
 		case R.id.action_sortDate:
 			PostListController.setSort(PostListController.SORT_DATE);
 			return true;
@@ -356,6 +359,13 @@ public class MainActivity extends FragmentActivity {
 	protected void sortPostsByProximityTo() {
 		Intent intent = new Intent(this, LocationActivity.class);
 		startActivityForResult(intent, GET_LOCATION);
+	}
+	/**
+	 * Starts the Help Activity
+	 */
+	protected void startHelpActivity() {
+		Intent intent = new Intent(this, HelpViewActivity.class);
+		startActivity(intent);
 	}
 
 	/**
