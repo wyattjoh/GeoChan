@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.adapters.CommentListViewAdapter;
 import ca.ualberta.cs.adapters.TopicListViewAdapter;
+import ca.ualberta.cs.models.CommentModelList;
+import ca.ualberta.cs.models.FavoriteCommentModelList;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.ReadLaterTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
@@ -54,7 +57,8 @@ public enum MainActivityFragmentComponent {
 	},
 
 	FAVORITES_VIEW {
-		public TopicListViewAdapter adapter;
+		public TopicListViewAdapter favoriteTopicAdapter;
+		public CommentListViewAdapter favoriteCommentAdapter;
 
 		@Override
 		public void setupView(LayoutInflater theInflater,
@@ -67,58 +71,46 @@ public enum MainActivityFragmentComponent {
 			ListView topicListView = (ListView) rootView
 					.findViewById(R.id.listTopics);
 
-			// Setup the adapter
+			// Setup the topic adapter
 			FavoriteTopicModelList theFavoriteTopicModelList = FavoriteTopicModelList
 					.getInstance();
 
-			adapter = new TopicListViewAdapter(theActivity,
+			favoriteTopicAdapter = new TopicListViewAdapter(theActivity,
 					theFavoriteTopicModelList);
-			topicListView.setAdapter(adapter);
+			topicListView.setAdapter(favoriteTopicAdapter);
 
-			theFavoriteTopicModelList.registerListeningAdapter(adapter);
+			theFavoriteTopicModelList
+					.registerListeningAdapter(favoriteTopicAdapter);
+
+			// Setup the comment adapter
+			FavoriteCommentModelList theFavoriteCommentModelList = FavoriteCommentModelList
+					.getInstance();
+
+			ListView commentsListView = (ListView) rootView
+					.findViewById(R.id.listComments);
+
+			favoriteCommentAdapter = new CommentListViewAdapter(theActivity,
+					theFavoriteCommentModelList);
+			commentsListView.setAdapter(favoriteCommentAdapter);
+
+			theFavoriteCommentModelList
+					.registerListeningAdapter(favoriteCommentAdapter);
 
 		}
 
 		@Override
 		public void destroy() {
+			// Unregister the topics
 			FavoriteTopicModelList theFavoriteTopicModelList = FavoriteTopicModelList
 					.getInstance();
-			theFavoriteTopicModelList.unRegisterListeningAdapter(adapter);
-		}
-
-	},
-
-	READ_LATER {
-		public TopicListViewAdapter adapter;
-
-		@Override
-		public void setupView(LayoutInflater theInflater,
-				LinearLayout theLayout, FragmentActivity theActivity) {
-			View rootView = theInflater.inflate(
-					R.layout.fragment_split_post_list, null);
-			theLayout.addView(rootView);
-
-			// Populate list view for topics
-			ListView topicListView = (ListView) rootView
-					.findViewById(R.id.listTopics);
-
-			// Setup the adapter
-			ReadLaterTopicModelList theReadLaterTopicList = ReadLaterTopicModelList
+			theFavoriteTopicModelList
+					.unRegisterListeningAdapter(favoriteTopicAdapter);
+			
+			// Unregister the comments
+			FavoriteCommentModelList theFavoriteCommentModelList = FavoriteCommentModelList
 					.getInstance();
-
-			adapter = new TopicListViewAdapter(theActivity,
-					theReadLaterTopicList);
-			topicListView.setAdapter(adapter);
-
-			theReadLaterTopicList.registerListeningAdapter(adapter);
-
-		}
-
-		@Override
-		public void destroy() {
-			ReadLaterTopicModelList theReadLaterList = ReadLaterTopicModelList
-					.getInstance();
-			theReadLaterList.unRegisterListeningAdapter(adapter);
+			theFavoriteCommentModelList
+					.unRegisterListeningAdapter(favoriteCommentAdapter);
 		}
 
 	};
@@ -135,9 +127,11 @@ public enum MainActivityFragmentComponent {
 			return TOPICS_LIST;
 		case 2:
 			return FAVORITES_VIEW;
-		case 3:
-			return READ_LATER;
 		}
 		throw new RuntimeException("Invalid position passed.");
+	}
+
+	public static int getSize() {
+		return 2;
 	}
 }
