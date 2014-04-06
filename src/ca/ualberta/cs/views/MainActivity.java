@@ -34,13 +34,13 @@ import ca.ualberta.cs.models.TopicModelList;
  * @author wyatt
  */
 public class MainActivity extends FragmentActivity {
-	
+
 	/*
 	 * Intent request codes
 	 */
 	private static final int LOGIN_ACTIVITY = 1;
 	private static final int GET_LOCATION = 2;
-	
+
 	/*
 	 * Post sorting location
 	 */
@@ -145,7 +145,8 @@ public class MainActivity extends FragmentActivity {
 
 					this.theSortLocation.setLatitude(retLatitude);
 					this.theSortLocation.setLongitude(retLongitude);
-					TopicModelList.getInstance().sortByProximityTo(this.theSortLocation);
+					TopicModelList.getInstance().sortByProximityTo(
+							this.theSortLocation);
 
 				} catch (Exception e) {
 					Toast.makeText(
@@ -159,8 +160,11 @@ public class MainActivity extends FragmentActivity {
 				}
 			}
 			if (resultCode == RESULT_CANCELED) {
-				this.theSortLocation = ActiveUserModel.getInstance().getUser().getLocation();
-				Toast.makeText(this, "Sorting by proximity to current location", Toast.LENGTH_LONG).show();
+				this.theSortLocation = ActiveUserModel.getInstance().getUser()
+						.getLocation();
+				Toast.makeText(this,
+						"Sorting by proximity to current location",
+						Toast.LENGTH_LONG).show();
 				PostListController.setSort(PostListController.SORT_PROXIMITY);
 			}
 		}
@@ -343,7 +347,7 @@ public class MainActivity extends FragmentActivity {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
 	}
-	
+
 	/**
 	 * Selects the location to sort relative to
 	 */

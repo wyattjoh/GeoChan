@@ -1,0 +1,38 @@
+package ca.ualberta.cs.test;
+
+import org.osmdroid.tileprovider.modules.NetworkAvailabliltyCheck;
+
+import android.app.Activity;
+import android.test.ActivityInstrumentationTestCase2;
+import ca.ualberta.cs.models.NetworkModel;
+import ca.ualberta.cs.views.MainActivityFragment;
+
+public class ConnectionTesting extends
+		ActivityInstrumentationTestCase2<Activity> {
+
+	public ConnectionTesting() {
+		super(Activity.class);
+	}
+
+	/**
+	 * TestCase 19.1
+	 * Test loosing connection during operation
+	 */
+	public void testLostConnection() {
+		NetworkModel.getInstance();
+		assertTrue(NetworkModel.isNetworkAvailable(getActivity()));
+		
+		// TODO add broadcast receiver
+	}
+	
+	/**
+	 * TestCase 19.2
+	 * Test gaining connection
+	 */
+	public void testUpdatingConnection() {
+		NetworkModel.getInstance();
+		assertTrue(NetworkModel.isNetworkAvailable(getActivity()));
+		
+		// TODO add broadcast receiver and then recast it as connected
+	}
+}

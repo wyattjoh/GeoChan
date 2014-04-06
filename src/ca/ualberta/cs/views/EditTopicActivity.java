@@ -19,8 +19,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 
 		@Override
 		public void onClick(View v) {
-			theModel = CurrentUserPostModelFactory
-					.newTopicModel();
+			theModel = CurrentUserPostModelFactory.newTopicModel();
 
 			// Get the title
 			EditText titleField = (EditText) findViewById(R.id.titleTextField);
@@ -52,7 +51,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 			finish();
 		}
 	};
-	
+
 	private OnClickListener updateTopicOnClickListener = new OnClickListener() {
 
 		@Override
@@ -86,7 +85,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 
 			finish();
 		}
-		
+
 	};
 
 	/*

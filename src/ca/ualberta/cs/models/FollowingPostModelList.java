@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.util.Log;
-import ca.ualberta.cs.providers.GeoChanGson;
 import ca.ualberta.cs.providers.GeoChanGsonOffline;
 
 import com.google.gson.Gson;
@@ -45,7 +44,6 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 
 	protected FollowingPostModelList(Context applicationContext) {
 		this.applicationContext = applicationContext;
-
 		load();
 	}
 
@@ -165,7 +163,9 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 			for (int i = 0; i < thePrimative.length; i++) {
 				dataThatLoaded.add(thePrimative[i]);
 			}
-
+			
+			// Load the data into the object
+			super.setArrayList(dataThatLoaded);
 		} catch (FileNotFoundException e) {
 			// File was not found! Create it!
 			save();

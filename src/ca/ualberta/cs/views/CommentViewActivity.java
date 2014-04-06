@@ -19,7 +19,7 @@ import ca.ualberta.cs.models.EditPostModel;
 public class CommentViewActivity extends PostViewActivity<CommentModel> {
 
 	private static final int IS_COMMENT = 1;
-	
+
 	@Override
 	protected CommentModel getSelectedModel() {
 		return CommentModelList.getInstance().getLastSelection();
@@ -56,7 +56,6 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 	@Override
 	protected void editPost() {
 		EditPostModel theEditPostModel = EditPostModel.getInstance();
-		theEditPostModel.setTheParent(theModel.getMyParent());
 		theEditPostModel.setThePost(theModel);
 
 		Intent intent = new Intent(this, EditCommentActivity.class);
@@ -70,5 +69,10 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 		mapIntent.putExtra("selfLocation", this.theModel.getLocation());
 		mapIntent.putExtra("postType", IS_COMMENT);
 		startActivity(mapIntent);
+	}
+
+	@Override
+	protected String getTitleString() {
+		return this.theModel.getCommentText();
 	}
 }

@@ -67,6 +67,14 @@ public class PostModelList<T extends PostModel> {
 		updateListeningAdapters();
 	}
 
+	public PostModel getSelectionOffsetFromEnd(Integer theIndex) {
+		Object[] temp = this.selectedPostModelStack.toArray();
+		if (temp.length == 1) {
+			return ((PostModel) temp[temp.length - theIndex]);
+		}
+		return ((PostModel) temp[temp.length - (theIndex + 1)]);
+	}
+
 	/*
 	 * Gets the topic model array list
 	 */
@@ -137,7 +145,7 @@ public class PostModelList<T extends PostModel> {
 
 		updateListeningAdapters();
 	}
-	
+
 	/*
 	 * Sorts theTopicModelArrayList by distance to a specified location
 	 */
@@ -146,13 +154,17 @@ public class PostModelList<T extends PostModel> {
 		Comparator<PostModel> proximityTo = new Comparator<PostModel>() {
 			@Override
 			public int compare(PostModel one, PostModel other) {
-				float distanceToOneLocation = proximitySortLocation.distanceTo(one.getLocation());
-				float distanceToOtherLocation = proximitySortLocation.distanceTo(other.getLocation());
-				return distanceToOneLocation < distanceToOtherLocation ? -1 : distanceToOneLocation > distanceToOtherLocation ? 1 : 0;
+				float distanceToOneLocation = proximitySortLocation
+						.distanceTo(one.getLocation());
+				float distanceToOtherLocation = proximitySortLocation
+						.distanceTo(other.getLocation());
+				return distanceToOneLocation < distanceToOtherLocation ? -1
+						: distanceToOneLocation > distanceToOtherLocation ? 1
+								: 0;
 			}
 		};
 		Collections.sort(this.postModelArrayList, proximityTo);
-		
+
 		updateListeningAdapters();
 	}
 
