@@ -14,8 +14,11 @@
 
         <TextView
             android:id="@+id/titleTopics"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/blueColor"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/bottom_border"
             android:text="Topics"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -33,8 +36,11 @@
 
         <TextView
             android:id="@+id/titleComments"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="@color/blueColor"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/bottom_border"
             android:text="Comments"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
