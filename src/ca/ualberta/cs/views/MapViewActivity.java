@@ -23,7 +23,6 @@ public class MapViewActivity extends Activity {
     private MapView         mMapView;
     private MapController   mMapController;
     
-    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,8 +37,8 @@ public class MapViewActivity extends Activity {
 	    
 	    if (postType == 0) {
 	    //topic
-		    this.mMapController.setZoom(2);	
-//	    	markSelfOnMap();
+		    this.mMapController.setZoom(8);	
+	    	markSelfOnMap();
 		    markThreadOnMap();
 	    } else if (postType == 1) {
 	    //comment
@@ -66,11 +65,11 @@ public class MapViewActivity extends Activity {
 
 		  @Override
 		  public boolean onItemSingleTapUp(int index, OverlayItem item) {
-		   Toast.makeText(MapViewActivity.this, 
-		     item.getTitle() + "\n"
-		     + item.getSnippet()+ "\n",
-		     Toast.LENGTH_LONG).show();
-		   return true;
+			  Toast.makeText(MapViewActivity.this,
+					  item.getTitle() + "\n"
+					  + item.getSnippet()+ "\n",
+					  Toast.LENGTH_SHORT).show();
+			  return true;
 		  }
 	};
 	
@@ -108,10 +107,10 @@ public class MapViewActivity extends Activity {
     	    		"Post Location",
     	    		String.valueOf(gp_loc.getLatitude()) + " , " + String.valueOf(gp_loc.getLongitude()),
     	    		gp_loc));
-    	    ItemizedIconOverlay<OverlayItem> theItemizedIconOverlay = new ItemizedIconOverlay<OverlayItem>(
-    	    		this, theThreadOverlayItemArray, myOnItemGestureListener);
-    	    this.mMapView.getOverlays().add(theItemizedIconOverlay);
     	}
+        ItemizedIconOverlay<OverlayItem> theItemizedIconOverlay = new ItemizedIconOverlay<OverlayItem>(
+	    		this, theThreadOverlayItemArray, myOnItemGestureListener);
+	    mMapView.getOverlays().add(theItemizedIconOverlay);
 	}
 	
 	public void printLocation() {
