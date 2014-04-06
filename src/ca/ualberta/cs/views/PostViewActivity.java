@@ -15,10 +15,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.CommentListViewAdapter;
+import ca.ualberta.cs.controllers.PostViewController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.EditPostModel;
@@ -36,8 +38,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 	abstract void setTitleText();
 
-	abstract protected OnClickListener getFavoriteOnClickListener();
-
 	/**
 	 * Gets the title string associated with the currently displayed post.
 	 * 
@@ -48,6 +48,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	protected T theModel = null;
 
 	protected static Bitmap currentBitmap = null;
+
+	protected PostViewController<T> theController;
 
 	/**
 	 * Starts an activity to reply to the currently visible post
@@ -62,6 +64,25 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	abstract protected void editPost();
 
 	protected CommentListViewAdapter thePostAdapter;
+
+	protected OnClickListener favoriteOnClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			ImageView favoritesButton = (ImageView) v;
+			theController.toggleFavorite(theModel);
+
+			if (theModel.isFavorite()) {
+				// Is already a favorite! Must unfavorite now...
+				favoritesButton
+						.setImageResource(android.R.drawable.btn_star_big_on);
+			} else {
+				// Not a favorite! Lets add it!
+				favoritesButton
+						.setImageResource(android.R.drawable.btn_star_big_off);
+			}
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -372,7 +393,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	}
 
 	private void populateFavoritesButton(ImageButton favoriteButton) {
-		favoriteButton.setOnClickListener(getFavoriteOnClickListener());
+		favoriteButton.setOnClickListener(favoriteOnClickListener);
 
 		if (theModel.isFavorite()) {
 			favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
@@ -414,8 +435,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 
 		// Favorite Button
 		ImageButton favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
-
-		favoriteButton.setOnClickListener(getFavoriteOnClickListener());
+		favoriteButton.setOnClickListener(favoriteOnClickListener);
 
 		if (theModel.isFavorite()) {
 			favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);

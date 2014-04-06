@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.controllers.CommentViewController;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.EditPostModel;
@@ -20,11 +21,15 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 
 	private static final int IS_COMMENT = 1;
 
+	public CommentViewActivity() {
+		theController = new CommentViewController();
+	}
+	
 	@Override
 	protected CommentModel getSelectedModel() {
 		return CommentModelList.getInstance().getLastSelection();
 	}
-
+	
 	@Override
 	void setTitleText() {
 		// Hide the titleView
@@ -45,12 +50,6 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		CommentModelList.getInstance().popFromSelectionStack();
-	}
-
-	@Override
-	protected OnClickListener getFavoriteOnClickListener() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

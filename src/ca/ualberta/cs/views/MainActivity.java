@@ -22,6 +22,7 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.NetworkInterfaceController;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.FavoriteCommentModelList;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.ReadLaterTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
@@ -317,6 +318,7 @@ public class MainActivity extends FragmentActivity {
 
 		// Create Favorites List
 		FavoriteTopicModelList.createInstance(applicationContext);
+		FavoriteCommentModelList.createInstance(applicationContext);
 
 		// Create Read Later list
 		ReadLaterTopicModelList.createInstance(applicationContext);
