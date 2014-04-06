@@ -87,15 +87,13 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public CharSequence getPageTitle(int position) {
 			Locale l = Locale.getDefault();
-			switch (position) {
-			case 0:
-				return getString(R.string.title_section1).toUpperCase(l);
-			case 1:
-				return getString(R.string.title_section2).toUpperCase(l);
-			case 2:
-				return getString(R.string.title_section3).toUpperCase(l);
+			MainActivityFragmentComponent theComponent = MainActivityFragmentComponent
+					.getComponentForPosition(position + 1);
+			if (theComponent != null) {
+				return theComponent.getTitle().toUpperCase(l);
+			} else {
+				return null;
 			}
-			return null;
 		}
 
 		// TODO: Add documentation
@@ -360,6 +358,7 @@ public class MainActivity extends FragmentActivity {
 		Intent intent = new Intent(this, LocationActivity.class);
 		startActivityForResult(intent, GET_LOCATION);
 	}
+
 	/**
 	 * Starts the Help Activity
 	 */

@@ -54,6 +54,11 @@ public enum MainActivityFragmentComponent {
 			theTopicModelList.unRegisterListeningAdapter(adapter);
 		}
 
+		@Override
+		public String getTitle() {
+			return "Topics";
+		}
+
 	},
 
 	FAVORITE_TOPICS {
@@ -91,6 +96,11 @@ public enum MainActivityFragmentComponent {
 					.unRegisterListeningAdapter(favoriteTopicAdapter);
 		}
 
+		@Override
+		public String getTitle() {
+			return "Favorite Topics";
+		}
+
 	},
 	FAVORITE_COMMENTS {
 		public CommentListViewAdapter favoriteCommentAdapter;
@@ -126,6 +136,11 @@ public enum MainActivityFragmentComponent {
 					.unRegisterListeningAdapter(favoriteCommentAdapter);
 		}
 
+		@Override
+		public String getTitle() {
+			return "Favrorite Comments";
+		}
+
 	};
 
 	abstract public void setupView(LayoutInflater theInflater,
@@ -143,10 +158,12 @@ public enum MainActivityFragmentComponent {
 		case 3:
 			return FAVORITE_COMMENTS;
 		}
-		throw new RuntimeException("Invalid position passed.");
+		return null;
 	}
 
 	public static int getSize() {
 		return 3;
 	}
+	
+	abstract public String getTitle(); 
 }
