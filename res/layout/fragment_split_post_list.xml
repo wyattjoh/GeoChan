@@ -1,57 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollojt"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
 
-    <LinearLayout
-        android:id="@+id/topicContainer"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-        <TextView
-            android:id="@+id/titleTopics"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/bottom_border"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:text="Topics"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/blueColor" />
-
-        <ListView
-            android:id="@+id/listTopics"
+        <LinearLayout
+            android:id="@+id/topicContainer"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/commentsContainer"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/titleComments"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/bottom_border"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:text="Comments"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/blueColor" />
+            android:orientation="vertical" >
 
-        <ListView
-            android:id="@+id/listComments"
+            <TextView
+                android:id="@+id/titleTopics"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bottom_border"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:text="Topics"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blueColor" />
+
+            <ListView
+                android:id="@+id/listTopics"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/commentsContainer"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/topicContainer"
+            android:orientation="vertical" >
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/titleComments"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bottom_border"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:text="Comments"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blueColor" />
+
+            <ListView
+                android:id="@+id/listComments"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>
