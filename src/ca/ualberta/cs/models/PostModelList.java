@@ -129,8 +129,10 @@ public class PostModelList<T extends PostModel> {
 	public void sortByPicture() {
 		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_DATE);
 		Collections.reverse(this.postModelArrayList);
+		
 		ArrayList<T> tempList = new ArrayList<T>();
-		tempList = (ArrayList<T>) this.postModelArrayList.clone();
+		tempList.addAll(this.postModelArrayList);
+		
 		this.postModelArrayList.clear();
 		for (T theModel : tempList) {
 			if (theModel.hasPicture()) {
