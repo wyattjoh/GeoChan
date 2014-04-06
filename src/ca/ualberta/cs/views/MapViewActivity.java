@@ -36,8 +36,8 @@ public class MapViewActivity extends Activity {
 
 		if (postType == 0) {
 			// topic
-			this.mMapController.setZoom(2);
-			// markSelfOnMap();
+			this.mMapController.setZoom(8);
+			markSelfOnMap();
 			markThreadOnMap();
 		} else if (postType == 1) {
 			// comment
