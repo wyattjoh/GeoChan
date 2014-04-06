@@ -70,4 +70,9 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 		mapIntent.putExtra("postType", IS_COMMENT);
 		startActivity(mapIntent);
 	}
+
+	@Override
+	protected String getTitleString() {
+		return this.theModel.getCommentText();
+	}
 }

@@ -2,6 +2,7 @@ package ca.ualberta.cs.views;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,17 +11,24 @@ import android.widget.ImageView;
 import ca.ualberta.cs.R;
 
 public class PictureViewActivity extends Activity {
-	public final static String BITMAP_KEY = "BITMAP_KEY";
+	public final static String TITLE_KEY = "TITLE_KEY";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_picture_view);
 		
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-
 		Bitmap bitmap = PostViewActivity.getCurrentBitmap();
+		
+		// Get the intent and extras
+		Intent intent = getIntent();
+		Bundle extras = intent.getExtras();
+		
+		// Update the title
+		if (extras != null) {
+			String titleText = extras.getString(TITLE_KEY);
+			getActionBar().setTitle(titleText);
+		} 
 		
 		if (bitmap != null) {
 			setupBitmap(bitmap);

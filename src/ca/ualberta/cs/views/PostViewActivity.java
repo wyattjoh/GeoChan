@@ -38,6 +38,12 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	abstract void setTitleText();
 
 	abstract protected OnClickListener getFavoriteOnClickListener();
+	
+	/**
+	 * Gets the title string associated with the currently displayed post.
+	 * @return
+	 */
+	abstract protected String getTitleString();
 
 	protected T theModel = null;
 	
@@ -360,6 +366,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(PostViewActivity.this, PictureViewActivity.class);
+					intent.putExtra(PictureViewActivity.TITLE_KEY, PostViewActivity.this.getTitleString());
 					startActivity(intent);
 				}
 			});

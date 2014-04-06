@@ -110,4 +110,9 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 		mapIntent.putExtra("postType", IS_TOPIC);
 		startActivity(mapIntent);
 	}
+
+	@Override
+	protected String getTitleString() {
+		return this.theModel.getTitle();
+	}
 }
