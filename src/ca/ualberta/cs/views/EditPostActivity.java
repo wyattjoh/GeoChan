@@ -40,14 +40,15 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	protected ArrayList<CommentModel> commentList = null;
 	
 	abstract protected T getUpcastedModel();
+	
+	abstract protected Location getNewLocation();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_post);
 
-		this.theLocation = ActiveUserModel.getInstance().getUser()
-				.getLocation();
+		this.theLocation = getNewLocation();
 
 		// Add title
 		setTitle(getSaveButtonText());
@@ -94,10 +95,8 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	private void populateNew() {
 		// set distance button
 		Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
-		Location temploc = ActiveUserModel.getInstance().getUser()
-				.getLocation();
-		distanceButton.setText(String.valueOf(temploc.getLatitude() + " , "
-				+ String.valueOf(temploc.getLongitude())));
+		distanceButton.setText(String.valueOf(theLocation.getLatitude() + " , "
+				+ String.valueOf(theLocation.getLongitude())));
 
 		// get photo button
 		Button cameraButton = (Button) findViewById(R.id.pictureButton);

@@ -27,6 +27,7 @@ import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.ReadLaterCommentModelList;
 import ca.ualberta.cs.models.ReadLaterTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
+import ca.ualberta.cs.providers.LocationProvider;
 
 /**
  * 
@@ -325,6 +326,9 @@ public class MainActivity extends FragmentActivity {
 		// Create Read Later list
 		ReadLaterTopicModelList.createInstance(applicationContext);
 		ReadLaterCommentModelList.createInstance(applicationContext);
+		
+		// Create Location Provider
+		LocationProvider.getInstance(applicationContext);
 	}
 
 	/**

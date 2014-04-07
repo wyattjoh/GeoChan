@@ -1,12 +1,12 @@
 package ca.ualberta.cs.providers;
 
-import ca.ualberta.cs.models.ActiveUserModel;
-import ca.ualberta.cs.models.UserModel;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.UserModel;
 
 /*
  *  Implement such as:
@@ -37,17 +37,16 @@ public class LocationProvider {
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO
+			Log.w("LocationProvider", "Status changed: " + provider + " status: " + Integer.toString(status));
 		}
 
 		@Override
 		public void onProviderEnabled(String provider) {
-			// TODO
+			Log.w("LocationProvider", "Provider enabled: " + provider);
 		}
 
 		@Override
 		public void onProviderDisabled(String provider) {
-			// TODO
 		}
 	};
 
@@ -58,7 +57,7 @@ public class LocationProvider {
 				.getSystemService(Context.LOCATION_SERVICE);
 
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-				10000, 0, locationListener);
+				1000, 0, locationListener);
 	}
 
 	public static LocationProvider getInstance(Context theContext) {
