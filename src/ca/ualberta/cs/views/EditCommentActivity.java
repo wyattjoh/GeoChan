@@ -45,7 +45,11 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 		@Override
 		public void onClick(View v) {
+			// set the model vars from the temp vars gathered earlier
 			theModel.setId(postId);
+			theModel.setScore(postScore);
+			theModel.setChildComments(commentList);
+			
 
 			// Get the comment
 			EditText commentField = (EditText) findViewById(R.id.commentTextField);
@@ -63,9 +67,6 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 				theModel.setPicture(imageBitmap);
 			}
 			theModel.setLocation(theLocation);
-
-			// set the comment list
-			theModel.setChildComments(commentList);
 
 			theController.updateComment(theModel);
 

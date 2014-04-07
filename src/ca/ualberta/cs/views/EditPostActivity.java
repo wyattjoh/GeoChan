@@ -40,6 +40,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	protected T theModel;
 	protected String postId = null;
 	protected ArrayList<CommentModel> commentList = null;
+	protected Integer postScore = 0;
 
 	abstract protected T getUpcastedModel();
 
@@ -132,8 +133,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	private void populateEdit() {
 		// get the post to fill values from
 		theModel = getUpcastedModel();
-		postId = theEditPostModel.getThePost().getId();
-		commentList = theEditPostModel.getThePost().getChildrenComments();
+		getAttributes();
 
 		EditPostModel.getInstance().setThePost(null);
 
@@ -182,6 +182,12 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				finish();
 			}
 		});
+	}
+
+	private void getAttributes() {
+		postId = theEditPostModel.getThePost().getId();
+		commentList = theEditPostModel.getThePost().getChildrenComments();
+		postScore = theEditPostModel.getThePost().getScore();
 	}
 
 	protected abstract void populateTitle(PostModel theModel);
