@@ -356,6 +356,7 @@ public class MainActivity extends FragmentActivity implements LocationUpdatedInt
 	 */
 	protected void sortPostsByProximityTo() {
 		Intent intent = new Intent(this, LocationActivity.class);
+		intent.putExtra("previousLocation", ActiveUserModel.getInstance().getUser().getLocation());
 		startActivityForResult(intent, GET_LOCATION);
 	}
 

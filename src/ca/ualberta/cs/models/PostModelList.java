@@ -55,7 +55,7 @@ public class PostModelList<T extends PostModel> {
 	 * @return the last element in the stack (last selected)
 	 */
 	public T getLastSelection() {
-		return this.selectedPostModelStack.getLast();
+		return this.selectedPostModelStack.peekLast();
 	}
 
 	public void setArrayList(ArrayList<T> postModelArrayList) {
