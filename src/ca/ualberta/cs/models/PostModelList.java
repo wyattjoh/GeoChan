@@ -14,6 +14,8 @@ import ca.ualberta.cs.adapters.PostListViewAdapter;
 public class PostModelList<T extends PostModel> {
 	private ArrayList<T> postModelArrayList;
 	private ArrayList<PostListViewAdapter<?>> listeningAdapters;
+	private Comparator<PostModel> theCurrentSort = PostModelComparator.COMPARE_BY_LATEST_GREATEST;
+	private Location proxiedLocation = null;
 
 	private Deque<T> selectedPostModelStack = new ArrayDeque<T>();
 
@@ -87,49 +89,53 @@ public class PostModelList<T extends PostModel> {
 	 * Sorts theTopicModelArrayList by score
 	 */
 	public void sortByScore() {
-		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_SCORE);
-		Collections.reverse(this.postModelArrayList);
-
-		updateListeningAdapters();
+		Boolean reverse = true;
+		setTheCurrentSort(PostModelComparator.COMPARE_BY_SCORE);
+		
+		executeSort(reverse, true);
 	}
 
 	/*
 	 * Sorts theTopicModelArrayList by date
 	 */
 	public void sortByDate() {
-		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_DATE);
-		Collections.reverse(this.postModelArrayList);
-
-		updateListeningAdapters();
+		Boolean reverse = true;
+		setTheCurrentSort(PostModelComparator.COMPARE_BY_DATE);
+		
+		executeSort(reverse, true);
 	}
 
 	/*
 	 * Sorts theTopicModelArrayList by proximity to user
 	 */
 	public void sortByProximity() {
-		Collections.sort(this.postModelArrayList,
-				PostModel.COMPARE_BY_PROXIMITY);
+		Boolean reverse = false;
+		setTheCurrentSort(PostModelComparator.COMPARE_BY_PROXIMITY);
+		
+		Location sortingLocation = ActiveUserModel.getInstance().getUser().getLocation();
+		PostModelComparator.setSortingLocation(sortingLocation);
 
-		updateListeningAdapters();
+		executeSort(reverse, true);
 	}
 
 	/*
 	 * Sorts theTopicModelArrayList by "latest greatest"
 	 */
 	public void sortByLatestGreatest() {
-		Collections.sort(this.postModelArrayList,
-				PostModel.COMPARE_BY_LATEST_GREATEST);
-		Collections.reverse(this.postModelArrayList);
+		Boolean reverse = true;
+		setTheCurrentSort(PostModelComparator.COMPARE_BY_LATEST_GREATEST);
 
-		updateListeningAdapters();
+		executeSort(reverse, true);
 	}
 
 	/*
 	 * Sorts theTopicModelArrayList by picture
 	 */
 	public void sortByPicture() {
-		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_DATE);
-		Collections.reverse(this.postModelArrayList);
+		Boolean reverse = true;
+		setTheCurrentSort(PostModelComparator.COMPARE_BY_DATE);
+		
+		executeSort(reverse, false);
 
 		ArrayList<T> tempList = new ArrayList<T>();
 		tempList.addAll(this.postModelArrayList);
@@ -149,26 +155,32 @@ public class PostModelList<T extends PostModel> {
 		updateListeningAdapters();
 	}
 
+	/**
+	 * Executes a sort
+	 * @param reverse
+	 * @param updateAdapter
+	 */
+	protected void executeSort(Boolean reverse, Boolean updateAdapter) {
+		Collections.sort(this.postModelArrayList, getTheCurrentSort());
+		if (reverse) {
+			Collections.reverse(this.postModelArrayList);
+		}
+	
+		if (updateAdapter) {
+			updateListeningAdapters();
+		}
+	}
+
 	/*
 	 * Sorts theTopicModelArrayList by distance to a specified location
 	 */
 	public void sortByProximityTo(Location location) {
-		final Location proximitySortLocation = new Location(location);
-		Comparator<PostModel> proximityTo = new Comparator<PostModel>() {
-			@Override
-			public int compare(PostModel one, PostModel other) {
-				float distanceToOneLocation = proximitySortLocation
-						.distanceTo(one.getLocation());
-				float distanceToOtherLocation = proximitySortLocation
-						.distanceTo(other.getLocation());
-				return distanceToOneLocation < distanceToOtherLocation ? -1
-						: distanceToOneLocation > distanceToOtherLocation ? 1
-								: 0;
-			}
-		};
-		Collections.sort(this.postModelArrayList, proximityTo);
+		Boolean reverse = false;
+		setTheCurrentSort(PostModelComparator.COMPARE_BY_PROXIMITY);
+		
+		PostModelComparator.setSortingLocation(location);
 
-		updateListeningAdapters();
+		executeSort(reverse, true);
 	}
 
 	/*
@@ -247,5 +259,19 @@ public class PostModelList<T extends PostModel> {
 	public void unRegisterListeningAdapter(PostListViewAdapter<?> theAdapter) {
 		this.listeningAdapters.remove(theAdapter);
 		Log.w("PostModelList", "Listener removed");
+	}
+
+	/**
+	 * @return the theCurrentSort
+	 */
+	public Comparator<PostModel> getTheCurrentSort() {
+		return theCurrentSort;
+	}
+
+	/**
+	 * @param theCurrentSort the theCurrentSort to set
+	 */
+	public void setTheCurrentSort(Comparator<PostModel> theCurrentSort) {
+		this.theCurrentSort = theCurrentSort;
 	}
 }
