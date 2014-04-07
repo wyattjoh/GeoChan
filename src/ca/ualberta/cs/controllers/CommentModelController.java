@@ -19,6 +19,7 @@ public class CommentModelController {
 	public void addComment(CommentModel theComment, PostModel theParent) {
 		theParent.addChildComment(theComment);
 		theComment.setMyParent(theParent);
+		theComment.setParentId(theParent.getId());
 
 		// Get the provider
 		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();

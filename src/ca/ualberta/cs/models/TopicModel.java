@@ -42,4 +42,9 @@ public class TopicModel extends PostModel {
 		this.version = version;
 	}
 
+	@Override
+	public String getQualifyingId() {
+		return getId();
+	}
+
 }

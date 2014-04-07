@@ -20,6 +20,8 @@ public abstract class PostModel {
 	private transient Boolean isFavorite = false;
 	private transient Boolean isReadLater = false;
 	private String id;
+	
+	abstract public String getQualifyingId();
 
 	/**
 	 * Constructors

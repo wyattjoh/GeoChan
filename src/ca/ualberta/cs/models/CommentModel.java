@@ -3,6 +3,7 @@ package ca.ualberta.cs.models;
 import java.util.UUID;
 
 public class CommentModel extends PostModel {
+	private String parentId;
 
 	/**
 	 * Constructors
@@ -16,5 +17,19 @@ public class CommentModel extends PostModel {
 
 	public CommentModel(UserModel theUser) {
 		super(theUser);
+	}
+
+	/**
+	 * @return the parentId
+	 */
+	public String getQualifyingId() {
+		return parentId;
+	}
+
+	/**
+	 * @param parentId the parentId to set
+	 */
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 }
