@@ -12,7 +12,8 @@
             android:id="@+id/helpText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="This is Help Stuff" />
+            android:text="This is Help Stuff"
+            android:singleLine="false" />
 
     </LinearLayout>
     
