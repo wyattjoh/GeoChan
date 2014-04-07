@@ -15,7 +15,6 @@ public class PostModelList<T extends PostModel> {
 	private ArrayList<T> postModelArrayList;
 	private ArrayList<PostListViewAdapter<?>> listeningAdapters;
 	private Comparator<PostModel> theCurrentSort = PostModelComparator.COMPARE_BY_LATEST_GREATEST;
-	private Location proxiedLocation = null;
 
 	private Deque<T> selectedPostModelStack = new ArrayDeque<T>();
 

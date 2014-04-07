@@ -1,8 +1,6 @@
 package ca.ualberta.cs.models;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import android.app.DownloadManager.Request;
 
 public class ElasticSearchOperationFactory {
 	public static ElasticSearchOperationResponse responseFromRequest(

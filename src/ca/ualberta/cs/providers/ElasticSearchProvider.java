@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.ElasticSearchOperationRequest;
 import ca.ualberta.cs.models.FollowingPostModelList;
-import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.PostModelList;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;

@@ -22,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.EditPostController;
-import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;

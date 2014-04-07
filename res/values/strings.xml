@@ -6,7 +6,7 @@
     <string name="action_sortDateText">Sort By Newest</string>
     <string name="action_sortScoreText">Sort By Score</string>
     <string name="action_sortProximityText">Sort By Proximity</string>
-    <string name="action_sortProximityToText">Sort By Proximity To...</string>
+    <string name="action_sortProximityToText">Sort By Proximity To&#8230;</string>
     <string name="action_sortLatestGreatestText">Sort By Latest/Greatest</string>
     <string name="action_sortPictureText">Sort By Picture</string>
     <string name="action_logoutText">Logout</string>

@@ -24,7 +24,6 @@ import ca.ualberta.cs.models.TopicModel;
 public class TopicViewActivity extends PostViewActivity<TopicModel> {
 
 	private static final int IS_TOPIC = 0;
-	private static final int Location = 0;
 
 	public TopicViewActivity() {
 		theController = new TopicViewController();
