@@ -485,6 +485,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 	 */
 	@Override
 	public void locationWasUpdated(Location theNewLocation) {
+		// Redraws the boxes that contain distance information
 		populateDistanceButton();
+		populateCommentsView();
 	}
 }
