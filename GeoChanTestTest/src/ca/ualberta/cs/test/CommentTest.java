@@ -9,6 +9,22 @@ public class CommentTest extends ActivityInstrumentationTestCase2<Activity> {
 	public CommentTest(){
 		super(Activity.class);
 	}
+	
+	/**
+	 * TestCase 6.1
+	 * Test whether an error message is displayed if no text is entered when posting a comment
+	 */
+	public void testNoTextComment() {
+		fail();
+	}
+	
+	/**
+	 * TestCase 6.2
+	 * Test whether a new comment can be created
+	 */
+	public void testCommentCreation() {
+		fail();
+	}
 
 	/**
 	 * TestCase 21.1
