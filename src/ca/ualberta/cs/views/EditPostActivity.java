@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.controllers.EditPostController;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.EditPostModel;
@@ -237,12 +238,12 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				// galleryThumbnail.setVisibility(View.VISIBLE);
 
 				// create scaled image for display
-				Bitmap scaledBitmap = scaleBitMapToFit(imageBitmap,
-						galleryThumbnail);
+				byte[] scaledBitmapArray = EditPostController.compressBitmap(imageBitmap);
+				
+				imageBitmap = BitmapFactory.decodeByteArray(scaledBitmapArray, 0, scaledBitmapArray.length);
 
 				// set the view image o the selected image
-				galleryThumbnail.setImageBitmap(scaledBitmap);
-				imageBitmap = scaledBitmap;
+				galleryThumbnail.setImageBitmap(imageBitmap);
 			}
 		} else if (requestCode == GET_LOCATION) {
 			if (resultCode == RESULT_OK) {
@@ -285,34 +286,6 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 			}
 			//do nothing if cancelled
 		}
-	}
-
-	/**
-	 * returns a scaled image where the image will be sized so that it will fit
-	 * the image view by scaling to the largest length, either width or height
-	 * and setting that to the size of the image view
-	 * 
-	 * @param bitmapImage
-	 * @param imageViewScale
-	 * @return
-	 */
-	public Bitmap scaleBitMapToFit(Bitmap bitmapImage, ImageView imageViewScale) {
-		Bitmap scaledBitmap = null;
-
-		if (bitmapImage.getWidth() > bitmapImage.getHeight()) {
-			// if the image is bigger horizontally scale vertically
-			scaledBitmap = Bitmap.createScaledBitmap(bitmapImage,
-					bitmapImage.getWidth(), imageViewScale.getHeight(),
-					imageViewScale.getFilterTouchesWhenObscured());
-
-		} else {
-			// otherwise scale horizontally
-			scaledBitmap = Bitmap.createScaledBitmap(bitmapImage,
-					imageViewScale.getWidth(), bitmapImage.getHeight(),
-					imageViewScale.getFilterTouchesWhenObscured());
-		}
-
-		return scaledBitmap;
 	}
 
 	/**
