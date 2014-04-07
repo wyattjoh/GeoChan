@@ -39,11 +39,7 @@ public class LocationProvider {
 				theLoggedInUser.setLocation(location);
 			}
 
-			for (LocationUpdatedInterface item : LocationProvider.this.activities) {
-				if (item != null) {
-					item.locationWasUpdated(location);
-				}
-			}
+			updateListeningInterfaces(location);
 		}
 
 		@Override
@@ -90,6 +86,14 @@ public class LocationProvider {
 
 	public Location getLocation() {
 		return theLocation;
+	}
+
+	protected void updateListeningInterfaces(Location location) {
+		for (LocationUpdatedInterface item : LocationProvider.this.activities) {
+			if (item != null) {
+				item.locationWasUpdated(location);
+			}
+		}
 	}
 
 }
