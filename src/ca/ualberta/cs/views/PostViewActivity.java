@@ -30,8 +30,9 @@ import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
+import ca.ualberta.cs.providers.LocationProvider;
 
-public abstract class PostViewActivity<T extends PostModel> extends Activity {
+public abstract class PostViewActivity<T extends PostModel> extends Activity implements LocationUpdatedInterface {
 	protected static Bitmap currentBitmap = null;
 
 	/**
@@ -113,6 +114,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			throw new RuntimeException(
 					"Tried to execute the view without selecting anything? (No idea how you got here...)");
 		}
+		
+		// Register for location updates
+		LocationProvider.getInstance(null).registerForLocationUpdates(this);
 	}
 
 	@Override
@@ -143,6 +147,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 			TopicModelList.getInstance().unRegisterListeningAdapter(
 					thePostAdapter);
 		}
+		
+		LocationProvider.getInstance(null).unregisterForLocationUpdates(this);
 	}
 
 	@Override
@@ -221,7 +227,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		commentsListView.setAdapter(thePostAdapter);
 	}
 
-	private void populateDistanceButton(Button distanceButton) {
+	private void populateDistanceButton() {
+		Button distanceButton = (Button) this.headerView.findViewById(R.id.distanceButton);
+		
 		if (theModel.getLocation() != null) {
 			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
 				Location userLocation = new Location(ActiveUserModel
@@ -453,8 +461,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 		populateEditButton();
 
 		// Distance button
-		Button distanceButton = (Button) this.headerView.findViewById(R.id.distanceButton);
-		populateDistanceButton(distanceButton);
+		populateDistanceButton();
 
 		// Add comments
 		populateCommentsView();
@@ -483,5 +490,13 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity {
 	protected void startSettingsActivity() {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
+	}
+
+	/* (non-Javadoc)
+	 * @see ca.ualberta.cs.views.LocationUpdatedInterface#locationWasUpdated(android.location.Location)
+	 */
+	@Override
+	public void locationWasUpdated(Location theNewLocation) {
+		populateDistanceButton();
 	}
 }
