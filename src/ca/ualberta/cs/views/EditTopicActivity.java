@@ -1,5 +1,6 @@
 package ca.ualberta.cs.views;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -7,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicModelController;
+import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CurrentUserPostModelFactory;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
@@ -19,8 +21,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 
 		@Override
 		public void onClick(View v) {
-			theModel = CurrentUserPostModelFactory
-					.newTopicModel();
+			theModel = CurrentUserPostModelFactory.newTopicModel();
 
 			// Get the title
 			EditText titleField = (EditText) findViewById(R.id.titleTextField);
@@ -52,7 +53,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 			finish();
 		}
 	};
-	
+
 	private OnClickListener updateTopicOnClickListener = new OnClickListener() {
 
 		@Override
@@ -86,7 +87,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 
 			finish();
 		}
-		
+
 	};
 
 	/*
@@ -141,5 +142,19 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	protected void populateTitle(PostModel theModel) {
 		TextView title = (TextView) findViewById(R.id.titleTextField);
 		title.setText(((TopicModel) theModel).getTitle());
+	}
+
+	@Override
+	protected TopicModel getUpcastedModel() {
+		// TODO Auto-generated method stub
+		return (TopicModel) theEditPostModel.getThePost();
+	}
+
+	/**
+	 * In the event that we are editing a topic, have it's location default to the users location
+	 */
+	@Override
+	protected Location getNewLocation() {
+		return ActiveUserModel.getInstance().getUser().getLocation();
 	}
 }

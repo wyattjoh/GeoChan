@@ -4,6 +4,7 @@
 package ca.ualberta.cs.models;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * @author wyatt
@@ -21,6 +22,7 @@ public class ActiveUserModel {
 
 		// Load UserModel if already existing
 		this.theUser = theSavedUserModel.load();
+		this.theUser.setActiveUserModel(this);
 	}
 
 	/*
@@ -59,6 +61,16 @@ public class ActiveUserModel {
 
 		// Remove the user from preferences
 		theSavedUserModel.remove();
+
+		// Remove the users details
+
+		// Favorites
+		FavoriteCommentModelList.getInstance().delete();
+		FavoriteTopicModelList.getInstance().delete();
+
+		// Read later
+		ReadLaterCommentModelList.getInstance().delete();
+		ReadLaterTopicModelList.getInstance().delete();
 	}
 
 	public Boolean isLoggedIn() {
@@ -69,7 +81,21 @@ public class ActiveUserModel {
 		}
 	}
 
-	public UserModel getUser() {
+	/**
+	 * Get the user from the active user model
+	 * @return
+	 */
+	public final UserModel getUser() {
 		return theUser;
+	}
+
+	/**
+	 * Notify that the user was modified
+	 */
+	public void notifiedUserMutated() {
+		// Save the user in preferences
+		theSavedUserModel.save(theUser);
+		
+		Log.w("ActiveUserModel", "Update was called.");
 	}
 }

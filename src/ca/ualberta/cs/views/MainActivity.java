@@ -22,9 +22,12 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.NetworkInterfaceController;
 import ca.ualberta.cs.controllers.PostListController;
 import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.FavoriteCommentModelList;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
+import ca.ualberta.cs.models.ReadLaterCommentModelList;
 import ca.ualberta.cs.models.ReadLaterTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
+import ca.ualberta.cs.providers.LocationProvider;
 
 /**
  * 
@@ -33,14 +36,14 @@ import ca.ualberta.cs.models.TopicModelList;
  * 
  * @author wyatt
  */
-public class MainActivity extends FragmentActivity {
-	
+public class MainActivity extends FragmentActivity implements LocationUpdatedInterface {
+
 	/*
 	 * Intent request codes
 	 */
 	private static final int LOGIN_ACTIVITY = 1;
 	private static final int GET_LOCATION = 2;
-	
+
 	/*
 	 * Post sorting location
 	 */
@@ -64,7 +67,7 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 3;
+			return MainActivityFragmentComponent.getSize();
 		}
 
 		// TODO: Add documentation
@@ -86,15 +89,13 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public CharSequence getPageTitle(int position) {
 			Locale l = Locale.getDefault();
-			switch (position) {
-			case 0:
-				return getString(R.string.title_section1).toUpperCase(l);
-			case 1:
-				return getString(R.string.title_section2).toUpperCase(l);
-			case 2:
-				return getString(R.string.title_section3).toUpperCase(l);
+			MainActivityFragmentComponent theComponent = MainActivityFragmentComponent
+					.getComponentForPosition(position + 1);
+			if (theComponent != null) {
+				return theComponent.getTitle().toUpperCase(l);
+			} else {
+				return null;
 			}
-			return null;
 		}
 
 		// TODO: Add documentation
@@ -145,7 +146,8 @@ public class MainActivity extends FragmentActivity {
 
 					this.theSortLocation.setLatitude(retLatitude);
 					this.theSortLocation.setLongitude(retLongitude);
-					TopicModelList.getInstance().sortByProximityTo(this.theSortLocation);
+					TopicModelList.getInstance().sortByProximityTo(
+							this.theSortLocation);
 
 				} catch (Exception e) {
 					Toast.makeText(
@@ -159,8 +161,11 @@ public class MainActivity extends FragmentActivity {
 				}
 			}
 			if (resultCode == RESULT_CANCELED) {
-				this.theSortLocation = ActiveUserModel.getInstance().getUser().getLocation();
-				Toast.makeText(this, "Sorting by proximity to current location", Toast.LENGTH_LONG).show();
+				this.theSortLocation = ActiveUserModel.getInstance().getUser()
+						.getLocation();
+				Toast.makeText(this,
+						"Sorting by proximity to current location",
+						Toast.LENGTH_LONG).show();
 				PostListController.setSort(PostListController.SORT_PROXIMITY);
 			}
 		}
@@ -196,6 +201,12 @@ public class MainActivity extends FragmentActivity {
 
 		context.registerReceiver(this.connectionBroadcastReceiver,
 				new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+		
+
+		// Must be first thing that is started, sets up contexts
+		createSharedSingletons(getApplicationContext());
+		
+		LocationProvider.getInstance(getApplicationContext()).registerForLocationUpdates(this);
 	}
 
 	/*
@@ -214,6 +225,8 @@ public class MainActivity extends FragmentActivity {
 			context.unregisterReceiver(this.connectionBroadcastReceiver);
 			this.connectionBroadcastReceiver = null;
 		}
+		
+		LocationProvider.getInstance(null).unregisterForLocationUpdates(this);
 	}
 
 	/*
@@ -225,7 +238,7 @@ public class MainActivity extends FragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-
+		menu.findItem(R.id.readLaterButton).setVisible(false);
 		return true;
 	}
 
@@ -241,8 +254,8 @@ public class MainActivity extends FragmentActivity {
 		case R.id.cellActiveArea:
 			newPost();
 			return true;
-		case R.id.action_settings:
-			startSettingsActivity();
+		case R.id.action_help:
+			startHelpActivity();
 			return true;
 		case R.id.action_sortDate:
 			PostListController.setSort(PostListController.SORT_DATE);
@@ -294,9 +307,6 @@ public class MainActivity extends FragmentActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 
-		// Must be first thing that is started, sets up contexts
-		createSharedSingletons(getApplicationContext());
-
 		// Perform the login flow process
 		loginFlow();
 	}
@@ -313,9 +323,14 @@ public class MainActivity extends FragmentActivity {
 
 		// Create Favorites List
 		FavoriteTopicModelList.createInstance(applicationContext);
+		FavoriteCommentModelList.createInstance(applicationContext);
 
 		// Create Read Later list
 		ReadLaterTopicModelList.createInstance(applicationContext);
+		ReadLaterCommentModelList.createInstance(applicationContext);
+		
+		// Create Location Provider
+		LocationProvider.getInstance(applicationContext);
 	}
 
 	/**
@@ -337,19 +352,19 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	/**
-	 * Starts the settings activity
-	 */
-	protected void startSettingsActivity() {
-		Intent intent = new Intent(this, SettingsActivity.class);
-		startActivity(intent);
-	}
-	
-	/**
 	 * Selects the location to sort relative to
 	 */
 	protected void sortPostsByProximityTo() {
 		Intent intent = new Intent(this, LocationActivity.class);
 		startActivityForResult(intent, GET_LOCATION);
+	}
+
+	/**
+	 * Starts the Help Activity
+	 */
+	protected void startHelpActivity() {
+		Intent intent = new Intent(this, HelpViewActivity.class);
+		startActivity(intent);
 	}
 
 	/**
@@ -375,5 +390,10 @@ public class MainActivity extends FragmentActivity {
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivityForResult(intent, LOGIN_ACTIVITY);
 		}
+	}
+
+	@Override
+	public void locationWasUpdated(Location theNewLocation) {
+		NetworkInterfaceController.refreshPosts();
 	}
 }

@@ -1,5 +1,6 @@
 package ca.ualberta.cs.views;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,15 +40,37 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 			finish();
 		}
 	};
-	
+
 	private OnClickListener updateCommentOnClickListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			
+			theModel.setId(postId);
+
+			// Get the comment
+			EditText commentField = (EditText) findViewById(R.id.commentTextField);
+			String theComment = commentField.getText().toString();
+
+			if (theComment.length() <= 0) {
+				failedDueToReason("Cannot create a comment without any text!");
+				return;
+			}
+
+			theModel.setCommentText(theComment);
+
+			if (imageBitmap != null) {
+				// add the picture
+				theModel.setPicture(imageBitmap);
+			}
+			theModel.setLocation(theLocation);
+
+			// set the comment list
+			theModel.setChildComments(commentList);
+
+			theController.updateComment(theModel);
+
+			finish();
 		}
-		
 	};
 
 	/*
@@ -62,8 +85,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 		if (theEditPostModel.isNewPost()) {
 			theModel = new CommentModel(ActiveUserModel.getInstance().getUser());
-		} else {
-			theModel = (CommentModel) theEditPostModel.getThePost();
+			theModel.setMyParent(theEditPostModel.getTheParent());
 		}
 
 		// Get the controller
@@ -112,5 +134,19 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 	@Override
 	protected void populateTitle(PostModel theModel) {
 		// lol no comment title
+	}
+
+	@Override
+	protected CommentModel getUpcastedModel() {
+		// TODO Auto-generated method stub
+		return (CommentModel) theEditPostModel.getThePost();
+	}
+
+	/**
+	 * In the event this is a new comment, have it inherit its location from its parent
+	 */
+	@Override
+	protected Location getNewLocation() {
+		return theEditPostModel.getTheParent().getLocation();
 	}
 }

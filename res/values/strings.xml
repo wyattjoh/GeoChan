@@ -10,6 +10,7 @@
     <string name="action_sortLatestGreatestText">Sort By Latest/Greatest</string>
     <string name="action_sortPictureText">Sort By Picture</string>
     <string name="action_logoutText">Logout</string>
+    <string name="action_helpText">Help</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_section1">Topics</string>
@@ -37,5 +38,8 @@
     <string name="title_activity_location">LocationActivity</string>
     <string name="refresh">Refresh</string>
     <string name="title_activity_map_view">MapViewActivity</string>
+    <string name="title_activity_picture_view">PictureViewActivity</string>
+    <string name="title_activity_help_view">HelpActivity</string>
+    <string name="read_later">Read Later</string>
 
 </resources>

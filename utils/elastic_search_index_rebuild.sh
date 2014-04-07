@@ -22,12 +22,15 @@ curl -XPOST `endpoint` -d'
 {
     "mappings": {
         "topic": {
-           "properties": {
-             "datePosted": {
-                 "type" : "date"
-            }
-        }
-    }
+			"properties": {
+            	"datePosted": {
+                	"type" : "date"
+            	},
+            	"location": {
+            		"type": "geo_point"
+            	}
+        	}
+    	}
     }
 }'
 log "Created index."

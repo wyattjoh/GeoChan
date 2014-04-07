@@ -1,7 +1,6 @@
 package ca.ualberta.cs.models;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 
 import android.graphics.Bitmap;
@@ -18,8 +17,11 @@ public abstract class PostModel {
 	private ArrayList<CommentModel> childrenComments = new ArrayList<CommentModel>();
 
 	private transient Boolean isFavorite = false;
+	private transient Boolean isReadLater = false;
 	private String id;
-
+	
+	abstract public String getQualifyingId();
+	
 	/**
 	 * Constructors
 	 */
@@ -115,6 +117,10 @@ public abstract class PostModel {
 		this.childrenComments.add(theChildComment);
 	}
 
+	public void setChildComments(ArrayList<CommentModel> commentList) {
+		this.childrenComments = commentList;
+	}
+
 	/**
 	 * end of auto generated setters and getters
 	 */
@@ -132,6 +138,20 @@ public abstract class PostModel {
 	 */
 	public void setIsFavorite(Boolean isFavorite) {
 		this.isFavorite = isFavorite;
+	}
+
+	/**
+	 * @return the isReadLater
+	 */
+	public Boolean isReadLater() {
+		return isReadLater;
+	}
+
+	/**
+	 * @param isReadLater the isReadLater to set
+	 */
+	public void setIsReadLater(Boolean isReadLater) {
+		this.isReadLater = isReadLater;
 	}
 
 	/**
@@ -165,6 +185,28 @@ public abstract class PostModel {
 	}
 	
 	/**
+	 * Finds the comment with the specified id in the tree
+	 * @param id
+	 * @return
+	 */
+	public CommentModel fetchCommentWithId(String id) {
+		for (CommentModel theComment: this.childrenComments) {
+			if (theComment.getId().equals(id)) {
+				return theComment;
+			}
+			else {
+				CommentModel theCommentThatMatched = theComment.fetchCommentWithId(id);
+				
+				if (theCommentThatMatched != null) {
+					return theCommentThatMatched;
+				}
+			}
+		}
+		
+		return null;
+	}
+
+	/**
 	 * Location mapping function
 	 */
 	public ArrayList<Location> getLocationMapArray() {
@@ -180,47 +222,6 @@ public abstract class PostModel {
 		return locationMapArray;
 	}
 
-	/**
-	 * Comparators
-	 */
-	public static Comparator<PostModel> COMPARE_BY_DATE = new Comparator<PostModel>() {
-		@Override
-		public int compare(PostModel one, PostModel other) {
-			return one.datePosted.compareTo(other.datePosted);
-		}
-	};
-	public static Comparator<PostModel> COMPARE_BY_SCORE = new Comparator<PostModel>() {
-		@Override
-		public int compare(PostModel one, PostModel other) {
-			return one.score.compareTo(other.score);
-		}
-	};
-	public static Comparator<PostModel> COMPARE_BY_PROXIMITY = new Comparator<PostModel>() {
-		@Override
-		public int compare(PostModel one, PostModel other) {
-			ActiveUserModel theActiveUserModel = ActiveUserModel.getInstance();
-			UserModel theLoggedInUser = theActiveUserModel.getUser();
-			Location myLocation = new Location(theLoggedInUser.getLocation());
-			float distanceToOneLocation = myLocation.distanceTo(one.location);
-			float distanceToOtherLocation = myLocation
-					.distanceTo(other.location);
-			return distanceToOneLocation < distanceToOtherLocation ? -1
-					: distanceToOneLocation > distanceToOtherLocation ? 1 : 0;
-		}
-	};
-	public static Comparator<PostModel> COMPARE_BY_LATEST_GREATEST = new Comparator<PostModel>() {
-		@Override
-		public int compare(PostModel one, PostModel other) {
-			Date currentTime = new Date();
-			float relativeScoreOne = one.getScore()
-					- ((currentTime.getTime() - one.datePosted.getTime()) / 10000);
-			float relativeScoreOther = other.getScore()
-					- ((currentTime.getTime() - other.datePosted.getTime()) / 10000);
-			return relativeScoreOne < relativeScoreOther ? -1
-					: relativeScoreOne > relativeScoreOther ? 1 : 0;
-		}
-	};
-
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) {
@@ -232,8 +233,9 @@ public abstract class PostModel {
 		}
 
 		PostModel oModel = (PostModel) o;
+		String theId = oModel.getId();
 
-		if (oModel.getId().equals(getId())) {
+		if (theId != null && theId.equals(getId())) {
 			return true;
 		} else {
 			return false;

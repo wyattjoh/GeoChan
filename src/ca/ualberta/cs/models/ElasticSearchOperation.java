@@ -7,8 +7,12 @@ import ca.ualberta.cs.providers.ElasticSearchProviderServiceHandler;
 abstract public class ElasticSearchOperation {
 	private ElasticSearchProviderServiceHandler requestType;
 	private TopicModel theModel = null;
+	private FollowingPostModelList<TopicModel> theFollowingTopicsList = null;
+	private FollowingPostModelList<CommentModel> theFollowingCommentsList = null;
 	private PostModelList<TopicModel> thePostModelList = null;
 	private ArrayList<TopicModel> theTopicModels = new ArrayList<TopicModel>();
+	private ArrayList<UpdatePackage<CommentModel>> theCommentIdsToGet = null;
+	private ArrayList<UpdatePackage<TopicModel>> theTopicIdsToGet = null;
 
 	protected int size;
 	protected int from;
@@ -56,5 +60,63 @@ abstract public class ElasticSearchOperation {
 	 */
 	public void setTheTopicModels(ArrayList<TopicModel> theTopicModels) {
 		this.theTopicModels = theTopicModels;
+	}
+
+	/**
+	 * @return the theFollowingList
+	 */
+	public FollowingPostModelList<TopicModel> getTheFollowingTopicsList() {
+		return theFollowingTopicsList;
+	}
+
+	/**
+	 * @param theFollowingList the theFollowingList to set
+	 */
+	public void setTheFollowingTopicsList(
+			FollowingPostModelList<TopicModel> theFollowingList) {
+		this.theFollowingTopicsList = theFollowingList;
+	}
+	
+	/**
+	 * @return the theFollowingList
+	 */
+	public FollowingPostModelList<CommentModel> getTheFollowingCommentsList() {
+		return theFollowingCommentsList;
+	}
+
+	/**
+	 * @param theFollowingList the theFollowingList to set
+	 */
+	public void setTheFollowingCommentsList(
+			FollowingPostModelList<CommentModel> theFollowingList) {
+		this.theFollowingCommentsList = theFollowingList;
+	}
+
+	/**
+	 * @return the theTopicIdsToGet
+	 */
+	public ArrayList<UpdatePackage<TopicModel>> getTheTopicIdsToGet() {
+		return theTopicIdsToGet;
+	}
+	
+	/**
+	 * @return the theCommentIdsToGet
+	 */
+	public ArrayList<UpdatePackage<CommentModel>> getTheCommentIdsToGet() {
+		return theCommentIdsToGet;
+	}
+
+	/**
+	 * @param theIds the theIdsToGet to set
+	 */
+	public void setTheTopicIdsToGet(ArrayList<UpdatePackage<TopicModel>> theIds) {
+		this.theTopicIdsToGet = theIds;
+	}
+	
+	/**
+	 * @param theIds the theIdsToGet to set
+	 */
+	public void setTheCommentIdsToGet(ArrayList<UpdatePackage<CommentModel>> theIds) {
+		this.theCommentIdsToGet = theIds;
 	}
 }

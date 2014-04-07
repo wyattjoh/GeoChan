@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
+import java.util.Iterator;
 
 import android.location.Location;
 import android.util.Log;
@@ -13,6 +14,8 @@ import ca.ualberta.cs.adapters.PostListViewAdapter;
 public class PostModelList<T extends PostModel> {
 	private ArrayList<T> postModelArrayList;
 	private ArrayList<PostListViewAdapter<?>> listeningAdapters;
+	private Comparator<PostModel> theCurrentSort = PostModelComparator.COMPARE_BY_LATEST_GREATEST;
+	private Location proxiedLocation = null;
 
 	private Deque<T> selectedPostModelStack = new ArrayDeque<T>();
 
@@ -67,6 +70,14 @@ public class PostModelList<T extends PostModel> {
 		updateListeningAdapters();
 	}
 
+	public PostModel getSelectionOffsetFromEnd(Integer theIndex) {
+		Object[] temp = this.selectedPostModelStack.toArray();
+		if (temp.length == 1) {
+			return ((PostModel) temp[temp.length - theIndex]);
+		}
+		return ((PostModel) temp[temp.length - (theIndex + 1)]);
+	}
+
 	/*
 	 * Gets the topic model array list
 	 */
@@ -78,51 +89,57 @@ public class PostModelList<T extends PostModel> {
 	 * Sorts theTopicModelArrayList by score
 	 */
 	public void sortByScore() {
-		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_SCORE);
-		Collections.reverse(this.postModelArrayList);
-
-		updateListeningAdapters();
+		Boolean reverse = true;
+		setTheCurrentSort(PostModelComparator.COMPARE_BY_SCORE);
+		
+		executeSort(reverse, true);
 	}
 
 	/*
 	 * Sorts theTopicModelArrayList by date
 	 */
 	public void sortByDate() {
-		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_DATE);
-		Collections.reverse(this.postModelArrayList);
-
-		updateListeningAdapters();
+		Boolean reverse = true;
+		setTheCurrentSort(PostModelComparator.COMPARE_BY_DATE);
+		
+		executeSort(reverse, true);
 	}
 
 	/*
 	 * Sorts theTopicModelArrayList by proximity to user
 	 */
 	public void sortByProximity() {
-		Collections.sort(this.postModelArrayList,
-				PostModel.COMPARE_BY_PROXIMITY);
+		Boolean reverse = false;
+		setTheCurrentSort(PostModelComparator.COMPARE_BY_PROXIMITY);
+		
+		Location sortingLocation = ActiveUserModel.getInstance().getUser().getLocation();
+		PostModelComparator.setSortingLocation(sortingLocation);
 
-		updateListeningAdapters();
+		executeSort(reverse, true);
 	}
 
 	/*
 	 * Sorts theTopicModelArrayList by "latest greatest"
 	 */
 	public void sortByLatestGreatest() {
-		Collections.sort(this.postModelArrayList,
-				PostModel.COMPARE_BY_LATEST_GREATEST);
-		Collections.reverse(this.postModelArrayList);
+		Boolean reverse = true;
+		setTheCurrentSort(PostModelComparator.COMPARE_BY_LATEST_GREATEST);
 
-		updateListeningAdapters();
+		executeSort(reverse, true);
 	}
 
 	/*
 	 * Sorts theTopicModelArrayList by picture
 	 */
 	public void sortByPicture() {
-		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_DATE);
-		Collections.reverse(this.postModelArrayList);
+		Boolean reverse = true;
+		setTheCurrentSort(PostModelComparator.COMPARE_BY_DATE);
+		
+		executeSort(reverse, false);
+
 		ArrayList<T> tempList = new ArrayList<T>();
-		tempList = (ArrayList<T>) this.postModelArrayList.clone();
+		tempList.addAll(this.postModelArrayList);
+
 		this.postModelArrayList.clear();
 		for (T theModel : tempList) {
 			if (theModel.hasPicture()) {
@@ -137,23 +154,33 @@ public class PostModelList<T extends PostModel> {
 
 		updateListeningAdapters();
 	}
+
+	/**
+	 * Executes a sort
+	 * @param reverse
+	 * @param updateAdapter
+	 */
+	protected void executeSort(Boolean reverse, Boolean updateAdapter) {
+		Collections.sort(this.postModelArrayList, getTheCurrentSort());
+		if (reverse) {
+			Collections.reverse(this.postModelArrayList);
+		}
 	
+		if (updateAdapter) {
+			updateListeningAdapters();
+		}
+	}
+
 	/*
 	 * Sorts theTopicModelArrayList by distance to a specified location
 	 */
 	public void sortByProximityTo(Location location) {
-		final Location proximitySortLocation = new Location(location);
-		Comparator<PostModel> proximityTo = new Comparator<PostModel>() {
-			@Override
-			public int compare(PostModel one, PostModel other) {
-				float distanceToOneLocation = proximitySortLocation.distanceTo(one.getLocation());
-				float distanceToOtherLocation = proximitySortLocation.distanceTo(other.getLocation());
-				return distanceToOneLocation < distanceToOtherLocation ? -1 : distanceToOneLocation > distanceToOtherLocation ? 1 : 0;
-			}
-		};
-		Collections.sort(this.postModelArrayList, proximityTo);
+		Boolean reverse = false;
+		setTheCurrentSort(PostModelComparator.COMPARE_BY_PROXIMITY);
 		
-		updateListeningAdapters();
+		PostModelComparator.setSortingLocation(location);
+
+		executeSort(reverse, true);
 	}
 
 	/*
@@ -192,17 +219,23 @@ public class PostModelList<T extends PostModel> {
 		}
 
 		if (!foundObjectToUpdate) {
-			throw new RuntimeException(
-					"Tried to update an entry that wasn't here!");
-		} else {
-			updateListeningAdapters();
+			this.postModelArrayList.clear();
 		}
+
+		updateListeningAdapters();
 	}
 
 	public void remove(T theModel) {
-		this.postModelArrayList.remove(theModel);
+		String removingId = theModel.getId();
 
-		updateListeningAdapters();
+		Iterator<T> iter = this.postModelArrayList.iterator();
+		while (iter.hasNext()) {
+			if (iter.next().getId().equals(removingId)) {
+				iter.remove();
+				updateListeningAdapters();
+				return;
+			}
+		}
 	}
 
 	public Boolean contains(T theModelToSearchFor) {
@@ -226,5 +259,19 @@ public class PostModelList<T extends PostModel> {
 	public void unRegisterListeningAdapter(PostListViewAdapter<?> theAdapter) {
 		this.listeningAdapters.remove(theAdapter);
 		Log.w("PostModelList", "Listener removed");
+	}
+
+	/**
+	 * @return the theCurrentSort
+	 */
+	public Comparator<PostModel> getTheCurrentSort() {
+		return theCurrentSort;
+	}
+
+	/**
+	 * @param theCurrentSort the theCurrentSort to set
+	 */
+	public void setTheCurrentSort(Comparator<PostModel> theCurrentSort) {
+		this.theCurrentSort = theCurrentSort;
 	}
 }

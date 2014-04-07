@@ -5,7 +5,6 @@ package ca.ualberta.cs.models;
 
 import java.io.InputStreamReader;
 
-import ca.ualberta.cs.providers.GeoChanGson;
 import ca.ualberta.cs.providers.GeoChanGsonOffline;
 
 import com.google.gson.Gson;
@@ -18,8 +17,6 @@ import android.content.Context;
  */
 public class ReadLaterTopicModelList extends FollowingPostModelList<TopicModel> {
 	private static ReadLaterTopicModelList singleton = null;
-
-	private static final String FILENAME = "FavoriteTopicModelList.json";
 
 	private ReadLaterTopicModelList(Context applicationContext) {
 		super(applicationContext);
@@ -43,7 +40,7 @@ public class ReadLaterTopicModelList extends FollowingPostModelList<TopicModel> 
 
 	@Override
 	protected String getFilenameString() {
-		return FILENAME;
+		return "ReadLaterTopicModelList.json";
 	}
 
 	@Override

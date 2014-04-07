@@ -44,4 +44,12 @@ public class PostModelTest extends
 		topicModel.decrementScore();
 		assertEquals("Descrement score test", topicModel.getScore().intValue(), 0);
 	}
+	
+	/**
+	 * TestCase 7.1
+	 * Test to see if a picture can be attached to a post
+	 */
+	public void testPictureAssociate() {
+		fail();
+	}
 }

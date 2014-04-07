@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/postCell"
     android:layout_width="match_parent"
@@ -35,6 +34,8 @@
                 android:layout_height="57dp"
                 android:layout_weight="1.04"
                 android:gravity="center|left"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:text="Title"
                 android:textColor="@color/blueColor" />
 
@@ -54,9 +55,9 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
+                    android:drawableLeft="@android:drawable/sym_action_chat"
                     android:gravity="center"
-                    android:text="5"
-                    android:drawableLeft="@android:drawable/sym_action_chat" />
+                    android:text="5" />
 
                 <TextView
                     android:id="@+id/textViewScore"
@@ -64,10 +65,9 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/textViewComments"
+                    android:drawableLeft="@drawable/ic_action_good"
                     android:gravity="center"
-                    android:text="Score"
-                    android:drawableLeft="@drawable/ic_action_good" />
-
+                    android:text="Score" />
             </RelativeLayout>
         </LinearLayout>
 

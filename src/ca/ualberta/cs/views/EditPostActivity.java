@@ -1,5 +1,7 @@
 package ca.ualberta.cs.views;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,7 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
+import ca.ualberta.cs.controllers.EditPostController;
 import ca.ualberta.cs.models.ActiveUserModel;
+import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
 
@@ -33,15 +37,20 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	protected Location theLocation = null;
 
 	protected T theModel;
+	protected String postId = null;
+	protected ArrayList<CommentModel> commentList = null;
+	
+	abstract protected T getUpcastedModel();
+	
+	abstract protected Location getNewLocation();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_post);
 
-		this.theLocation = ActiveUserModel.getInstance().getUser()
-				.getLocation();
-		
+		this.theLocation = getNewLocation();
+
 		// Add title
 		setTitle(getSaveButtonText());
 		// Populate the views
@@ -73,10 +82,10 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		} else {
 			saveButton.setOnClickListener(getUpdateOnClickListener());
 		}
-		
-		if (EditPostModel.getInstance().isNewPost()){
+
+		if (EditPostModel.getInstance().isNewPost()) {
 			populateNew();
-		} else{
+		} else {
 			populateEdit();
 		}
 	}
@@ -87,10 +96,8 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	private void populateNew() {
 		// set distance button
 		Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
-		Location temploc = ActiveUserModel.getInstance().getUser()
-				.getLocation();
-		distanceButton.setText(String.valueOf(temploc.getLatitude() + " , "
-				+ String.valueOf(temploc.getLongitude())));
+		distanceButton.setText(String.valueOf(theLocation.getLatitude() + " , "
+				+ String.valueOf(theLocation.getLongitude())));
 
 		// get photo button
 		Button cameraButton = (Button) findViewById(R.id.pictureButton);
@@ -115,7 +122,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				finish();
 			}
 		});
-		
+
 	}
 
 	/**
@@ -123,25 +130,28 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	 */
 	private void populateEdit() {
 		// get the post to fill values from
-		theModel = (T) EditPostModel.getInstance().getThePost();
+		theModel = getUpcastedModel();
+		postId = theEditPostModel.getThePost().getId();
+		commentList = theEditPostModel.getThePost().getChildrenComments();
+
 		EditPostModel.getInstance().setThePost(null);
-		
+
 		// set distance button to post value
 		Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
 		Location tempLocation = theModel.getLocation();
-		distanceButton.setText(String.valueOf(tempLocation.getLatitude() + " , "
-				+ String.valueOf(tempLocation.getLongitude())));
-		
+		distanceButton.setText(String.valueOf(tempLocation.getLatitude()
+				+ " , " + String.valueOf(tempLocation.getLongitude())));
+
 		// set the comment text
 		TextView commentText = (TextView) findViewById(R.id.commentTextField);
 		commentText.setText(theModel.getCommentText());
-		
+
 		// set the title
 		populateTitle(theModel);
-		
+
 		// get photo button
 		Button cameraButton = (Button) findViewById(R.id.pictureButton);
-		
+
 		// set onclick listener
 		cameraButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -150,16 +160,16 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				getPictureIntent();
 			}
 		});
-		
+
 		// set the camera text if and get the picture
-		if (theModel.hasPicture()){
+		if (theModel.hasPicture()) {
 			cameraButton.setText("Change Picture");
-			
+
 			// set the picture
 			ImageView immageThumbnail = (ImageView) findViewById(R.id.imageThumbnail);
 			immageThumbnail.setImageBitmap(theModel.getPicture());
 		}
-		
+
 		// get cancel button
 		Button cancelButton = (Button) findViewById(R.id.distanceButton);
 
@@ -172,7 +182,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 			}
 		});
 	}
-	
+
 	protected abstract void populateTitle(PostModel theModel);
 
 	/**
@@ -198,7 +208,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	 */
 	public void onClick_StartLocationActivity(View theView) {
 		Intent locationIntent = new Intent(this, LocationActivity.class);
-		// locationIntent.putExtra(EXTRA_LOCATION, extraLocation);
+		locationIntent.putExtra("previousLocation", this.theLocation);
 		startActivityForResult(locationIntent, GET_LOCATION);
 	}
 
@@ -228,12 +238,12 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				// galleryThumbnail.setVisibility(View.VISIBLE);
 
 				// create scaled image for display
-				Bitmap scaledBitmap = scaleBitMapToFit(imageBitmap,
-						galleryThumbnail);
+				byte[] scaledBitmapArray = EditPostController.compressBitmap(imageBitmap);
+				
+				imageBitmap = BitmapFactory.decodeByteArray(scaledBitmapArray, 0, scaledBitmapArray.length);
 
 				// set the view image o the selected image
-				galleryThumbnail.setImageBitmap(scaledBitmap);
-				imageBitmap = scaledBitmap;
+				galleryThumbnail.setImageBitmap(imageBitmap);
 			}
 		} else if (requestCode == GET_LOCATION) {
 			if (resultCode == RESULT_OK) {
@@ -248,7 +258,8 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 					this.theLocation = theCurrentLocation;
 
 					Button distanceButton = (Button) findViewById(R.id.currentLocationButton);
-					distanceButton.setText(String.valueOf(this.theLocation.getLatitude()
+					distanceButton.setText(String.valueOf(this.theLocation
+							.getLatitude()
 							+ " , "
 							+ String.valueOf(this.theLocation.getLongitude())));
 
@@ -273,45 +284,8 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 							Toast.LENGTH_LONG).show();
 				}
 			}
-			if (resultCode == RESULT_CANCELED) {
-				Toast.makeText(
-						this,
-						"Location is still: "
-								+ String.valueOf(this.theLocation.getLatitude())
-								+ " , "
-								+ String.valueOf(this.theLocation
-										.getLongitude()), Toast.LENGTH_LONG)
-						.show();
-			}
+			//do nothing if cancelled
 		}
-	}
-
-	/**
-	 * returns a scaled image where the image will be sized so that it will fit
-	 * the image view by scaling to the largest length, either width or height
-	 * and setting that to the size of the image view
-	 * 
-	 * @param bitmapImage
-	 * @param imageViewScale
-	 * @return
-	 */
-	public Bitmap scaleBitMapToFit(Bitmap bitmapImage, ImageView imageViewScale) {
-		Bitmap scaledBitmap = null;
-
-		if (bitmapImage.getWidth() > bitmapImage.getHeight()) {
-			// if the image is bigger horizontally scale vertically
-			scaledBitmap = Bitmap.createScaledBitmap(bitmapImage,
-					bitmapImage.getWidth(), imageViewScale.getHeight(),
-					imageViewScale.getFilterTouchesWhenObscured());
-
-		} else {
-			// otherwise scale horizontally
-			scaledBitmap = Bitmap.createScaledBitmap(bitmapImage,
-					imageViewScale.getWidth(), bitmapImage.getHeight(),
-					imageViewScale.getFilterTouchesWhenObscured());
-		}
-
-		return scaledBitmap;
 	}
 
 	/**
