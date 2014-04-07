@@ -33,6 +33,9 @@ public class ElasticSearchOperationFactory {
 
 		for (ElasticSearchResponse<TopicModel> r : esResponse.getHits()) {
 			TopicModel theTopic = r.getSource();
+			if (theTopic.getId() == null || theTopic.getId() == "null") {
+				theTopic.setId(r.getId());
+			}
 			theTopicModelArrayList.add(theTopic);
 		}
 

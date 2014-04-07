@@ -59,6 +59,8 @@ public enum ElasticSearchProviderServiceHandler {
 
 				ElasticSearchResponse<TopicModel> esResponse = gson.fromJson(
 						jsonResponse, elasticSearchResponseType);
+				
+				theTopic.setId(esResponse.getId());
 
 				ElasticSearchOperationResponse theResponse = ElasticSearchOperationFactory
 						.responseFromRequest(theRequest, esResponse);
