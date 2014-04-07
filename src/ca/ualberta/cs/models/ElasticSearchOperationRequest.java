@@ -3,6 +3,8 @@
  */
 package ca.ualberta.cs.models;
 
+import java.util.Iterator;
+
 import ca.ualberta.cs.providers.ElasticSearchProviderServiceHandler;
 
 /**
@@ -29,5 +31,47 @@ public class ElasticSearchOperationRequest extends ElasticSearchOperation {
 				+ ", \"size\": "
 				+ Integer.toString(size)
 				+ ", \"query\": { \"match_all\": {} }, \"version\" : true, \"sort\": [{\"datePosted\": {\"order\": \"desc\"}}]}";
+	}
+	
+	public String generateMultiGetQueryStringForComments() {
+		String theQuery = "{\"docs\": [";
+		
+		Iterator<UpdatePackage<CommentModel>> iterator = getTheCommentIdsToGet().iterator();
+		
+		while (iterator.hasNext()) {
+			UpdatePackage<?> theUpdatePackage = iterator.next();
+			theQuery += "{\"_id\": \"";
+			theQuery += theUpdatePackage.getParentId();
+			theQuery += "\"}";
+			
+			if (iterator.hasNext() == true) {
+				theQuery += ",";
+			}
+		}
+
+		theQuery += "]}";
+		
+		return theQuery;
+	}
+	
+	public String generateMultiGetQueryStringForTopics() {
+		String theQuery = "{\"docs\": [";
+		
+		Iterator<UpdatePackage<TopicModel>> iterator = getTheTopicIdsToGet().iterator();
+		
+		while (iterator.hasNext()) {
+			UpdatePackage<?> theUpdatePackage = iterator.next();
+			theQuery += "{\"_id\": \"";
+			theQuery += theUpdatePackage.getParentId();
+			theQuery += "\"}";
+			
+			if (iterator.hasNext() == true) {
+				theQuery += ",";
+			}
+		}
+
+		theQuery += "]}";
+		
+		return theQuery;
 	}
 }

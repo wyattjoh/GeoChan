@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.channels.OverlappingFileLockException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import android.content.Context;
 import ca.ualberta.cs.providers.GeoChanGsonNetworked;
@@ -20,6 +21,8 @@ import com.google.gson.Gson;
  */
 abstract public class FollowingPostModelList<T extends PostModel> extends
 		PostModelList<T> implements UpdateableListInterface {
+	
+	private ArrayList<UpdatePackage<T>> updatedPackages = new ArrayList<UpdatePackage<T>>();
 
 	private final class SaveThread extends Thread {
 		private final T[] cloned;
@@ -201,6 +204,13 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Delete the contents of the list from disk
+	 */
+	public void delete() {
+		setArrayList(new ArrayList<T>());
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -214,5 +224,42 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 		super.add(theModel);
 
 		save();
+	}
+	
+	/**
+	 * Gets the post id's to be updated
+	 * @return
+	 */
+	public ArrayList<UpdatePackage<T>> getUpdateablePackages() {
+		ArrayList<UpdatePackage<T>> theIds = new ArrayList<UpdatePackage<T>>();
+		
+		for (PostModel post: getArrayList()) {
+			UpdatePackage<T> aPackage = new UpdatePackage<T>(post.getQualifyingId(), post.getId());
+			
+			theIds.add(aPackage);
+		}
+		
+		return theIds;
+	}
+
+	/**
+	 * @param updatedPackages the updatedPackages to set
+	 */
+	public void setUpdatedPackages(ArrayList<UpdatePackage<T>> updatedPackages) {
+		this.updatedPackages = updatedPackages;
+		
+		performPostUpdate();
+	}
+	
+	public void performPostUpdate() {
+		Iterator<UpdatePackage<T>> iterator = this.updatedPackages.iterator();
+		
+		while(iterator.hasNext()) {
+			UpdatePackage<T> aPackage = iterator.next();
+			
+			T theModel = aPackage.getTheUpdatedModel();
+			
+			super.update(theModel);
+		}
 	}
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,12 +16,16 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
+import ca.ualberta.cs.models.CommentModel;
+import ca.ualberta.cs.models.ElasticSearchMgetResponse;
 import ca.ualberta.cs.models.ElasticSearchOperationFactory;
 import ca.ualberta.cs.models.ElasticSearchOperationRequest;
 import ca.ualberta.cs.models.ElasticSearchOperationResponse;
 import ca.ualberta.cs.models.ElasticSearchResponse;
 import ca.ualberta.cs.models.ElasticSearchSearchResponse;
+import ca.ualberta.cs.models.FollowingPostModelList;
 import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.models.UpdatePackage;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -191,6 +196,112 @@ public enum ElasticSearchProviderServiceHandler {
 					theResponse.getTheTopicModels());
 		}
 
+	},
+	MULTI_GET_TOPICS {
+
+		@Override
+		public ElasticSearchOperationResponse doInBackground(
+				ElasticSearchOperationRequest theRequest) {
+			HttpPost request = new HttpPost(getEndpointUrl("topic/_mget"));
+			String query = theRequest.generateMultiGetQueryStringForTopics();
+
+			try {
+				StringEntity stringentity = new StringEntity(query);
+				request.setHeader("Accept", "application/json");
+				request.setEntity(stringentity);
+
+				HttpResponse response = client.execute(request);
+
+				String jsonResponse = getStringFromResponse(response);
+
+				// We have to tell GSON what type we expect
+				Type elasticSearchResponseType = new TypeToken<ElasticSearchMgetResponse<TopicModel>>() {
+				}.getType();
+
+				ElasticSearchMgetResponse<TopicModel> esResponse = gson
+						.fromJson(jsonResponse, elasticSearchResponseType);
+
+				ElasticSearchOperationResponse theResponse = ElasticSearchOperationFactory
+						.responseFromTopicsRequest(theRequest, esResponse);
+
+				return theResponse;
+			} catch (JsonParseException e) {
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		@Override
+		public void onPostExecute(ElasticSearchOperationResponse theResponse) {
+			FollowingPostModelList<TopicModel> thePostList = theResponse.getTheFollowingTopicsList();
+			ArrayList<UpdatePackage<TopicModel>> thePackages = theResponse.getTheTopicIdsToGet();
+			
+			thePostList.setUpdatedPackages(thePackages);
+		}
+		
+	},
+	MULTI_GET_COMMENTS {
+
+		@Override
+		public ElasticSearchOperationResponse doInBackground(
+				ElasticSearchOperationRequest theRequest) {
+			HttpPost request = new HttpPost(getEndpointUrl("topic/_mget"));
+			String query = theRequest.generateMultiGetQueryStringForComments();
+
+			try {
+				StringEntity stringentity = new StringEntity(query);
+				request.setHeader("Accept", "application/json");
+				request.setEntity(stringentity);
+
+				HttpResponse response = client.execute(request);
+
+				String jsonResponse = getStringFromResponse(response);
+
+				// We have to tell GSON what type we expect
+				Type elasticSearchResponseType = new TypeToken<ElasticSearchMgetResponse<TopicModel>>() {
+				}.getType();
+
+				ElasticSearchMgetResponse<TopicModel> esResponse = gson
+						.fromJson(jsonResponse, elasticSearchResponseType);
+
+				ElasticSearchOperationResponse theResponse = ElasticSearchOperationFactory
+						.responseFromCommentsRequest(theRequest, esResponse);
+
+				return theResponse;
+			} catch (JsonParseException e) {
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		@Override
+		public void onPostExecute(ElasticSearchOperationResponse theResponse) {
+			FollowingPostModelList<CommentModel> thePostList = theResponse.getTheFollowingCommentsList();
+			ArrayList<UpdatePackage<CommentModel>> thePackages = theResponse.getTheCommentIdsToGet();
+			
+			thePostList.setUpdatedPackages(thePackages);
+		}
+		
 	};
 
 	public abstract ElasticSearchOperationResponse doInBackground(
