@@ -2,7 +2,6 @@ package ca.ualberta.cs.providers;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -12,18 +11,40 @@ import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.UserModel;
 import ca.ualberta.cs.views.LocationUpdatedInterface;
 
-/*
- *  Implement such as:
- *  	http://developer.android.com/reference/android/app/Service.html#LocalServiceSample
- *  
+/**
+ * 
+ * @author wyatt
+ * 
+ *         Implement such as:
+ *         http://developer.android.com/reference/android/app/
+ *         Service.html#LocalServiceSample
+ * 
+ *         Measures the location and keeps listening interfaces up to date
+ * 
  */
 
 public class LocationProvider {
 	private static LocationProvider singleton = null;
-	private LocationManager locationManager = null;
-	private Location theLocation = null;
-	protected ArrayList<LocationUpdatedInterface> activities = new ArrayList<LocationUpdatedInterface>();
 
+	/**
+	 * Fetches a singleton of the LocationProvider class
+	 * 
+	 * @param theContext
+	 * @return
+	 */
+	public static LocationProvider getInstance(Context theContext) {
+		if (singleton == null) {
+			singleton = new LocationProvider(theContext);
+		}
+
+		return singleton;
+	}
+
+	protected ArrayList<LocationUpdatedInterface> listeningInterfaces = new ArrayList<LocationUpdatedInterface>();
+
+	/**
+	 * The location listener
+	 */
 	private final LocationListener locationListener = new LocationListener() {
 		@Override
 		public void onLocationChanged(Location location) {
@@ -43,18 +64,24 @@ public class LocationProvider {
 		}
 
 		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-
+		public void onProviderDisabled(String provider) {
+			// Do nothing
 		}
 
 		@Override
 		public void onProviderEnabled(String provider) {
+			// Do nothing
 		}
 
 		@Override
-		public void onProviderDisabled(String provider) {
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// Do nothing
 		}
 	};
+
+	private LocationManager locationManager = null;
+
+	private Location theLocation = null;
 
 	private LocationProvider(Context theContext) {
 		// Register the listener with the Location Manager to receive location
@@ -65,31 +92,43 @@ public class LocationProvider {
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				1000, 0, locationListener);
 	}
-	
-	public void registerForLocationUpdates(LocationUpdatedInterface activity) {
-		if (!this.activities.contains(activity)) {
-			this.activities.add(activity);
-		}
-	}
-	
-	public void unregisterForLocationUpdates(LocationUpdatedInterface activity) {
-		this.activities.remove(activity);
-	}
 
-	public static LocationProvider getInstance(Context theContext) {
-		if (singleton == null) {
-			singleton = new LocationProvider(theContext);
-		}
-
-		return singleton;
-	}
-
+	/**
+	 * @return the current/last location
+	 */
 	public Location getLocation() {
 		return theLocation;
 	}
 
+	/**
+	 * Registered the interface with the listening method
+	 * 
+	 * @param listeningInterface
+	 */
+	public void registerForLocationUpdates(
+			LocationUpdatedInterface listeningInterface) {
+		if (!this.listeningInterfaces.contains(listeningInterface)) {
+			this.listeningInterfaces.add(listeningInterface);
+		}
+	}
+
+	/**
+	 * Unregisters the interface from location updates
+	 * 
+	 * @param listeningInterface
+	 */
+	public void unregisterForLocationUpdates(
+			LocationUpdatedInterface listeningInterface) {
+		this.listeningInterfaces.remove(listeningInterface);
+	}
+
+	/**
+	 * Updates the listening interface with the location
+	 * 
+	 * @param location
+	 */
 	protected void updateListeningInterfaces(Location location) {
-		for (LocationUpdatedInterface item : LocationProvider.this.activities) {
+		for (LocationUpdatedInterface item : LocationProvider.this.listeningInterfaces) {
 			if (item != null) {
 				item.locationWasUpdated(location);
 			}
