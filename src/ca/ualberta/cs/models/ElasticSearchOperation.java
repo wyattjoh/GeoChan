@@ -119,4 +119,32 @@ abstract public class ElasticSearchOperation {
 	public void setTheCommentIdsToGet(ArrayList<UpdatePackage<CommentModel>> theIds) {
 		this.theCommentIdsToGet = theIds;
 	}
+
+	/**
+	 * @return the size
+	 */
+	public int getSize() {
+		return size;
+	}
+
+	/**
+	 * @param size the size to set
+	 */
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	/**
+	 * @return the from
+	 */
+	public int getFrom() {
+		return from;
+	}
+
+	/**
+	 * @param from the from to set
+	 */
+	public void setFrom(int from) {
+		this.from = from;
+	}
 }

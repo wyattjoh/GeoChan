@@ -24,13 +24,10 @@ public class ElasticSearchOperationRequest extends ElasticSearchOperation {
 		super(theRequestType);
 		// TODO Auto-generated constructor stub
 	}
-
-	public String generateSearchQueryString() {
-		return "{\"from\": "
-				+ Integer.toString(this.from)
-				+ ", \"size\": "
-				+ Integer.toString(size)
-				+ ", \"query\": { \"match_all\": {} }, \"version\" : true, \"sort\": [{\"datePosted\": {\"order\": \"desc\"}}]}";
+	
+	public String getQueryString() {
+		PostModelList<TopicModel> theList = getPostModelList();
+		return theList.getTheCurrentSort().getElasticSearchQueryString(this);
 	}
 	
 	public String generateMultiGetQueryStringForComments() {

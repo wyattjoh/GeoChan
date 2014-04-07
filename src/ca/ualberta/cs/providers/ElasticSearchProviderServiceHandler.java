@@ -154,7 +154,7 @@ public enum ElasticSearchProviderServiceHandler {
 		public ElasticSearchOperationResponse doInBackground(
 				ElasticSearchOperationRequest theRequest) {
 			HttpPost request = new HttpPost(getEndpointUrl("topic/_search"));
-			String query = theRequest.generateSearchQueryString();
+			String query = theRequest.getQueryString();
 
 			try {
 				StringEntity stringentity = new StringEntity(query);

@@ -14,7 +14,7 @@ import ca.ualberta.cs.adapters.PostListViewAdapter;
 public class PostModelList<T extends PostModel> {
 	private ArrayList<T> postModelArrayList;
 	private ArrayList<PostListViewAdapter<?>> listeningAdapters;
-	private Comparator<PostModel> theCurrentSort = PostModelComparator.COMPARE_BY_LATEST_GREATEST;
+	private PostModelComparator theCurrentSort = PostModelComparator.COMPARE_BY_LATEST_GREATEST;
 
 	private Deque<T> selectedPostModelStack = new ArrayDeque<T>();
 
@@ -263,14 +263,14 @@ public class PostModelList<T extends PostModel> {
 	/**
 	 * @return the theCurrentSort
 	 */
-	public Comparator<PostModel> getTheCurrentSort() {
+	public PostModelComparator getTheCurrentSort() {
 		return theCurrentSort;
 	}
 
 	/**
 	 * @param theCurrentSort the theCurrentSort to set
 	 */
-	public void setTheCurrentSort(Comparator<PostModel> theCurrentSort) {
+	public void setTheCurrentSort(PostModelComparator theCurrentSort) {
 		this.theCurrentSort = theCurrentSort;
 	}
 }
