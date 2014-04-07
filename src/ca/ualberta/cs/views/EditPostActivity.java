@@ -3,6 +3,7 @@ package ca.ualberta.cs.views;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.view.Menu;
 import android.view.View;
@@ -39,9 +41,9 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	protected T theModel;
 	protected String postId = null;
 	protected ArrayList<CommentModel> commentList = null;
-	
+
 	abstract protected T getUpcastedModel();
-	
+
 	abstract protected Location getNewLocation();
 
 	@Override
@@ -228,7 +230,8 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 			if (resultCode == RESULT_OK) {
 				// get picture path from intent
 				Uri selectedImageUri = data.getData();
-				String selectedImagePath = getPath(selectedImageUri);
+				String selectedImagePath = getRealPathFromURI(
+						getApplicationContext(), selectedImageUri);
 
 				// get picture object from path
 				imageBitmap = BitmapFactory.decodeFile(selectedImagePath);
@@ -238,9 +241,11 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 				// galleryThumbnail.setVisibility(View.VISIBLE);
 
 				// create scaled image for display
-				byte[] scaledBitmapArray = EditPostController.compressBitmap(imageBitmap);
-				
-				imageBitmap = BitmapFactory.decodeByteArray(scaledBitmapArray, 0, scaledBitmapArray.length);
+				byte[] scaledBitmapArray = EditPostController
+						.compressBitmap(imageBitmap);
+
+				imageBitmap = BitmapFactory.decodeByteArray(scaledBitmapArray,
+						0, scaledBitmapArray.length);
 
 				// set the view image o the selected image
 				galleryThumbnail.setImageBitmap(imageBitmap);
@@ -284,30 +289,33 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 							Toast.LENGTH_LONG).show();
 				}
 			}
-			//do nothing if cancelled
+			// do nothing if cancelled
 		}
 	}
 
 	/**
-	 * helper to retrieve the path of an image URI
+	 * helper to get the string path to an image from URI taken from
+	 * http://stackoverflow
+	 * .com/questions/3401579/get-filename-and-path-from-uri-from-mediastore
 	 * 
+	 * @param context
+	 * @param contentUri
+	 * @return
 	 */
-	public String getPath(Uri uri) {
-		// just some safety built in
-		if (uri == null) {
-			// TODO perform some logging or show user feedback
-			return null;
-		}
-		// try to retrieve the image from the media store first
-		// this will only work for images selected from gallery
-		String[] projection = { MediaColumns.DATA };
-		Cursor cursor = managedQuery(uri, projection, null, null, null);
-		if (cursor != null) {
-			int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
+	public String getRealPathFromURI(Context context, Uri contentUri) {
+		Cursor cursor = null;
+		try {
+			String[] proj = { MediaStore.Images.Media.DATA };
+			cursor = context.getContentResolver().query(contentUri, proj, null,
+					null, null);
+			int column_index = cursor
+					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 			cursor.moveToFirst();
 			return cursor.getString(column_index);
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
 		}
-		// this is our fallback here
-		return uri.getPath();
 	}
 }
