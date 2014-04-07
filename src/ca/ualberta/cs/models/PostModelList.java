@@ -130,10 +130,10 @@ public class PostModelList<T extends PostModel> {
 	public void sortByPicture() {
 		Collections.sort(this.postModelArrayList, PostModel.COMPARE_BY_DATE);
 		Collections.reverse(this.postModelArrayList);
-		
+
 		ArrayList<T> tempList = new ArrayList<T>();
 		tempList.addAll(this.postModelArrayList);
-		
+
 		this.postModelArrayList.clear();
 		for (T theModel : tempList) {
 			if (theModel.hasPicture()) {
@@ -207,23 +207,22 @@ public class PostModelList<T extends PostModel> {
 		}
 
 		if (!foundObjectToUpdate) {
-			throw new RuntimeException(
-					"Tried to update an entry that wasn't here!");
-		} else {
-			updateListeningAdapters();
+			this.postModelArrayList.clear();
 		}
+
+		updateListeningAdapters();
 	}
 
 	public void remove(T theModel) {
 		String removingId = theModel.getId();
-		
+
 		Iterator<T> iter = this.postModelArrayList.iterator();
 		while (iter.hasNext()) {
-		    if (iter.next().getId().equals(removingId)) {
-		        iter.remove();
-		        updateListeningAdapters();
-		        return;
-		    }
+			if (iter.next().getId().equals(removingId)) {
+				iter.remove();
+				updateListeningAdapters();
+				return;
+			}
 		}
 	}
 
