@@ -108,7 +108,7 @@ public class PostModelList<T extends PostModel> {
 	 * Sorts theTopicModelArrayList by proximity to user
 	 */
 	public void sortByProximity() {
-		Boolean reverse = false;
+		Boolean reverse = true;
 		setTheCurrentSort(PostModelComparator.COMPARE_BY_PROXIMITY);
 		
 		Location sortingLocation = ActiveUserModel.getInstance().getUser().getLocation();
@@ -174,7 +174,7 @@ public class PostModelList<T extends PostModel> {
 	 * Sorts theTopicModelArrayList by distance to a specified location
 	 */
 	public void sortByProximityTo(Location location) {
-		Boolean reverse = false;
+		Boolean reverse = true;
 		setTheCurrentSort(PostModelComparator.COMPARE_BY_PROXIMITY);
 		
 		PostModelComparator.setSortingLocation(location);
