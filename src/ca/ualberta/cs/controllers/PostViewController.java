@@ -27,5 +27,17 @@ abstract public class PostViewController<T extends PostModel> {
 			readModelList.add(theModel);
 		}
 	}
+	
+	private void modifyScore(int value) {
+		
+	}
+	
+	public void increaseScore() {
+		modifyScore(1);
+	}
+	
+	public void decreaseScore() {
+		modifyScore(-1);
+	}
 
 }

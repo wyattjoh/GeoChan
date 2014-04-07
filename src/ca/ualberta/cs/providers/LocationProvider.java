@@ -1,5 +1,8 @@
 package ca.ualberta.cs.providers;
 
+import java.util.ArrayList;
+
+import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -7,6 +10,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.UserModel;
+import ca.ualberta.cs.views.LocationUpdatedInterface;
 
 /*
  *  Implement such as:
@@ -18,6 +22,7 @@ public class LocationProvider {
 	private static LocationProvider singleton = null;
 	private LocationManager locationManager = null;
 	private Location theLocation = null;
+	protected ArrayList<LocationUpdatedInterface> activities = new ArrayList<LocationUpdatedInterface>();
 
 	private final LocationListener locationListener = new LocationListener() {
 		@Override
@@ -33,11 +38,17 @@ public class LocationProvider {
 			if (theLoggedInUser != null) {
 				theLoggedInUser.setLocation(location);
 			}
+
+			for (LocationUpdatedInterface item : LocationProvider.this.activities) {
+				if (item != null) {
+					item.locationWasUpdated(location);
+				}
+			}
 		}
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
-			
+
 		}
 
 		@Override
@@ -57,6 +68,16 @@ public class LocationProvider {
 
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				1000, 0, locationListener);
+	}
+	
+	public void registerForLocationUpdates(LocationUpdatedInterface activity) {
+		if (!this.activities.contains(activity)) {
+			this.activities.add(activity);
+		}
+	}
+	
+	public void unregisterForLocationUpdates(LocationUpdatedInterface activity) {
+		this.activities.remove(activity);
 	}
 
 	public static LocationProvider getInstance(Context theContext) {

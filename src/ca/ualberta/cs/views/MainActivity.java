@@ -36,7 +36,7 @@ import ca.ualberta.cs.providers.LocationProvider;
  * 
  * @author wyatt
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements LocationUpdatedInterface {
 
 	/*
 	 * Intent request codes
@@ -201,6 +201,12 @@ public class MainActivity extends FragmentActivity {
 
 		context.registerReceiver(this.connectionBroadcastReceiver,
 				new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+		
+
+		// Must be first thing that is started, sets up contexts
+		createSharedSingletons(getApplicationContext());
+		
+		LocationProvider.getInstance(getApplicationContext()).registerForLocationUpdates(this);
 	}
 
 	/*
@@ -219,6 +225,8 @@ public class MainActivity extends FragmentActivity {
 			context.unregisterReceiver(this.connectionBroadcastReceiver);
 			this.connectionBroadcastReceiver = null;
 		}
+		
+		LocationProvider.getInstance(null).unregisterForLocationUpdates(this);
 	}
 
 	/*
@@ -301,9 +309,6 @@ public class MainActivity extends FragmentActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-
-		// Must be first thing that is started, sets up contexts
-		createSharedSingletons(getApplicationContext());
 
 		// Perform the login flow process
 		loginFlow();
@@ -396,5 +401,10 @@ public class MainActivity extends FragmentActivity {
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivityForResult(intent, LOGIN_ACTIVITY);
 		}
+	}
+
+	@Override
+	public void locationWasUpdated(Location theNewLocation) {
+		NetworkInterfaceController.refreshPosts();
 	}
 }
