@@ -294,7 +294,6 @@ public class MainActivity extends FragmentActivity implements LocationUpdatedInt
 	@Override
 	protected void onStart() {
 		super.onStart();
-
 	}
 
 	/*
