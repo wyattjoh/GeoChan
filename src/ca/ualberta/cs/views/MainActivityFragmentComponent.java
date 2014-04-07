@@ -11,7 +11,6 @@ import android.widget.ListView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.adapters.CommentListViewAdapter;
 import ca.ualberta.cs.adapters.TopicListViewAdapter;
-import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.FavoriteCommentModelList;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.ReadLaterCommentModelList;

@@ -179,7 +179,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 	}
 
 	private void updateReadLaterText() {
-		MenuItem theReadLaterButton = (MenuItem) this.menu.findItem(R.id.readLaterButton);
+		MenuItem theReadLaterButton = this.menu.findItem(R.id.readLaterButton);
 		
 		if (this.theModel.isReadLater()) {
 			theReadLaterButton.setTitle("Mark as read");

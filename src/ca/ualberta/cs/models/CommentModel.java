@@ -22,6 +22,7 @@ public class CommentModel extends PostModel {
 	/**
 	 * @return the parentId
 	 */
+	@Override
 	public String getQualifyingId() {
 		return parentId;
 	}

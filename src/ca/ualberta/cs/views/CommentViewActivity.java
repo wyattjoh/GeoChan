@@ -9,7 +9,6 @@ import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.CommentViewController;
 import ca.ualberta.cs.models.CommentModel;
-import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.SelectedCommentModelList;
 
