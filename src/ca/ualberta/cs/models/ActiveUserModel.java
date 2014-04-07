@@ -22,7 +22,10 @@ public class ActiveUserModel {
 
 		// Load UserModel if already existing
 		this.theUser = theSavedUserModel.load();
-		this.theUser.setActiveUserModel(this);
+
+		if (this.theUser != null) {
+			this.theUser.setActiveUserModel(this);
+		}
 	}
 
 	/*
@@ -51,6 +54,8 @@ public class ActiveUserModel {
 		}
 
 		theUser = new UserModel(theUsername);
+		
+		this.theUser.setActiveUserModel(this);
 
 		// Save the user in preferences
 		theSavedUserModel.save(theUser);
@@ -83,6 +88,7 @@ public class ActiveUserModel {
 
 	/**
 	 * Get the user from the active user model
+	 * 
 	 * @return
 	 */
 	public final UserModel getUser() {
@@ -95,7 +101,7 @@ public class ActiveUserModel {
 	public void notifiedUserMutated() {
 		// Save the user in preferences
 		theSavedUserModel.save(theUser);
-		
+
 		Log.w("ActiveUserModel", "Update was called.");
 	}
 }
