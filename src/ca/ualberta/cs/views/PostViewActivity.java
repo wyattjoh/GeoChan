@@ -158,9 +158,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 		case R.id.cellActiveArea:
 			replyToPost();
 			return true;
-		case R.id.action_settings:
-			startSettingsActivity();
-			return true;
 		case android.R.id.home:
 			onBackPressed();
 			return true;
@@ -482,16 +479,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 	}
 
 	abstract void setTitleText();
-
-	/**
-	 * Starts the settings activity
-	 */
-
-	protected void startSettingsActivity() {
-		Intent intent = new Intent(this, SettingsActivity.class);
-		startActivity(intent);
-	}
-
+	
 	/* (non-Javadoc)
 	 * @see ca.ualberta.cs.views.LocationUpdatedInterface#locationWasUpdated(android.location.Location)
 	 */

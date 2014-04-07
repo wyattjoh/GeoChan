@@ -254,9 +254,6 @@ public class MainActivity extends FragmentActivity implements LocationUpdatedInt
 		case R.id.cellActiveArea:
 			newPost();
 			return true;
-		case R.id.action_settings:
-			startSettingsActivity();
-			return true;
 		case R.id.action_help:
 			startHelpActivity();
 			return true;
@@ -351,14 +348,6 @@ public class MainActivity extends FragmentActivity implements LocationUpdatedInt
 		Intent intent = new Intent(this, EditTopicActivity.class);
 		intent.putExtra(EditPostActivity.IS_NEW, true);
 
-		startActivity(intent);
-	}
-
-	/**
-	 * Starts the settings activity
-	 */
-	protected void startSettingsActivity() {
-		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
 	}
 

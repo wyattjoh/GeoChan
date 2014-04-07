@@ -44,10 +44,6 @@
             android:label="@string/title_activity_login" >
         </activity>
         <activity
-            android:name="ca.ualberta.cs.views.SettingsActivity"
-            android:label="@string/title_activity_settings" >
-        </activity>
-        <activity
             android:name="ca.ualberta.cs.views.TopicViewActivity"
             android:label="@string/topic_view_vctivity" >
         </activity>
