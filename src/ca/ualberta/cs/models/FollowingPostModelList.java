@@ -261,5 +261,8 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 			
 			super.update(theModel);
 		}
+		
+		// Save when done
+		save();
 	}
 }
