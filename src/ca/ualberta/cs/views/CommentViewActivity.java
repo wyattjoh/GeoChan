@@ -4,12 +4,16 @@
 package ca.ualberta.cs.views;
 
 import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.CommentViewController;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.EditPostModel;
+import ca.ualberta.cs.models.FavoriteCommentModelList;
+import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.SelectedCommentModelList;
 
 /**
@@ -32,7 +36,8 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 	@Override
 	void setTitleText() {
 		// Hide the titleView
-		TextView titleView = (TextView) headerView.findViewById(R.id.titleTextView);
+		TextView titleView = (TextView) headerView
+				.findViewById(R.id.titleTextView);
 		titleView.setVisibility(View.GONE);
 
 		// Fix action bar
@@ -72,5 +77,14 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 	@Override
 	protected String getTitleString() {
 		return this.theModel.getCommentText();
+	}
+
+	@Override
+	void setEditButton(Menu theMenu) {
+		if ((FavoriteCommentModelList.getInstance().getLastSelection() != null)
+				|| FavoriteTopicModelList.getInstance().getLastSelection() != null) {
+			MenuItem editButton = theMenu.findItem(R.id.cellActiveArea);
+			editButton.setVisible(false);
+		}
 	}
 }

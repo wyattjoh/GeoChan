@@ -129,9 +129,12 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 		
 		// Read later text
 		updateReadLaterText();
+		setEditButton(this.menu);
 		
 		return true;
 	}
+	
+	abstract void setEditButton(Menu theMenu);
 
 	/*
 	 * (non-Javadoc)
@@ -140,7 +143,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 	 */
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 
 		if (thePostAdapter != null) {
@@ -199,6 +201,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 		MenuItem refreshIcon = menu.findItem(R.id.refreshButton);
 		refreshIcon.setVisible(false);
 
+		setEditButton(menu);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -260,7 +263,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 
 				@Override
 				public void onClick(View v) {
-					// TODO add editing on edit post
 					editPost();
 				}
 			});
@@ -425,6 +427,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 	}
 
 	protected void populateView() {
+		
 		// Add comment
 		TextView commentView = (TextView) this.headerView.findViewById(R.id.commentTextView);
 		commentView.setText(theModel.getCommentText());

@@ -9,11 +9,14 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicViewController;
 import ca.ualberta.cs.models.EditPostModel;
+import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.SelectedTopicModelList;
 import ca.ualberta.cs.models.TopicModel;
 
@@ -36,7 +39,8 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 
 	@Override
 	void setTitleText() {
-		TextView titleView = (TextView) this.headerView.findViewById(R.id.titleTextView);
+		TextView titleView = (TextView) this.headerView
+				.findViewById(R.id.titleTextView);
 		titleView.setText(theModel.getTitle());
 
 		// Fix action bar
@@ -87,5 +91,13 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 	@Override
 	protected String getTitleString() {
 		return this.theModel.getTitle();
+	}
+
+	@Override
+	void setEditButton(Menu theMenu) {
+		if (FavoriteTopicModelList.getInstance().getLastSelection() != null) {
+			MenuItem editButton = theMenu.findItem(R.id.cellActiveArea);
+			editButton.setVisible(false);
+		}
 	}
 }
