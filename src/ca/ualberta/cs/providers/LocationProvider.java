@@ -37,12 +37,11 @@ public class LocationProvider {
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
-			Log.w("LocationProvider", "Status changed: " + provider + " status: " + Integer.toString(status));
+			
 		}
 
 		@Override
 		public void onProviderEnabled(String provider) {
-			Log.w("LocationProvider", "Provider enabled: " + provider);
 		}
 
 		@Override
