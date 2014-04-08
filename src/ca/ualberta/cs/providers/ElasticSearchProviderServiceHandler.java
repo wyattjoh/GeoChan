@@ -89,7 +89,8 @@ public enum ElasticSearchProviderServiceHandler {
 		public void onPostExecute(ElasticSearchOperationResponse theResponse) {
 			theResponse.getPostModelList().add(theResponse.getTopicModel());
 
-			// Required as to add the elasticsearch id into the db as "id" rather than "_id"
+			// Required as to add the elasticsearch id into the db as "id"
+			// rather than "_id"
 			ElasticSearchProvider.getProvider()
 					.updateTopic(theResponse.getTopicModel(),
 							theResponse.getPostModelList());
@@ -332,6 +333,7 @@ public enum ElasticSearchProviderServiceHandler {
 
 	/**
 	 * Performs the request on a background thread
+	 * 
 	 * @param theRequest
 	 * @return
 	 */
@@ -340,6 +342,7 @@ public enum ElasticSearchProviderServiceHandler {
 
 	/**
 	 * Executed on the main thread, updates UI
+	 * 
 	 * @param theResponse
 	 */
 	public abstract void onPostExecute(
@@ -349,12 +352,12 @@ public enum ElasticSearchProviderServiceHandler {
 	 * The url for the db
 	 */
 	private static String urlIndex = "http://cmput301.softwareprocess.es:8080/cmput301w14t12/";
-	
+
 	/**
 	 * The gson serilization object
 	 */
 	private static Gson gson = GeoChanGsonNetworked.getGson();
-	
+
 	/**
 	 * The HTTP client
 	 */
@@ -390,6 +393,7 @@ public enum ElasticSearchProviderServiceHandler {
 
 	/**
 	 * Utility method to get an endpoint url
+	 * 
 	 * @param endpoint
 	 * @return
 	 */
@@ -399,6 +403,7 @@ public enum ElasticSearchProviderServiceHandler {
 
 	/**
 	 * Utility method for getting a versioned url at an endpoint
+	 * 
 	 * @param endpoint
 	 * @param theTopic
 	 * @return

@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,7 +25,6 @@ import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
-import ca.ualberta.cs.models.SelectedTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.providers.LocationProvider;
 
@@ -120,7 +118,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 
 		// Read later text
 		updateReadLaterText();
-		
+
 		// Setup the menu
 		setupTheMenu();
 
@@ -202,7 +200,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		MenuItem refreshIcon = menu.findItem(R.id.refreshButton);
 		refreshIcon.setVisible(false);
-		
+
 		return super.onPrepareOptionsMenu(menu);
 	}
 

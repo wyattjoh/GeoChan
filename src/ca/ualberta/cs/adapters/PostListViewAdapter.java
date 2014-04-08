@@ -2,7 +2,6 @@ package ca.ualberta.cs.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
