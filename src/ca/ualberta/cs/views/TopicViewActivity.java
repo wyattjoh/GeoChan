@@ -17,6 +17,7 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicViewController;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
+import ca.ualberta.cs.models.PostModelUpgradeFactory;
 import ca.ualberta.cs.models.SelectedTopicModelList;
 import ca.ualberta.cs.models.TopicModel;
 
@@ -34,7 +35,8 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 
 	@Override
 	protected TopicModel getSelectedModel() {
-		return SelectedTopicModelList.getTopicList().getLastSelection();
+		TopicModel theTopic = SelectedTopicModelList.getTopicList().getLastSelection();
+		return PostModelUpgradeFactory.upgradePostModel(theTopic);
 	}
 
 	@Override

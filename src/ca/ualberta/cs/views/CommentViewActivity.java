@@ -14,6 +14,7 @@ import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.FavoriteCommentModelList;
 import ca.ualberta.cs.models.FavoriteTopicModelList;
+import ca.ualberta.cs.models.PostModelUpgradeFactory;
 import ca.ualberta.cs.models.SelectedCommentModelList;
 
 /**
@@ -30,7 +31,8 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 
 	@Override
 	protected CommentModel getSelectedModel() {
-		return SelectedCommentModelList.getCommentList().getLastSelection();
+		CommentModel theComment = SelectedCommentModelList.getCommentList().getLastSelection();
+		return PostModelUpgradeFactory.upgradePostModel(theComment);
 	}
 
 	@Override
