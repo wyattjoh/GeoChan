@@ -11,7 +11,6 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.view.Menu;
 import android.view.View;
@@ -316,8 +315,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 			String[] proj = { MediaColumns.DATA };
 			cursor = context.getContentResolver().query(contentUri, proj, null,
 					null, null);
-			int column_index = cursor
-					.getColumnIndexOrThrow(MediaColumns.DATA);
+			int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
 			cursor.moveToFirst();
 			return cursor.getString(column_index);
 		} finally {

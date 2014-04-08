@@ -13,7 +13,8 @@ public class CommentViewController extends PostViewController<CommentModel> {
 
 	@Override
 	protected void updatePost(CommentModel thePost) {
-		CommentModelController theController = new CommentModelController(TopicModelList.getInstance());
+		CommentModelController theController = new CommentModelController(
+				TopicModelList.getInstance());
 		theController.updateComment(thePost);
 	}
 }

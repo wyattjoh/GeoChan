@@ -42,9 +42,9 @@ public class CommentModelController {
 			index = TopicModelList.getInstance().getLastSelection()
 					.getChildrenComments().indexOf(theModel);
 			//
-			if (index != -1){
+			if (index != -1) {
 				TopicModelList.getInstance().getLastSelection()
-				.getChildrenComments().set(index, theModel);
+						.getChildrenComments().set(index, theModel);
 			}
 
 		}
@@ -54,11 +54,11 @@ public class CommentModelController {
 			// need the index
 			index = CommentModelList.getInstance().getSelectionOffsetFromEnd(1)
 					.getChildrenComments().indexOf(theModel);
-			if (index != -1){
+			if (index != -1) {
 				CommentModelList.getInstance().getSelectionOffsetFromEnd(1)
-				.getChildrenComments().set(index, theModel);
+						.getChildrenComments().set(index, theModel);
 			}
-			
+
 		}
 
 		// tell the topic we need to update

@@ -1,7 +1,5 @@
 package ca.ualberta.cs.views;
 
-import java.util.ArrayList;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -29,7 +27,6 @@ import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModelList;
-import ca.ualberta.cs.models.UserModel;
 import ca.ualberta.cs.providers.LocationProvider;
 
 public abstract class PostViewActivity<T extends PostModel> extends Activity
@@ -308,7 +305,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 
 	private void populateScoreControlsAndView(final TextView scoreView,
 			final ImageButton downVoteButton, final ImageButton upVoteButton) {
-		
+
 		populateScoreField(scoreView);
 
 		downVoteButton.setOnClickListener(new OnClickListener() {

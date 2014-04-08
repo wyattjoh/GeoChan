@@ -88,7 +88,7 @@ public class UserModel {
 	public void setActiveUserModel(ActiveUserModel activeUserModel) {
 		this.activeUserModel = activeUserModel;
 	}
-	
+
 	protected Boolean canVote(String id, Integer mod) {
 		if (userVoteList.containsKey(id)) {
 			Integer vote = userVoteList.get(id);
@@ -116,17 +116,17 @@ public class UserModel {
 	public Boolean canDownVote(String id) {
 		return canVote(id, -1);
 	}
-	
+
 	protected void performVote(String id, Integer mod) {
 		if (canVote(id, mod)) {
 			if (userVoteList.containsKey(id)) {
 				Integer theScore = userVoteList.get(id);
-				
+
 				if (theScore == 0) {
 					userVoteList.put(id, mod);
-				}
-				else {
-					userVoteList.put(id, 0);;
+				} else {
+					userVoteList.put(id, 0);
+					;
 				}
 			} else {
 				userVoteList.put(id, mod);
