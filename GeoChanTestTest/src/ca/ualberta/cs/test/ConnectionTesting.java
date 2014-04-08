@@ -26,7 +26,7 @@ public class ConnectionTesting extends
 	 */
 	public void testLostConnection() {
 		NetworkModel.getInstance();
-		assertTrue(NetworkModel.isNetworkAvailable(getActivity()));
+		assertTrue(NetworkModel.getInstance().isNetworkAvailable(getActivity()));
 		
 		// TODO add broadcast receiver
 	}
