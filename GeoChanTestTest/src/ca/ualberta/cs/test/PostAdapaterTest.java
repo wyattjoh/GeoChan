@@ -14,9 +14,9 @@ import ca.ualberta.cs.models.ReadLaterTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
 
-public class PostApaterTest extends
+public class PostAdapaterTest extends
 		ActivityInstrumentationTestCase2<FragmentActivity> {
-	public PostApaterTest() {
+	public PostAdapaterTest() {
 		super(FragmentActivity.class);
 		// TODO Auto-generated constructor stub
 	}
@@ -33,6 +33,6 @@ public class PostApaterTest extends
 		CommentListViewAdapter adapter = new CommentListViewAdapter(getActivity(), comments);
 
 		// make sure the adapter isnt null
-		assertNotNull("The objcet is not null", adapter);
+		assertNotNull("The object is not null", adapter);
 	}
 }
