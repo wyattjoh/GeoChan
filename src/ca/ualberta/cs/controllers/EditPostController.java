@@ -13,19 +13,22 @@ public class EditPostController {
 	 * @return the compressed bitmap byte array
 	 */
 	public static byte[] compressBitmap(Bitmap theBitmap) {
-		int height = 500;
+		theBitmap = theBitmap(theBitmap);
+		ByteArrayOutputStream blob = new ByteArrayOutputStream();
 
+		theBitmap.compress(CompressFormat.WEBP, 20, blob);
+
+		return blob.toByteArray();
+	}
+
+	private static Bitmap theBitmap(Bitmap theBitmap) {
+		int height = 500;
 		if (theBitmap.getHeight() > height) {
 			float factor = height / (float) theBitmap.getHeight();
 			Bitmap bm = Bitmap.createScaledBitmap(theBitmap,
 					(int) (theBitmap.getWidth() * factor), height, false);
 			theBitmap = bm;
 		}
-
-		ByteArrayOutputStream blob = new ByteArrayOutputStream();
-
-		theBitmap.compress(CompressFormat.WEBP, 20, blob);
-
-		return blob.toByteArray();
+		return theBitmap;
 	}
 }
