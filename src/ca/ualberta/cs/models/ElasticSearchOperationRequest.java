@@ -24,51 +24,53 @@ public class ElasticSearchOperationRequest extends ElasticSearchOperation {
 		super(theRequestType);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public String getQueryString() {
 		PostModelList<TopicModel> theList = getPostModelList();
 		return theList.getTheCurrentSort().getElasticSearchQueryString(this);
 	}
-	
+
 	public String generateMultiGetQueryStringForComments() {
 		String theQuery = "{\"docs\": [";
-		
-		Iterator<UpdatePackage<CommentModel>> iterator = getTheCommentIdsToGet().iterator();
-		
+
+		Iterator<UpdatePackage<CommentModel>> iterator = getTheCommentIdsToGet()
+				.iterator();
+
 		while (iterator.hasNext()) {
 			UpdatePackage<?> theUpdatePackage = iterator.next();
 			theQuery += "{\"_id\": \"";
 			theQuery += theUpdatePackage.getParentId();
 			theQuery += "\"}";
-			
+
 			if (iterator.hasNext() == true) {
 				theQuery += ",";
 			}
 		}
 
 		theQuery += "]}";
-		
+
 		return theQuery;
 	}
-	
+
 	public String generateMultiGetQueryStringForTopics() {
 		String theQuery = "{\"docs\": [";
-		
-		Iterator<UpdatePackage<TopicModel>> iterator = getTheTopicIdsToGet().iterator();
-		
+
+		Iterator<UpdatePackage<TopicModel>> iterator = getTheTopicIdsToGet()
+				.iterator();
+
 		while (iterator.hasNext()) {
 			UpdatePackage<?> theUpdatePackage = iterator.next();
 			theQuery += "{\"_id\": \"";
 			theQuery += theUpdatePackage.getParentId();
 			theQuery += "\"}";
-			
+
 			if (iterator.hasNext() == true) {
 				theQuery += ",";
 			}
 		}
 
 		theQuery += "]}";
-		
+
 		return theQuery;
 	}
 }

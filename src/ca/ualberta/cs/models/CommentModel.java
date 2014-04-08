@@ -28,7 +28,8 @@ public class CommentModel extends PostModel {
 	}
 
 	/**
-	 * @param parentId the parentId to set
+	 * @param parentId
+	 *            the parentId to set
 	 */
 	public void setParentId(String parentId) {
 		this.parentId = parentId;

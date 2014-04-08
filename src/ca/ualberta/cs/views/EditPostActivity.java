@@ -12,7 +12,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.MediaStore.MediaColumns;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -313,11 +312,11 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	public String getRealPathFromURI(Context context, Uri contentUri) {
 		Cursor cursor = null;
 		try {
-			String[] proj = { MediaStore.Images.Media.DATA };
+			String[] proj = { MediaColumns.DATA };
 			cursor = context.getContentResolver().query(contentUri, proj, null,
 					null, null);
 			int column_index = cursor
-					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+					.getColumnIndexOrThrow(MediaColumns.DATA);
 			cursor.moveToFirst();
 			return cursor.getString(column_index);
 		} finally {

@@ -62,20 +62,26 @@ public class ElasticSearchProvider {
 
 		new ElasticSearchProviderService().execute(request);
 	}
-	
-	public void performMultiGetComments(ArrayList<UpdatePackage<CommentModel>> theIds, FollowingPostModelList<CommentModel> theModelList) {
-		ElasticSearchOperationRequest request = new ElasticSearchOperationRequest(ElasticSearchProviderServiceHandler.MULTI_GET_COMMENTS);
+
+	public void performMultiGetComments(
+			ArrayList<UpdatePackage<CommentModel>> theIds,
+			FollowingPostModelList<CommentModel> theModelList) {
+		ElasticSearchOperationRequest request = new ElasticSearchOperationRequest(
+				ElasticSearchProviderServiceHandler.MULTI_GET_COMMENTS);
 		request.setTheFollowingCommentsList(theModelList);
 		request.setTheCommentIdsToGet(theIds);
-		
+
 		new ElasticSearchProviderService().execute(request);
 	}
-	
-	public void performMultiGetTopics(ArrayList<UpdatePackage<TopicModel>> theIds, FollowingPostModelList<TopicModel> theModelList) {
-		ElasticSearchOperationRequest request = new ElasticSearchOperationRequest(ElasticSearchProviderServiceHandler.MULTI_GET_TOPICS);
+
+	public void performMultiGetTopics(
+			ArrayList<UpdatePackage<TopicModel>> theIds,
+			FollowingPostModelList<TopicModel> theModelList) {
+		ElasticSearchOperationRequest request = new ElasticSearchOperationRequest(
+				ElasticSearchProviderServiceHandler.MULTI_GET_TOPICS);
 		request.setTheFollowingTopicsList(theModelList);
 		request.setTheTopicIdsToGet(theIds);
-		
+
 		new ElasticSearchProviderService().execute(request);
 	}
 }

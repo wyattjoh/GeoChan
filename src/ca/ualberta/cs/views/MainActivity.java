@@ -36,7 +36,8 @@ import ca.ualberta.cs.providers.LocationProvider;
  * 
  * @author wyatt
  */
-public class MainActivity extends FragmentActivity implements LocationUpdatedInterface {
+public class MainActivity extends FragmentActivity implements
+		LocationUpdatedInterface {
 
 	/*
 	 * Intent request codes
@@ -201,12 +202,12 @@ public class MainActivity extends FragmentActivity implements LocationUpdatedInt
 
 		context.registerReceiver(this.connectionBroadcastReceiver,
 				new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
-		
 
 		// Must be first thing that is started, sets up contexts
 		createSharedSingletons(getApplicationContext());
-		
-		LocationProvider.getInstance(getApplicationContext()).registerForLocationUpdates(this);
+
+		LocationProvider.getInstance(getApplicationContext())
+				.registerForLocationUpdates(this);
 	}
 
 	/*
@@ -225,7 +226,7 @@ public class MainActivity extends FragmentActivity implements LocationUpdatedInt
 			context.unregisterReceiver(this.connectionBroadcastReceiver);
 			this.connectionBroadcastReceiver = null;
 		}
-		
+
 		LocationProvider.getInstance(null).unregisterForLocationUpdates(this);
 	}
 
@@ -327,7 +328,7 @@ public class MainActivity extends FragmentActivity implements LocationUpdatedInt
 		// Create Read Later list
 		ReadLaterTopicModelList.createInstance(applicationContext);
 		ReadLaterCommentModelList.createInstance(applicationContext);
-		
+
 		// Create Location Provider
 		LocationProvider.getInstance(applicationContext);
 	}
@@ -355,7 +356,8 @@ public class MainActivity extends FragmentActivity implements LocationUpdatedInt
 	 */
 	protected void sortPostsByProximityTo() {
 		Intent intent = new Intent(this, LocationActivity.class);
-		intent.putExtra("previousLocation", ActiveUserModel.getInstance().getUser().getLocation());
+		intent.putExtra("previousLocation", ActiveUserModel.getInstance()
+				.getUser().getLocation());
 		startActivityForResult(intent, GET_LOCATION);
 	}
 

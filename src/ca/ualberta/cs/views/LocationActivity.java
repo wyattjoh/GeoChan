@@ -32,43 +32,44 @@ import ca.ualberta.cs.R;
  * 
  */
 public class LocationActivity extends Activity {
-	
+
 	private MapView lMapView;
 	private MapController lMapController;
-	
+
 	LocationManager locationManager;
 	ArrayList<OverlayItem> theOverlayItemArray;
 	MyLocationNewOverlay myLocationOverlay = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_location);
-		
+
 		this.lMapView = (MapView) findViewById(R.id.locationmapview);
 		this.lMapView.setTileSource(TileSourceFactory.MAPNIK);
 		this.lMapView.setBuiltInZoomControls(true);
 		this.lMapController = (MapController) this.lMapView.getController();
 		this.lMapController.setZoom(2);
-		
+
 		setToCurrentLocation();
 	}
-	OnItemGestureListener<OverlayItem> myOnItemGestureListener = new OnItemGestureListener<OverlayItem>() {
-		  @Override
-		  public boolean onItemLongPress(int arg0, OverlayItem arg1) {
-		   // TODO Auto-generated method stub
-		   return false;
-		  }
 
-		  @Override
-		  public boolean onItemSingleTapUp(int index, OverlayItem item) {
-			  Toast.makeText(LocationActivity.this,
-					  item.getTitle() + "\n"
-					  + item.getSnippet()+ "\n",
-					  Toast.LENGTH_SHORT).show();
-			  return true;
-		  }
+	OnItemGestureListener<OverlayItem> myOnItemGestureListener = new OnItemGestureListener<OverlayItem>() {
+		@Override
+		public boolean onItemLongPress(int arg0, OverlayItem arg1) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean onItemSingleTapUp(int index, OverlayItem item) {
+			Toast.makeText(LocationActivity.this,
+					item.getTitle() + "\n" + item.getSnippet() + "\n",
+					Toast.LENGTH_SHORT).show();
+			return true;
+		}
 	};
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -76,7 +77,7 @@ public class LocationActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	protected boolean isEmpty(EditText etText) {
 		return etText.getText().toString().trim().length() == 0;
 	}
@@ -115,8 +116,10 @@ public class LocationActivity extends Activity {
 		setResult(RESULT_CANCELED, returnIntent);
 		finish();
 	}
+
 	public void setToCurrentLocation() {
-		Location previousLocation = (Location) getIntent().getExtras().getParcelable("previousLocation");
+		Location previousLocation = (Location) getIntent().getExtras()
+				.getParcelable("previousLocation");
 		if (previousLocation == null) {
 			previousLocation = new Location("");
 			this.lMapController.setZoom(1);
@@ -127,9 +130,10 @@ public class LocationActivity extends Activity {
 		this.lMapController.setCenter(gp_prevlocation);
 
 		TextView locationDisplay = (TextView) findViewById(R.id.tvPreviousLocation);
-		locationDisplay.setText("(" + String.valueOf(previousLocation.getLatitude()) + " , " +
-				String.valueOf(previousLocation.getLongitude()) + ")");
-		
+		locationDisplay.setText("("
+				+ String.valueOf(previousLocation.getLatitude()) + " , "
+				+ String.valueOf(previousLocation.getLongitude()) + ")");
+
 		theOverlayItemArray = new ArrayList<OverlayItem>();
 
 		theOverlayItemArray.add(new OverlayItem("Post Location", String
@@ -140,31 +144,36 @@ public class LocationActivity extends Activity {
 		ItemizedIconOverlay<OverlayItem> theItemizedIconOverlay = new ItemizedIconOverlay<OverlayItem>(
 				this, theOverlayItemArray, myOnItemGestureListener) {
 		};
-		this.lMapView.getOverlays().add(theItemizedIconOverlay);		
+		this.lMapView.getOverlays().add(theItemizedIconOverlay);
 	}
 
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		int actionType = ev.getAction();
-		switch(actionType){
+		switch (actionType) {
 		case MotionEvent.ACTION_UP:
 			Projection projection = lMapView.getProjection();
-			GeoPoint gp_loc = (GeoPoint) projection.fromPixels((int)ev.getX(), (int)ev.getY());
+			GeoPoint gp_loc = (GeoPoint) projection.fromPixels((int) ev.getX(),
+					(int) ev.getY());
 			Integer topBound = lMapView.getTop();
-			Log.i("Coordinates","evY:" + String.valueOf(ev.getY()) + "TopBound" + String.valueOf(topBound));
-			if ((int)ev.getY() > topBound + 100) {
-				String latitude = Double.toString(((double)gp_loc.getLatitudeE6())/1000000); 
-				String longitude = Double.toString(((double)gp_loc.getLongitudeE6())/1000000);
+			Log.i("Coordinates", "evY:" + String.valueOf(ev.getY())
+					+ "TopBound" + String.valueOf(topBound));
+			if ((int) ev.getY() > topBound + 100) {
+				String latitude = Double.toString(((double) gp_loc
+						.getLatitudeE6()) / 1000000);
+				String longitude = Double.toString(((double) gp_loc
+						.getLongitudeE6()) / 1000000);
 				setLatLong(latitude, longitude);
 			}
 		}
 		return super.dispatchTouchEvent(ev);
 	}
+
 	public void setLatLong(String latitude, String longitude) {
-        EditText etLat = (EditText) findViewById(R.id.editTextLatitude);
-        EditText etLon = (EditText) findViewById(R.id.editTextLongitude);
-        
-        etLat.setText(latitude);
-        etLon.setText(longitude);
+		EditText etLat = (EditText) findViewById(R.id.editTextLatitude);
+		EditText etLon = (EditText) findViewById(R.id.editTextLongitude);
+
+		etLat.setText(latitude);
+		etLon.setText(longitude);
 	}
 }

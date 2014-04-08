@@ -19,9 +19,9 @@ public abstract class PostModel {
 	private transient Boolean isFavorite = false;
 	private transient Boolean isReadLater = false;
 	private String id;
-	
+
 	abstract public String getQualifyingId();
-	
+
 	/**
 	 * Constructors
 	 */
@@ -148,7 +148,8 @@ public abstract class PostModel {
 	}
 
 	/**
-	 * @param isReadLater the isReadLater to set
+	 * @param isReadLater
+	 *            the isReadLater to set
 	 */
 	public void setIsReadLater(Boolean isReadLater) {
 		this.isReadLater = isReadLater;
@@ -183,26 +184,27 @@ public abstract class PostModel {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * Finds the comment with the specified id in the tree
+	 * 
 	 * @param id
 	 * @return
 	 */
 	public CommentModel fetchCommentWithId(String id) {
-		for (CommentModel theComment: this.childrenComments) {
+		for (CommentModel theComment : this.childrenComments) {
 			if (theComment.getId().equals(id)) {
 				return theComment;
-			}
-			else {
-				CommentModel theCommentThatMatched = theComment.fetchCommentWithId(id);
-				
+			} else {
+				CommentModel theCommentThatMatched = theComment
+						.fetchCommentWithId(id);
+
 				if (theCommentThatMatched != null) {
 					return theCommentThatMatched;
 				}
 			}
 		}
-		
+
 		return null;
 	}
 

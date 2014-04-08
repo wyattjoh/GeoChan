@@ -73,12 +73,13 @@ public class ElasticSearchOperationFactory {
 
 		ElasticSearchOperationResponse response = new ElasticSearchOperationResponse(
 				theRequest.getRequestType());
-		response.setTheFollowingCommentsList(theRequest.getTheFollowingCommentsList());
+		response.setTheFollowingCommentsList(theRequest
+				.getTheFollowingCommentsList());
 		response.setTheCommentIdsToGet(initialRequest);
 
 		return response;
 	}
-	
+
 	public static ElasticSearchOperationResponse responseFromTopicsRequest(
 			ElasticSearchOperationRequest theRequest,
 			ElasticSearchMgetResponse<TopicModel> esResponse) {
@@ -105,7 +106,8 @@ public class ElasticSearchOperationFactory {
 
 		ElasticSearchOperationResponse response = new ElasticSearchOperationResponse(
 				theRequest.getRequestType());
-		response.setTheFollowingTopicsList(theRequest.getTheFollowingTopicsList());
+		response.setTheFollowingTopicsList(theRequest
+				.getTheFollowingTopicsList());
 		response.setTheTopicIdsToGet(initialRequest);
 
 		return response;

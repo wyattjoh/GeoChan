@@ -6,9 +6,7 @@ package ca.ualberta.cs.models;
 import java.util.Comparator;
 import java.util.Date;
 
-import ca.ualberta.cs.views.LocationUpdatedInterface;
 import android.location.Location;
-import android.util.Log;
 
 /**
  * @author wyatt

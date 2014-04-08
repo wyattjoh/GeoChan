@@ -59,7 +59,7 @@ public enum ElasticSearchProviderServiceHandler {
 
 				ElasticSearchResponse<TopicModel> esResponse = gson.fromJson(
 						jsonResponse, elasticSearchResponseType);
-				
+
 				theTopic.setId(esResponse.getId());
 
 				ElasticSearchOperationResponse theResponse = ElasticSearchOperationFactory
@@ -245,12 +245,14 @@ public enum ElasticSearchProviderServiceHandler {
 
 		@Override
 		public void onPostExecute(ElasticSearchOperationResponse theResponse) {
-			FollowingPostModelList<TopicModel> thePostList = theResponse.getTheFollowingTopicsList();
-			ArrayList<UpdatePackage<TopicModel>> thePackages = theResponse.getTheTopicIdsToGet();
-			
+			FollowingPostModelList<TopicModel> thePostList = theResponse
+					.getTheFollowingTopicsList();
+			ArrayList<UpdatePackage<TopicModel>> thePackages = theResponse
+					.getTheTopicIdsToGet();
+
 			thePostList.setUpdatedPackages(thePackages);
 		}
-		
+
 	},
 	MULTI_GET_COMMENTS {
 
@@ -298,12 +300,14 @@ public enum ElasticSearchProviderServiceHandler {
 
 		@Override
 		public void onPostExecute(ElasticSearchOperationResponse theResponse) {
-			FollowingPostModelList<CommentModel> thePostList = theResponse.getTheFollowingCommentsList();
-			ArrayList<UpdatePackage<CommentModel>> thePackages = theResponse.getTheCommentIdsToGet();
-			
+			FollowingPostModelList<CommentModel> thePostList = theResponse
+					.getTheFollowingCommentsList();
+			ArrayList<UpdatePackage<CommentModel>> thePackages = theResponse
+					.getTheCommentIdsToGet();
+
 			thePostList.setUpdatedPackages(thePackages);
 		}
-		
+
 	};
 
 	public abstract ElasticSearchOperationResponse doInBackground(
