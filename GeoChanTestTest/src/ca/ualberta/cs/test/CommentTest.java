@@ -41,6 +41,20 @@ public class CommentTest extends ActivityInstrumentationTestCase2<Activity> {
 		testComment.setMyParent(testTopic);
 		assertSame("Comment not properly associated with Topic", testComment.getMyParent(), testTopic);
 	}
+	
+	/**
+	 * TestCase 13.1
+	 * Test whether a comment can be edited
+	 */
+	public void testEditComment() {
+		CommentModel testComment = new CommentModel();
+		String string = "This is a test text";
+		testComment.setCommentText(string);
+		assertEquals("Check if comment is set before edit", string, testComment.getCommentText());
+		String string1 = "Changed the text";
+		testComment.setCommentText(string1);
+		assertNotSame("Check if the edit occured", string, testComment.getCommentText());
+	}
 
 	/**
 	 * TestCase 21.1
