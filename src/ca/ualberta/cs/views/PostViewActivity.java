@@ -26,6 +26,7 @@ import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
+import ca.ualberta.cs.models.SelectedTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.providers.LocationProvider;
 
@@ -308,26 +309,34 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 
 		populateScoreField(scoreView);
 
-		downVoteButton.setOnClickListener(new OnClickListener() {
+		if (TopicModelList.getInstance().getLastSelection() != null) {
 
-			@Override
-			public void onClick(View v) {
-				if (theController.decreaseScore(theModel)) {
-					populateScoreField(scoreView);
+			downVoteButton.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if (theController.decreaseScore(theModel)) {
+						populateScoreField(scoreView);
+					}
 				}
-			}
-		});
+			});
 
-		upVoteButton.setOnClickListener(new OnClickListener() {
+			upVoteButton.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				if (theController.increaseScore(theModel)) {
-					populateScoreField(scoreView);
+				@Override
+				public void onClick(View v) {
+					if (theController.increaseScore(theModel)) {
+						populateScoreField(scoreView);
+					}
 				}
-			}
 
-		});
+			});
+
+		}
+		else {
+			downVoteButton.setVisibility(View.GONE);
+			upVoteButton.setVisibility(View.GONE);
+		}
 	}
 
 	protected void populateScoreField(final TextView scoreView) {
