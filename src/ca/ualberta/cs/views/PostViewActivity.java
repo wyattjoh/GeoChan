@@ -125,7 +125,13 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 		return true;
 	}
 
-	abstract void setEditButton(Menu theMenu);
+	void setEditButton(Menu theMenu) {
+		if (TopicModelList.getInstance().getLastSelection() == null) {
+			// Find the edit button
+			MenuItem editButton = theMenu.findItem(R.id.cellActiveArea);
+			editButton.setVisible(false);
+		}
+	}
 
 	/*
 	 * (non-Javadoc)

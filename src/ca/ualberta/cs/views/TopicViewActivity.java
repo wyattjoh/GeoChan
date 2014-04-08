@@ -94,12 +94,4 @@ public class TopicViewActivity extends PostViewActivity<TopicModel> {
 	protected String getTitleString() {
 		return this.theModel.getTitle();
 	}
-
-	@Override
-	void setEditButton(Menu theMenu) {
-		if (FavoriteTopicModelList.getInstance().getLastSelection() != null) {
-			MenuItem editButton = theMenu.findItem(R.id.cellActiveArea);
-			editButton.setVisible(false);
-		}
-	}
 }

@@ -80,13 +80,4 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 	protected String getTitleString() {
 		return this.theModel.getCommentText();
 	}
-
-	@Override
-	void setEditButton(Menu theMenu) {
-		if ((FavoriteCommentModelList.getInstance().getLastSelection() != null)
-				|| FavoriteTopicModelList.getInstance().getLastSelection() != null) {
-			MenuItem editButton = theMenu.findItem(R.id.cellActiveArea);
-			editButton.setVisible(false);
-		}
-	}
 }
