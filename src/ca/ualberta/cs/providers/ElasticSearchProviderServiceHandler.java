@@ -85,6 +85,11 @@ public enum ElasticSearchProviderServiceHandler {
 		@Override
 		public void onPostExecute(ElasticSearchOperationResponse theResponse) {
 			theResponse.getPostModelList().add(theResponse.getTopicModel());
+
+			ElasticSearchProvider.getProvider()
+					.updateTopic(theResponse.getTopicModel(),
+							theResponse.getPostModelList());
+
 		}
 
 	},
