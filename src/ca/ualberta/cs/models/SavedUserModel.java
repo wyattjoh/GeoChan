@@ -7,6 +7,12 @@ import com.google.gson.Gson;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/**
+ * Saved user manager
+ * 
+ * @author wyatt
+ * 
+ */
 public class SavedUserModel {
 	private static final String PREFS_NAME = "ActiveUserModel";
 	private Context theContext;

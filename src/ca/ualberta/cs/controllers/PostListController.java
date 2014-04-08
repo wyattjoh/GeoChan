@@ -3,7 +3,7 @@ package ca.ualberta.cs.controllers;
 import ca.ualberta.cs.models.TopicModelList;
 
 /**
- * control the post arrays (?!)
+ * control the post arrays
  * 
  * @author vincent
  * 

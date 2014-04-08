@@ -1,11 +1,10 @@
-/**
- * 
- */
 package ca.ualberta.cs.models;
 
 import java.util.Collection;
 
 /**
+ * Stores the mget response
+ * 
  * @author wyatt
  * 
  */

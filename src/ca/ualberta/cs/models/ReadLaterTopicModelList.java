@@ -12,6 +12,8 @@ import com.google.gson.Gson;
 import android.content.Context;
 
 /**
+ * A list for managing the list of favorite topic models
+ * 
  * @author wyatt
  * 
  */

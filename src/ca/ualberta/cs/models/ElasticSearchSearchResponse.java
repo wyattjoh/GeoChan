@@ -5,6 +5,12 @@ package ca.ualberta.cs.models;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Stores information from a ES search response
+ * @author wyatt
+ *
+ * @param <T>
+ */
 public class ElasticSearchSearchResponse<T> {
 	int took;
 	boolean timed_out;

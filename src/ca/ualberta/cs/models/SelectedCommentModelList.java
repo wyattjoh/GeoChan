@@ -4,6 +4,8 @@
 package ca.ualberta.cs.models;
 
 /**
+ * Stores selected comment model list
+ * 
  * @author wyatt
  * 
  */

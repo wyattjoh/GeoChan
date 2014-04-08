@@ -4,6 +4,8 @@
 package ca.ualberta.cs.models;
 
 /**
+ * Stores a package to be updated
+ * 
  * @author wyatt
  * 
  */

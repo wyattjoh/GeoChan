@@ -2,6 +2,12 @@ package ca.ualberta.cs.models;
 
 import java.util.UUID;
 
+/**
+ * Stores the comment data
+ * 
+ * @author wyatt
+ *
+ */
 public class CommentModel extends PostModel {
 	private String parentId;
 

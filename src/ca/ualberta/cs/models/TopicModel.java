@@ -1,5 +1,11 @@
 package ca.ualberta.cs.models;
 
+/**
+ * Stores a topic model, a post with a title
+ * 
+ * @author wyatt
+ *
+ */
 public class TopicModel extends PostModel {
 	private String title;
 	private transient int version;

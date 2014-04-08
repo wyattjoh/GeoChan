@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 import ca.ualberta.cs.controllers.TopicModelController;
 
+/**
+ * Generates a series of dummy posts
+ * 
+ * @author wyatt
+ *
+ */
 public class DummyPostListFactory {
 
 	public static void createTopicList(UserModel theUser) {

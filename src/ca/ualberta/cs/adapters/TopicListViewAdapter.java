@@ -9,6 +9,13 @@ import ca.ualberta.cs.models.SelectedTopicModelList;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.views.TopicViewActivity;
 
+/**
+ * 
+ * Maintains a list of topics
+ * 
+ * @author wyatt
+ * 
+ */
 public class TopicListViewAdapter extends PostListViewAdapter<TopicModel> {
 
 	public TopicListViewAdapter(FragmentActivity theActivity,
@@ -16,6 +23,13 @@ public class TopicListViewAdapter extends PostListViewAdapter<TopicModel> {
 		super(theActivity, arrayList);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.ualberta.cs.adapters.PostListViewAdapter#populateCellTitle(android
+	 * .view.View, ca.ualberta.cs.models.PostModel)
+	 */
 	@Override
 	protected void populateCellTitle(View theView, TopicModel thePost) {
 		// Fill title/comment text
@@ -37,6 +51,11 @@ public class TopicListViewAdapter extends PostListViewAdapter<TopicModel> {
 		return TopicViewActivity.class;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ca.ualberta.cs.adapters.PostListViewAdapter#setSelectedList()
+	 */
 	@Override
 	protected void setSelectedList() {
 		SelectedTopicModelList.setTopicList(theArrayList);

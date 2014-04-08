@@ -9,6 +9,13 @@ import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.providers.ElasticSearchProvider;
 
+/**
+ * 
+ * Maintains comment models
+ * 
+ * @author wyatt
+ * 
+ */
 public class CommentModelController {
 	private PostModelList<TopicModel> thePostModelList;
 
@@ -16,6 +23,12 @@ public class CommentModelController {
 		this.thePostModelList = thePostModelList;
 	}
 
+	/**
+	 * Add a comment to the parent model
+	 * 
+	 * @param theComment
+	 * @param theParent
+	 */
 	public void addComment(CommentModel theComment, PostModel theParent) {
 		theParent.addChildComment(theComment);
 		theComment.setMyParent(theParent);
@@ -28,6 +41,11 @@ public class CommentModelController {
 				.getLastSelection(), thePostModelList);
 	}
 
+	/**
+	 * Updates a comment
+	 * 
+	 * @param theModel
+	 */
 	public void updateComment(CommentModel theModel) {
 		// Get the provider
 		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();

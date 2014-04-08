@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 import ca.ualberta.cs.providers.ElasticSearchProviderServiceHandler;
 
+/**
+ * Stores the parameters for an ElasticSearch operation
+ * 
+ * @author wyatt
+ *
+ */
 abstract public class ElasticSearchOperation {
 	private ElasticSearchProviderServiceHandler requestType;
 	private TopicModel theModel = null;
@@ -22,26 +28,45 @@ abstract public class ElasticSearchOperation {
 		this.requestType = theRequestType;
 	}
 
+	/**
+	 * @return
+	 */
 	public ElasticSearchProviderServiceHandler getRequestType() {
 		return requestType;
 	}
 
+	/**
+	 * @param theModel
+	 */
 	public void setTopicModel(TopicModel theModel) {
 		this.theModel = theModel;
 	}
 
+	/**
+	 * @return
+	 */
 	public TopicModel getTopicModel() {
 		return this.theModel;
 	}
 
+	/**
+	 * @param thePostModelList
+	 */
 	public void setPostModelList(PostModelList<TopicModel> thePostModelList) {
 		this.thePostModelList = thePostModelList;
 	}
 
+	/**
+	 * @return
+	 */
 	public PostModelList<TopicModel> getPostModelList() {
 		return this.thePostModelList;
 	}
 
+	/**
+	 * @param from
+	 * @param size
+	 */
 	public void setRange(int from, int size) {
 		this.size = size;
 		this.from = from;

@@ -27,6 +27,7 @@ import android.widget.Toast;
 import ca.ualberta.cs.R;
 
 /**
+ * Displays the location on a map with an editable interface
  * 
  * @author troy
  * 

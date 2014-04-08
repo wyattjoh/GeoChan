@@ -18,6 +18,12 @@ import android.view.Menu;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
 
+/**
+ * Displays a map
+ * 
+ * @author troy
+ *
+ */
 public class MapViewActivity extends Activity {
 
 	private MapView mMapView;

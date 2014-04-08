@@ -4,6 +4,13 @@ package ca.ualberta.cs.models;
 
 import java.util.Collection;
 
+/**
+ * Stores the response from ES
+ * 
+ * @author wyatt
+ *
+ * @param <T>
+ */
 public class Hits<T> {
 	int total;
 	double max_score;

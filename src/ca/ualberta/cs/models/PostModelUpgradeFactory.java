@@ -4,6 +4,8 @@
 package ca.ualberta.cs.models;
 
 /**
+ * Adds in extra parameters to a post
+ * 
  * @author wyatt
  * 
  */

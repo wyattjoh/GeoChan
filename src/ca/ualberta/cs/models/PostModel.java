@@ -243,5 +243,4 @@ public abstract class PostModel {
 			return false;
 		}
 	}
-
 }

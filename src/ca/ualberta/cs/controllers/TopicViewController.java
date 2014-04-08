@@ -5,6 +5,12 @@ import ca.ualberta.cs.models.ReadLaterTopicModelList;
 import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 
+/**
+ * Controls a topic view
+ * 
+ * @author wyatt
+ * 
+ */
 public class TopicViewController extends PostViewController<TopicModel> {
 	public TopicViewController() {
 		favModelList = FavoriteTopicModelList.getInstance();

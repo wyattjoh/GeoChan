@@ -19,10 +19,15 @@ import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.providers.ElasticSearchProvider;
 
 /**
+ * Describes the components within the main fragments
+ * 
  * @author wyatt
  * 
  */
 public enum MainActivityFragmentComponent {
+	/**
+	 * A list of topics
+	 */
 	TOPICS_LIST {
 		protected TopicListViewAdapter adapter;
 
@@ -52,7 +57,9 @@ public enum MainActivityFragmentComponent {
 		}
 
 	},
-
+	/**
+	 * A list of favorited topics
+	 */
 	FAVORITE_TOPICS {
 		protected TopicListViewAdapter favoriteTopicAdapter;
 
@@ -86,6 +93,9 @@ public enum MainActivityFragmentComponent {
 		}
 
 	},
+	/**
+	 * A list of favorited comments
+	 */
 	FAVORITE_COMMENTS {
 		protected CommentListViewAdapter favoriteCommentAdapter;
 
@@ -119,6 +129,9 @@ public enum MainActivityFragmentComponent {
 		}
 
 	},
+	/**
+	 * A list of topics marked as read later
+	 */
 	READ_LATER_TOPICS {
 		protected TopicListViewAdapter adapter;
 
@@ -151,6 +164,9 @@ public enum MainActivityFragmentComponent {
 		}
 
 	},
+	/**
+	 * A list of comments marked as read later
+	 */
 	READ_LATER_COMMENTS {
 		protected CommentListViewAdapter adapter;
 
@@ -181,9 +197,20 @@ public enum MainActivityFragmentComponent {
 
 	};
 
+	/**
+	 * Sets up the row adapters for the specific components
+	 * @param topicListView
+	 * @param theActivity
+	 */
 	abstract protected void setupAdapter(ListView topicListView,
 			FragmentActivity theActivity);
 
+	/**
+	 * Sets up the view for the component
+	 * @param theInflater
+	 * @param theLayout
+	 * @param theActivity
+	 */
 	public void setupView(LayoutInflater theInflater, LinearLayout theLayout,
 			FragmentActivity theActivity) {
 		View rootView = theInflater.inflate(R.layout.fragment_single_post_list,
@@ -198,8 +225,16 @@ public enum MainActivityFragmentComponent {
 		setupAdapter(topicListView, theActivity);
 	}
 
+	/**
+	 * Called when the fragment is being destroyed, allows for cleanup
+	 */
 	abstract public void destroy();
 
+	/**
+	 * Simple factory for getting a fragment component
+	 * @param position
+	 * @return
+	 */
 	public static MainActivityFragmentComponent getComponentForPosition(
 			int position) {
 		switch (position) {
@@ -217,9 +252,17 @@ public enum MainActivityFragmentComponent {
 		return null;
 	}
 
+	/**
+	 * Stores the size for the amount of fragments
+	 * @return
+	 */
 	public static int getSize() {
 		return 5;
 	}
 
+	/**
+	 * Retrives the title for the fragment
+	 * @return
+	 */
 	abstract public String getTitle();
 }

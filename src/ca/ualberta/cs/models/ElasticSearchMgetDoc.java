@@ -1,5 +1,12 @@
 package ca.ualberta.cs.models;
 
+/**
+ * Stores the document from an mget response
+ * 
+ * @author wyatt
+ *
+ * @param <T>
+ */
 public class ElasticSearchMgetDoc<T> {
 	String _index;
 	String _type;

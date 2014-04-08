@@ -22,14 +22,22 @@ public class ElasticSearchOperationRequest extends ElasticSearchOperation {
 	public ElasticSearchOperationRequest(
 			ElasticSearchProviderServiceHandler theRequestType) {
 		super(theRequestType);
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Gets the query string from the sort
+	 * 
+	 * @return
+	 */
 	public String getQueryString() {
 		PostModelList<TopicModel> theList = getPostModelList();
 		return theList.getTheCurrentSort().getElasticSearchQueryString(this);
 	}
 
+	/**
+	 * Generates the multiget query
+	 * @return the json request
+	 */
 	public String generateMultiGetQueryStringForComments() {
 		String theQuery = "{\"docs\": [";
 
@@ -52,6 +60,10 @@ public class ElasticSearchOperationRequest extends ElasticSearchOperation {
 		return theQuery;
 	}
 
+	/**
+	 * Generate the topic request
+	 * @return  the request in json
+	 */
 	public String generateMultiGetQueryStringForTopics() {
 		String theQuery = "{\"docs\": [";
 

@@ -14,6 +14,8 @@ import ca.ualberta.cs.models.PostModelUpgradeFactory;
 import ca.ualberta.cs.models.SelectedCommentModelList;
 
 /**
+ * Displays a comment
+ * 
  * @author wyatt
  * 
  */

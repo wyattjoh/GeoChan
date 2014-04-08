@@ -11,6 +11,12 @@ import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModelList;
 
+/**
+ * Displays the editing interface of a comment
+ * 
+ * @author wyatt
+ *
+ */
 public class EditCommentActivity extends EditPostActivity<CommentModel> {
 
 	private CommentModelController theController;
@@ -102,7 +108,7 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 	 * @see ca.ualberta.cs.views.EditPostActivity#getSaveButtonText()
 	 */
 	@Override
-	protected String getSaveButtonText() {
+	protected String getCommitButtonText() {
 		if (theEditPostModel.isNewPost()) {
 			return "Add Comment";
 		} else {

@@ -28,6 +28,13 @@ import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.providers.LocationProvider;
 
+/**
+ * An abstract activity that displays a post
+ * 
+ * @author wyatt
+ * 
+ * @param <T>
+ */
 public abstract class PostViewActivity<T extends PostModel> extends Activity
 		implements LocationUpdatedInterface {
 	protected static Bitmap currentBitmap = null;
@@ -39,6 +46,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 		return currentBitmap;
 	}
 
+	protected ListView commentsListView;
+
 	protected OnClickListener favoriteOnClickListener = new OnClickListener() {
 
 		@Override
@@ -49,17 +58,15 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 		}
 	};
 
+	protected LinearLayout headerView = null;
+
+	private Menu menu;
+
 	protected PostViewController<T> theController;
 
 	protected T theModel = null;
 
 	protected CommentListViewAdapter thePostAdapter;
-
-	protected LinearLayout headerView = null;
-
-	protected ListView commentsListView;
-
-	private Menu menu;
 
 	abstract protected void editPost();
 
@@ -77,6 +84,24 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 	 */
 	abstract protected String getTitleString();
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.ualberta.cs.views.LocationUpdatedInterface#locationWasUpdated(android
+	 * .location.Location)
+	 */
+	@Override
+	public void locationWasUpdated(Location theNewLocation) {
+		// Redraws the boxes that contain distance information
+		populateDistanceButton();
+		populateCommentsView();
+	}
+
+	/**
+	 * Opens a map, triggered via XML
+	 * @param theView
+	 */
 	public abstract void onClick_OpenMap(View theView);
 
 	@Override
@@ -125,18 +150,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 		return true;
 	}
 
-	/**
-	 * 
-	 * @param theMenu
-	 */
-	void setupTheMenu() {
-		if (TopicModelList.getInstance().getLastSelection() == null) {
-			// Find the edit button
-			MenuItem editButton = this.menu.findItem(R.id.cellActiveArea);
-			editButton.setVisible(false);
-		}
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -172,25 +185,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 		}
 	}
 
-	/**
-	 * Is fired when the read later button is clicked in the model
-	 */
-	private void onReadLaterPressed() {
-		theController.toggleReadLater(getSelectedModel());
-
-		updateReadLaterText();
-	}
-
-	private void updateReadLaterText() {
-		MenuItem theReadLaterButton = this.menu.findItem(R.id.readLaterButton);
-
-		if (this.theModel.isReadLater()) {
-			theReadLaterButton.setTitle("Mark as read");
-		} else {
-			theReadLaterButton.setTitle("Read Later");
-		}
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -202,6 +196,15 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 		refreshIcon.setVisible(false);
 
 		return super.onPrepareOptionsMenu(menu);
+	}
+
+	/**
+	 * Is fired when the read later button is clicked in the model
+	 */
+	private void onReadLaterPressed() {
+		theController.toggleReadLater(getSelectedModel());
+
+		updateReadLaterText();
 	}
 
 	/*
@@ -217,6 +220,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 		populateView();
 	}
 
+	/**
+	 * Populates the comments view
+	 */
 	private void populateCommentsView() {
 		CommentModelList theCommentModelList = CommentModelList
 				.getInstanceFromParent(theModel);
@@ -226,6 +232,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 		commentsListView.setAdapter(thePostAdapter);
 	}
 
+	/**
+	 * Populates the distance button
+	 */
 	private void populateDistanceButton() {
 		Button distanceButton = (Button) this.headerView
 				.findViewById(R.id.distanceButton);
@@ -250,6 +259,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 
 	}
 
+	/**
+	 * Populates the edit button
+	 */
 	private void populateEditButton() {
 		// get the edit button if required
 		if (theModel.getPostedBy().getUserHash()
@@ -270,6 +282,10 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 		}
 	}
 
+	/**
+	 * Populates the favorites button
+	 * @param favoriteButton
+	 */
 	private void populateFavoritesButton(ImageButton favoriteButton) {
 		favoriteButton.setOnClickListener(favoriteOnClickListener);
 
@@ -281,6 +297,10 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 		}
 	}
 
+	/** 
+	 * Populates the image view
+	 * @param imageView
+	 */
 	private void populateImageView(Button imageView) {
 		final Bitmap thePicture = theModel.getPicture();
 		if (thePicture == null) {
@@ -304,6 +324,12 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 		}
 	}
 
+	/**
+	 * Sets up the score controllers and views
+	 * @param scoreView
+	 * @param downVoteButton
+	 * @param upVoteButton
+	 */
 	private void populateScoreControlsAndView(final TextView scoreView,
 			final ImageButton downVoteButton, final ImageButton upVoteButton) {
 
@@ -338,11 +364,18 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 		}
 	}
 
+	/**
+	 * Populates the score view
+	 * @param scoreView
+	 */
 	protected void populateScoreField(final TextView scoreView) {
 		Integer theScore = theModel.getScore();
 		scoreView.setText(theScore.toString());
 	}
 
+	/**
+	 * Populates the view for the post model
+	 */
 	protected void populateView() {
 
 		// Add comment
@@ -408,17 +441,28 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 
 	abstract void setTitleText();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ca.ualberta.cs.views.LocationUpdatedInterface#locationWasUpdated(android
-	 * .location.Location)
+	/**
+	 * Sets up the menu
+	 * @param theMenu
 	 */
-	@Override
-	public void locationWasUpdated(Location theNewLocation) {
-		// Redraws the boxes that contain distance information
-		populateDistanceButton();
-		populateCommentsView();
+	void setupTheMenu() {
+		if (TopicModelList.getInstance().getLastSelection() == null) {
+			// Find the edit button
+			MenuItem editButton = this.menu.findItem(R.id.cellActiveArea);
+			editButton.setVisible(false);
+		}
+	}
+
+	/**
+	 * Updates the read later text from the menu
+	 */
+	private void updateReadLaterText() {
+		MenuItem theReadLaterButton = this.menu.findItem(R.id.readLaterButton);
+
+		if (this.theModel.isReadLater()) {
+			theReadLaterButton.setTitle("Mark as read");
+		} else {
+			theReadLaterButton.setTitle("Read Later");
+		}
 	}
 }

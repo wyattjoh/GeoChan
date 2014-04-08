@@ -7,6 +7,8 @@ import android.content.Context;
 import android.util.Log;
 
 /**
+ * Manages a user model that is currently logged in
+ * 
  * @author wyatt
  * 
  */
@@ -28,7 +30,7 @@ public class ActiveUserModel {
 		}
 	}
 
-	/*
+	/**
 	 * Creates a new shared object
 	 */
 	public static ActiveUserModel createInstance(Context theContext) {
@@ -39,6 +41,11 @@ public class ActiveUserModel {
 		return singleton;
 	}
 
+	/**
+	 * Gets an instance of an active user model
+	 * 
+	 * @return
+	 */
 	public static ActiveUserModel getInstance() {
 		if (singleton == null) {
 			throw new RuntimeException(
@@ -48,6 +55,11 @@ public class ActiveUserModel {
 		return singleton;
 	}
 
+	/**
+	 * Performs a login process for the user
+	 * 
+	 * @param theUsername
+	 */
 	public void performLogin(String theUsername) {
 		if (isLoggedIn()) {
 			performLogout();
@@ -61,6 +73,9 @@ public class ActiveUserModel {
 		theSavedUserModel.save(theUser);
 	}
 
+	/**
+	 * Performs a logout process for the user
+	 */
 	public void performLogout() {
 		theUser = null;
 
@@ -78,6 +93,9 @@ public class ActiveUserModel {
 		ReadLaterTopicModelList.getInstance().delete();
 	}
 
+	/**
+	 * @return true if a user is logged in, false if not
+	 */
 	public Boolean isLoggedIn() {
 		if (theUser == null) {
 			return false;
@@ -89,7 +107,7 @@ public class ActiveUserModel {
 	/**
 	 * Get the user from the active user model
 	 * 
-	 * @return
+	 * @return the active user
 	 */
 	public final UserModel getUser() {
 		return theUser;

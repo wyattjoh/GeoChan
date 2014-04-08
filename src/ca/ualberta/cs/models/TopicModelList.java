@@ -4,6 +4,8 @@
 package ca.ualberta.cs.models;
 
 /**
+ * Manages a list of topic models
+ * 
  * @author wyatt
  * 
  */

@@ -31,6 +31,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * Manages the ES requests
+ * 
+ * @author wyatt
+ */
 public enum ElasticSearchProviderServiceHandler {
 	/**
 	 * Adds a topic to the database

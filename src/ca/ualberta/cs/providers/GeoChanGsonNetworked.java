@@ -19,6 +19,8 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 /**
+ * Manages the networked version of GeoChanGson
+ * 
  * @author wyatt
  * 
  */

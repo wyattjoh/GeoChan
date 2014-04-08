@@ -9,6 +9,8 @@ import java.util.Date;
 import android.location.Location;
 
 /**
+ * Compares posts
+ * 
  * @author wyatt
  * 
  */

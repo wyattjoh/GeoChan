@@ -9,6 +9,8 @@ import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.providers.ElasticSearchProvider;
 
 /**
+ * Controls the models of topics
+ * 
  * @author wyatt
  * 
  */
@@ -19,6 +21,11 @@ public class TopicModelController {
 		this.theTopicModelList = TopicModelList.getInstance();
 	}
 
+	/**
+	 * Adds a new topic
+	 * 
+	 * @param theTopicModel
+	 */
 	public void newTopic(TopicModel theTopicModel) {
 		// Get the provider
 		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();
@@ -26,6 +33,11 @@ public class TopicModelController {
 		theProvider.addTopic(theTopicModel, this.theTopicModelList);
 	}
 
+	/**
+	 * Updates a topic
+	 * 
+	 * @param thePostModelList
+	 */
 	public void updateTopic(PostModelList<TopicModel> thePostModelList) {
 		// Get the provider
 		ElasticSearchProvider theProvider = ElasticSearchProvider.getProvider();

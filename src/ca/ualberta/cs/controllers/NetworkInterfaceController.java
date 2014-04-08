@@ -12,7 +12,16 @@ import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.UpdatePackage;
 import ca.ualberta.cs.providers.ElasticSearchProvider;
 
+/**
+ * Manages the network interface
+ * 
+ * @author wyatt
+ * 
+ */
 public class NetworkInterfaceController {
+	/**
+	 * Performs a refresh
+	 */
 	public static void refreshPosts() {
 		// Refresh TopicModelList
 		ElasticSearchProvider.getProvider().getTopics(0, 30);

@@ -9,6 +9,13 @@ import ca.ualberta.cs.models.PostModelList;
 import ca.ualberta.cs.models.SelectedCommentModelList;
 import ca.ualberta.cs.views.CommentViewActivity;
 
+/**
+ * 
+ * Manages a list of comments
+ * 
+ * @author wyatt
+ * 
+ */
 public class CommentListViewAdapter extends PostListViewAdapter<CommentModel> {
 	private final static int excerptLength = 50;
 
@@ -18,6 +25,13 @@ public class CommentListViewAdapter extends PostListViewAdapter<CommentModel> {
 		// TODO Auto-generated constructor stub
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.ualberta.cs.adapters.PostListViewAdapter#populateCellTitle(android
+	 * .view.View, ca.ualberta.cs.models.PostModel)
+	 */
 	@Override
 	protected void populateCellTitle(View theView, CommentModel thePost) {
 		// List of comments, display an excerpt of their comment
@@ -41,6 +55,11 @@ public class CommentListViewAdapter extends PostListViewAdapter<CommentModel> {
 		return CommentViewActivity.class;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ca.ualberta.cs.adapters.PostListViewAdapter#setSelectedList()
+	 */
 	@Override
 	protected void setSelectedList() {
 		SelectedCommentModelList.setTopicList(theArrayList);

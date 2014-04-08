@@ -10,6 +10,13 @@ import android.location.Location;
 import android.util.Log;
 import ca.ualberta.cs.adapters.PostListViewAdapter;
 
+/**
+ * Stores and manages lists of posts
+ * 
+ * @author wyatt
+ *
+ * @param <T>
+ */
 public class PostModelList<T extends PostModel> {
 	private ArrayList<T> postModelArrayList;
 	private ArrayList<PostListViewAdapter<?>> listeningAdapters;

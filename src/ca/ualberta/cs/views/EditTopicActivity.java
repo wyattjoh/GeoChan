@@ -108,7 +108,7 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	 * @see ca.ualberta.cs.views.EditPostActivity#getSaveButtonText()
 	 */
 	@Override
-	protected String getSaveButtonText() {
+	protected String getCommitButtonText() {
 		if (theEditPostModel.isNewPost()) {
 			return "New Topic";
 		} else {

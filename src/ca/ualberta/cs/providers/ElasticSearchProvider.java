@@ -14,9 +14,9 @@ import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UpdatePackage;
 
 /**
- * @author wyatt
+ * Provides interface to remote and proxies objects
  * 
- *         Provides interface to remote and proxies objects
+ * @author wyatt
  * 
  */
 public class ElasticSearchProvider {

@@ -13,7 +13,43 @@ import ca.ualberta.cs.R;
 import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.providers.LocationProvider;
 
+/**
+ * Performs the login activity actions
+ * @author wyatt
+ *
+ */
 public class LoginActivity extends Activity {
+
+	/**
+	 * Handles the login for the login form
+	 * 
+	 * @author wyatt
+	 *
+	 */
+	private final class LoginListener implements View.OnClickListener {
+		@Override
+		public void onClick(View v) {
+			// Get the username
+			EditText theTextField = (EditText) findViewById(R.id.userNameEditText);
+
+			String theUserName = theTextField.getText().toString();
+
+			if (theUserName.length() <= 0) {
+				Toast.makeText(getApplicationContext(),
+						"Cannot create an empty Username",
+						Toast.LENGTH_LONG).show();
+				return;
+			}
+
+			// Perform action on click
+			ActiveUserModel userController = ActiveUserModel
+					.createInstance(getApplicationContext());
+			userController.performLogin(theUserName);
+			Intent resultIntent = new Intent();
+			setResult(Activity.RESULT_OK, resultIntent);
+			finish();
+		}
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,33 +58,17 @@ public class LoginActivity extends Activity {
 
 		Intent intent = new Intent(this, LocationProvider.class);
 		startService(intent);
-		Log.w("LoginActivity", "Activity onCreate.");
 
+		// Populate the view
+		populateView();
+	}
+
+	/**
+	 * Populates the view
+	 */
+	protected void populateView() {
 		final Button button = (Button) findViewById(R.id.signInButton);
-		button.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// Get the username
-				EditText theTextField = (EditText) findViewById(R.id.userNameEditText);
-
-				String theUserName = theTextField.getText().toString();
-
-				if (theUserName.length() <= 0) {
-					Toast.makeText(getApplicationContext(),
-							"Cannot create an empty Username",
-							Toast.LENGTH_LONG).show();
-					return;
-				}
-
-				// Perform action on click
-				ActiveUserModel userController = ActiveUserModel
-						.createInstance(getApplicationContext());
-				userController.performLogin(theUserName);
-				Intent resultIntent = new Intent();
-				setResult(Activity.RESULT_OK, resultIntent);
-				finish();
-			}
-		});
+		button.setOnClickListener(new LoginListener());
 	}
 
 	@Override

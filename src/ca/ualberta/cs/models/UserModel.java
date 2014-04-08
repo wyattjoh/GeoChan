@@ -8,6 +8,8 @@ import java.util.HashMap;
 import android.location.Location;
 
 /**
+ * Stores a model for a user
+ * 
  * @author wyatt
  * 
  */

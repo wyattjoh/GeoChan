@@ -12,7 +12,9 @@ import com.google.gson.Gson;
 import android.content.Context;
 
 /**
- * @author wyatt A list for managing the list of favorite comment models
+ * A list for managing the list of favorite comment models
+ * 
+ * @author wyatt
  */
 public class ReadLaterCommentModelList extends
 		FollowingPostModelList<CommentModel> {

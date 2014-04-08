@@ -5,6 +5,12 @@ import java.io.ByteArrayOutputStream;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 
+/**
+ * Maintains the editable posts
+ * 
+ * @author wyatt
+ * 
+ */
 public class EditPostController {
 	/**
 	 * Compresses the bitmap to a WEBP formatted image
@@ -21,6 +27,12 @@ public class EditPostController {
 		return blob.toByteArray();
 	}
 
+	/**
+	 * Retrieve a scaled image
+	 * 
+	 * @param theBitmap
+	 * @return
+	 */
 	private static Bitmap theBitmap(Bitmap theBitmap) {
 		int height = 500;
 		if (theBitmap.getHeight() > height) {

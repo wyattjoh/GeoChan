@@ -8,10 +8,9 @@ import ca.ualberta.cs.models.ElasticSearchOperationRequest;
 import ca.ualberta.cs.models.ElasticSearchOperationResponse;
 
 /**
+ * Provides async http requests against the proxy provider
+ * 
  * @author wyatt
- * 
- *         Provides async http requests against the proxy provider
- * 
  */
 public class ElasticSearchProviderService
 		extends

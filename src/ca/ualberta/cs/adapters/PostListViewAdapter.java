@@ -19,10 +19,11 @@ import ca.ualberta.cs.models.PostModelList;
 
 /**
  * 
- * @author vincent
+ * Manages a list of posts
+ * 
+ * @author wyatt
  * 
  */
-
 public abstract class PostListViewAdapter<T extends PostModel> extends
 		ArrayAdapter<T> implements OnClickListener {
 	private LayoutInflater layoutInflater = null;
@@ -37,6 +38,12 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		this.theArrayList = arrayList;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.widget.ArrayAdapter#getView(int, android.view.View,
+	 * android.view.ViewGroup)
+	 */
 	@Override
 	public View getView(int thePosition, View convertView, ViewGroup parent) {
 		View postRowView = convertView;
@@ -87,7 +94,6 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 				.size()));
 
 		// Fill location
-		// TODO: Add location text
 		TextView locationText = (TextView) theView
 				.findViewById(R.id.textViewLocation);
 		if (thePost.getLocation() != null) {
@@ -152,10 +158,24 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		}
 	}
 
+	/**
+	 * Populates the cell title
+	 * 
+	 * @param theView
+	 * @param thePost
+	 */
 	abstract protected void populateCellTitle(View theView, T thePost);
 
+	/**
+	 * Returns the class of view to assist with activity creation
+	 * 
+	 * @return
+	 */
 	abstract protected Class<?> getViewClass();
 
+	/**
+	 * Sets the selected list
+	 */
 	abstract protected void setSelectedList();
 
 	/*

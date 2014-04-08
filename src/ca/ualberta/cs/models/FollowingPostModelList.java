@@ -15,9 +15,12 @@ import ca.ualberta.cs.providers.GeoChanGsonNetworked;
 
 import com.google.gson.Gson;
 
-/*
+/**
  * A followed post model is a post model that has been marked as favorite or read later. These
  * models will not be networked, and only saved to the device.
+ * 
+ * @author wyatt
+ * 
  */
 abstract public class FollowingPostModelList<T extends PostModel> extends
 		PostModelList<T> {
@@ -96,17 +99,6 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	protected FollowingPostModelList(Context applicationContext) {
 		this.applicationContext = applicationContext;
 		load();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ca.ualberta.cs.models.UpdateableListInterface#updateFromNetwork()
-	 */
-	@Override
-	public void updateFromNetwork() {
-		// TODO Auto-generated method stub
-
 	}
 
 	/**

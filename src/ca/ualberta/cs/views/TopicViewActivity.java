@@ -18,9 +18,10 @@ import ca.ualberta.cs.models.SelectedTopicModelList;
 import ca.ualberta.cs.models.TopicModel;
 
 /**
- * @author wyatt
+ * Responsible for displaying a TopicModel
  * 
- *         Responsible for dispalying a TopicModel
+ * @author wyatt
+ *
  */
 public class TopicViewActivity extends PostViewActivity<TopicModel> {
 

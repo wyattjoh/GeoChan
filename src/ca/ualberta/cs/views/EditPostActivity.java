@@ -26,6 +26,13 @@ import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
 
+/**
+ * Abstract activity for managing posts
+ * 
+ * @author wyatt
+ *
+ * @param <T>
+ */
 public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	public static final String IS_NEW = "IS_NEW_TOPIC";
 
@@ -56,7 +63,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		this.theLocation = getNewLocation();
 
 		// Add title
-		setTitle(getSaveButtonText());
+		setTitle(getCommitButtonText());
 		// Populate the views
 		populateView();
 	}
@@ -68,10 +75,22 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		return true;
 	}
 
-	protected abstract String getSaveButtonText();
+	/**
+	 * Gets the text for the commit button
+	 * @return the text for the commit button
+	 */
+	protected abstract String getCommitButtonText();
 
+	/**
+	 * Gets the new listener
+	 * @return
+	 */
 	protected abstract OnClickListener getNewOnClickListener();
 
+	/**
+	 * Gets the update listener
+	 * @return
+	 */
 	protected abstract OnClickListener getUpdateOnClickListener();
 
 	/**
@@ -79,7 +98,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	 */
 	protected void populateView() {
 		Button saveButton = (Button) findViewById(R.id.saveOrAddButton);
-		saveButton.setText(getSaveButtonText());
+		saveButton.setText(getCommitButtonText());
 
 		if (theEditPostModel.isNewPost()) {
 			saveButton.setOnClickListener(getNewOnClickListener());
@@ -186,6 +205,9 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 		});
 	}
 
+	/**
+	 * Sets all the attributes for the edit post model
+	 */
 	private void getAttributes() {
 		postId = theEditPostModel.getThePost().getId();
 		commentList = theEditPostModel.getThePost().getChildrenComments();
@@ -277,7 +299,7 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 					Toast.makeText(
 							this,
-							"Current Location is now:"
+							"Current Location is now: "
 									+ String.valueOf(this.theLocation
 											.getLatitude())
 									+ " , "

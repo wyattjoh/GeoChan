@@ -1,5 +1,11 @@
 package ca.ualberta.cs.models;
 
+/**
+ * Stores information relevant to the editing post
+ * 
+ * @author wyatt
+ *
+ */
 public class EditPostModel {
 	private static EditPostModel singleton = null;
 	private PostModel theParent = null;

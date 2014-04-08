@@ -2,10 +2,16 @@ package ca.ualberta.cs.models;
 
 import java.util.ArrayList;
 
+/**
+ * Transforms a ElasticSearchOperationRequest to a ElasticSearchOperationResponse
+ * @author wyatt
+ *
+ */
 public class ElasticSearchOperationFactory {
 	public static ElasticSearchOperationResponse responseFromRequest(
 			ElasticSearchOperationRequest theRequest,
 			ElasticSearchResponse<?> serverResponse) {
+		// Get the response type
 		ElasticSearchOperationResponse response = new ElasticSearchOperationResponse(
 				theRequest.getRequestType());
 		TopicModel theTopicModel = theRequest.getTopicModel();

@@ -12,6 +12,8 @@ import com.google.gson.Gson;
 import android.content.Context;
 
 /**
+ * Stores a list of favorites
+ * 
  * @author wyatt
  * 
  */

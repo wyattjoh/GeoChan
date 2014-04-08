@@ -3,6 +3,12 @@ package ca.ualberta.cs.models;
 import android.content.Context;
 import android.net.ConnectivityManager;
 
+/**
+ * Stores the current network state
+ * 
+ * @author wyatt
+ *
+ */
 public class NetworkModel {
 	private static NetworkModel singleton = null;
 

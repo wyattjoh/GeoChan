@@ -9,6 +9,12 @@ import android.view.View;
 import android.widget.ImageView;
 import ca.ualberta.cs.R;
 
+/**
+ * Simple activity for viewing a picture
+ * 
+ * @author wyatt
+ *
+ */
 public class PictureViewActivity extends Activity {
 	public final static String TITLE_KEY = "TITLE_KEY";
 
@@ -46,6 +52,9 @@ public class PictureViewActivity extends Activity {
 		imageView.setImageBitmap(bitmap);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

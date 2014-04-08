@@ -2,6 +2,13 @@ package ca.ualberta.cs.models;
 
 // Credit: https://github.com/rayzhangcl/ESDemo
 
+/**
+ * Stores the response from ES
+ * 
+ * @author wyatt
+ *
+ * @param <T>
+ */
 public class ElasticSearchResponse<T> {
 	String _index;
 	String _type;
