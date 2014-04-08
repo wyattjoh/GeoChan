@@ -1,1 +1,6 @@
+ca.ualberta.cs
+ca.ualberta.cs.adapters
+ca.ualberta.cs.controllers
 ca.ualberta.cs.models
+ca.ualberta.cs.providers
+ca.ualberta.cs.views
