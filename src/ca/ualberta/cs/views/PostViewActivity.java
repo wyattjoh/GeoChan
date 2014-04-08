@@ -308,125 +308,34 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 
 	private void populateScoreControlsAndView(final TextView scoreView,
 			final ImageButton downVoteButton, final ImageButton upVoteButton) {
-		String scoreString = "";
-		if (theModel.getScore() > 0) {
-			scoreString = "+";
-		}
-
-		scoreString = scoreString + theModel.getScore().toString();
-		scoreView.setText(scoreString);
-
-		UserModel theLoggedInUser = ActiveUserModel.getInstance().getUser();
-		ArrayList<String> downVoteList = theLoggedInUser.getDownVoteList();
-
-		if (downVoteList.contains(theModel.getId())) {
-			downVoteButton.setPressed(true);
-		} else {
-			downVoteButton.setPressed(false);
-		}
+		
+		populateScoreField(scoreView);
 
 		downVoteButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				UserModel theLoggedInUser = ActiveUserModel.getInstance()
-						.getUser();
-
-				if (!theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
-					if (theLoggedInUser.getDownVoteList().contains(
-							theModel.getId())) {
-						theLoggedInUser.removePostIdDownVoteList(theModel
-								.getId());
-						theModel.incrementScore();
-						String string = "";
-						if (theModel.getScore() > 0) {
-							string = "+";
-						}
-
-						string = string + theModel.getScore().toString();
-						scoreView.setText(string);
-					} else {
-						theLoggedInUser.addPostIdDownVoteList(theModel.getId());
-						theModel.decrementScore();
-						String string = "";
-						if (theModel.getScore() > 0) {
-							string = "+";
-						}
-
-						string = string + theModel.getScore().toString();
-						scoreView.setText(string);
-
-					}
-				} else {
-					theLoggedInUser.removePostIdUpVoteList(theModel.getId());
-					theLoggedInUser.addPostIdDownVoteList(theModel.getId());
-					theModel.decrementScore();
-					theModel.decrementScore();
-					String string = "";
-					if (theModel.getScore() > 0) {
-						string = "+";
-					}
-
-					string = string + theModel.getScore().toString();
-					scoreView.setText(string);
+				if (theController.decreaseScore(theModel)) {
+					populateScoreField(scoreView);
 				}
 			}
 		});
-
-		if (theLoggedInUser.getUpVoteList().contains(theModel.getId())) {
-			upVoteButton.setPressed(true);
-		} else {
-			upVoteButton.setPressed(false);
-		}
 
 		upVoteButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				UserModel theLoggedInUser = ActiveUserModel.getInstance()
-						.getUser();
-
-				if (!theLoggedInUser.getDownVoteList().contains(
-						theModel.getId())) {
-					if (theLoggedInUser.getUpVoteList().contains(
-							theModel.getId())) {
-						theLoggedInUser.removePostIdUpVoteList(theModel.getId());
-						theModel.decrementScore();
-						String string = "";
-						if (theModel.getScore() > 0) {
-							string = "+";
-						}
-
-						string = string + theModel.getScore().toString();
-						scoreView.setText(string);
-					} else {
-						theLoggedInUser.addPostIdUpVoteList(theModel.getId());
-						theModel.incrementScore();
-						String string = "";
-						if (theModel.getScore() > 0) {
-							string = "+";
-						}
-
-						string = string + theModel.getScore().toString();
-						scoreView.setText(string);
-
-					}
-				} else {
-					theLoggedInUser.removePostIdDownVoteList(theModel.getId());
-					theLoggedInUser.addPostIdUpVoteList(theModel.getId());
-					theModel.incrementScore();
-					theModel.incrementScore();
-					String string = "";
-					if (theModel.getScore() > 0) {
-						string = "+";
-					}
-
-					string = string + theModel.getScore().toString();
-					scoreView.setText(string);
+				if (theController.increaseScore(theModel)) {
+					populateScoreField(scoreView);
 				}
 			}
 
 		});
+	}
+
+	protected void populateScoreField(final TextView scoreView) {
+		Integer theScore = theModel.getScore();
+		scoreView.setText(theScore.toString());
 	}
 
 	protected void populateView() {

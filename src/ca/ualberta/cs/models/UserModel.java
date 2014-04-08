@@ -3,7 +3,7 @@
  */
 package ca.ualberta.cs.models;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.location.Location;
 
@@ -15,8 +15,7 @@ public class UserModel {
 	private String userName;
 	private String userHash;
 	private Location location;
-	private ArrayList<String> upVoteList = new ArrayList<String>();
-	private ArrayList<String> downVoteList = new ArrayList<String>();
+	private HashMap<String, Integer> userVoteList = new HashMap<String, Integer>();
 	private transient ActiveUserModel activeUserModel = null;
 
 	public UserModel(String theUserName) {
@@ -38,64 +37,37 @@ public class UserModel {
 	}
 
 	/**
-	 * @param upVoteList
-	 *            the upVoteList to set
+	 * Gets the username from the user model
+	 * 
+	 * @return the username
 	 */
-	public void setUpVoteList(ArrayList<String> upVoteList) {
-		this.upVoteList = upVoteList;
-		wasMutated();
-	}
-
-	/**
-	 * @param downVoteList
-	 *            the downVoteList to set
-	 */
-	public void setDownVoteList(ArrayList<String> downVoteList) {
-		this.downVoteList = downVoteList;
-		wasMutated();
-	}
-
-	public ArrayList<String> getUpVoteList() {
-		return upVoteList;
-	}
-
-	public void addPostIdUpVoteList(String id) {
-		upVoteList.add(id);
-		wasMutated();
-	}
-
-	public void removePostIdUpVoteList(String id) {
-		upVoteList.remove(id);
-		wasMutated();
-	}
-
-	public ArrayList<String> getDownVoteList() {
-		return downVoteList;
-	}
-
-	public void addPostIdDownVoteList(String id) {
-		downVoteList.add(id);
-		wasMutated();
-	}
-
-	public void removePostIdDownVoteList(String id) {
-		downVoteList.remove(id);
-		wasMutated();
-	}
-
 	public String getUserName() {
 		return userName;
 	}
 
+	/**
+	 * Gets the location from the user model
+	 * 
+	 * @return the location
+	 */
 	public Location getLocation() {
 		return location;
 	}
 
+	/**
+	 * 
+	 * @param location
+	 */
 	public void setLocation(Location location) {
 		this.location = location;
 		wasMutated();
 	}
 
+	/**
+	 * Gets the hash from the user model
+	 * 
+	 * @return hash
+	 */
 	public String getUserHash() {
 		return userHash;
 	}
@@ -115,5 +87,58 @@ public class UserModel {
 	 */
 	public void setActiveUserModel(ActiveUserModel activeUserModel) {
 		this.activeUserModel = activeUserModel;
+	}
+	
+	protected Boolean canVote(String id, Integer mod) {
+		if (userVoteList.containsKey(id)) {
+			Integer vote = userVoteList.get(id);
+
+			if (vote == mod) {
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * Determines whether a user can upvote a post
+	 * 
+	 * @param id
+	 * @return true if can vote up, false if cannot
+	 */
+	public Boolean canUpVote(String id) {
+		return canVote(id, 1);
+	}
+
+	public Boolean canDownVote(String id) {
+		return canVote(id, -1);
+	}
+	
+	protected void performVote(String id, Integer mod) {
+		if (canVote(id, mod)) {
+			if (userVoteList.containsKey(id)) {
+				Integer theScore = userVoteList.get(id);
+				
+				if (theScore == 0) {
+					userVoteList.put(id, mod);
+				}
+				else {
+					userVoteList.put(id, 0);;
+				}
+			} else {
+				userVoteList.put(id, mod);
+			}
+		}
+	}
+
+	public void performUpvote(String id) {
+		performVote(id, 1);
+	}
+
+	public void performDownVote(String id) {
+		performVote(id, -1);
 	}
 }

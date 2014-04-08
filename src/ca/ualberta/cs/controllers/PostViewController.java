@@ -1,12 +1,17 @@
 package ca.ualberta.cs.controllers;
 
+import android.util.Log;
+import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.PostModelList;
+import ca.ualberta.cs.models.UserModel;
 
 abstract public class PostViewController<T extends PostModel> {
 
 	protected PostModelList<T> favModelList;
 	protected PostModelList<T> readModelList;
+
+	abstract protected void updatePost(T thePost);
 
 	public void toggleFavorite(T theModel) {
 		if (theModel.isFavorite()) {
@@ -21,7 +26,6 @@ abstract public class PostViewController<T extends PostModel> {
 	public void toggleReadLater(T theModel) {
 		if (theModel.isReadLater()) {
 			theModel.setIsReadLater(false);
-			;
 			readModelList.remove(theModel);
 		} else {
 			theModel.setIsReadLater(true);
@@ -29,16 +33,35 @@ abstract public class PostViewController<T extends PostModel> {
 		}
 	}
 
-	private void modifyScore(int value) {
+	public Boolean increaseScore(T theModel) {
+		UserModel theUser = ActiveUserModel.getInstance().getUser();
 
+		String postId = theModel.getId();
+
+		if (theUser.canUpVote(postId)) {
+			theUser.performUpvote(postId);
+			theModel.incrementScore();
+			updatePost(theModel);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
-	public void increaseScore() {
-		modifyScore(1);
-	}
+	public Boolean decreaseScore(T theModel) {
+		UserModel theUser = ActiveUserModel.getInstance().getUser();
 
-	public void decreaseScore() {
-		modifyScore(-1);
+		String postId = theModel.getId();
+
+		if (theUser.canDownVote(postId)) {
+			Log.w("PostViewController", "Can perform down vote!");
+			theUser.performDownVote(postId);
+			theModel.decrementScore();
+			updatePost(theModel);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
