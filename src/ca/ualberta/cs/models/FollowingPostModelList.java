@@ -20,7 +20,7 @@ import com.google.gson.Gson;
  * models will not be networked, and only saved to the device.
  */
 abstract public class FollowingPostModelList<T extends PostModel> extends
-		PostModelList<T> implements UpdateableListInterface {
+		PostModelList<T> {
 
 	private ArrayList<UpdatePackage<T>> updatedPackages = new ArrayList<UpdatePackage<T>>();
 
