@@ -4,16 +4,12 @@
 package ca.ualberta.cs.views;
 
 import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.CommentViewController;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.EditPostModel;
-import ca.ualberta.cs.models.FavoriteCommentModelList;
-import ca.ualberta.cs.models.FavoriteTopicModelList;
 import ca.ualberta.cs.models.PostModelUpgradeFactory;
 import ca.ualberta.cs.models.SelectedCommentModelList;
 
@@ -31,7 +27,8 @@ public class CommentViewActivity extends PostViewActivity<CommentModel> {
 
 	@Override
 	protected CommentModel getSelectedModel() {
-		CommentModel theComment = SelectedCommentModelList.getCommentList().getLastSelection();
+		CommentModel theComment = SelectedCommentModelList.getCommentList()
+				.getLastSelection();
 		return PostModelUpgradeFactory.upgradePostModel(theComment);
 	}
 

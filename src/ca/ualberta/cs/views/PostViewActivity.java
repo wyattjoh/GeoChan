@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,7 +25,6 @@ import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModelList;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
-import ca.ualberta.cs.models.SelectedTopicModelList;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.providers.LocationProvider;
 
@@ -120,15 +118,21 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 
 		// Read later text
 		updateReadLaterText();
-		setEditButton(this.menu);
+
+		// Setup the menu
+		setupTheMenu();
 
 		return true;
 	}
 
-	void setEditButton(Menu theMenu) {
+	/**
+	 * 
+	 * @param theMenu
+	 */
+	void setupTheMenu() {
 		if (TopicModelList.getInstance().getLastSelection() == null) {
 			// Find the edit button
-			MenuItem editButton = theMenu.findItem(R.id.cellActiveArea);
+			MenuItem editButton = this.menu.findItem(R.id.cellActiveArea);
 			editButton.setVisible(false);
 		}
 	}
@@ -197,7 +201,6 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 		MenuItem refreshIcon = menu.findItem(R.id.refreshButton);
 		refreshIcon.setVisible(false);
 
-		setEditButton(menu);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -329,8 +332,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 
 			});
 
-		}
-		else {
+		} else {
 			downVoteButton.setVisibility(View.GONE);
 			upVoteButton.setVisibility(View.GONE);
 		}

@@ -75,9 +75,10 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	 * @return transformed arrayList to a Java array typed correctly
 	 */
 	abstract protected T[] arrayListToArray();
-	
+
 	/**
 	 * Adds in special variables to model
+	 * 
 	 * @param thePost
 	 * @return thePost
 	 */

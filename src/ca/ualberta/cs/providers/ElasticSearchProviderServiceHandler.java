@@ -32,6 +32,9 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 public enum ElasticSearchProviderServiceHandler {
+	/**
+	 * Adds a topic to the database
+	 */
 	ADD_TOPIC {
 
 		@Override
@@ -85,9 +88,19 @@ public enum ElasticSearchProviderServiceHandler {
 		@Override
 		public void onPostExecute(ElasticSearchOperationResponse theResponse) {
 			theResponse.getPostModelList().add(theResponse.getTopicModel());
+
+			// Required as to add the elasticsearch id into the db as "id"
+			// rather than "_id"
+			ElasticSearchProvider.getProvider()
+					.updateTopic(theResponse.getTopicModel(),
+							theResponse.getPostModelList());
+
 		}
 
 	},
+	/**
+	 * Updates a topic in the database
+	 */
 	UPDATE_TOPIC {
 
 		@Override
@@ -147,7 +160,9 @@ public enum ElasticSearchProviderServiceHandler {
 		}
 
 	},
-
+	/**
+	 * Fetches posts according to a sorting routine
+	 */
 	GET_POSTS {
 
 		@Override
@@ -199,6 +214,9 @@ public enum ElasticSearchProviderServiceHandler {
 		}
 
 	},
+	/**
+	 * Multi get posts
+	 */
 	MULTI_GET_TOPICS {
 
 		@Override
@@ -254,6 +272,9 @@ public enum ElasticSearchProviderServiceHandler {
 		}
 
 	},
+	/**
+	 * Multiget comments
+	 */
 	MULTI_GET_COMMENTS {
 
 		@Override
@@ -310,16 +331,41 @@ public enum ElasticSearchProviderServiceHandler {
 
 	};
 
+	/**
+	 * Performs the request on a background thread
+	 * 
+	 * @param theRequest
+	 * @return
+	 */
 	public abstract ElasticSearchOperationResponse doInBackground(
 			ElasticSearchOperationRequest theRequest);
 
+	/**
+	 * Executed on the main thread, updates UI
+	 * 
+	 * @param theResponse
+	 */
 	public abstract void onPostExecute(
 			ElasticSearchOperationResponse theResponse);
 
+	/**
+	 * The url for the db
+	 */
 	private static String urlIndex = "http://cmput301.softwareprocess.es:8080/cmput301w14t12/";
+
+	/**
+	 * The gson serilization object
+	 */
 	private static Gson gson = GeoChanGsonNetworked.getGson();
+
+	/**
+	 * The HTTP client
+	 */
 	private static HttpClient client = new DefaultHttpClient();
 
+	/**
+	 * Fetches a string from a response object in a smarter fashion
+	 */
 	private static String getStringFromResponse(HttpResponse response) {
 		String json = "";
 		try {
@@ -345,10 +391,23 @@ public enum ElasticSearchProviderServiceHandler {
 		return json;
 	}
 
+	/**
+	 * Utility method to get an endpoint url
+	 * 
+	 * @param endpoint
+	 * @return
+	 */
 	private static String getEndpointUrl(String endpoint) {
 		return urlIndex + "/" + endpoint;
 	}
 
+	/**
+	 * Utility method for getting a versioned url at an endpoint
+	 * 
+	 * @param endpoint
+	 * @param theTopic
+	 * @return
+	 */
 	private static String getVersionedEndpoint(String endpoint,
 			TopicModel theTopic) {
 		String theUrl = urlIndex + "/" + endpoint + "/";

@@ -2,7 +2,6 @@ package ca.ualberta.cs.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -134,25 +133,6 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		}
 
 		populateCellTitle(theView, theObject);
-	}
-
-	/**
-	 * returns a scaled image where the image will be sized so that it will fit
-	 * the image view by scaling to the largest length, either width or height
-	 * and setting that to the size of the image view
-	 * 
-	 * @param bitmapImage
-	 * @param imageViewScale
-	 * @return
-	 */
-	public Bitmap scaleBitMapToImageView(Bitmap bitmapImage,
-			ImageView imageViewScale) {
-		System.out.println("Height" + imageViewScale.getHeight() + " Width"
-				+ imageViewScale.getWidth());
-		Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmapImage,
-				imageViewScale.getWidth(), imageViewScale.getHeight(),
-				imageViewScale.getFilterTouchesWhenObscured());
-		return scaledBitmap;
 	}
 
 	/**
