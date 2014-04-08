@@ -1,6 +1,5 @@
 package ca.ualberta.cs.views;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -8,7 +7,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.TopicModelController;
-import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CurrentUserPostModelFactory;
 import ca.ualberta.cs.models.PostModel;
 import ca.ualberta.cs.models.TopicModel;
@@ -148,13 +146,5 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 	protected TopicModel getUpcastedModel() {
 		// TODO Auto-generated method stub
 		return (TopicModel) theEditPostModel.getThePost();
-	}
-
-	/**
-	 * In the event that we are editing a topic, have it's location default to the users location
-	 */
-	@Override
-	protected Location getNewLocation() {
-		return ActiveUserModel.getInstance().getUser().getLocation();
 	}
 }

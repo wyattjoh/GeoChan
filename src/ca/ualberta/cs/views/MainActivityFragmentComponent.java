@@ -127,8 +127,7 @@ public enum MainActivityFragmentComponent {
 			// Unregister the topics
 			ReadLaterTopicModelList theReadLaterTopicModelList = ReadLaterTopicModelList
 					.getInstance();
-			theReadLaterTopicModelList
-					.unRegisterListeningAdapter(adapter);
+			theReadLaterTopicModelList.unRegisterListeningAdapter(adapter);
 		}
 
 		@Override
@@ -157,8 +156,9 @@ public enum MainActivityFragmentComponent {
 
 		@Override
 		public void destroy() {
-			ReadLaterCommentModelList commentList = ReadLaterCommentModelList.getInstance();
-			
+			ReadLaterCommentModelList commentList = ReadLaterCommentModelList
+					.getInstance();
+
 			commentList.unRegisterListeningAdapter(adapter);
 		}
 
@@ -170,11 +170,12 @@ public enum MainActivityFragmentComponent {
 		@Override
 		protected void setupAdapter(ListView topicListView,
 				FragmentActivity theActivity) {
-			ReadLaterCommentModelList commentList = ReadLaterCommentModelList.getInstance();
-			
+			ReadLaterCommentModelList commentList = ReadLaterCommentModelList
+					.getInstance();
+
 			adapter = new CommentListViewAdapter(theActivity, commentList);
 			topicListView.setAdapter(adapter);
-			
+
 			commentList.registerListeningAdapter(adapter);
 		}
 

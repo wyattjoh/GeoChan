@@ -6,9 +6,7 @@ package ca.ualberta.cs.models;
 import java.util.Comparator;
 import java.util.Date;
 
-import ca.ualberta.cs.views.LocationUpdatedInterface;
 import android.location.Location;
-import android.util.Log;
 
 /**
  * @author wyatt
@@ -70,9 +68,15 @@ public enum PostModelComparator implements Comparator<PostModel> {
 		@Override
 		public String getElasticSearchQueryString(
 				ElasticSearchOperationRequest theRequest) {
-			Log.w("PostModelComparator.COMPARE_BY_PROXIMITY",
-					"search query request");
-			return COMPARE_BY_DATE.getElasticSearchQueryString(theRequest);
+			Location theLocation = getSortingLocation();
+			return "{ \"from\": "
+					+ Integer.toString(theRequest.getFrom())
+					+ ", \"size\": "
+					+ Integer.toString(theRequest.getSize())
+					+ ", \"query\": { \"match_all\": {} }, \"filter\": { \"geo_distance\": { \"distance\": \"20km\", \"location\": { \"lat\": "
+					+ Double.toString(theLocation.getLatitude())
+					+ ", \"lon\": "
+					+ Double.toString(theLocation.getLongitude()) + " } } } }";
 		}
 
 	},

@@ -54,7 +54,7 @@ public class ActiveUserModel {
 		}
 
 		theUser = new UserModel(theUsername);
-		
+
 		this.theUser.setActiveUserModel(this);
 
 		// Save the user in preferences

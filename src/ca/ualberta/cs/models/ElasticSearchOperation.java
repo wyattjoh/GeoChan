@@ -70,13 +70,14 @@ abstract public class ElasticSearchOperation {
 	}
 
 	/**
-	 * @param theFollowingList the theFollowingList to set
+	 * @param theFollowingList
+	 *            the theFollowingList to set
 	 */
 	public void setTheFollowingTopicsList(
 			FollowingPostModelList<TopicModel> theFollowingList) {
 		this.theFollowingTopicsList = theFollowingList;
 	}
-	
+
 	/**
 	 * @return the theFollowingList
 	 */
@@ -85,7 +86,8 @@ abstract public class ElasticSearchOperation {
 	}
 
 	/**
-	 * @param theFollowingList the theFollowingList to set
+	 * @param theFollowingList
+	 *            the theFollowingList to set
 	 */
 	public void setTheFollowingCommentsList(
 			FollowingPostModelList<CommentModel> theFollowingList) {
@@ -98,7 +100,7 @@ abstract public class ElasticSearchOperation {
 	public ArrayList<UpdatePackage<TopicModel>> getTheTopicIdsToGet() {
 		return theTopicIdsToGet;
 	}
-	
+
 	/**
 	 * @return the theCommentIdsToGet
 	 */
@@ -107,16 +109,19 @@ abstract public class ElasticSearchOperation {
 	}
 
 	/**
-	 * @param theIds the theIdsToGet to set
+	 * @param theIds
+	 *            the theIdsToGet to set
 	 */
 	public void setTheTopicIdsToGet(ArrayList<UpdatePackage<TopicModel>> theIds) {
 		this.theTopicIdsToGet = theIds;
 	}
-	
+
 	/**
-	 * @param theIds the theIdsToGet to set
+	 * @param theIds
+	 *            the theIdsToGet to set
 	 */
-	public void setTheCommentIdsToGet(ArrayList<UpdatePackage<CommentModel>> theIds) {
+	public void setTheCommentIdsToGet(
+			ArrayList<UpdatePackage<CommentModel>> theIds) {
 		this.theCommentIdsToGet = theIds;
 	}
 
@@ -128,7 +133,8 @@ abstract public class ElasticSearchOperation {
 	}
 
 	/**
-	 * @param size the size to set
+	 * @param size
+	 *            the size to set
 	 */
 	public void setSize(int size) {
 		this.size = size;
@@ -142,7 +148,8 @@ abstract public class ElasticSearchOperation {
 	}
 
 	/**
-	 * @param from the from to set
+	 * @param from
+	 *            the from to set
 	 */
 	public void setFrom(int from) {
 		this.from = from;

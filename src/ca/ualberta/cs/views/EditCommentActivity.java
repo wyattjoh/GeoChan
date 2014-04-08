@@ -1,6 +1,5 @@
 package ca.ualberta.cs.views;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,7 +48,6 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 			theModel.setId(postId);
 			theModel.setScore(postScore);
 			theModel.setChildComments(commentList);
-			
 
 			// Get the comment
 			EditText commentField = (EditText) findViewById(R.id.commentTextField);
@@ -141,13 +139,5 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 	protected CommentModel getUpcastedModel() {
 		// TODO Auto-generated method stub
 		return (CommentModel) theEditPostModel.getThePost();
-	}
-
-	/**
-	 * In the event this is a new comment, have it inherit its location from its parent
-	 */
-	@Override
-	protected Location getNewLocation() {
-		return theEditPostModel.getTheParent().getLocation();
 	}
 }

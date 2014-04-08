@@ -17,25 +17,26 @@ abstract public class PostViewController<T extends PostModel> {
 			favModelList.add(theModel);
 		}
 	}
-	
+
 	public void toggleReadLater(T theModel) {
 		if (theModel.isReadLater()) {
-			theModel.setIsReadLater(false);;
+			theModel.setIsReadLater(false);
+			;
 			readModelList.remove(theModel);
 		} else {
 			theModel.setIsReadLater(true);
 			readModelList.add(theModel);
 		}
 	}
-	
+
 	private void modifyScore(int value) {
-		
+
 	}
-	
+
 	public void increaseScore() {
 		modifyScore(1);
 	}
-	
+
 	public void decreaseScore() {
 		modifyScore(-1);
 	}

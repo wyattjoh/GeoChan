@@ -5,7 +5,7 @@ package ca.ualberta.cs.models;
 
 /**
  * @author wyatt
- *
+ * 
  */
 public class UpdatePackage<T extends PostModel> {
 	private String parentId;
@@ -28,7 +28,8 @@ public class UpdatePackage<T extends PostModel> {
 	}
 
 	/**
-	 * @param parentId the parentId to set
+	 * @param parentId
+	 *            the parentId to set
 	 */
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
@@ -42,7 +43,8 @@ public class UpdatePackage<T extends PostModel> {
 	}
 
 	/**
-	 * @param myId the myId to set
+	 * @param myId
+	 *            the myId to set
 	 */
 	public void setMyId(String myId) {
 		this.myId = myId;
@@ -56,7 +58,8 @@ public class UpdatePackage<T extends PostModel> {
 	}
 
 	/**
-	 * @param theUpdatedModel the theUpdatedModel to set
+	 * @param theUpdatedModel
+	 *            the theUpdatedModel to set
 	 */
 	public void setTheUpdatedModel(T theUpdatedModel) {
 		this.theUpdatedModel = theUpdatedModel;

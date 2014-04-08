@@ -7,11 +7,11 @@ public class ElasticSearchMgetDoc<T> {
 	int _version;
 	Boolean exists;
 	T _source;
-	
+
 	public T getSource() {
 		return (exists) ? _source : null;
 	}
-	
+
 	public int getVersion() {
 		return (exists) ? _version : null;
 	}

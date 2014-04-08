@@ -3,7 +3,6 @@ package ca.ualberta.cs.models;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Deque;
 import java.util.Iterator;
 
@@ -90,7 +89,7 @@ public class PostModelList<T extends PostModel> {
 	public void sortByScore() {
 		Boolean reverse = true;
 		setTheCurrentSort(PostModelComparator.COMPARE_BY_SCORE);
-		
+
 		executeSort(reverse, true);
 	}
 
@@ -100,7 +99,7 @@ public class PostModelList<T extends PostModel> {
 	public void sortByDate() {
 		Boolean reverse = true;
 		setTheCurrentSort(PostModelComparator.COMPARE_BY_DATE);
-		
+
 		executeSort(reverse, true);
 	}
 
@@ -108,10 +107,11 @@ public class PostModelList<T extends PostModel> {
 	 * Sorts theTopicModelArrayList by proximity to user
 	 */
 	public void sortByProximity() {
-		Boolean reverse = false;
+		Boolean reverse = true;
 		setTheCurrentSort(PostModelComparator.COMPARE_BY_PROXIMITY);
-		
-		Location sortingLocation = ActiveUserModel.getInstance().getUser().getLocation();
+
+		Location sortingLocation = ActiveUserModel.getInstance().getUser()
+				.getLocation();
 		PostModelComparator.setSortingLocation(sortingLocation);
 
 		executeSort(reverse, true);
@@ -133,7 +133,7 @@ public class PostModelList<T extends PostModel> {
 	public void sortByPicture() {
 		Boolean reverse = true;
 		setTheCurrentSort(PostModelComparator.COMPARE_BY_DATE);
-		
+
 		executeSort(reverse, false);
 
 		ArrayList<T> tempList = new ArrayList<T>();
@@ -156,6 +156,7 @@ public class PostModelList<T extends PostModel> {
 
 	/**
 	 * Executes a sort
+	 * 
 	 * @param reverse
 	 * @param updateAdapter
 	 */
@@ -164,7 +165,7 @@ public class PostModelList<T extends PostModel> {
 		if (reverse) {
 			Collections.reverse(this.postModelArrayList);
 		}
-	
+
 		if (updateAdapter) {
 			updateListeningAdapters();
 		}
@@ -174,9 +175,9 @@ public class PostModelList<T extends PostModel> {
 	 * Sorts theTopicModelArrayList by distance to a specified location
 	 */
 	public void sortByProximityTo(Location location) {
-		Boolean reverse = false;
+		Boolean reverse = true;
 		setTheCurrentSort(PostModelComparator.COMPARE_BY_PROXIMITY);
-		
+
 		PostModelComparator.setSortingLocation(location);
 
 		executeSort(reverse, true);
@@ -268,7 +269,8 @@ public class PostModelList<T extends PostModel> {
 	}
 
 	/**
-	 * @param theCurrentSort the theCurrentSort to set
+	 * @param theCurrentSort
+	 *            the theCurrentSort to set
 	 */
 	public void setTheCurrentSort(PostModelComparator theCurrentSort) {
 		this.theCurrentSort = theCurrentSort;

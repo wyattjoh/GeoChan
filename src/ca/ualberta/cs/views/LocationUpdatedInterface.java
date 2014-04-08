@@ -7,7 +7,7 @@ import android.location.Location;
 
 /**
  * @author wyatt
- *
+ * 
  */
 public interface LocationUpdatedInterface {
 	public void locationWasUpdated(Location theNewLocation);

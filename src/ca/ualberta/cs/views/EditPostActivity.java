@@ -12,7 +12,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.MediaStore.MediaColumns;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.EditPostController;
+import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
@@ -44,7 +44,9 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 	abstract protected T getUpcastedModel();
 
-	abstract protected Location getNewLocation();
+	protected Location getNewLocation() {
+		return ActiveUserModel.getInstance().getUser().getLocation();
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -310,11 +312,11 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 	public String getRealPathFromURI(Context context, Uri contentUri) {
 		Cursor cursor = null;
 		try {
-			String[] proj = { MediaStore.Images.Media.DATA };
+			String[] proj = { MediaColumns.DATA };
 			cursor = context.getContentResolver().query(contentUri, proj, null,
 					null, null);
 			int column_index = cursor
-					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+					.getColumnIndexOrThrow(MediaColumns.DATA);
 			cursor.moveToFirst();
 			return cursor.getString(column_index);
 		} finally {

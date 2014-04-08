@@ -32,7 +32,8 @@ import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
 import ca.ualberta.cs.providers.LocationProvider;
 
-public abstract class PostViewActivity<T extends PostModel> extends Activity implements LocationUpdatedInterface {
+public abstract class PostViewActivity<T extends PostModel> extends Activity
+		implements LocationUpdatedInterface {
 	protected static Bitmap currentBitmap = null;
 
 	/**
@@ -68,11 +69,11 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 	protected CommentListViewAdapter thePostAdapter;
 
 	protected LinearLayout headerView = null;
-	
+
 	protected ListView commentsListView;
 
 	private Menu menu;
-	
+
 	abstract protected void editPost();
 
 	/**
@@ -94,7 +95,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activity_post_view);
 
 		ActionBar actionBar = getActionBar();
@@ -102,10 +103,11 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 
 		// Populate the model
 		this.theModel = getSelectedModel();
-		
+
 		LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.headerView = (LinearLayout) inflator.inflate(R.layout.post_header, null);
-		
+		this.headerView = (LinearLayout) inflator.inflate(R.layout.post_header,
+				null);
+
 		commentsListView = (ListView) findViewById(R.id.commentsListView);
 		commentsListView.addHeaderView(headerView);
 
@@ -114,7 +116,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 			throw new RuntimeException(
 					"Tried to execute the view without selecting anything? (No idea how you got here...)");
 		}
-		
+
 		// Register for location updates
 		LocationProvider.getInstance(null).registerForLocationUpdates(this);
 	}
@@ -123,17 +125,17 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		
+
 		// Grab the menu for later...
 		this.menu = menu;
-		
+
 		// Read later text
 		updateReadLaterText();
 		setEditButton(this.menu);
-		
+
 		return true;
 	}
-	
+
 	abstract void setEditButton(Menu theMenu);
 
 	/*
@@ -149,7 +151,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 			TopicModelList.getInstance().unRegisterListeningAdapter(
 					thePostAdapter);
 		}
-		
+
 		LocationProvider.getInstance(null).unregisterForLocationUpdates(this);
 	}
 
@@ -176,17 +178,16 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 	 */
 	private void onReadLaterPressed() {
 		theController.toggleReadLater(getSelectedModel());
-		
+
 		updateReadLaterText();
 	}
 
 	private void updateReadLaterText() {
 		MenuItem theReadLaterButton = this.menu.findItem(R.id.readLaterButton);
-		
+
 		if (this.theModel.isReadLater()) {
 			theReadLaterButton.setTitle("Mark as read");
-		}
-		else {
+		} else {
 			theReadLaterButton.setTitle("Read Later");
 		}
 	}
@@ -228,8 +229,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 	}
 
 	private void populateDistanceButton() {
-		Button distanceButton = (Button) this.headerView.findViewById(R.id.distanceButton);
-		
+		Button distanceButton = (Button) this.headerView
+				.findViewById(R.id.distanceButton);
+
 		if (theModel.getLocation() != null) {
 			if (ActiveUserModel.getInstance().getUser().getLocation() != null) {
 				Location userLocation = new Location(ActiveUserModel
@@ -255,7 +257,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 		if (theModel.getPostedBy().getUserHash()
 				.equals(ActiveUserModel.getInstance().getUser().getUserHash())) {
 			// set the visibility to visible
-			Button editButton = (Button) this.headerView.findViewById(R.id.editButton);
+			Button editButton = (Button) this.headerView
+					.findViewById(R.id.editButton);
 			editButton.setVisibility(View.VISIBLE);
 
 			// add onclick listener
@@ -427,34 +430,41 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 	}
 
 	protected void populateView() {
-		
+
 		// Add comment
-		TextView commentView = (TextView) this.headerView.findViewById(R.id.commentTextView);
+		TextView commentView = (TextView) this.headerView
+				.findViewById(R.id.commentTextView);
 		commentView.setText(theModel.getCommentText());
 
 		// Add score
-		final TextView scoreView = (TextView) this.headerView.findViewById(R.id.scorePostTextView);
+		final TextView scoreView = (TextView) this.headerView
+				.findViewById(R.id.scorePostTextView);
 
 		// Add Buttons
-		final ImageButton downVoteButton = (ImageButton) this.headerView.findViewById(R.id.downVoteButton);
-		final ImageButton upVoteButton = (ImageButton) this.headerView.findViewById(R.id.upVoteButton);
+		final ImageButton downVoteButton = (ImageButton) this.headerView
+				.findViewById(R.id.downVoteButton);
+		final ImageButton upVoteButton = (ImageButton) this.headerView
+				.findViewById(R.id.upVoteButton);
 		populateScoreControlsAndView(scoreView, downVoteButton, upVoteButton);
 
 		// Add Date
-		TextView dateView = (TextView) this.headerView.findViewById(R.id.ageTextView);
+		TextView dateView = (TextView) this.headerView
+				.findViewById(R.id.ageTextView);
 		String date = (String) DateFormat.format("yyyy/MM/dd",
 				theModel.getDatePosted());
 		dateView.setText(date);
 
 		// Add Author
-		TextView authorView = (TextView) this.headerView.findViewById(R.id.authorTextView);
+		TextView authorView = (TextView) this.headerView
+				.findViewById(R.id.authorTextView);
 		authorView.setText(theModel.getPostedBy().getUserName());
 
 		// Add or remove title text
 		setTitleText();
 
 		// Add image
-		Button imageViewButton = (Button) this.headerView.findViewById(R.id.pictureButton);
+		Button imageViewButton = (Button) this.headerView
+				.findViewById(R.id.pictureButton);
 		populateImageView(imageViewButton);
 
 		// add edit if required
@@ -467,7 +477,8 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 		populateCommentsView();
 
 		// Favorite Button
-		ImageButton favoriteButton = (ImageButton) this.headerView.findViewById(R.id.favoriteButton);
+		ImageButton favoriteButton = (ImageButton) this.headerView
+				.findViewById(R.id.favoriteButton);
 		populateFavoritesButton(favoriteButton);
 	}
 
@@ -482,9 +493,13 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity imp
 	}
 
 	abstract void setTitleText();
-	
-	/* (non-Javadoc)
-	 * @see ca.ualberta.cs.views.LocationUpdatedInterface#locationWasUpdated(android.location.Location)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ca.ualberta.cs.views.LocationUpdatedInterface#locationWasUpdated(android
+	 * .location.Location)
 	 */
 	@Override
 	public void locationWasUpdated(Location theNewLocation) {
