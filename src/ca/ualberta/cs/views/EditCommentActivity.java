@@ -142,12 +142,4 @@ public class EditCommentActivity extends EditPostActivity<CommentModel> {
 		// TODO Auto-generated method stub
 		return (CommentModel) theEditPostModel.getThePost();
 	}
-
-	/**
-	 * In the event this is a new comment, have it inherit its location from its parent
-	 */
-	@Override
-	protected Location getNewLocation() {
-		return theEditPostModel.getTheParent().getLocation();
-	}
 }

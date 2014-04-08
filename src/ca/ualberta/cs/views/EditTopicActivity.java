@@ -149,12 +149,4 @@ public class EditTopicActivity extends EditPostActivity<TopicModel> {
 		// TODO Auto-generated method stub
 		return (TopicModel) theEditPostModel.getThePost();
 	}
-
-	/**
-	 * In the event that we are editing a topic, have it's location default to the users location
-	 */
-	@Override
-	protected Location getNewLocation() {
-		return ActiveUserModel.getInstance().getUser().getLocation();
-	}
 }

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.cs.R;
 import ca.ualberta.cs.controllers.EditPostController;
+import ca.ualberta.cs.models.ActiveUserModel;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.EditPostModel;
 import ca.ualberta.cs.models.PostModel;
@@ -44,7 +45,9 @@ public abstract class EditPostActivity<T extends PostModel> extends Activity {
 
 	abstract protected T getUpcastedModel();
 
-	abstract protected Location getNewLocation();
+	protected Location getNewLocation() {
+		return ActiveUserModel.getInstance().getUser().getLocation();
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
