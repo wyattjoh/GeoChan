@@ -85,4 +85,10 @@ public class ReadLaterCommentModelList extends
 		return gson.fromJson(isr, CommentModel[].class);
 	}
 
+	@Override
+	public CommentModel specializePost(CommentModel thePost) {
+		thePost.setIsReadLater(true);
+		return thePost;
+	}
+
 }

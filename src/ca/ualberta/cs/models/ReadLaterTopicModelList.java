@@ -55,4 +55,10 @@ public class ReadLaterTopicModelList extends FollowingPostModelList<TopicModel> 
 		// TODO Auto-generated method stub
 		return this.getArrayList().toArray(new TopicModel[0]);
 	}
+
+	@Override
+	public TopicModel specializePost(TopicModel thePost) {
+		thePost.setIsReadLater(true);
+		return thePost;
+	}
 }

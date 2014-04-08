@@ -75,6 +75,13 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 	 * @return transformed arrayList to a Java array typed correctly
 	 */
 	abstract protected T[] arrayListToArray();
+	
+	/**
+	 * Adds in special variables to model
+	 * @param thePost
+	 * @return thePost
+	 */
+	public abstract T specializePost(T thePost);
 
 	/**
 	 * Loads the JSON file from the ISR
@@ -190,7 +197,8 @@ abstract public class FollowingPostModelList<T extends PostModel> extends
 			}
 
 			for (int i = 0; i < thePrimative.length; i++) {
-				dataThatLoaded.add(thePrimative[i]);
+				T theModel = specializePost(thePrimative[i]);
+				dataThatLoaded.add(theModel);
 			}
 
 			// Load the data into the object
