@@ -26,7 +26,7 @@ public class ConnectionTesting extends
 	 */
 	public void testLostConnection() {
 		NetworkModel.getInstance();
-		assertTrue(NetworkModel.getInstance().isNetworkAvailable(getActivity()));
+		assertTrue("Test whether singleton returns true",NetworkModel.getInstance().isNetworkAvailable(getActivity()));
 		
 		// TODO add broadcast receiver
 	}
@@ -37,12 +37,12 @@ public class ConnectionTesting extends
 	 */
 	public void testUpdatingConnection() {
 		NetworkModel.getInstance();
-		//assertTrue(NetworkModel.isNetworkAvailable(getActivity()));
+		assertTrue("Test wether we have a connection", NetworkModel.getInstance().isNetworkAvailable(getActivity()));
 		
 		TopicModelList.getInstance();
 		
 		ElasticSearchProvider.getProvider().getTopics(0, 1);
-		assertNotNull(TopicModelList.getInstance());
+		assertNotNull("Test whether our Topic List is null",TopicModelList.getInstance());
 		
 		// TODO add broadcast receiver and then recast it as connected
 	}
