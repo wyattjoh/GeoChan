@@ -120,15 +120,21 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 
 		// Read later text
 		updateReadLaterText();
-		setEditButton(this.menu);
+		
+		// Setup the menu
+		setupTheMenu();
 
 		return true;
 	}
 
-	void setEditButton(Menu theMenu) {
+	/**
+	 * 
+	 * @param theMenu
+	 */
+	void setupTheMenu() {
 		if (TopicModelList.getInstance().getLastSelection() == null) {
 			// Find the edit button
-			MenuItem editButton = theMenu.findItem(R.id.cellActiveArea);
+			MenuItem editButton = this.menu.findItem(R.id.cellActiveArea);
 			editButton.setVisible(false);
 		}
 	}
@@ -196,8 +202,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		MenuItem refreshIcon = menu.findItem(R.id.refreshButton);
 		refreshIcon.setVisible(false);
-
-		setEditButton(menu);
+		
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -329,8 +334,7 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 
 			});
 
-		}
-		else {
+		} else {
 			downVoteButton.setVisibility(View.GONE);
 			upVoteButton.setVisibility(View.GONE);
 		}
