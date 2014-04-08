@@ -45,18 +45,9 @@ public abstract class PostViewActivity<T extends PostModel> extends Activity
 
 		@Override
 		public void onClick(View v) {
-			ImageView favoritesButton = (ImageView) v;
+			ImageButton favoritesButton = (ImageButton) v;
 			theController.toggleFavorite(theModel);
-
-			if (theModel.isFavorite()) {
-				// Is already a favorite! Must unfavorite now...
-				favoritesButton
-						.setImageResource(android.R.drawable.btn_star_big_on);
-			} else {
-				// Not a favorite! Lets add it!
-				favoritesButton
-						.setImageResource(android.R.drawable.btn_star_big_off);
-			}
+			populateFavoritesButton(favoritesButton);
 		}
 	};
 
