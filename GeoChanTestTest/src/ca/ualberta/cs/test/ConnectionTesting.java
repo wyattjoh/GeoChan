@@ -1,17 +1,10 @@
 package ca.ualberta.cs.test;
 
-import java.util.ArrayList;
-
-import org.osmdroid.tileprovider.modules.NetworkAvailabliltyCheck;
-
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import ca.ualberta.cs.models.NetworkModel;
-import ca.ualberta.cs.models.PostModelList;
-import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.providers.ElasticSearchProvider;
-import ca.ualberta.cs.views.MainActivityFragment;
 
 public class ConnectionTesting extends
 		ActivityInstrumentationTestCase2<Activity> {
@@ -26,7 +19,7 @@ public class ConnectionTesting extends
 	 */
 	public void testLostConnection() {
 		NetworkModel.getInstance();
-		assertTrue("Test whether singleton returns true",NetworkModel.getInstance().isNetworkAvailable(getActivity()));
+		assertTrue("Test whether singleton returns true", NetworkModel.isNetworkAvailable(getInstrumentation().getContext()));
 		
 		// TODO add broadcast receiver
 	}
@@ -37,7 +30,7 @@ public class ConnectionTesting extends
 	 */
 	public void testUpdatingConnection() {
 		NetworkModel.getInstance();
-		assertTrue("Test wether we have a connection", NetworkModel.getInstance().isNetworkAvailable(getActivity()));
+		assertTrue("Test wether we have a connection", NetworkModel.isNetworkAvailable(getInstrumentation().getContext()));
 		
 		TopicModelList.getInstance();
 		

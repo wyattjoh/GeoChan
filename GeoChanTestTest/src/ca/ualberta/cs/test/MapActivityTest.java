@@ -21,7 +21,7 @@ public class MapActivityTest extends ActivityInstrumentationTestCase2<Activity> 
 	 * Test if a map is displayed
 	 */
 	public void testMapActivity() {
-		Intent mapView = new Intent(getActivity(), MapViewActivity.class);
+		Intent mapView = new Intent(getInstrumentation().getContext(), MapViewActivity.class);
 		assertNotNull("Make sure intent isn't null", mapView);
 	}
 

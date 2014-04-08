@@ -17,7 +17,7 @@ public class LocationTest extends ActivityInstrumentationTestCase2<Activity> {
 	 * test whether provider will get me the default location
 	 */
 	public void testDefaultLocation() {
-		LocationProvider provider = ca.ualberta.cs.providers.LocationProvider.getInstance(getActivity());
+		LocationProvider provider = LocationProvider.getInstance(getInstrumentation().getContext());
 		assertNotNull(provider.getLocation());
 	}
 	
@@ -26,7 +26,7 @@ public class LocationTest extends ActivityInstrumentationTestCase2<Activity> {
 	 * test whether I can send the location to the user
 	 */
 	public void testChangeLocation() {
-		UserModel user = new UserModel("LactionTestUser");		
+		UserModel user = new UserModel("LocationTestUser");		
 		Location location  = new Location("1000.0000");
 		user.setLocation(location);
 		
@@ -38,7 +38,7 @@ public class LocationTest extends ActivityInstrumentationTestCase2<Activity> {
 	 * test whether location provider will send different locations 
 	 */
 	public void testUpdatedLocation() {
-		UserModel user = new UserModel("LactionTestUser");
+		UserModel user = new UserModel("LocationTestUser");
 		assertNotNull(user.getLocation());
 		
 		Location location  = new Location("1000.0000");

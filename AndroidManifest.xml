@@ -24,6 +24,7 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="16" />
+    <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="ca.ualberta.cs"></instrumentation>
 
     <application
         android:allowBackup="true"

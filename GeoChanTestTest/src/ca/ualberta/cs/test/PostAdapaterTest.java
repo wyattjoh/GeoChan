@@ -4,13 +4,9 @@ import java.util.ArrayList;
 
 import android.support.v4.app.FragmentActivity;
 import android.test.ActivityInstrumentationTestCase2;
-import ca.ualberta.cs.adapters.CommentListViewAdapter;
-import ca.ualberta.cs.adapters.PostListViewAdapter;
-import ca.ualberta.cs.controllers.PostListController;
-import ca.ualberta.cs.models.CommentModel;
-import ca.ualberta.cs.models.CommentModelList;
+import ca.ualberta.cs.adapters.TopicListViewAdapter;
 import ca.ualberta.cs.models.PostModelList;
-import ca.ualberta.cs.models.ReadLaterTopicModelList;
+import ca.ualberta.cs.models.TopicModel;
 import ca.ualberta.cs.models.TopicModelList;
 import ca.ualberta.cs.models.UserModel;
 
@@ -24,13 +20,13 @@ public class PostAdapaterTest extends
 	public void testPostAdapterExists() {
 		// build comment object list
 		UserModel user = new UserModel("Wyatt");
-		CommentModel comment = new CommentModel(user);
-		ArrayList<CommentModel> commentList = new ArrayList<CommentModel>();
-		commentList.add(comment);
+		TopicModel topic = new TopicModel(user);
+		ArrayList<TopicModel> topicList = new ArrayList<TopicModel>();
+		topicList.add(topic);
 		
-		PostModelList<CommentModel> comments = CommentModelList.getInstance();
-		comments.setArrayList(commentList);
-		CommentListViewAdapter adapter = new CommentListViewAdapter(getActivity(), comments);
+		PostModelList<TopicModel> topics = TopicModelList.getInstance();
+		topics.setArrayList(topicList);
+		TopicListViewAdapter adapter = new TopicListViewAdapter(getActivity(), topics);
 
 		// make sure the adapter isnt null
 		assertNotNull("The object is not null", adapter);

@@ -1,7 +1,7 @@
 package ca.ualberta.cs.test;
-import ca.ualberta.cs.models.ActiveUserModel;
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
+import ca.ualberta.cs.models.ActiveUserModel;
 
 public class UserTest extends ActivityInstrumentationTestCase2<Activity> {
 
@@ -17,7 +17,7 @@ public class UserTest extends ActivityInstrumentationTestCase2<Activity> {
 		String theUserName = "TestUser";
 		String theNewuserName = "";
 		ActiveUserModel userController = ActiveUserModel
-				.createInstance(getActivity());
+				.createInstance(getInstrumentation().getContext());
 		userController.performLogin(theUserName);
 		
 		assertEquals("Test the username is set",theUserName, userController.getUser().getUserName());

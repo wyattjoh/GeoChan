@@ -1,7 +1,6 @@
 package ca.ualberta.cs.test;
 
 import android.app.Activity;
-import android.content.Context;
 import android.location.Location;
 import android.test.ActivityInstrumentationTestCase2;
 import ca.ualberta.cs.models.CommentModel;
