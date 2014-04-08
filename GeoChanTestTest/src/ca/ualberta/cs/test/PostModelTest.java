@@ -55,8 +55,7 @@ public class PostModelTest extends
 	public void testPictureAssociate() {
 		TopicModel testTopicModel = new TopicModel();
 		CommentModel testCommentModel = new CommentModel();
-		Context context = super.getActivity().getApplicationContext();
-		Bitmap picture = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
+		Bitmap picture = BitmapFactory.decodeResource(getInstrumentation().getContext().getResources(), R.drawable.ic_launcher);
 		testTopicModel.setPicture(picture);
 		assertNotNull("Topic picture not set", testTopicModel.getPicture());
 		testCommentModel.setPicture(picture);
