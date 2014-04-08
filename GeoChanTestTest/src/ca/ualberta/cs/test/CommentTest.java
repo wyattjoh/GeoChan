@@ -1,8 +1,9 @@
 package ca.ualberta.cs.test;
-import ca.ualberta.cs.models.CommentModel;
-import ca.ualberta.cs.models.UserModel;
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
+import ca.ualberta.cs.models.CommentModel;
+import ca.ualberta.cs.models.TopicModel;
+import ca.ualberta.cs.models.UserModel;
 
 
 public class CommentTest extends ActivityInstrumentationTestCase2<Activity> {
@@ -14,15 +15,10 @@ public class CommentTest extends ActivityInstrumentationTestCase2<Activity> {
 	 * Test whether a topic's comments are displayed
 	 */
 	public void testCommentDisplay() {
-		fail();
-	}
-	
-	/**
-	 * TestCase 6.1
-	 * Test whether an error message is displayed if no text is entered when posting a comment
-	 */
-	public void testNoTextComment() {
-		fail();
+		TopicModel testTopic = new TopicModel();
+		CommentModel testComment = new CommentModel();
+		testTopic.addChildComment(testComment);
+		
 	}
 	
 	/**
@@ -30,7 +26,8 @@ public class CommentTest extends ActivityInstrumentationTestCase2<Activity> {
 	 * Test whether a new comment can be created
 	 */
 	public void testCommentCreation() {
-		fail();
+		CommentModel testComment = new CommentModel();
+		assertNotNull("Comment is not created", testComment);
 	}
 	
 	/**
@@ -38,7 +35,10 @@ public class CommentTest extends ActivityInstrumentationTestCase2<Activity> {
 	 * Test whether a new comment is correctly attached to its parent
 	 */
 	public void testCommentAssociation() {
-		fail();
+		TopicModel testTopic = new TopicModel();
+		CommentModel testComment = new CommentModel();
+		testTopic.addChildComment(testComment);
+		assertEquals("Comment not properly associated with Topic", testComment.getMyFirstAncestor(), testTopic);
 	}
 
 	/**

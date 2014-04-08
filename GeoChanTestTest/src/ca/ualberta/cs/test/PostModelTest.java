@@ -1,6 +1,9 @@
 package ca.ualberta.cs.test;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.test.ActivityInstrumentationTestCase2;
 import ca.ualberta.cs.models.CommentModel;
 import ca.ualberta.cs.models.PostModel;
@@ -50,6 +53,13 @@ public class PostModelTest extends
 	 * Test to see if a picture can be attached to a post
 	 */
 	public void testPictureAssociate() {
-		fail();
+		TopicModel testTopicModel = new TopicModel();
+		CommentModel testCommentModel = new CommentModel();
+		Context context = super.getActivity().getApplicationContext();
+		Bitmap picture = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
+		testTopicModel.setPicture(picture);
+		assertNotNull("Topic picture not set", testTopicModel.getPicture());
+		testCommentModel.setPicture(picture);
+		assertNotNull("Comment picture not set", testCommentModel.getPicture());
 	}
 }
