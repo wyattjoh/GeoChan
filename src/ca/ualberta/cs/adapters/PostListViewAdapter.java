@@ -129,15 +129,6 @@ public abstract class PostListViewAdapter<T extends PostModel> extends
 		String scoreString = thePost.getScore().toString();
 		scoreText.setText(scoreString);
 
-		// Fill picture
-		ImageView imageView = (ImageView) theView
-				.findViewById(R.id.imageViewPicture);
-		if (thePost.hasPicture()) {
-			imageView.setImageBitmap(thePost.getPicture());
-		} else {
-			imageView.setVisibility(View.GONE);
-		}
-
 		populateCellTitle(theView, theObject);
 	}
 
