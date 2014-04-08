@@ -38,7 +38,8 @@ public class CommentTest extends ActivityInstrumentationTestCase2<Activity> {
 		TopicModel testTopic = new TopicModel();
 		CommentModel testComment = new CommentModel();
 		testTopic.addChildComment(testComment);
-		assertEquals("Comment not properly associated with Topic", testComment.getMyFirstAncestor(), testTopic);
+		testComment.setMyParent(testTopic);
+		assertSame("Comment not properly associated with Topic", testComment.getMyParent(), testTopic);
 	}
 
 	/**
